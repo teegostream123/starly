@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "188663119667",
+    "project_id": "teego-58a2a",
+    "storage_bucket": "teego-58a2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188663119667:android:449a1d14f9777e740bc846",
+        "android_client_info": {
+          "package_name": "com.tiganlab.teego1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188663119667-t9ogqse16hh8bsepe81ti8505jm0ia1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tiganlab.teego1",
+            "certificate_hash": "56b30e1f4d1d9e027c765c15a1072c20693f2f19"
+          }
+        },
+        {
+          "client_id": "188663119667-qt7q8945l7io5ne1bdbja0s9h35hao8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYHJ2M_AA52n2B08urrupBM0hXnJYyfuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188663119667-1s5jflmsrh1udoq3jqmta3vbgjn9744k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "188663119667-c8biqa8qgvle5huu32vl39oabo0e3kb2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tiganlab.teego"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
