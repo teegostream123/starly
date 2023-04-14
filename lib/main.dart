@@ -89,7 +89,7 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  if(QuickHelp.isMobile()) {
+  if (QuickHelp.isMobile()) {
     MobileAds.instance.initialize();
   }
 
@@ -99,7 +99,7 @@ void main() async {
       overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
 
   Map<String, ParseObjectConstructor> subClassMap =
-  <String, ParseObjectConstructor>{
+      <String, ParseObjectConstructor>{
     PictureModel.keyTableName: () => PictureModel(),
     PostsModel.keyTableName: () => PostsModel(),
     NotificationsModel.keyTableName: () => NotificationsModel(),
@@ -137,13 +137,13 @@ void main() async {
     appVersion: Setup.appVersion,
     locale: await Devicelocale.currentLocale,
     parseUserConstructor: (username, password, email,
-        {client, debug, sessionToken}) =>
+            {client, debug, sessionToken}) =>
         UserModel(username, password, email),
     registeredSubClassMap: subClassMap,
   );
 
   runZonedGuarded<Future<void>>(
-        () async {
+    () async {
       WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp();
 
@@ -164,14 +164,13 @@ void main() async {
         ),
       );
     },
-        (error, stack) =>
+    (error, stack) =>
         FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
   );
 }
 
 Future<void> initPlatformState() async {
-
-  if(Setup.isDebug){
+  if (Setup.isDebug) {
     await Purchases.setLogLevel(LogLevel.verbose);
   }
 
@@ -179,13 +178,11 @@ Future<void> initPlatformState() async {
 
   if (QuickHelp.isAndroidPlatform()) {
     configuration = PurchasesConfiguration(Config.publicGoogleSdkKey);
-
   } else if (QuickHelp.isIOSPlatform()) {
     configuration = PurchasesConfiguration(Config.publicIosSdkKey);
   }
   await Purchases.configure(configuration!);
 }
-
 
 class App extends StatefulWidget {
   @override
@@ -193,12 +190,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with WidgetsBindingObserver {
-
   late SharedPreferences preferences;
 
   @override
   void initState() {
-
     if (!QuickHelp.isWebPlatform()) {
       context.read<CallsProvider>().connectAgoraRtm();
     }
@@ -231,22 +226,38 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         ForgotScreen.route: (_) => ForgotScreen(),
 
         // Home and tabs
-        HomeScreen.route: (_) => HomeScreen(preferences: preferences,),
-        FollowingScreen.route: (_) => FollowingScreen(preferences: preferences,),
-        NotificationsScreen.route: (_) => NotificationsScreen(preferences: preferences,),
+        HomeScreen.route: (_) => HomeScreen(
+              preferences: preferences,
+            ),
+        FollowingScreen.route: (_) => FollowingScreen(
+              preferences: preferences,
+            ),
+        NotificationsScreen.route: (_) => NotificationsScreen(
+              preferences: preferences,
+            ),
         LocationScreen.route: (_) => LocationScreen(),
-        SearchPage.route: (_) => SearchPage(preferences: preferences,),
-        ReelsHomeScreen.route: (_) => ReelsHomeScreen(preferences: preferences,),
+        SearchPage.route: (_) => SearchPage(
+              preferences: preferences,
+            ),
+        ReelsHomeScreen.route: (_) => ReelsHomeScreen(
+              preferences: preferences,
+            ),
 
         //Profile
-        ProfileMenuScreen.route: (_) => ProfileMenuScreen(preferences: preferences,),
+        ProfileMenuScreen.route: (_) => ProfileMenuScreen(
+              preferences: preferences,
+            ),
         ProfileScreen.route: (_) => ProfileScreen(),
         ProfileEdit.route: (_) => ProfileEdit(),
         UserProfileScreen.route: (_) => UserProfileScreen(),
 
         //Chat
-        MessagesListScreen.route: (_) => MessagesListScreen(preferences: preferences,),
-        MessageScreen.route: (_) => MessageScreen(preferences: preferences,),
+        MessagesListScreen.route: (_) => MessagesListScreen(
+              preferences: preferences,
+            ),
+        MessageScreen.route: (_) => MessageScreen(
+              preferences: preferences,
+            ),
 
         //Feed
         CommentPostScreen.route: (_) => CommentPostScreen(),
@@ -276,7 +287,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         ReferralScreen.route: (_) => ReferralScreen(),
         BlockedUsersScreen.route: (_) => BlockedUsersScreen(),
         RefillCoinsScreen.route: (_) => RefillCoinsScreen(),
-        GetMoneyScreen.route: (_) => GetMoneyScreen(preferences: preferences,),
+        GetMoneyScreen.route: (_) => GetMoneyScreen(
+              preferences: preferences,
+            ),
         SettingsScreen.route: (_) => SettingsScreen(),
         WithdrawHistoryScreen.route: (_) => WithdrawHistoryScreen(),
 
@@ -322,13 +335,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
                   );
                 default:
                   if (snapshot.hasData) {
-
                     return DispacheScreen(
                       preferences: preferences,
                       currentUser: snapshot.data,
                     );
                   } else {
-
                     logoutUserPurchase();
 
                     return WelcomeScreen();
@@ -340,11 +351,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   }
 
   logoutUserPurchase() async {
-
-    if(!await Purchases.isAnonymous){
+    if (!await Purchases.isAnonymous) {
       await Purchases.logOut().then((value) => print("purchase logout"));
     }
-
   }
 
   initSharedPref() async {

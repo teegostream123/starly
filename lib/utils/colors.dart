@@ -4,8 +4,8 @@ const coinColor = Color(0xFFFFE42C);
 const defaultColor = Color(0xFFA0A3B2);
 const earnCashColor = Color(0xFFFF117E);
 
-const kPrimaryColor = Color(0xFFFF117E);
-const kSecondaryColor = Color(0xFFFF8126);
+const kPrimaryColor = Color.fromARGB(145, 17, 156, 255);
+const kSecondaryColor = Color.fromARGB(255, 153, 191, 232);
 const kPrimaryLightColor = Color(0xFFD9FFE2);
 const kContentColorLightTheme = Color(0xFF000000);
 const kContentColorDarkTheme = Color(0xFFFFFFFF);
@@ -51,7 +51,7 @@ const kSecondaryShadowColor = Color(0xB300E0AA);
 
 const kPhotosGrayColor = Color(0xFFE6E9F0);
 const kPhotosGrayColorReverse = Color(0xFFCCD2E3);
-const kGrayColor =  Color(0xFF8B93B1); // Color(0xFFCCCCCC);
+const kGrayColor = Color(0xFF8B93B1); // Color(0xFFCCCCCC);
 const kGrayDark = Color(0xFF767676);
 const kGrayLight = Color(0xFFF6F6F6);
 const kGrayColorThemeLight = Color(0xFF242439);

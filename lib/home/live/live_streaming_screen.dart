@@ -60,7 +60,7 @@ class LiveStreamingScreen extends StatefulWidget {
       required this.currentUser,
       this.mUser,
       this.mLiveStreamingModel,
-        required this.preferences,
+      required this.preferences,
       this.giftsModel})
       : super(key: key);
 
@@ -172,8 +172,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
             },
           );
         } else {
-
-          if(!mounted) return;
+          if (!mounted) return;
           setState(() {
             liveEnded = true;
           });
@@ -222,14 +221,13 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
 
   @override
   void initState() {
-
     QuickHelp.saveCurrentRoute(route: LiveStreamingScreen.route);
 
     if (widget.mLiveStreamingModel != null) {
       liveStreamingModel = widget.mLiveStreamingModel!;
       liveMessageObjectId = liveStreamingModel.objectId!;
     }
-    
+
     isBroadcaster = widget.isBroadcaster;
     isUserInvited = widget.isUserInvited;
     // Add Invited list
@@ -242,13 +240,10 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       if (isBroadcaster) {
         invitedToPartyUidSelected = widget.currentUser.getUid!;
         invitedUserPartyShowing!.remove(widget.currentUser.getUid!);
-
       } else if (isUserInvited) {
-
         invitedToPartyUidSelected = widget.currentUser.getUid!;
         invitedUserPartyShowing!.remove(widget.currentUser.getUid);
       } else {
-
         invitedToPartyUidSelected = widget.mUser!.getUid!;
         invitedUserPartyShowing!.remove(widget.mUser!.getUid!);
       }
@@ -273,7 +268,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     //context.read<CallsProvider>().setUserBusy(true);
 
     _stopWatchTimer.onStartTimer();
-   // _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+    // _stopWatchTimer.onExecute.add(StopWatchExecute.start);
 
     chatTextFieldFocusNode = FocusNode();
 
@@ -290,10 +285,9 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
   updateInviteList(List<dynamic> newList) {
     print("PreviewList Updated ${newList.length}");
 
-    if(!mounted) return;
+    if (!mounted) return;
 
     if (newList.length == 0) {
-
       setState(() {
         invitedUserParty!.clear();
         invitedUserPartyShowing!.clear();
@@ -369,11 +363,12 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         });
       },
       firstRemoteVideoFrame: (uid, width, height, elapsed) {
-        print('AgoraLive firstRemoteVideoFrame: $uid $width, $height, time: $elapsed');
-
+        print(
+            'AgoraLive firstRemoteVideoFrame: $uid $width, $height, time: $elapsed');
       },
       firstLocalVideoFrame: (width, height, elapsed) {
-        print('AgoraLive firstLocalVideoFrame: $width, $height, time: $elapsed');
+        print(
+            'AgoraLive firstLocalVideoFrame: $width, $height, time: $elapsed');
 
         if (isBroadcaster && !liveJoined) {
           createLive(liveStreamingModel);
@@ -390,7 +385,11 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         if (errorCode == ErrorCode.JoinChannelRejected) {
           _engine.leaveChannel();
           QuickHelp.goToPageWithClear(
-              context, HomeScreen(currentUser: widget.currentUser, preferences: widget.preferences,));
+              context,
+              HomeScreen(
+                currentUser: widget.currentUser,
+                preferences: widget.preferences,
+              ));
         }
       },
       leaveChannel: (stats) {
@@ -424,17 +423,15 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       },
     ));
 
-    await _engine.joinChannel(
-        null,
-        widget.channelName,
-        widget.currentUser.objectId,
-        widget.currentUser.getUid!);
+    await _engine.joinChannel(null, widget.channelName,
+        widget.currentUser.objectId, widget.currentUser.getUid!);
   }
 
   Future<void> _initAgoraRtcEngine() async {
     // Create RTC client instance
 
-    RtcEngineContext context = RtcEngineContext(SharedManager().getStreamProviderKey(widget.preferences));
+    RtcEngineContext context = RtcEngineContext(
+        SharedManager().getStreamProviderKey(widget.preferences));
     _engine = await RtcEngine.createWithContext(context);
 
     if (isBroadcaster || isUserInvited) {
@@ -602,15 +599,14 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                     visible: invitedUserParty!.isNotEmpty && isLiveJoined(),
                     child: draggable()),
                 Visibility(
-                    visible: liveGiftReceivedUrl.isNotEmpty,
-                    child: Align(
+                  visible: liveGiftReceivedUrl.isNotEmpty,
+                  child: Align(
                       alignment: Alignment.center,
-                        child: Lottie.network(
-                            liveGiftReceivedUrl,
-                            width: 400,
-                            height: 400,
-                            animate: true,
-                            repeat: true)),
+                      child: Lottie.network(liveGiftReceivedUrl,
+                          width: 400,
+                          height: 400,
+                          animate: true,
+                          repeat: true)),
                 ),
               ],
             ),
@@ -649,7 +645,11 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     } else {
       if (liveJoined == false && liveEnded == true) {
         QuickHelp.goToPageWithClear(
-            context, HomeScreen(currentUser: widget.currentUser, preferences: widget.preferences,));
+            context,
+            HomeScreen(
+              currentUser: widget.currentUser,
+              preferences: widget.preferences,
+            ));
       } else {
         QuickHelp.showDialogLivEend(
           context: context,
@@ -1006,8 +1006,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       return Container(
         child: Stack(
           children: [
-            QuickActions.photosWidget(
-                liveStreamingModel.getImage!.url!),
+            QuickActions.photosWidget(liveStreamingModel.getImage!.url!),
             Center(
               child: QuickActions.avatarBorder(
                   isBroadcaster ? widget.currentUser : widget.mUser!,
@@ -1100,16 +1099,16 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       await liveStreamingModel.save();
       _engine.leaveChannel();
     } else {
-
-      if(widget.currentUser.isAdmin!){
-
+      if (widget.currentUser.isAdmin!) {
         await _engine.leaveChannel();
 
         QuickHelp.goToPageWithClear(
-            context, HomeScreen(currentUser: widget.currentUser, preferences: widget.preferences,));
-
+            context,
+            HomeScreen(
+              currentUser: widget.currentUser,
+              preferences: widget.preferences,
+            ));
       } else {
-
         QuickHelp.showLoadingDialog(context);
 
         if (liveJoined) {
@@ -1124,11 +1123,19 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
           QuickHelp.hideLoadingDialog(context);
 
           QuickHelp.goToPageWithClear(
-              context, HomeScreen(currentUser: widget.currentUser, preferences: widget.preferences,));
+              context,
+              HomeScreen(
+                currentUser: widget.currentUser,
+                preferences: widget.preferences,
+              ));
         } else {
           QuickHelp.hideLoadingDialog(context);
           QuickHelp.goToPageWithClear(
-              context, HomeScreen(currentUser: widget.currentUser, preferences: widget.preferences,));
+              context,
+              HomeScreen(
+                currentUser: widget.currentUser,
+                preferences: widget.preferences,
+              ));
         }
       }
     }
@@ -1200,9 +1207,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
   }
 
   updateViewers(int uid, String objectId) async {
-
-    if(widget.currentUser.isAdmin!){
-
+    if (widget.currentUser.isAdmin!) {
       setState(() {
         liveCounter = liveStreamingModel.getViewersCount.toString();
         diamondsCounter = liveStreamingModel.getDiamonds.toString();
@@ -1212,10 +1217,8 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       setupCounterLive(liveStreamingModel.objectId!);
       setupCounterLiveUser();
       setupLiveMessage(liveStreamingModel.objectId!);
-
     } else {
-
-      if(!isUserInvited){
+      if (!isUserInvited) {
         liveStreamingModel.addViewersCount = 1;
         liveStreamingModel.setViewersId = objectId;
         liveStreamingModel.setViewers = uid;
@@ -1240,7 +1243,6 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         setupLiveMessage(liveStreamingModel.objectId!);
       }
     }
-
   }
 
   void openBottomSheet(Widget widget, {bool isDismissible = true}) async {
@@ -1731,8 +1733,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       }
 
       if (!isBroadcaster) {
-
-        if(!mounted) return;
+        if (!mounted) return;
         setState(() {
           mUserDiamonds = widget.mUser!.getDiamondsTotal!.toString();
           viewersLast = liveStreamingModel.getViewersId!;
@@ -1750,7 +1751,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       }
 
       if (!isBroadcaster) {
-        if(!mounted) return;
+        if (!mounted) return;
         setState(() {
           mUserDiamonds = widget.mUser!.getDiamondsTotal!.toString();
           viewersLast = liveStreamingModel.getViewersId!;
@@ -1792,16 +1793,15 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
 
       updateInviteList(value.getInvitedPartyUid!);
 
-      if(!mounted) return;
+      if (!mounted) return;
 
-      if(isBroadcaster){
-        if(!mounted) return;
+      if (isBroadcaster) {
+        if (!mounted) return;
         setState(() {
-        liveCounter = value.getViewersCount.toString();
-        diamondsCounter = value.getDiamonds.toString();
-      });
+          liveCounter = value.getViewersCount.toString();
+          diamondsCounter = value.getDiamonds.toString();
+        });
       }
-
 
       QueryBuilder<LiveStreamingModel> query2 =
           QueryBuilder<LiveStreamingModel>(LiveStreamingModel());
@@ -1828,16 +1828,14 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
             openPayPrivateLiveSheet(updatedLive);
           }*/
 
-          if (!updatedLive.getPrivateViewersId!.contains(widget.currentUser.objectId) && !widget.currentUser.isAdmin!) {
-
-            if(!paymentPopUpIsShowing){
-
+          if (!updatedLive.getPrivateViewersId!
+                  .contains(widget.currentUser.objectId) &&
+              !widget.currentUser.isAdmin!) {
+            if (!paymentPopUpIsShowing) {
               paymentPopUpIsShowing = true;
               openPayPrivateLiveSheet(updatedLive);
             }
-
           }
-
         } else if (updatedLive.getInvitationLivePending != null) {
           print('*** UPDATE *** is not Private: ${updatedLive.getPrivate}');
 
@@ -1848,9 +1846,9 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
             );
           }*/
 
-          if(updatedLive.getInvitedPartyUid!.contains(widget.currentUser.objectId)){
+          if (updatedLive.getInvitedPartyUid!
+              .contains(widget.currentUser.objectId)) {
             if (!invitationIsShowing) {
-
               invitationIsShowing = true;
 
               openBottomSheet(
@@ -1869,7 +1867,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       liveStreamingModel = value;
       liveStreamingModel = value;
 
-      if(!mounted) return;
+      if (!mounted) return;
       setState(() {
         liveCounter = liveStreamingModel.getViewersCount.toString();
         diamondsCounter = liveStreamingModel.getDiamonds.toString();
@@ -2868,20 +2866,25 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     GiftsSentModel? giftsSent,
   }) async {
     if (messageType == LiveMessagesModel.messageTypeGift) {
-
       liveStreamingModel.addDiamonds = QuickHelp.getDiamondsForReceiver(
-          giftsSent!.getDiamondsQuantity!, widget.preferences!,);
+        giftsSent!.getDiamondsQuantity!,
+        widget.preferences!,
+      );
 
       liveStreamingModel.setCoHostAuthorUid = author.getUid!;
       liveStreamingModel.addAuthorTotalDiamonds =
-          QuickHelp.getDiamondsForReceiver(giftsSent.getDiamondsQuantity!, widget.preferences!,);
+          QuickHelp.getDiamondsForReceiver(
+        giftsSent.getDiamondsQuantity!,
+        widget.preferences!,
+      );
       await liveStreamingModel.save();
 
       addOrUpdateGiftSender(giftsSent.getGift!);
 
       await QuickCloudCode.sendGift(
-        preferences: widget.preferences,
-          author: widget.mUser!, credits: giftsSent.getDiamondsQuantity!);
+          preferences: widget.preferences,
+          author: widget.mUser!,
+          credits: giftsSent.getDiamondsQuantity!);
     }
 
     LiveMessagesModel liveMessagesModel = new LiveMessagesModel();
@@ -2889,8 +2892,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     liveMessagesModel.setAuthorId = author.objectId!;
 
     liveMessagesModel.setLiveStreaming = liveStreamingModel;
-    liveMessagesModel.setLiveStreamingId =
-        liveStreamingModel.objectId!;
+    liveMessagesModel.setLiveStreamingId = liveStreamingModel.objectId!;
 
     if (giftsSent != null) {
       liveMessagesModel.setGiftSent = giftsSent;
@@ -2923,8 +2925,8 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
 
     QueryBuilder<LiveMessagesModel> queryBuilder =
         QueryBuilder<LiveMessagesModel>(LiveMessagesModel());
-    queryBuilder.whereEqualTo(LiveMessagesModel.keyLiveStreamingId,
-        liveMessageObjectId);
+    queryBuilder.whereEqualTo(
+        LiveMessagesModel.keyLiveStreamingId, liveMessageObjectId);
     queryBuilder.includeObject([
       LiveMessagesModel.keySenderAuthor,
       LiveMessagesModel.keyLiveStreaming,
@@ -3128,7 +3130,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         await _engine.enableLocalVideo(true);
         await _engine.setClientRole(ClientRole.Broadcaster);
 
-        if(!mounted) return;
+        if (!mounted) return;
         setState(() {
           coHostAvailable = true;
         });
@@ -3296,7 +3298,6 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
   }
 
   sendGift(GiftsModel giftsModel) async {
-
     GiftsSentModel giftsSentModel = new GiftsSentModel();
     giftsSentModel.setAuthor = widget.currentUser;
     giftsSentModel.setAuthorId = widget.currentUser.objectId!;
@@ -3829,9 +3830,9 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
   }
 
   Widget _showListOfViewers() {
-
     QueryBuilder<UserModel> query = QueryBuilder(UserModel.forQuery());
-    query.whereContainedIn(UserModel.keyObjectId, this.liveStreamingModel.getViewersId as List<dynamic>); //globalList
+    query.whereContainedIn(UserModel.keyObjectId,
+        this.liveStreamingModel.getViewersId as List<dynamic>); //globalList
 
     return GestureDetector(
       onTap: () => Navigator.of(context).pop(),
@@ -3922,7 +3923,8 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                                               color: Colors.white,
                                             ),
                                             Visibility(
-                                              visible: user.getCreditsSent != null,
+                                              visible:
+                                                  user.getCreditsSent != null,
                                               //visible:  giftSenderList.contains(user.objectId),
                                               child: Padding(
                                                 padding: EdgeInsets.only(
@@ -3940,12 +3942,14 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                                                       marginTop: 5,
                                                       child: Row(
                                                         children: [
-                                                          QuickActions.showSVGAsset(
+                                                          QuickActions
+                                                              .showSVGAsset(
                                                             "assets/svg/ic_coin_with_star.svg",
                                                             height: 16,
                                                           ),
                                                           TextWithTap(
-                                                            user.getCreditsSent.toString(),
+                                                            user.getCreditsSent
+                                                                .toString(),
                                                             //giftSenderAuthor[].getDiamonds.toString(),
                                                             fontSize: 13,
                                                             marginLeft: 5,
@@ -4422,7 +4426,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                     backgroundColor: kTransparentColor,
                     appBar: AppBar(
                       backgroundColor: kTransparentColor,
-                      automaticallyImplyLeading : false,
+                      automaticallyImplyLeading: false,
                       title: Column(
                         children: [
                           ContainerCorner(
@@ -4434,7 +4438,9 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                             marginBottom: 10,
                           ),
                           TextWithTap(
-                            "live_streaming.live_beauty_makeup".tr().toUpperCase(),
+                            "live_streaming.live_beauty_makeup"
+                                .tr()
+                                .toUpperCase(),
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -4469,8 +4475,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       }
     }
 
-    liveStreamingModel.addInvitedPartyUid =
-        invitedUserPartyListPending!;
+    liveStreamingModel.addInvitedPartyUid = invitedUserPartyListPending!;
     ParseResponse response = await liveStreamingModel.save();
 
     if (response.success) {
@@ -4499,18 +4504,14 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
           borderRadius: 10,
           marginBottom: 5,
           onTap: () {
-
-            if(isBroadcaster || isUserInvited){
-
+            if (isBroadcaster || isUserInvited) {
               invitedUserPartyShowing!.add(invitedToPartyUidSelected);
               invitedToPartyUidSelected = userSelected;
               invitedUserPartyShowing!.remove(userSelected);
 
               setState(() {});
             } else {
-
               setState(() {
-
                 print("Preview clicked $userSelected");
 
                 invitedUserPartyShowing!.add(invitedToPartyUidSelected);
@@ -4518,102 +4519,102 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                 invitedUserPartyShowing!.remove(userSelected);
               });
             }
-
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: invitedUserPartyShowing!.isNotEmpty
                 ? Stack(
-              children: [
-                if (userSelected == widget.currentUser.getUid)
-                  RtcLocalView.SurfaceView(
-                    channelId: widget.channelName,
-                  )
-                else
-                  RtcRemoteView.SurfaceView(
-                    channelId: widget.channelName,
-                    uid: userSelected,
-                  ),
-                Visibility(
-                  visible: isBroadcaster,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          ContainerCorner(
-                            marginAll: 10,
-                            borderRadius: 40,
-                            width: 26,
-                            height: 26,
-                            onTap: () {
-                              if (userSelected ==
-                                  widget.currentUser.getUid) {
-                                _onToggleMute();
-                              } else {
-                                muteInvitedUserAudio(userSelected);
-                              }
-                            },
-                            color: getMuteColor(userSelected),
-                            child: Icon(
-                              getMuteIcon(userSelected),
-                              color: Colors.white,
-                              size: 18,
+                      if (userSelected == widget.currentUser.getUid)
+                        RtcLocalView.SurfaceView(
+                          channelId: widget.channelName,
+                        )
+                      else
+                        RtcRemoteView.SurfaceView(
+                          channelId: widget.channelName,
+                          uid: userSelected,
+                        ),
+                      Visibility(
+                        visible: isBroadcaster,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                ContainerCorner(
+                                  marginAll: 10,
+                                  borderRadius: 40,
+                                  width: 26,
+                                  height: 26,
+                                  onTap: () {
+                                    if (userSelected ==
+                                        widget.currentUser.getUid) {
+                                      _onToggleMute();
+                                    } else {
+                                      muteInvitedUserAudio(userSelected);
+                                    }
+                                  },
+                                  color: getMuteColor(userSelected),
+                                  child: Icon(
+                                    getMuteIcon(userSelected),
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                ),
+                                Visibility(
+                                  visible:
+                                      userSelected != widget.currentUser.getUid,
+                                  child: ContainerCorner(
+                                    marginRight: 10,
+                                    marginLeft: 10,
+                                    borderRadius: 40,
+                                    width: 26,
+                                    height: 26,
+                                    onTap: () {
+                                      muteInvitedUserVideo(userSelected);
+                                    },
+                                    color: invitedUserPartyVideoMuted!
+                                            .contains(userSelected)
+                                        ? Colors.red
+                                        : Colors.grey.withOpacity(0.4),
+                                    child: Icon(
+                                      invitedUserPartyVideoMuted!
+                                              .contains(userSelected)
+                                          ? Icons.videocam_off
+                                          : Icons.videocam,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Visibility(
-                            visible:
-                            userSelected != widget.currentUser.getUid,
-                            child: ContainerCorner(
-                              marginRight: 10,
-                              marginLeft: 10,
-                              borderRadius: 40,
-                              width: 26,
-                              height: 26,
-                              onTap: () {
-                                muteInvitedUserVideo(userSelected);
-                              },
-                              color: invitedUserPartyVideoMuted!
-                                  .contains(userSelected)
-                                  ? Colors.red
-                                  : Colors.grey.withOpacity(0.4),
-                              child: Icon(
-                                invitedUserPartyVideoMuted!
-                                    .contains(userSelected)
-                                    ? Icons.videocam_off
-                                    : Icons.videocam,
-                                color: Colors.white,
-                                size: 18,
+                            Visibility(
+                              visible:
+                                  userSelected != widget.currentUser.getUid,
+                              child: ContainerCorner(
+                                marginAll: 10,
+                                borderRadius: 40,
+                                width: 26,
+                                height: 26,
+                                onTap: () {
+                                  liveStreamingModel.removeInvitedPartyUid =
+                                      userSelected;
+                                  liveStreamingModel.save();
+                                },
+                                color: Colors.red,
+                                child: Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Visibility(
-                        visible: userSelected != widget.currentUser.getUid,
-                        child: ContainerCorner(
-                          marginAll: 10,
-                          borderRadius: 40,
-                          width: 26,
-                          height: 26,
-                          onTap: () {
-                            liveStreamingModel
-                                .removeInvitedPartyUid = userSelected;
-                            liveStreamingModel.save();
-                          },
-                          color: Colors.red,
-                          child: Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 18,
-                          ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ],
-            )
+                  )
                 : Container(),
           ),
         );
@@ -4647,18 +4648,14 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
               borderRadius: 10,
               marginBottom: 5,
               onTap: () {
-
-                if(isBroadcaster || isUserInvited){
-
+                if (isBroadcaster || isUserInvited) {
                   invitedUserPartyShowing!.add(invitedToPartyUidSelected);
                   invitedToPartyUidSelected = userSelected;
                   invitedUserPartyShowing!.remove(userSelected);
 
                   setState(() {});
                 } else {
-
                   setState(() {
-
                     print("Preview clicked $userSelected");
 
                     invitedUserPartyShowing!.add(invitedToPartyUidSelected);
@@ -4666,99 +4663,98 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                     invitedUserPartyShowing!.remove(userSelected);
                   });
                 }
-
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: invitedUserPartyShowing!.isNotEmpty
                     ? Stack(
-                  children: [
-                    if (userSelected == widget.currentUser.getUid)
-                      RtcLocalView.SurfaceView(
-                        channelId: widget.channelName,
-                      )
-                    else
-                      RtcRemoteView.SurfaceView(
-                        channelId: widget.channelName,
-                        uid: userSelected,
-                      ),
-                    Visibility(
-                      visible: isBroadcaster,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            children: [
-                              ContainerCorner(
-                                marginAll: 10,
-                                borderRadius: 40,
-                                width: 26,
-                                height: 26,
-                                onTap: () {
-                                  if (userSelected ==
-                                      widget.currentUser.getUid) {
-                                    _onToggleMute();
-                                  } else {
-                                    muteInvitedUserAudio(userSelected);
-                                  }
-                                },
-                                color: getMuteColor(userSelected),
-                                child: Icon(
-                                  getMuteIcon(userSelected),
-                                  color: Colors.white,
-                                  size: 18,
+                          if (userSelected == widget.currentUser.getUid)
+                            RtcLocalView.SurfaceView(
+                              channelId: widget.channelName,
+                            )
+                          else
+                            RtcRemoteView.SurfaceView(
+                              channelId: widget.channelName,
+                              uid: userSelected,
+                            ),
+                          Visibility(
+                            visible: isBroadcaster,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    ContainerCorner(
+                                      marginAll: 10,
+                                      borderRadius: 40,
+                                      width: 26,
+                                      height: 26,
+                                      onTap: () {
+                                        if (userSelected ==
+                                            widget.currentUser.getUid) {
+                                          _onToggleMute();
+                                        } else {
+                                          muteInvitedUserAudio(userSelected);
+                                        }
+                                      },
+                                      color: getMuteColor(userSelected),
+                                      child: Icon(
+                                        getMuteIcon(userSelected),
+                                        color: Colors.white,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: userSelected !=
+                                          widget.currentUser.getUid,
+                                      child: ContainerCorner(
+                                        marginRight: 10,
+                                        marginLeft: 10,
+                                        borderRadius: 40,
+                                        width: 26,
+                                        height: 26,
+                                        onTap: () {
+                                          muteInvitedUserVideo(userSelected);
+                                        },
+                                        color: invitedUserPartyVideoMuted!
+                                                .contains(userSelected)
+                                            ? Colors.red
+                                            : Colors.grey.withOpacity(0.4),
+                                        child: Icon(
+                                          invitedUserPartyVideoMuted!
+                                                  .contains(userSelected)
+                                              ? Icons.videocam_off
+                                              : Icons.videocam,
+                                          color: Colors.white,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Visibility(
-                                visible:
-                                userSelected != widget.currentUser.getUid,
-                                child: ContainerCorner(
-                                  marginRight: 10,
-                                  marginLeft: 10,
+                                ContainerCorner(
+                                  marginAll: 10,
                                   borderRadius: 40,
                                   width: 26,
                                   height: 26,
                                   onTap: () {
-                                    muteInvitedUserVideo(userSelected);
+                                    liveStreamingModel.removeInvitedPartyUid =
+                                        userSelected;
+                                    liveStreamingModel.save();
                                   },
-                                  color: invitedUserPartyVideoMuted!
-                                      .contains(userSelected)
-                                      ? Colors.red
-                                      : Colors.grey.withOpacity(0.4),
+                                  color: Colors.red,
                                   child: Icon(
-                                    invitedUserPartyVideoMuted!
-                                        .contains(userSelected)
-                                        ? Icons.videocam_off
-                                        : Icons.videocam,
+                                    Icons.close,
                                     color: Colors.white,
                                     size: 18,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          ContainerCorner(
-                            marginAll: 10,
-                            borderRadius: 40,
-                            width: 26,
-                            height: 26,
-                            onTap: () {
-                              liveStreamingModel
-                                  .removeInvitedPartyUid = userSelected;
-                              liveStreamingModel.save();
-                            },
-                            color: Colors.red,
-                            child: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 18,
+                              ],
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                  ],
-                )
+                      )
                     : Container(),
               ),
             );
@@ -5006,7 +5002,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
   acceptInvitation(LiveStreamingModel live) async {
     QuickHelp.hideLoadingDialog(context);
 
-    widget.channelName =  live.getStreamingChannel!;
+    widget.channelName = live.getStreamingChannel!;
 
     liveStreamingModel.removeInvitationLivePending();
     liveStreamingModel.setStreaming = false;
@@ -5032,12 +5028,12 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       invitedUserPartyShowing!.remove(widget.currentUser.getUid);
 
       liveMessageObjectId = liveUpdated.objectId!;
-      setState(() {
-      });
+      setState(() {});
     });
 
     await _engine.leaveChannel();
-    await _engine.joinChannel(null, live.getStreamingChannel!, widget.currentUser.objectId, widget.currentUser.getUid!);
+    await _engine.joinChannel(null, live.getStreamingChannel!,
+        widget.currentUser.objectId, widget.currentUser.getUid!);
 
     liveQuery.client.unSubscribe(subscription!);
 
@@ -5066,46 +5062,45 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
   }
 
   setupLiveMessage(String objectId) async {
-
     print("Gifts Live init");
 
     QueryBuilder<LiveMessagesModel> queryBuilder =
-    QueryBuilder<LiveMessagesModel>(LiveMessagesModel());
-    queryBuilder.whereEqualTo(LiveMessagesModel.keyLiveStreamingId, liveMessageObjectId);
-    queryBuilder.whereEqualTo(LiveMessagesModel.keyMessageType, LiveMessagesModel.messageTypeGift);
+        QueryBuilder<LiveMessagesModel>(LiveMessagesModel());
+    queryBuilder.whereEqualTo(
+        LiveMessagesModel.keyLiveStreamingId, liveMessageObjectId);
+    queryBuilder.whereEqualTo(
+        LiveMessagesModel.keyMessageType, LiveMessagesModel.messageTypeGift);
 
-    queryBuilder.includeObject([
-      LiveMessagesModel.keyGiftSent,
-      LiveMessagesModel.keyGiftSentGift
-    ]);
+    queryBuilder.includeObject(
+        [LiveMessagesModel.keyGiftSent, LiveMessagesModel.keyGiftSentGift]);
 
     subscription = await liveQuery.client.subscribe(queryBuilder);
 
-    subscription!.on(LiveQueryEvent.create, (LiveMessagesModel liveMessagesModel) async {
+    subscription!.on(LiveQueryEvent.create,
+        (LiveMessagesModel liveMessagesModel) async {
       showGift(liveMessagesModel.getGiftId!);
     });
   }
 
   showGift(String objectId) async {
-
     await player.setAsset("assets/audio/shake_results.mp3");
 
-    QueryBuilder<GiftsModel> queryBuilder = QueryBuilder<GiftsModel>(GiftsModel());
+    QueryBuilder<GiftsModel> queryBuilder =
+        QueryBuilder<GiftsModel>(GiftsModel());
     queryBuilder.whereEqualTo(GiftsModel.keyObjectId, objectId);
     ParseResponse parseResponse = await queryBuilder.query();
 
-    if(parseResponse.success){
-
+    if (parseResponse.success) {
       GiftsModel gift = parseResponse.results!.first! as GiftsModel;
 
-      this.setState((){
+      this.setState(() {
         liveGiftReceivedUrl = gift.getFile!.url!;
       });
 
       player.play();
 
-      Future.delayed(Duration(seconds: Setup.maxSecondsToShowBigGift), (){
-        this.setState((){
+      Future.delayed(Duration(seconds: Setup.maxSecondsToShowBigGift), () {
+        this.setState(() {
           liveGiftReceivedUrl = "";
         });
 

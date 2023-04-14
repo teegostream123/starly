@@ -92,6 +92,7 @@ class _LocationScreenState extends State<LocationScreen> {
         message: "permissions.location_access_denied_explain"
             .tr(namedArgs: {"app_name": Setup.appName}),
         onPressed: () async {
+          print("HERE IN ENABLED LOCATION");
           QuickHelp.hideLoadingDialog(context);
 
           QuickHelp.showAppNotificationAdvanced(
@@ -117,7 +118,6 @@ class _LocationScreenState extends State<LocationScreen> {
         finish: true
       );*/
       //return;
-
     } else {
       print("Location getAddressFromLatLong");
 
@@ -168,7 +168,6 @@ class _LocationScreenState extends State<LocationScreen> {
           HomeScreen(
             currentUser: widget.currentUser,
           ), back: false, finish: true);*/
-
     } else {
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.goBackToPreviousPage(context);

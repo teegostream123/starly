@@ -143,16 +143,21 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
         Center(
           child: ContainerCorner(
             onTap: () => checkPermission(true),
-            color:  Colors.white,
+            color: Colors.white,
             child: Stack(
               children: [
                 Center(
-                  child: parseFileUrl != null ? QuickActions.photosWidget(
-                    parseFileUrl,
-                    borderRadius: 8,
-                  ) : Container(
-                    child: Icon(Icons.image, size: 100,),
-                  ),
+                  child: parseFileUrl != null
+                      ? QuickActions.photosWidget(
+                          parseFileUrl,
+                          borderRadius: 8,
+                        )
+                      : Container(
+                          child: Icon(
+                            Icons.image,
+                            size: 100,
+                          ),
+                        ),
                 ),
                 Center(
                   child: Column(
@@ -250,8 +255,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                         Visibility(
                           visible: selected.isNotEmpty,
                           child: Wrap(
-                              crossAxisAlignment:
-                                  WrapCrossAlignment.start,
+                              crossAxisAlignment: WrapCrossAlignment.start,
                               spacing: 5,
                               runSpacing: 1,
                               children: selected.map((s) {
@@ -279,19 +283,16 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                                   ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.white
-                                            .withOpacity(0.3)),
+                                        color: Colors.white.withOpacity(0.3)),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.white
-                                            .withOpacity(0.3)),
+                                        color: Colors.white.withOpacity(0.3)),
                                   ),
                                   focusColor: Colors.white,
                                   fillColor: Colors.white,
                                   hintStyle: TextStyle(
-                                      color:
-                                          Colors.white.withOpacity(0.5))),
+                                      color: Colors.white.withOpacity(0.5))),
                               style: TextStyle(
                                 color: Colors.white,
                               ),
@@ -794,50 +795,50 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
 
   createLiveFinish() async {
     LiveStreamingModel streamingModel = LiveStreamingModel();
-    if( Setup.isDebug) print("Check live 1");
-    streamingModel.setStreamingChannel = widget.currentUser!.objectId! + widget.currentUser!.getUid!.toString();
-    if( Setup.isDebug) print("Check live 2");
+    if (Setup.isDebug) print("Check live 1");
+    streamingModel.setStreamingChannel =
+        widget.currentUser!.objectId! + widget.currentUser!.getUid!.toString();
+    if (Setup.isDebug) print("Check live 2");
     streamingModel.setAuthor = widget.currentUser!;
-    if( Setup.isDebug) print("Check live 3");
+    if (Setup.isDebug) print("Check live 3");
     streamingModel.setAuthorId = widget.currentUser!.objectId!;
-    if( Setup.isDebug) print("Check live 4");
+    if (Setup.isDebug) print("Check live 4");
     streamingModel.setAuthorUid = widget.currentUser!.getUid!;
-    if( Setup.isDebug) print("Check live 5");
+    if (Setup.isDebug) print("Check live 5");
     streamingModel.addAuthorTotalDiamonds =
         widget.currentUser!.getDiamondsTotal!;
-    if( Setup.isDebug) print("Check live 6");
+    if (Setup.isDebug) print("Check live 6");
     streamingModel.setFirstLive = isFirstTime;
-    if( Setup.isDebug) print("Check live 7");
+    if (Setup.isDebug) print("Check live 7");
 
     streamingModel.setImage = parseFile!;
-    if( Setup.isDebug) print("Check live 8");
+    if (Setup.isDebug) print("Check live 8");
 
     if (widget.currentUser!.getGeoPoint != null) {
-      if( Setup.isDebug) print("Check live 9");
+      if (Setup.isDebug) print("Check live 9");
       streamingModel.setStreamingGeoPoint = widget.currentUser!.getGeoPoint!;
     }
 
-    if( Setup.isDebug) print("Check live 10");
-    if (selected.length > 0){
-      if( Setup.isDebug) print("Check live 11");
+    if (Setup.isDebug) print("Check live 10");
+    if (selected.length > 0) {
+      if (Setup.isDebug) print("Check live 11");
       streamingModel.setHashtags = selectedHashTags; //List<HashTagModel>;
     }
 
-    if( Setup.isDebug) print("Check live 12");
+    if (Setup.isDebug) print("Check live 12");
     streamingModel.setPrivate = false;
-    if( Setup.isDebug) print("Check live 3");
+    if (Setup.isDebug) print("Check live 3");
     streamingModel.setStreaming = false;
-    if( Setup.isDebug) print("Check live 14");
+    if (Setup.isDebug) print("Check live 14");
     streamingModel.addViewersCount = 0;
-    if( Setup.isDebug) print("Check live 15");
+    if (Setup.isDebug) print("Check live 15");
     streamingModel.addDiamonds = 0;
-    if( Setup.isDebug) print("Check live 16");
+    if (Setup.isDebug) print("Check live 16");
 
-    streamingModel.save().then((value){
-      if( Setup.isDebug) print("Check live 17");
+    streamingModel.save().then((value) {
+      if (Setup.isDebug) print("Check live 17");
 
       if (value.success) {
-
         LiveStreamingModel liveStreaming = value.results!.first!;
 
         QuickHelp.hideLoadingDialog(context);
@@ -856,7 +857,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
         selected.clear();
         selectedHashTags.clear();
       } else {
-
         QuickHelp.hideLoadingDialog(context);
 
         QuickHelp.showAppNotificationAdvanced(
@@ -865,10 +865,9 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
             message: value.error!.message,
             isError: true,
             user: widget.currentUser);
-
       }
 
-      if( Setup.isDebug) print("Check live 17 (1)");
+      if (Setup.isDebug) print("Check live 17 (1)");
     }).onError((ParseError error, stackTrace) {
       if (Setup.isDebug) print("Check live 18");
 
@@ -879,7 +878,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
           message: "unknown_error".tr(),
           isError: true,
           user: widget.currentUser);
-
     }).catchError((err) {
       if (Setup.isDebug) print("Check live 19: $err");
 
@@ -976,7 +974,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
             ].request();
 
             if (statuses[Permission.camera]!.isGranted &&
-                statuses[Permission.photos]!.isGranted ||
+                    statuses[Permission.photos]!.isGranted ||
                 statuses[Permission.storage]!.isGranted) {
               //_choosePhoto(isAvatar);
               _pickFile(isAvatar);
@@ -1004,7 +1002,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
     print('Permission $status2');
   }
 
- /* _choosePhoto(bool isAvatar) async {
+  /* _choosePhoto(bool isAvatar) async {
     final ImagePicker _picker = ImagePicker();
 
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -1057,17 +1055,23 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
     CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: path,
         aspectRatioPresets: [
-          isAvatar == true ? CropAspectRatioPreset.square : CropAspectRatioPreset.ratio16x9,
+          isAvatar == true
+              ? CropAspectRatioPreset.square
+              : CropAspectRatioPreset.ratio16x9,
         ],
         //maxHeight: 480,
         //maxWidth: 740,
-        aspectRatio: isAvatar == true ? CropAspectRatio(ratioX: 4, ratioY: 4) : CropAspectRatio(ratioX: 16, ratioY: 9),
+        aspectRatio: isAvatar == true
+            ? CropAspectRatio(ratioX: 4, ratioY: 4)
+            : CropAspectRatio(ratioX: 16, ratioY: 9),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "edit_photo".tr(),
               toolbarColor: kPrimaryColor,
               toolbarWidgetColor: Colors.white,
-              initAspectRatio: isAvatar == true ? CropAspectRatioPreset.square : CropAspectRatioPreset.ratio16x9,
+              initAspectRatio: isAvatar == true
+                  ? CropAspectRatioPreset.square
+                  : CropAspectRatioPreset.ratio16x9,
               lockAspectRatio: false),
           IOSUiSettings(
             minimumAspectRatio: 1.0,
@@ -1075,9 +1079,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
         ]);
 
     if (croppedFile != null) {
-
       compressImage(croppedFile.path, isAvatar);
-
     } else {
       QuickHelp.hideLoadingDialog(context);
 
@@ -1092,18 +1094,16 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
   }
 
   void compressImage(String path, bool isAvatar) {
-
     QuickHelp.showLoadingAnimation();
 
-    Future.delayed(Duration(seconds: 1), () async{
+    Future.delayed(Duration(seconds: 1), () async {
       var result = await QuickHelp.compressImage(path);
 
-      if(result != null){
-
+      if (result != null) {
         if (QuickHelp.isWebPlatform()) {
           //Seems weird, but this lets you get the data from the selected file as an Uint8List very easily.
           ParseWebFile file =
-          ParseWebFile(null, name: "avatar.jpg", url: result.absolute.path);
+              ParseWebFile(null, name: "avatar.jpg", url: result.absolute.path);
           await file.download();
           parseFile = ParseWebFile(file.file, name: file.name);
         } else {
@@ -1112,16 +1112,13 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
 
         ParseResponse parseResponse = await parseFile!.save();
 
-        if(parseResponse.success){
-
+        if (parseResponse.success) {
           QuickHelp.hideLoadingDialog(context);
 
           setState(() {
             parseFileUrl = parseFile!.url;
           });
-
         } else {
-
           QuickHelp.hideLoadingDialog(context);
           QuickHelp.showAppNotificationAdvanced(
             context: context,
@@ -1129,9 +1126,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
             message: "try_again_later".tr(),
           );
         }
-
       } else {
-
         QuickHelp.hideLoadingDialog(context);
 
         QuickHelp.showAppNotificationAdvanced(
@@ -1141,7 +1136,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
         );
       }
     });
-
   }
 
   initSharedPref() async {
