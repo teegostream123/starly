@@ -5,14 +5,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'constants.dart';
 
 class Setup {
-
   static final bool isDebug = kDebugMode;
 
   static String appName = Config.appName;
   static String appPackageName = Constants.appPackageName();
   static String appVersion = Config.appVersion;
-  static String bio = "welcome_bio".tr(namedArgs: {"app_name" : appName});
-  static final List<String> allowedCountries = []; //['FR', 'CA', 'US', 'AO', 'BR'];
+  static String bio = "welcome_bio".tr(namedArgs: {"app_name": appName});
+  static final List<String> allowedCountries =
+      []; //['FR', 'CA', 'US', 'AO', 'BR'];
   static final int verificationCodeDigits = 6;
 
   // Social login= Config.appName
@@ -24,7 +24,8 @@ class Setup {
   // App config
   static final bool isCallsEnabled = true;
   static final String streamingProviderType = 'agora';
-  static final String streamingProviderKey = 'agora_app_id_here';
+  static final String streamingProviderKey = Config.agoraAppId;
+  // 'agora_app_id_here';
 
   static final bool isWithdrawIbanEnabled = false;
   static final bool isWithdrawPayoneerEnabled = false;
@@ -49,11 +50,14 @@ class Setup {
   static final int diamondsEarnPercent = 60; //Percent to give the streamer.
   static final int withDrawPercent = 50; //Percent to give the streamer.
   static final int agencyPercent = 10; //Percent to give the agency.
-  static final int diamondsNeededToRedeem = 5000; // Minimum diamonds needed to redeem
+  static final int diamondsNeededToRedeem =
+      5000; // Minimum diamonds needed to redeem
 
   // Calls cost
-  static final int coinsNeededForVideoCallPerMinute = 120; //Coins per minute needed to make video call
-  static final int coinsNeededForVoiceCallPerMinute = 60;  //Coins per minute needed to make Voice call
+  static final int coinsNeededForVideoCallPerMinute =
+      120; //Coins per minute needed to make video call
+  static final int coinsNeededForVoiceCallPerMinute =
+      60; //Coins per minute needed to make Voice call
 
   //Leaders
   static final int diamondsNeededForLeaders = 10;
@@ -67,5 +71,4 @@ class Setup {
 
   // Ads Config
   static final bool isBannerAdsOnHomeReelsEnabled = false;
-
 }

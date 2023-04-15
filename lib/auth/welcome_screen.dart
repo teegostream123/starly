@@ -70,7 +70,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
-
     initSharedPref();
     super.initState();
   }
@@ -442,10 +441,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Column(
                     children: [
                       ContainerCorner(
-                          marginTop: 10,
-                          //height: Responsive.isMobile(context) ? 250 : 380,
-                          width: Responsive.isMobile(context) ? 250 : 380,
-                          child: Image.asset("assets/images/ic_logo.png", width: 100, height: 100,),),
+                        marginTop: 10,
+                        //height: Responsive.isMobile(context) ? 250 : 380,
+                        width: Responsive.isMobile(context) ? 250 : 380,
+                        child: Image.asset(
+                          "assets/images/ic_logo.png",
+                          width: 100,
+                          height: 100,
+                        ),
+                      ),
                       /*ContainerCorner(
                           //marginTop: 10,
                           //height: Responsive.isMobile(context) ? 250 : 380,
@@ -740,7 +744,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
           ),
           Visibility(
-            visible: QuickHelp.isIOSPlatform() && SharedManager().isAppleLoginEnabled(preferences),
+            visible: QuickHelp.isIOSPlatform() &&
+                SharedManager().isAppleLoginEnabled(preferences),
             child: ButtonWithSvg(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               height: 48,

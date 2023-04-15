@@ -14,22 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "188663119667-b3sju6ebb611ktrkaeadlke8bqnr3fq7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tiganlab.teego1",
-            "certificate_hash": "e4b3ae17b21effd2df2e954ff9c5aa2e88d1ffe7"
-          }
-        },
-        {
-          "client_id": "188663119667-gj1g95q3o96b8irn1etkb3s5e9tnlffg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tiganlab.teego1",
-            "certificate_hash": "15dfb33ba5657a5b805a55425cfc58763ba9c671"
-          }
-        },
-        {
           "client_id": "188663119667-t9ogqse16hh8bsepe81ti8505jm0ia1t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
