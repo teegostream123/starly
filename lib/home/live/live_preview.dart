@@ -776,7 +776,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
 
         live.setStreaming = false;
         await live.save();
-
+// yeh sahi hoga if issue aye ga
         createLiveFinish();
       } else {
         createLiveFinish();

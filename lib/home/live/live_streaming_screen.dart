@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
@@ -187,6 +189,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
 
   startTimerToConnectLive(BuildContext context, int seconds) {
     Future.delayed(Duration(seconds: seconds), () {
+      print("print is able to connect $liveJoined $mounted");
       if (!liveJoined && mounted) {
         QuickHelp.showAppNotification(
           context: context,
@@ -380,6 +383,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       },
       error: (ErrorCode errorCode) {
         print('AgoraLive error $errorCode');
+        print('AgoraLive error my my error $errorCode');
 
         // JoinChannelRejected
         if (errorCode == ErrorCode.JoinChannelRejected) {
@@ -422,8 +426,38 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         }
       },
     ));
+// https://agora-token-service-production-e31c.up.railway.app/rtc/4EVjzR6ufY1687861873/1/uid/1143726920
+    callchanneltoken(channelname, uuid, role) async {
+      var tokenrtc = null;
+      String url =
+          'https://agora-token-service-production-e31c.up.railway.app/rtc/$channelname/${role}/uid/${uuid}';
+      print(url);
 
-    await _engine.joinChannel(null, widget.channelName,
+      // Send the request
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        // If the server returns an OK response, then parse the JSON.
+        Map<String, dynamic> json = jsonDecode(response.body);
+        String newToken = json['rtcToken'];
+        debugPrint('Token Received: $newToken');
+        // Use the token to join a channel or renew an expiring token
+        // setToken(newToken);
+        tokenrtc = newToken;
+      } else {
+        // If the server did not return an OK response,
+        // then throw an exception.
+        throw Exception(
+            'Failed to fetch a token. Make sure that your server URL is valid');
+      }
+      return tokenrtc;
+    }
+
+    var tokenchannel = await callchanneltoken(
+        widget.channelName, widget.currentUser.getUid!, 2);
+    print(
+        "the channel name for this new ${widget.channelName} ${widget.currentUser.objectId} ${widget.currentUser.getUid!} ${tokenchannel}");
+    await _engine.joinChannel(tokenchannel, widget.channelName,
         widget.currentUser.objectId, widget.currentUser.getUid!);
   }
 
@@ -433,7 +467,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     RtcEngineContext context = RtcEngineContext(
         SharedManager().getStreamProviderKey(widget.preferences));
     _engine = await RtcEngine.createWithContext(context);
-
+    print("preference print here testing ${widget.preferences}");
     if (isBroadcaster || isUserInvited) {
       await _engine.startPreview();
     }
@@ -5030,6 +5064,8 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       liveMessageObjectId = liveUpdated.objectId!;
       setState(() {});
     });
+    print(
+        "want to join ${live.getStreamingChannel!},   ${widget.currentUser.objectId}, ${widget.currentUser.getUid!}");
 
     await _engine.leaveChannel();
     await _engine.joinChannel(null, live.getStreamingChannel!,

@@ -452,7 +452,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
             // Releases an ad resource when it fails to load
             ad.dispose();
             print(
-                'Ad load failed (code=${error.code} message=${error.message})');
+                '-----Ad load failed (code=${error.code} message=${error.message})');
           },
         ),
       );
@@ -505,6 +505,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
       listener: NativeAdListener(onAdLoaded: (ad) {
         //isAdLoaded = true;
       }, onAdFailedToLoad: (ad, error) {
+        print("login shahzzeb");
         // _listAd.dispose();
       }),
     );
