@@ -300,39 +300,21 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
           tabs: [
             tabsRows(
-              "live_streaming.menu_for_you",
-              tabTypeForYou,
-              QuickActions.showSVGAsset(
-                "assets/svg/ic_followers_active.svg",
-                color: kPrimaryColor,
-              ),
-            ),
-            tabsRows(
-                "live_streaming.menu_nearby",
-                tabTypeNearby,
+                "Artist",
+                tabTypeForYou,
                 Icon(
-                  Icons.location_on,
+                  Icons.people,
                   size: 18,
                   color: kPrimaryColor,
                 )),
             tabsRows(
-                "live_streaming.menu_new",
-                tabTypeNew,
+                "Live Party",
+                tabTypeNearby,
                 Icon(
-                  Icons.new_releases,
-                  size: 16,
+                  Icons.music_note,
+                  size: 18,
                   color: kPrimaryColor,
                 )),
-            tabsRows(
-              "live_streaming.menu_popular",
-              tabTypePopular,
-              QuickActions.showSVGAsset(
-                "assets/svg/ic_tab_following_selected.svg",
-                color: kPrimaryColor,
-                height: 20,
-                width: 20,
-              ),
-            ),
           ],
         ),
         backgroundColor: kTransparentColor,
@@ -341,10 +323,8 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: [
+          artistWidget(),
           initQuery(tabTypeForYou),
-          initQuery(tabTypeNearby),
-          initQuery(tabTypeNew),
-          initQuery(tabTypePopular),
         ],
         //children: List.generate(tabsLength, (index) => initQuery(index)),
       ),
@@ -429,6 +409,20 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     } else {
       return null;
     }
+  }
+
+  Widget artistWidget() {
+    return Container(
+      child: Center(
+          child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: QuickActions.noContentFound(
+          "Comming Soon".tr(),
+          "Stay tuned with us".tr(),
+          "assets/svg/ic_tab_live_default.svg",
+        ),
+      )),
+    );
   }
 
   Widget initQuery(int category) {

@@ -4,8 +4,8 @@ const coinColor = Color(0xFFFFE42C);
 const defaultColor = Color(0xFFA0A3B2);
 const earnCashColor = Color(0xFFFF117E);
 
-const kPrimaryColor = Color.fromARGB(145, 17, 156, 255);
-const kSecondaryColor = Color.fromARGB(255, 153, 191, 232);
+const kPrimaryColor = Color(0xFFD6B529);
+const kSecondaryColor = Color.fromARGB(255, 238, 223, 156);
 const kPrimaryLightColor = Color(0xFFD9FFE2);
 const kContentColorLightTheme = Color(0xFF000000);
 const kContentColorDarkTheme = Color(0xFFFFFFFF);
