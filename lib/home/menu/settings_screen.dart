@@ -105,7 +105,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         share: true,
                         arguments: widget.currentUser),
                     getDivider(),
-                   /* settingsOptions(
+                    /* settingsOptions(
                         "settings_screen.my_qr_code"
                             .tr(namedArgs: {"app_name": Config.appName}),
                         "assets/images/ic_qrcode_app.png",
@@ -135,47 +135,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         route: AppSettingsScreen.route,
                         arguments: widget.currentUser),
                     getDivider(),
-                    settingsOptions("settings_screen.app_support".tr(),
-                        "assets/images/ic_logo.png",
-                        route: CustomerSupportScreen.route,),
+                    settingsOptions(
+                      "settings_screen.app_support".tr(),
+                      "assets/images/ic_logo.png",
+                      route: CustomerSupportScreen.route,
+                    ),
                     getDivider(),
                     settingsOptions("settings_screen.app_third_party".tr(),
                         "assets/images/ic_settings_open_source.png",
                         route: QuickHelp.pageTypeOpenSource),
                   ],
                 ),
-              ),
-              Column(
-                children: [
-                  TextWithTap("settings_screen.app_version_one".tr(namedArgs: {
-                    "year": DateTime.now().year.toString(),
-                    "company": Config.companyName
-                  })),
-                  TextWithTap("settings_screen.app_version_two".tr()),
-                  TextWithTap("settings_screen.app_version_tree"
-                      .tr(namedArgs: {"version": Config.appVersion})),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextWithTap(
-                    "page_title.terms_of_use".tr(),
-                    marginRight: 20,
-                    marginTop: 15,
-                    decoration: TextDecoration.underline,
-                    onTap: () => QuickHelp.goToWebPage(context,
-                        pageType: QuickHelp.pageTypeTerms),
-                  ),
-                  TextWithTap(
-                    "page_title.privacy_policy".tr(),
-                    marginLeft: 20,
-                    marginTop: 15,
-                    decoration: TextDecoration.underline,
-                    onTap: () => QuickHelp.goToWebPage(context,
-                        pageType: QuickHelp.pageTypePrivacy),
-                  ),
-                ],
               ),
             ],
           ),
@@ -206,46 +176,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       fontSize: 17,
       height: 50,
-      onTap: () =>
-      share == true
-              ? Share.share("settings_screen.share_app_url".tr(namedArgs: {"app_name": Config.appName, "url": Config.appOrCompanyUrl}))
-              : gotoActivity(route!, arguments),
+      onTap: () => share == true
+          ? Share.share("settings_screen.share_app_url".tr(namedArgs: {
+              "app_name": Config.appName,
+              "url": Config.appOrCompanyUrl
+            }))
+          : gotoActivity(route!, arguments),
     );
   }
 
-  gotoActivity(String route, Object? arguments){
-
-    if(route ==  ProfileEdit.route){
-
+  gotoActivity(String route, Object? arguments) {
+    if (route == ProfileEdit.route) {
       QuickHelp.goToNavigatorScreen(
-          context,
-          ProfileEdit(
-            currentUser: widget.currentUser,
-          ),
+        context,
+        ProfileEdit(
+          currentUser: widget.currentUser,
+        ),
       );
-
-    } else if(route ==  CustomerSupportScreen.route){
-
+    } else if (route == CustomerSupportScreen.route) {
       QuickHelp.goToNavigatorScreen(
         context,
         CustomerSupportScreen(
           currentUser: widget.currentUser,
         ),
       );
-
-    } else if(route ==  AccountSettingsScreen.route){
-
+    } else if (route == AccountSettingsScreen.route) {
       QuickHelp.goToNavigatorScreen(
         context,
         AccountSettingsScreen(
           currentUser: widget.currentUser,
         ),
       );
-
     } else {
-
       QuickHelp.goToNavigator(context, route, arguments: arguments);
     }
-
   }
 }
