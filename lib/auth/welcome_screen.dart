@@ -500,55 +500,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             textAlign: TextAlign.center,
             color: color,
           ),
-          RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(children: [
-                TextSpan(
-                    style: TextStyle(
-                        color: color != null
-                            ? color
-                            : QuickHelp.isDarkMode(context)
-                                ? Colors.white
-                                : Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                    text: "auth.privacy_policy".tr(),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        QuickHelp.goToWebPage(
-                          context,
-                          pageType: QuickHelp.pageTypePrivacy,
-                          //pageUrl: Config.privacyPolicyUrl
-                        );
-                      }),
-                TextSpan(
-                    style: TextStyle(
-                        color: color != null
-                            ? color
-                            : QuickHelp.isDarkMode(context)
-                                ? Colors.white
-                                : Colors.black,
-                        fontSize: 16),
-                    text: "and_".tr()),
-                TextSpan(
-                    style: TextStyle(
-                        color: color != null
-                            ? color
-                            : QuickHelp.isDarkMode(context)
-                                ? Colors.white
-                                : Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                    text: "auth.terms_of_use".tr(),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        QuickHelp.goToWebPage(
-                          context,
-                          pageType: QuickHelp.pageTypeTerms,
-                          //pageUrl: Config.termsOfUseUrl
-                        );
-                      }),
-              ])),
         ],
       ),
       marginLeft: 5,
