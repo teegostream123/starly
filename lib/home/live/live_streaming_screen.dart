@@ -2005,6 +2005,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                     marginAll: 8,
                     height: 30,
                     width: 30,
+                    // hereisasendbutton
                     child: QuickActions.showSVGAsset(
                       "assets/svg/ic_send_message.svg",
                       color: Colors.white,

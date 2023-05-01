@@ -37,14 +37,15 @@ class MessageScreen extends StatefulWidget {
   SharedPreferences? preferences;
   UserModel? currentUser, mUser;
 
-  MessageScreen({Key? key, this.currentUser, this.mUser,  required this.preferences}): super(key: key);
+  MessageScreen(
+      {Key? key, this.currentUser, this.mUser, required this.preferences})
+      : super(key: key);
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
 }
 
 class _MessageScreenState extends State<MessageScreen> {
-
   SharedPreferences? preferences;
   TextEditingController messageController = TextEditingController();
 
@@ -115,18 +116,17 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   void cropPhoto(String path, StateSetter setState) async {
-    CroppedFile? croppedFile = await ImageCropper().cropImage(
-        sourcePath: path,
-        uiSettings: [
-          AndroidUiSettings(
-              toolbarTitle: "edit_photo".tr(),
-              toolbarColor: kPrimaryColor,
-              toolbarWidgetColor: Colors.white,
-              lockAspectRatio: false),
-          IOSUiSettings(
-            minimumAspectRatio: 1.0,
-          )
-        ]);
+    CroppedFile? croppedFile =
+        await ImageCropper().cropImage(sourcePath: path, uiSettings: [
+      AndroidUiSettings(
+          toolbarTitle: "edit_photo".tr(),
+          toolbarColor: kPrimaryColor,
+          toolbarWidgetColor: Colors.white,
+          lockAspectRatio: false),
+      IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      )
+    ]);
 
     if (croppedFile != null) {
       compressImage(croppedFile.path, setState);
@@ -134,18 +134,14 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   void compressImage(String path, StateSetter setState) {
-
     QuickHelp.showLoadingAnimation();
 
-    Future.delayed(Duration(seconds: 1), () async{
+    Future.delayed(Duration(seconds: 1), () async {
       var result = await QuickHelp.compressImage(path);
 
-      if(result != null){
-
+      if (result != null) {
         uploadFile(result, setState);
-
       } else {
-
         QuickHelp.hideLoadingDialog(context);
 
         QuickHelp.showAppNotificationAdvanced(
@@ -157,11 +153,8 @@ class _MessageScreenState extends State<MessageScreen> {
     });
   }
 
-
-
   uploadFile(File imageFile, StateSetter setState) async {
-
-    if(imageFile.absolute.path.isNotEmpty){
+    if (imageFile.absolute.path.isNotEmpty) {
       parseFile = ParseFile(File(imageFile.absolute.path), name: "avatar.jpg");
 
       //print("Image path ${imageFile.absolute.path}");
@@ -169,9 +162,7 @@ class _MessageScreenState extends State<MessageScreen> {
       setState(() {
         uploadPhoto = imageFile.absolute.path;
       });
-
     } else {
-
       setState(() {
         uploadPhoto = imageFile.readAsBytes();
       });
@@ -188,7 +179,6 @@ class _MessageScreenState extends State<MessageScreen> {
       QuickHelp.showLoadingDialog(context);
       QuickHelp.showAppNotification(
           context: context, title: parseResponse.error!.message);
-
     }
   }
 
@@ -217,14 +207,13 @@ class _MessageScreenState extends State<MessageScreen> {
 
   @override
   void initState() {
-
-    Future.delayed(Duration(microseconds: 100), (){
+    Future.delayed(Duration(microseconds: 100), () {
       setState(() {
         initialLoad = _loadMessages();
       });
     });
 
-    if(widget.currentUser != null && widget.mUser != null){
+    if (widget.currentUser != null && widget.mUser != null) {
       currentUser = widget.currentUser;
       mUser = widget.mUser;
     }
@@ -234,8 +223,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(ModalRoute.of(context)!.settings.arguments != null){
+    if (ModalRoute.of(context)!.settings.arguments != null) {
       final users = ModalRoute.of(context)!.settings.arguments as Map;
 
       currentUser = users['currentUser'];
@@ -256,7 +244,7 @@ class _MessageScreenState extends State<MessageScreen> {
         leftButtonIcon: Icons.arrow_back,
         leftButtonPress: () => QuickHelp.goBackToPreviousPage(context),
         centerWidget: GestureDetector(
-          onTap: (){
+          onTap: () {
             QuickActions.showUserProfile(context, currentUser!, mUser!);
           },
           child: Row(
@@ -378,16 +366,17 @@ class _MessageScreenState extends State<MessageScreen> {
             confirmButtonText: "continue".tr(),
             onPressed: () async {
               QuickHelp.hideLoadingDialog(context);
-              UserModel? userModel = await QuickHelp.goToNavigatorScreenForResult(
-                  context,
-                  VideoCallScreen(
-                    key: Key(QuickHelp.generateUId().toString()),
-                    currentUser: currentUser,
-                    mUser: mUser,
-                    preferences: widget.preferences,
-                    channel: currentUser!.objectId,
-                    isCaller: true,
-                  ));
+              UserModel? userModel =
+                  await QuickHelp.goToNavigatorScreenForResult(
+                      context,
+                      VideoCallScreen(
+                        key: Key(QuickHelp.generateUId().toString()),
+                        currentUser: currentUser,
+                        mUser: mUser,
+                        preferences: widget.preferences,
+                        channel: currentUser!.objectId,
+                        isCaller: true,
+                      ));
 
               currentUser = userModel;
             });
@@ -422,7 +411,6 @@ class _MessageScreenState extends State<MessageScreen> {
             confirmButtonText: "continue".tr(),
             onPressed: () {
               QuickHelp.hideLoadingDialog(context);
-
 
               QuickHelp.goToNavigatorScreen(
                   context,
@@ -503,7 +491,6 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   Future<List<dynamic>?> _loadMessages() async {
-
     QueryBuilder<MessageModel> queryFrom =
         QueryBuilder<MessageModel>(MessageModel());
 
@@ -559,7 +546,6 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   Widget _messageSpace(BuildContext showContext) {
-
     return Column(
       children: [
         Expanded(
@@ -658,9 +644,11 @@ class _MessageScreenState extends State<MessageScreen> {
                                             marginTop: 10,
                                             marginBottom: 10,
                                             color: kColorsLightBlue300,
-                                            child: callMessage(chatMessage, true),
+                                            child:
+                                                callMessage(chatMessage, true),
                                           ),
-                                        if (chatMessage.getMessageType == MessageModel.messageTypeText)
+                                        if (chatMessage.getMessageType ==
+                                            MessageModel.messageTypeText)
                                           ContainerCorner(
                                             radiusBottomLeft: 10,
                                             radiusTopLeft: 10,
@@ -673,7 +661,6 @@ class _MessageScreenState extends State<MessageScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
-
                                                 TextWithTap(
                                                   chatMessage.getDuration!,
                                                   marginBottom: 5,
@@ -682,7 +669,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                                   marginLeft: 10,
                                                   marginRight: 10,
                                                   fontSize: 14,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   selectableText: true,
                                                   urlDetectable: true,
                                                 ),
@@ -838,7 +826,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                             marginTop: 10,
                                             marginBottom: 10,
                                             color: kGreyColor0,
-                                            child: callMessage(chatMessage, false),
+                                            child:
+                                                callMessage(chatMessage, false),
                                           ),
                                         if (chatMessage.getMessageType ==
                                             MessageModel.messageTypeText)
@@ -872,15 +861,20 @@ class _MessageScreenState extends State<MessageScreen> {
                                                                     .start,
                                                             children: [
                                                               TextWithTap(
-                                                                chatMessage.getDuration!,
-                                                                marginBottom: 10,
+                                                                chatMessage
+                                                                    .getDuration!,
+                                                                marginBottom:
+                                                                    10,
                                                                 marginTop: 10,
-                                                                color: Colors.black,
+                                                                color: Colors
+                                                                    .black,
                                                                 marginLeft: 10,
                                                                 marginRight: 10,
                                                                 fontSize: 14,
-                                                                selectableText: true,
-                                                                urlDetectable: true,
+                                                                selectableText:
+                                                                    true,
+                                                                urlDetectable:
+                                                                    true,
                                                               ),
                                                               Row(
                                                                 mainAxisSize:
@@ -1147,7 +1141,10 @@ class _MessageScreenState extends State<MessageScreen> {
       currentUser!.removeCredit = gift.getCoins!;
       ParseResponse saved = await currentUser!.save();
       if (saved.success) {
-        QuickCloudCode.sendGift(author: mUser!, credits: gift.getCoins!, preferences: widget.preferences!);
+        QuickCloudCode.sendGift(
+            author: mUser!,
+            credits: gift.getCoins!,
+            preferences: widget.preferences!);
         currentUser = saved.results!.first! as UserModel;
 
         _saveMessage(MessageModel.messageTypeGif,
@@ -1327,7 +1324,10 @@ class _MessageScreenState extends State<MessageScreen> {
                                       Icons.camera_alt,
                                       color: kPrimaryColor,
                                       size: 80,
-                                    ) : uploadPhoto is File ? Image.file(File(uploadPhoto)) : Image.memory(uploadPhoto),
+                                    )
+                                  : uploadPhoto is File
+                                      ? Image.file(File(uploadPhoto))
+                                      : Image.memory(uploadPhoto),
                               onTap: () => _choosePhoto(setState),
                             ),
                             Column(
@@ -1438,7 +1438,8 @@ class _MessageScreenState extends State<MessageScreen> {
                   children: [
                     Visibility(
                       visible: !messageModel.getCall!.getAccepted! &&
-                          messageModel.getCall!.getAuthorId! != currentUser!.objectId!,
+                          messageModel.getCall!.getAuthorId! !=
+                              currentUser!.objectId!,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -1456,7 +1457,8 @@ class _MessageScreenState extends State<MessageScreen> {
                     ),
                     Visibility(
                       visible: !messageModel.getCall!.getAccepted! &&
-                          messageModel.getCall!.getAuthorId! == currentUser!.objectId!,
+                          messageModel.getCall!.getAuthorId! ==
+                              currentUser!.objectId!,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -1473,7 +1475,9 @@ class _MessageScreenState extends State<MessageScreen> {
                       ),
                     ),
                     Visibility(
-                      visible: messageModel.getCall!.getAccepted! && messageModel.getCall!.getAuthorId == currentUser!.objectId!,
+                      visible: messageModel.getCall!.getAccepted! &&
+                          messageModel.getCall!.getAuthorId ==
+                              currentUser!.objectId!,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -1490,14 +1494,18 @@ class _MessageScreenState extends State<MessageScreen> {
                       ),
                     ),
                     Visibility(
-                      visible: messageModel.getCall!.getAccepted! && messageModel.getCall!.getAuthorId != currentUser!.objectId!,
+                      visible: messageModel.getCall!.getAccepted! &&
+                          messageModel.getCall!.getAuthorId !=
+                              currentUser!.objectId!,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.call_received,
+                          Icon(
+                            Icons.call_received,
                             color: isMe ? Colors.white : Colors.black,
                           ),
-                          TextWithTap("message_screen.incoming_call".tr(),
+                          TextWithTap(
+                            "message_screen.incoming_call".tr(),
                             color: isMe ? Colors.white : Colors.black,
                             marginLeft: 10,
                           )
@@ -1507,7 +1515,8 @@ class _MessageScreenState extends State<MessageScreen> {
                     Row(
                       children: [
                         TextWithTap(
-                          QuickHelp.getMessageTime(messageModel.createdAt!, time: true),
+                          QuickHelp.getMessageTime(messageModel.createdAt!,
+                              time: true),
                           marginRight: 10,
                           color: isMe ? Colors.white : Colors.black,
                         ),
@@ -1534,7 +1543,9 @@ class _MessageScreenState extends State<MessageScreen> {
                     child: Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Icon(
-                    messageModel.getCall!.getIsVoiceCall! ? Icons.phone : Icons.videocam,
+                    messageModel.getCall!.getIsVoiceCall!
+                        ? Icons.phone
+                        : Icons.videocam,
                     color: Colors.white,
                     size: 25,
                   ),
@@ -1547,7 +1558,7 @@ class _MessageScreenState extends State<MessageScreen> {
     );
   }
 
-  Widget callInfo(bool appear, IconData icon, String text){
+  Widget callInfo(bool appear, IconData icon, String text) {
     return Visibility(
       visible: appear,
       child: Row(
