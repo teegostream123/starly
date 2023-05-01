@@ -435,30 +435,81 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             resizeToAvoidBottomInset: false,
             body: SafeArea(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(),
-                  Column(
-                    children: [
-                      ContainerCorner(
-                        marginTop: 10,
-                        //height: Responsive.isMobile(context) ? 250 : 380,
-                        width: Responsive.isMobile(context) ? 250 : 380,
-                        child: Image.asset(
-                          "assets/images/ic_logo.png",
-                          width: 100,
-                          height: 100,
-                        ),
+                  Center(
+                    child: ContainerCorner(
+                      width: Responsive.isMobile(context) ? 250 : 380,
+                      child: Image.asset(
+                        "assets/images/ic_logo.png",
+                        width: 100,
+                        height: 100,
                       ),
-                      /*ContainerCorner(
-                          //marginTop: 10,
-                          //height: Responsive.isMobile(context) ? 250 : 380,
-                          width: Responsive.isMobile(context) ? 250 : 380,
-                          child: Image.asset("assets/images/ic_logo_name.png",
-                            color: QuickHelp.isDarkModeNoContext() ? Colors.white : Colors.black,
-                          )
-                      ),*/
-                    ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextField(
+                          obscureText: true,
+                          autofocus: false,
+                          style: TextStyle(fontSize: 15.0, color: Colors.black),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            border: InputBorder.none,
+                            alignLabelWithHint: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            hintText: 'Email',
+                            filled: true,
+                            fillColor: Colors.grey.shade400,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.circular(60.0),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(60.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextField(
+                          obscureText: true,
+                          autofocus: false,
+                          style: TextStyle(fontSize: 15.0, color: Colors.black),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            alignLabelWithHint: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            border: InputBorder.none,
+                            hintText: 'Password',
+                            filled: true,
+                            fillColor: Colors.grey.shade400,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.circular(60.0),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(60.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   ButtonWithImage(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -471,9 +522,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     fontSize: 16,
                     imageName: "ic_icon.png",
                     imageColor: kContentColorLightTheme,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 199, 183, 41),
                     textColor: Colors.black,
-                    text: "auth.get_started".tr(),
+                    text: "Sign in",
                     fontWeight: FontWeight.bold,
                     //matchParent: true,
                     press: () {
@@ -481,8 +532,34 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       //showMobileModal();
                     },
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ButtonWithImage(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    height: 48,
+                    marginLeft: 30,
+                    marginRight: 30,
+                    borderRadius: 60,
+                    imageHeight: 25,
+                    imageWidth: 25,
+                    fontSize: 16,
+                    imageName: "ic_icon.png",
+                    imageColor: kContentColorLightTheme,
+                    color: Color.fromARGB(255, 41, 133, 199),
+                    textColor: Colors.black,
+                    text: "Social accounts",
+                    fontWeight: FontWeight.bold,
+                    //matchParent: true,
+                    press: () {
+                      showMobileDialog();
+                      //showMobileModal();
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   termsAndPrivacyMobile(),
-                  Container(),
                 ],
               ),
             ),
@@ -494,11 +571,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return ContainerCorner(
       child: Column(
         children: [
-          TextWithTap(
-            "auth.by_clicking".tr(),
-            marginBottom: 20,
-            textAlign: TextAlign.center,
-            color: color,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextWithTap(
+                "Dont't have an account?",
+                marginBottom: 20,
+                textAlign: TextAlign.center,
+                color: color,
+              ),
+              TextWithTap(
+                " Sign up",
+                marginBottom: 20,
+                textAlign: TextAlign.center,
+                color: color,
+              ),
+            ],
           ),
         ],
       ),
