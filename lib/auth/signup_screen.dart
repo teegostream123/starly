@@ -10,6 +10,7 @@ import 'package:teego/app/config.dart';
 import 'package:teego/app/setup.dart';
 import 'package:teego/auth/signup_screen.dart';
 import 'package:teego/auth/social_login.dart';
+import 'package:teego/auth/welcome_screen.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/ui/button_with_icon.dart';
 import 'package:teego/helpers/quick_help.dart';
@@ -36,16 +37,14 @@ FirebaseAuth _auth = FirebaseAuth.instance;
 late ConfirmationResult confirmationResult;
 late UserCredential userCredential;
 
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
-
-  static const String route = '/welcome';
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -435,143 +434,380 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             body: SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: ContainerCorner(
-                      width: Responsive.isMobile(context) ? 250 : 380,
-                      child: Image.asset(
-                        "assets/images/ic_logo.png",
-                        width: 100,
-                        height: 100,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Center(
+                      child: ContainerCorner(
+                        width: Responsive.isMobile(context) ? 250 : 380,
+                        child: Image.asset(
+                          "assets/images/ic_logo.png",
+                          width: 100,
+                          height: 100,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        TextField(
-                          obscureText: true,
-                          autofocus: false,
-                          style: TextStyle(fontSize: 15.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.person_2_outlined,
-                                color: Color(0xFFDDB300)),
-                            border: InputBorder.none,
-                            alignLabelWithHint: true,
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            hintText: 'Username',
-                            filled: true,
-                            fillColor: Colors.grey.shade200,
-                            errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextField(
-                          obscureText: true,
-                          autofocus: false,
-                          style: TextStyle(fontSize: 15.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                              color: Color(0xFFDDB300),
-                            ),
-                            alignLabelWithHint: true,
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            border: InputBorder.none,
-                            hintText: 'Password',
-                            filled: true,
-                            fillColor: Colors.grey.shade200,
-                            errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                          ),
-                        ),
-                      ],
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ButtonWithImage(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    height: 48,
-                    marginLeft: 30,
-                    marginRight: 30,
-                    borderRadius: 60,
-                    imageHeight: 25,
-                    imageWidth: 25,
-                    fontSize: 16,
-                    imageName: "",
-                    imageColor: kContentColorLightTheme,
-                    color: Color(0xFFDDB300),
-                    textColor: Colors.black,
-                    text: "Sign in",
-                    fontWeight: FontWeight.bold,
-                    //matchParent: true,
-                    press: () {
-                      showMobileDialog();
-                      //showMobileModal();
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ButtonWithImage(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    height: 48,
-                    marginLeft: 30,
-                    marginRight: 30,
-                    borderRadius: 60,
-                    imageHeight: 25,
-                    imageWidth: 25,
-                    fontSize: 16,
-                    imageName: "",
-                    imageColor: kContentColorLightTheme,
-                    color: Color.fromARGB(255, 133, 189, 229),
-                    textColor: Colors.white,
-                    text: "Social Sign in",
-                    fontWeight: FontWeight.bold,
-                    //matchParent: true,
-                    press: () {
-                      showMobileDialog();
-                      //showMobileModal();
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  termsAndPrivacyMobile(),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person_2_outlined,
+                                    color: Color(0xFFDDB300)),
+                                border: InputBorder.none,
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                hintText: 'First name',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person_2_outlined,
+                                    color: Color(0xFFDDB300)),
+                                border: InputBorder.none,
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                hintText: 'Last name',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person_2_outlined,
+                                    color: Color(0xFFDDB300)),
+                                border: InputBorder.none,
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                hintText: 'Sur name',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email_outlined,
+                                    color: Color(0xFFDDB300)),
+                                border: InputBorder.none,
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                hintText: 'Email',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.lock_outline,
+                                    color: Color(0xFFDDB300)),
+                                border: InputBorder.none,
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                hintText: 'Password',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.info_outline,
+                                    color: Color(0xFFDDB300)),
+                                border: InputBorder.none,
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                hintText: 'About',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.vaccines,
+                                    color: Color(0xFFDDB300)),
+                                border: InputBorder.none,
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                hintText: 'Role',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.person_2_outlined,
+                                  color: Color(0xFFDDB300),
+                                ),
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                border: InputBorder.none,
+                                hintText: 'Gender',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextField(
+                              obscureText: true,
+                              autofocus: false,
+                              style: TextStyle(
+                                  fontSize: 15.0, color: Colors.black),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.calendar_month,
+                                  color: Color(0xFFDDB300),
+                                ),
+                                alignLabelWithHint: true,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                border: InputBorder.none,
+                                hintText: 'Dob',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(60),
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ButtonWithImage(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      height: 48,
+                      marginLeft: 30,
+                      marginRight: 30,
+                      borderRadius: 60,
+                      imageHeight: 25,
+                      imageWidth: 25,
+                      fontSize: 16,
+                      imageName: "",
+                      imageColor: kContentColorLightTheme,
+                      color: Color(0xFFDDB300),
+                      textColor: Colors.black,
+                      text: "Sign Up",
+                      fontWeight: FontWeight.bold,
+                      //matchParent: true,
+                      press: () {
+                        showMobileDialog();
+                        //showMobileModal();
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // ButtonWithImage(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   height: 48,
+                    //   marginLeft: 30,
+                    //   marginRight: 30,
+                    //   borderRadius: 60,
+                    //   imageHeight: 25,
+                    //   imageWidth: 25,
+                    //   fontSize: 16,
+                    //   imageName: "",
+                    //   imageColor: kContentColorLightTheme,
+                    //   color: Color.fromARGB(255, 133, 189, 229),
+                    //   textColor: Colors.white,
+                    //   text: "Social Sign up",
+                    //   fontWeight: FontWeight.bold,
+                    //   //matchParent: true,
+                    //   press: () {
+                    //     showMobileDialog();
+                    //     //showMobileModal();
+                    //   },
+                    // ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    termsAndPrivacyMobile(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -586,20 +822,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextWithTap(
-                "Don\'t have an account?",
+                "Already have an account?",
                 marginBottom: 20,
                 textAlign: TextAlign.center,
                 color: color,
               ),
               TextWithTap(
-                " Sign up",
+                " Sign In",
                 marginBottom: 20,
                 textAlign: TextAlign.center,
                 color: color,
                 fontWeight: FontWeight.w700,
                 onTap: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (builder) => SignUpScreen()));
+                      MaterialPageRoute(builder: (builder) => WelcomeScreen()));
                 },
               ),
             ],

@@ -53,11 +53,16 @@ class ButtonWithImage extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      margin: EdgeInsets.only(left: marginLeft!, top: marginTop!, bottom: marginBottom!, right: marginRight!),
+      margin: EdgeInsets.only(
+          left: marginLeft!,
+          top: marginTop!,
+          bottom: marginBottom!,
+          right: marginRight!),
       child: ElevatedButton(
         onPressed: press as void Function()?,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(color != null ? color! : Colors.grey),
+          backgroundColor: MaterialStateProperty.all<Color>(
+              color != null ? color! : Colors.grey),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
                   borderRadius != null ? borderRadius! : 0))),
@@ -69,7 +74,14 @@ class ButtonWithImage extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(right: imageRightSpace!),
-              child: Image.asset("assets/images/$imageName", color: imageColor, width: imageWidth, height: imageHeight,),
+              child: imageName == ""
+                  ? SizedBox()
+                  : Image.asset(
+                      "assets/images/$imageName",
+                      color: imageColor,
+                      width: imageWidth,
+                      height: imageHeight,
+                    ),
             ),
             Text(text,
                 style: TextStyle(
@@ -77,7 +89,9 @@ class ButtonWithImage extends StatelessWidget {
                   color: textColor,
                   fontWeight: fontWeight,
                 )),
-            Container(width: 10,),
+            Container(
+              width: 10,
+            ),
           ],
         ),
       ),
