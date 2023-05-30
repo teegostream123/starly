@@ -46,12 +46,20 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+  String _selectedGender = 'male';
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   PhoneNumber number = PhoneNumber(isoCode: Config.initialCountry);
 
-  TextEditingController phoneNumberEditingController = TextEditingController();
-  TextEditingController pinCodeEditingController = TextEditingController();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
+  TextEditingController surName = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController role = TextEditingController();
+  TextEditingController about = TextEditingController();
+  TextEditingController dob = TextEditingController();
+  TextEditingController gender = TextEditingController();
 
   bool hasError = false;
 
@@ -455,14 +463,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 20,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text(
+                            'Sign up',
+                            style: TextStyle(
+                                fontSize: 26, fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: SingleChildScrollView(
                         child: Column(
                           //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            SizedBox(
+                              height: 20,
+                            ),
                             TextField(
-                              obscureText: true,
                               autofocus: false,
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black),
@@ -494,7 +517,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               height: 20,
                             ),
                             TextField(
-                              obscureText: true,
                               autofocus: false,
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black),
@@ -526,7 +548,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               height: 20,
                             ),
                             TextField(
-                              obscureText: true,
                               autofocus: false,
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black),
@@ -537,7 +558,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 alignLabelWithHint: true,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.auto,
-                                hintText: 'Sur name',
+                                hintText: 'Surname',
                                 filled: true,
                                 fillColor: Colors.grey.shade200,
                                 errorBorder: OutlineInputBorder(
@@ -558,7 +579,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               height: 20,
                             ),
                             TextField(
-                              obscureText: true,
                               autofocus: false,
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black),
@@ -602,6 +622,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.auto,
                                 hintText: 'Password',
+                                suffixIcon: Icon(Icons.visibility,
+                                    color: Color(0xFFDDB300)),
                                 filled: true,
                                 fillColor: Colors.grey.shade200,
                                 errorBorder: OutlineInputBorder(
@@ -622,7 +644,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               height: 20,
                             ),
                             TextField(
-                              obscureText: true,
                               autofocus: false,
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black),
@@ -654,7 +675,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               height: 20,
                             ),
                             TextField(
-                              obscureText: true,
                               autofocus: false,
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black),
@@ -685,43 +705,90 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            TextField(
-                              obscureText: true,
-                              autofocus: false,
-                              style: TextStyle(
-                                  fontSize: 15.0, color: Colors.black),
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.person_2_outlined,
-                                  color: Color(0xFFDDB300),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(
+                                    'Select gender',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                                alignLabelWithHint: true,
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.auto,
-                                border: InputBorder.none,
-                                hintText: 'Gender',
-                                filled: true,
-                                fillColor: Colors.grey.shade200,
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(60),
-                                    borderSide: BorderSide.none),
-                                focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(60),
-                                    borderSide: BorderSide.none),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(60),
-                                    borderSide: BorderSide.none),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(60),
-                                    borderSide: BorderSide.none),
+                              ],
+                            ),
+                            ListTile(
+                              leading: Radio<String>(
+                                value: 'male',
+                                groupValue: _selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
+                                },
                               ),
+                              title: const Text('Male'),
+                            ),
+                            ListTile(
+                              leading: Radio<String>(
+                                value: 'female',
+                                groupValue: _selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
+                                },
+                              ),
+                              title: const Text('Female'),
+                            ),
+                            ListTile(
+                              leading: Radio<String>(
+                                value: 'other',
+                                groupValue: _selectedGender,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
+                                },
+                              ),
+                              title: const Text('Other'),
                             ),
                             SizedBox(
                               height: 20,
                             ),
                             TextField(
-                              obscureText: true,
                               autofocus: false,
+                              readOnly: true,
+                              controller: dob,
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate:
+                                        DateTime.now(), //get today's date
+                                    firstDate: DateTime(
+                                        2000), //DateTime.now() - not to allow to choose before today.
+                                    lastDate: DateTime(2101));
+
+                                if (pickedDate != null) {
+                                  print(
+                                      pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd').format(
+                                          pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                                  print(
+                                      formattedDate); //formatted date output using intl package =>  2022-07-04
+                                  //You can format date as per your need
+
+                                  setState(() {
+                                    dob.text =
+                                        formattedDate; //set foratted date to TextField value.
+                                  });
+                                } else {
+                                  print("Date is not selected");
+                                }
+                              },
                               style: TextStyle(
                                   fontSize: 15.0, color: Colors.black),
                               decoration: InputDecoration(
@@ -889,17 +956,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
   }
 
-  void showPhoneLoginModal() async {
-    showModalBottomSheet(
-        context: (context),
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        enableDrag: true,
-        isDismissible: true,
-        builder: (context) {
-          return _showPhoneLoginBottomSheet();
-        });
-  }
+  // void showPhoneLoginModal() async {
+  //   showModalBottomSheet(
+  //       context: (context),
+  //       isScrollControlled: true,
+  //       backgroundColor: Colors.transparent,
+  //       enableDrag: true,
+  //       isDismissible: true,
+  //       builder: (context) {
+  //         return _showPhoneLoginBottomSheet();
+  //       });
+  // }
 
   Widget _showReportBottomSheet() {
     return GestureDetector(
@@ -939,43 +1006,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _showPhoneLoginBottomSheet() {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: Container(
-        color: Color.fromRGBO(0, 0, 0, 0.001),
-        child: GestureDetector(
-          onTap: () {},
-          child: DraggableScrollableSheet(
-            initialChildSize: 0.6,
-            minChildSize: 0.1,
-            maxChildSize: 1.0,
-            builder: (_, controller) {
-              return StatefulBuilder(builder: (context, setState) {
-                return Container(
-                  decoration: BoxDecoration(
-                    //color: Colors.black.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(25.0),
-                      topRight: const Radius.circular(25.0),
-                    ),
-                  ),
-                  child: ContainerCorner(
-                    radiusTopRight: 25.0,
-                    radiusTopLeft: 25.0,
-                    color: QuickHelp.isDarkMode(context)
-                        ? kContentColorLightTheme
-                        : Colors.white,
-                    child: phoneNumberInput(),
-                  ),
-                );
-              });
-            },
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _showPhoneLoginBottomSheet() {
+  //   return GestureDetector(
+  //     onTap: () => Navigator.of(context).pop(),
+  //     child: Container(
+  //       color: Color.fromRGBO(0, 0, 0, 0.001),
+  //       child: GestureDetector(
+  //         onTap: () {},
+  //         child: DraggableScrollableSheet(
+  //           initialChildSize: 0.6,
+  //           minChildSize: 0.1,
+  //           maxChildSize: 1.0,
+  //           builder: (_, controller) {
+  //             return StatefulBuilder(builder: (context, setState) {
+  //               return Container(
+  //                 decoration: BoxDecoration(
+  //                   //color: Colors.black.withOpacity(0.5),
+  //                   borderRadius: BorderRadius.only(
+  //                     topLeft: const Radius.circular(25.0),
+  //                     topRight: const Radius.circular(25.0),
+  //                   ),
+  //                 ),
+  //                 child: ContainerCorner(
+  //                   radiusTopRight: 25.0,
+  //                   radiusTopLeft: 25.0,
+  //                   color: QuickHelp.isDarkMode(context)
+  //                       ? kContentColorLightTheme
+  //                       : Colors.white,
+  //                   child: phoneNumberInput(),
+  //                 ),
+  //               );
+  //             });
+  //           },
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget showMobileLogin() {
     return ContainerCorner(
@@ -1096,234 +1163,234 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return welcomePage();
   }
 
-  Widget phoneNumberInput() {
-    return Padding(
-      padding: EdgeInsets.only(left: 30, right: 30),
-      child: Column(
-        children: [
-          TextWithTap(
-            "auth.enter_phone_num".tr(),
-            marginTop: 10,
-            fontSize: 17,
-            marginBottom: 30,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-          InternationalPhoneNumberInput(
-            inputDecoration: InputDecoration(
-              hintText: "auth.phone_number_hint".tr(),
-              hintStyle: QuickHelp.isDarkMode(context)
-                  ? TextStyle(color: kColorsGrey500)
-                  : TextStyle(color: kColorsGrey500),
-              //border: InputBorder.none,
-            ),
-            //countries: Setup.allowedCountries,
-            errorMessage: "auth.invalid_phone_number".tr(),
-            searchBoxDecoration: InputDecoration(
-              hintText: "auth.country_input_hint".tr(),
-            ),
-            onInputChanged: (PhoneNumber number) {
-              //print(number.phoneNumber);
-              this.number = number;
-              this._phoneNumber = number.phoneNumber!;
-            },
-            onInputValidated: (bool value) {},
-            countrySelectorScrollControlled: true,
-            locale: Config.initialCountry,
-            selectorConfig: SelectorConfig(
-                selectorType: PhoneInputSelectorType.DIALOG,
-                showFlags: true,
-                useEmoji: QuickHelp.isWebPlatform() ? false : true,
-                setSelectorButtonAsPrefixIcon: true,
-                trailingSpace: true,
-                leadingPadding: 5),
-            ignoreBlank: false,
-            spaceBetweenSelectorAndTextField: 10,
-            autoValidateMode: AutovalidateMode.onUserInteraction,
-            textStyle: TextStyle(color: Colors.black),
-            selectorTextStyle: TextStyle(
-                color: kPrimaryColor,
-                fontSize: 16,
-                fontWeight: FontWeight.normal),
-            initialValue: number,
-            countries: Setup.allowedCountries,
-            textFieldController: phoneNumberEditingController,
-            formatInput: true,
-            autoFocus: true,
-            autoFocusSearch: true,
-            //hintText: number.phoneNumber,
-            keyboardType:
-                TextInputType.numberWithOptions(signed: false, decimal: false),
-            inputBorder: OutlineInputBorder(),
-            onSaved: (PhoneNumber number) {
-              //print('On Saved: $number');
-            },
-          ),
-          ButtonWithIcon(
-            mainAxisAlignment: MainAxisAlignment.center,
-            height: 45,
-            marginTop: 25,
-            marginBottom: 10,
-            borderRadius: 60,
-            fontSize: 14,
-            textColor: Colors.white,
-            backgroundColor: kColorsDeepOrange400,
-            text: "next".tr().toUpperCase(),
-            fontWeight: FontWeight.normal,
-            onTap: () {
-              if (_formKey.currentState!.validate()) {
-                FocusManager.instance.primaryFocus?.unfocus();
+  // Widget phoneNumberInput() {
+  //   return Padding(
+  //     padding: EdgeInsets.only(left: 30, right: 30),
+  //     child: Column(
+  //       children: [
+  //         TextWithTap(
+  //           "auth.enter_phone_num".tr(),
+  //           marginTop: 10,
+  //           fontSize: 17,
+  //           marginBottom: 30,
+  //           fontWeight: FontWeight.w600,
+  //           color: Colors.black,
+  //         ),
+  //         InternationalPhoneNumberInput(
+  //           inputDecoration: InputDecoration(
+  //             hintText: "auth.phone_number_hint".tr(),
+  //             hintStyle: QuickHelp.isDarkMode(context)
+  //                 ? TextStyle(color: kColorsGrey500)
+  //                 : TextStyle(color: kColorsGrey500),
+  //             //border: InputBorder.none,
+  //           ),
+  //           //countries: Setup.allowedCountries,
+  //           errorMessage: "auth.invalid_phone_number".tr(),
+  //           searchBoxDecoration: InputDecoration(
+  //             hintText: "auth.country_input_hint".tr(),
+  //           ),
+  //           onInputChanged: (PhoneNumber number) {
+  //             //print(number.phoneNumber);
+  //             this.number = number;
+  //             this._phoneNumber = number.phoneNumber!;
+  //           },
+  //           onInputValidated: (bool value) {},
+  //           countrySelectorScrollControlled: true,
+  //           locale: Config.initialCountry,
+  //           selectorConfig: SelectorConfig(
+  //               selectorType: PhoneInputSelectorType.DIALOG,
+  //               showFlags: true,
+  //               useEmoji: QuickHelp.isWebPlatform() ? false : true,
+  //               setSelectorButtonAsPrefixIcon: true,
+  //               trailingSpace: true,
+  //               leadingPadding: 5),
+  //           ignoreBlank: false,
+  //           spaceBetweenSelectorAndTextField: 10,
+  //           autoValidateMode: AutovalidateMode.onUserInteraction,
+  //           textStyle: TextStyle(color: Colors.black),
+  //           selectorTextStyle: TextStyle(
+  //               color: kPrimaryColor,
+  //               fontSize: 16,
+  //               fontWeight: FontWeight.normal),
+  //           initialValue: number,
+  //           countries: Setup.allowedCountries,
+  //           textFieldController: phoneNumberEditingController,
+  //           formatInput: true,
+  //           autoFocus: true,
+  //           autoFocusSearch: true,
+  //           //hintText: number.phoneNumber,
+  //           keyboardType:
+  //               TextInputType.numberWithOptions(signed: false, decimal: false),
+  //           inputBorder: OutlineInputBorder(),
+  //           onSaved: (PhoneNumber number) {
+  //             //print('On Saved: $number');
+  //           },
+  //         ),
+  //         ButtonWithIcon(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           height: 45,
+  //           marginTop: 25,
+  //           marginBottom: 10,
+  //           borderRadius: 60,
+  //           fontSize: 14,
+  //           textColor: Colors.white,
+  //           backgroundColor: kColorsDeepOrange400,
+  //           text: "next".tr().toUpperCase(),
+  //           fontWeight: FontWeight.normal,
+  //           onTap: () {
+  //             if (_formKey.currentState!.validate()) {
+  //               FocusManager.instance.primaryFocus?.unfocus();
 
-                if (position == _positionPhoneInput) {
-                  _sendVerificationCode(false);
-                }
-              }
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  //               if (position == _positionPhoneInput) {
+  //                 _sendVerificationCode(false);
+  //               }
+  //             }
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget phoneCodeInput() {
-    return Padding(
-      padding: EdgeInsets.only(top: 40, left: 30, right: 30),
-      child: Column(
-        children: [
-          TextWithTap(
-            "auth.code_sent_to".tr(),
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-          TextWithTap(
-            _phoneNumber,
-            marginTop: 20,
-            //marginLeft: 40,
-            marginBottom: 18,
-            fontSize: 20,
-            color: Colors.black,
-            textAlign: TextAlign.center,
-            fontWeight: FontWeight.normal,
-            marginRight: 10,
-          ),
-          TextWithTap(
-            "auth.enter_code".tr(),
-            marginTop: 20,
-            marginBottom: 20,
-            fontSize: 17,
-            color: Colors.black,
-            textAlign: TextAlign.center,
-            fontWeight: FontWeight.normal,
-            onTap: () => _showResend ? _sendVerificationCode(true) : null,
-          ),
-          Container(
-            child: PinCodeTextField(
-              appContext: context,
-              length: Setup.verificationCodeDigits,
-              keyboardType: TextInputType.number,
-              obscureText: false,
-              animationType: AnimationType.fade,
-              autoFocus: true,
-              pinTheme: PinTheme(
-                borderWidth: 2.0,
-                shape: PinCodeFieldShape.underline,
-                borderRadius: BorderRadius.zero,
-                fieldHeight: 50,
-                fieldWidth: 45,
-                activeFillColor: Colors.transparent,
-                inactiveFillColor: Colors.transparent,
-                selectedFillColor: Colors.transparent,
-                //errorBorderColor: Color(0xFFC7C7C7),
-                activeColor: kPrimaryColor,
-                inactiveColor: kDisabledColor,
-                selectedColor: kDisabledGrayColor,
-              ),
-              animationDuration: Duration(milliseconds: 300),
-              backgroundColor: Colors.transparent,
-              enableActiveFill: true,
-              controller: pinCodeEditingController,
-              autovalidateMode: AutovalidateMode.always,
-              validator: (value) {
-                return null;
-              },
-              useHapticFeedback: true,
-              hapticFeedbackTypes: HapticFeedbackTypes.selection,
-              onChanged: (value) {
-                print(value);
-              },
-              onCompleted: (v) {
-                _pinCode = v;
-                verifyCode(v);
-              },
-              beforeTextPaste: (text) {
-                print("Allowing to paste $text");
-                //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                return true;
-              },
-            ),
-          ),
-          ContainerCorner(
-            marginTop: 3,
-            marginRight: 4,
-            color: Colors.transparent,
-            child: Visibility(
-              visible: !_showResend,
-              child: CountDownTimer(
-                countDownTimerStyle: TextStyle(
-                    color: kGrayDark,
-                    decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14),
-                text: "auth.resend_in".tr(),
-                secondsRemaining: 30,
-                whenTimeExpires: () {
-                  setState(() {
-                    _showResend = true;
-                  });
-                },
-              ),
-            ),
-          ),
-          Visibility(
-            visible: _showResend,
-            child: TextWithTap(
-              "auth.resend_now".tr(),
-              marginTop: 10,
-              marginBottom: 5,
-              color: kGrayDark,
-              decoration: TextDecoration.underline,
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
-              onTap: () => _showResend ? _sendVerificationCode(true) : null,
-            ),
-          ),
-          TextWithTap(
-            "auth.edit_phone_number".tr(),
-            marginTop: 10,
-            marginBottom: 5,
-            color: kGrayDark,
-            decoration: TextDecoration.underline,
-            fontWeight: FontWeight.normal,
-            fontSize: 14,
-            onTap: () => previousPosition(),
-          ),
-          TextWithTap(
-            "auth.contact_support".tr(),
-            marginTop: 10,
-            marginBottom: 15,
-            color: kPrimaryColor,
-            decoration: TextDecoration.underline,
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            onTap: () => QuickHelp.goToWebPage(context,
-                pageType: QuickHelp.pageTypeHelpCenter),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget phoneCodeInput() {
+  //   return Padding(
+  //     padding: EdgeInsets.only(top: 40, left: 30, right: 30),
+  //     child: Column(
+  //       children: [
+  //         TextWithTap(
+  //           "auth.code_sent_to".tr(),
+  //           fontSize: 18,
+  //           fontWeight: FontWeight.w500,
+  //           color: Colors.black,
+  //         ),
+  //         TextWithTap(
+  //           _phoneNumber,
+  //           marginTop: 20,
+  //           //marginLeft: 40,
+  //           marginBottom: 18,
+  //           fontSize: 20,
+  //           color: Colors.black,
+  //           textAlign: TextAlign.center,
+  //           fontWeight: FontWeight.normal,
+  //           marginRight: 10,
+  //         ),
+  //         TextWithTap(
+  //           "auth.enter_code".tr(),
+  //           marginTop: 20,
+  //           marginBottom: 20,
+  //           fontSize: 17,
+  //           color: Colors.black,
+  //           textAlign: TextAlign.center,
+  //           fontWeight: FontWeight.normal,
+  //           onTap: () => _showResend ? _sendVerificationCode(true) : null,
+  //         ),
+  //         Container(
+  //           child: PinCodeTextField(
+  //             appContext: context,
+  //             length: Setup.verificationCodeDigits,
+  //             keyboardType: TextInputType.number,
+  //             obscureText: false,
+  //             animationType: AnimationType.fade,
+  //             autoFocus: true,
+  //             pinTheme: PinTheme(
+  //               borderWidth: 2.0,
+  //               shape: PinCodeFieldShape.underline,
+  //               borderRadius: BorderRadius.zero,
+  //               fieldHeight: 50,
+  //               fieldWidth: 45,
+  //               activeFillColor: Colors.transparent,
+  //               inactiveFillColor: Colors.transparent,
+  //               selectedFillColor: Colors.transparent,
+  //               //errorBorderColor: Color(0xFFC7C7C7),
+  //               activeColor: kPrimaryColor,
+  //               inactiveColor: kDisabledColor,
+  //               selectedColor: kDisabledGrayColor,
+  //             ),
+  //             animationDuration: Duration(milliseconds: 300),
+  //             backgroundColor: Colors.transparent,
+  //             enableActiveFill: true,
+  //             controller: pinCodeEditingController,
+  //             autovalidateMode: AutovalidateMode.always,
+  //             validator: (value) {
+  //               return null;
+  //             },
+  //             useHapticFeedback: true,
+  //             hapticFeedbackTypes: HapticFeedbackTypes.selection,
+  //             onChanged: (value) {
+  //               print(value);
+  //             },
+  //             onCompleted: (v) {
+  //               _pinCode = v;
+  //               verifyCode(v);
+  //             },
+  //             beforeTextPaste: (text) {
+  //               print("Allowing to paste $text");
+  //               //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+  //               //but you can show anything you want here, like your pop up saying wrong paste format or etc
+  //               return true;
+  //             },
+  //           ),
+  //         ),
+  //         ContainerCorner(
+  //           marginTop: 3,
+  //           marginRight: 4,
+  //           color: Colors.transparent,
+  //           child: Visibility(
+  //             visible: !_showResend,
+  //             child: CountDownTimer(
+  //               countDownTimerStyle: TextStyle(
+  //                   color: kGrayDark,
+  //                   decoration: TextDecoration.underline,
+  //                   fontWeight: FontWeight.normal,
+  //                   fontSize: 14),
+  //               text: "auth.resend_in".tr(),
+  //               secondsRemaining: 30,
+  //               whenTimeExpires: () {
+  //                 setState(() {
+  //                   _showResend = true;
+  //                 });
+  //               },
+  //             ),
+  //           ),
+  //         ),
+  //         Visibility(
+  //           visible: _showResend,
+  //           child: TextWithTap(
+  //             "auth.resend_now".tr(),
+  //             marginTop: 10,
+  //             marginBottom: 5,
+  //             color: kGrayDark,
+  //             decoration: TextDecoration.underline,
+  //             fontWeight: FontWeight.normal,
+  //             fontSize: 14,
+  //             onTap: () => _showResend ? _sendVerificationCode(true) : null,
+  //           ),
+  //         ),
+  //         TextWithTap(
+  //           "auth.edit_phone_number".tr(),
+  //           marginTop: 10,
+  //           marginBottom: 5,
+  //           color: kGrayDark,
+  //           decoration: TextDecoration.underline,
+  //           fontWeight: FontWeight.normal,
+  //           fontSize: 14,
+  //           onTap: () => previousPosition(),
+  //         ),
+  //         TextWithTap(
+  //           "auth.contact_support".tr(),
+  //           marginTop: 10,
+  //           marginBottom: 15,
+  //           color: kPrimaryColor,
+  //           decoration: TextDecoration.underline,
+  //           fontWeight: FontWeight.bold,
+  //           fontSize: 14,
+  //           onTap: () => QuickHelp.goToWebPage(context,
+  //               pageType: QuickHelp.pageTypeHelpCenter),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Future<void> signUpUser() async {
     var faker = Faker();

@@ -120,6 +120,8 @@ dependencies:
   flutter_linkify: ^5.0.2
   marquee: ^2.2.3
   hashtagable: ^2.1.0
+  
+ 
 
 
 dev_dependencies:

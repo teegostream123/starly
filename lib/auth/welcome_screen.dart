@@ -452,6 +452,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   SizedBox(
                     height: 20,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                              fontSize: 26, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
@@ -462,6 +478,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           autofocus: false,
                           style: TextStyle(fontSize: 15.0, color: Colors.black),
                           decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.visibility),
                             prefixIcon: Icon(Icons.person_2_outlined,
                                 color: Color(0xFFDDB300)),
                             border: InputBorder.none,
