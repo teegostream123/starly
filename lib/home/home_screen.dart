@@ -54,7 +54,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   late AppLifecycleReactor _appLifecycleReactor;
 
   BannerAd? _anchoredAdaptiveAd;
@@ -75,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadAd() async {
     // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
     final AnchoredAdaptiveBannerAdSize? size =
-    await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-        MediaQuery.of(context).size.width.truncate());
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.of(context).size.width.truncate());
 
     if (size == null) {
       print('Unable to get height of anchored banner.');
@@ -146,7 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
       FollowingScreen(
         currentUser: widget.currentUser != null
             ? widget.currentUser
-            : widget.currentUser, preferences: widget.preferences,
+            : widget.currentUser,
+        preferences: widget.preferences,
       ),
       CoinsScreen(
         currentUser: widget.currentUser != null
@@ -158,9 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ? widget.currentUser
             : widget.currentUser,
         preferences: widget.preferences,
-
       ),
-     ReelsHomeScreen(
+      ReelsHomeScreen(
         currentUser: widget.currentUser != null
             ? widget.currentUser
             : widget.currentUser,
@@ -193,7 +192,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       : 'assets/svg/ic_tab_live_default.svg',
                   height: iconSize,
                   width: iconSize,
-                  color: _selectedIndex == 0 ? kTabIconSelectedColor : _selectedIndex == 4 ? Colors.white : QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
+                  color: _selectedIndex == 0
+                      ? kTabIconSelectedColor
+                      : _selectedIndex == 4
+                          ? Colors.white
+                          : QuickHelp.isDarkMode(context)
+                              ? Colors.white
+                              : Colors.black,
                 ),
                 0,
                 false,
@@ -208,7 +213,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       : 'assets/svg/ic_tab_following_default.svg',
                   height: iconSize,
                   width: iconSize,
-                  color: _selectedIndex == 1 ? kTabIconSelectedColor : _selectedIndex == 4 ? Colors.white : QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
+                  color: _selectedIndex == 1
+                      ? kTabIconSelectedColor
+                      : _selectedIndex == 4
+                          ? Colors.white
+                          : QuickHelp.isDarkMode(context)
+                              ? Colors.white
+                              : Colors.black,
                 ),
                 1,
                 false,
@@ -221,10 +232,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Image.asset(
                   _selectedIndex == 2
                       ? 'assets/images/ic_home_coins.png' //'assets/svg/ic_tab_coins_selected.svg'
-                      : 'assets/images/ic_home_coins.png',//'assets/svg/ic_tab_coins_default.svg',
+                      : 'assets/images/ic_home_coins.png', //'assets/svg/ic_tab_coins_default.svg',
                   height: iconSize,
                   width: iconSize,
-                  color: _selectedIndex == 2 ? kTabIconSelectedColor : _selectedIndex == 4 ? Colors.white : QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
+                  color: _selectedIndex == 2
+                      ? kTabIconSelectedColor
+                      : _selectedIndex == 4
+                          ? Colors.white
+                          : QuickHelp.isDarkMode(context)
+                              ? Colors.white
+                              : Colors.black,
                 ),
                 2,
                 false,
@@ -241,7 +258,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     : 'assets/svg/ic_tab_chat_default.svg',
                 height: iconSize,
                 width: iconSize,
-                color: _selectedIndex == 3 ? kTabIconSelectedColor : _selectedIndex == 4 ? Colors.white : QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
+                color: _selectedIndex == 3
+                    ? kTabIconSelectedColor
+                    : _selectedIndex == 4
+                        ? Colors.white
+                        : QuickHelp.isDarkMode(context)
+                            ? Colors.white
+                            : Colors.black,
               ),
               3,
               false,
@@ -258,7 +281,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     : 'assets/images/ic_home_reels.png', //'assets/svg/ic_tab_feed_default.svg',
                 height: iconSize,
                 width: iconSize,
-                color: _selectedIndex == 4 ? kTabIconSelectedColor : QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
+                color: _selectedIndex == 4
+                    ? kTabIconSelectedColor
+                    : QuickHelp.isDarkMode(context)
+                        ? Colors.white
+                        : Colors.black,
               ),
               3,
               false,
@@ -270,45 +297,54 @@ class _HomeScreenState extends State<HomeScreen> {
       currentIndex: _selectedIndex,
       selectedItemColor: kPrimaryColor,
       backgroundColor: _selectedIndex == 4 ? kContentColorLightTheme : bgColor,
-      unselectedItemColor: _selectedIndex == 4 ? Colors.white : QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
+      unselectedItemColor: _selectedIndex == 4
+          ? Colors.white
+          : QuickHelp.isDarkMode(context)
+              ? Colors.white
+              : Colors.black,
       selectedLabelStyle: TextStyle(
           color: kPrimaryColor, fontSize: 12, fontWeight: FontWeight.bold),
       unselectedLabelStyle: TextStyle(
-          color: _selectedIndex == 4 ? Colors.white : QuickHelp.isDarkMode(context) ? Colors.white : Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
+          color: _selectedIndex == 4
+              ? Colors.white
+              : QuickHelp.isDarkMode(context)
+                  ? Colors.white
+                  : Colors.black,
+          fontSize: 12,
+          fontWeight: FontWeight.bold),
       onTap: (index) => onItemTapped(index),
     );
   }
 
-
   checkUser() async {
-
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
-    if(widget.currentUser!.getFullName!.isNotEmpty){
+    if (widget.currentUser!.getFullName!.isNotEmpty) {
       Purchases.setDisplayName(widget.currentUser!.getFullName!);
     }
 
-    if(widget.currentUser!.getEmail != null){
+    if (widget.currentUser!.getEmail != null) {
       Purchases.setEmail(widget.currentUser!.getEmail!);
     }
 
-    if(widget.currentUser!.getGender != null){
+    if (widget.currentUser!.getGender != null) {
       Map<String, String> params = <String, String>{
         "Gender": widget.currentUser!.getGender!,
       };
       Purchases.setAttributes(params);
     }
 
-    if(widget.currentUser!.getAge != null){
+    if (widget.currentUser!.getAge != null) {
       Map<String, String> params = <String, String>{
         "Age": widget.currentUser!.getAge.toString(),
       };
       Purchases.setAttributes(params);
     }
 
-    if(widget.currentUser!.getBirthday != null){
+    if (widget.currentUser!.getBirthday != null) {
       Map<String, String> params = <String, String>{
-        "Birthday": QuickHelp.getBirthdayFromDate(widget.currentUser!.getBirthday!),
+        "Birthday":
+            QuickHelp.getBirthdayFromDate(widget.currentUser!.getBirthday!),
       };
       Purchases.setAttributes(params);
     }
@@ -324,31 +360,31 @@ class _HomeScreenState extends State<HomeScreen> {
     initSharedPref();
     checkUser();
 
-    Future.delayed(Duration(seconds: 2), (){
-      if(QuickHelp.isIOSPlatform()){
-
-        if(!mounted) return; // Try
+    Future.delayed(Duration(seconds: 2), () {
+      if (QuickHelp.isIOSPlatform()) {
+        if (!mounted) return; // Try
         showAppTrackingPermission(context);
       }
     });
 
     AppOpenAdManager appOpenAdManager = AppOpenAdManager()..loadAd();
-    _appLifecycleReactor = AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
+    _appLifecycleReactor =
+        AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
     _appLifecycleReactor.listenToAppStateChanges();
   }
 
-  bool checkHomeBannerAdReels(){
-
-    if(SharedManager().isBannerAdsOnHomeReelsEnabled(widget.preferences)){
+  bool checkHomeBannerAdReels() {
+    if (SharedManager().isBannerAdsOnHomeReelsEnabled(widget.preferences)) {
       return true;
     } else {
-      if(_selectedIndex == 4){
+      if (_selectedIndex == 4) {
         return false;
       } else {
         return true;
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     if (widget.currentUser != null) {
@@ -357,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context.read<CallsProvider>().isAgoraUserLogged(widget.currentUser);
     } else if (ModalRoute.of(context)!.settings.arguments != null) {
       widget.currentUser =
-      ModalRoute.of(context)!.settings.arguments as UserModel;
+          ModalRoute.of(context)!.settings.arguments as UserModel;
 
       context.read<CallsProvider>().isAgoraUserLogged(widget.currentUser);
     }
@@ -370,8 +406,12 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: _widgetOptions().elementAt(_selectedIndex),),
-          if (_anchoredAdaptiveAd != null && _isLoaded && checkHomeBannerAdReels())
+          Expanded(
+            child: _widgetOptions().elementAt(_selectedIndex),
+          ),
+          if (_anchoredAdaptiveAd != null &&
+              _isLoaded &&
+              checkHomeBannerAdReels())
             Container(
               //color: Colors.green,
               width: _anchoredAdaptiveAd!.size.width.toDouble(),
@@ -392,29 +432,45 @@ class _HomeScreenState extends State<HomeScreen> {
         "assets/svg/ic_top_menu_search.svg",
         //Icon(Icons.search),
         hasNotification
-            ? Icon(Icons.notifications_rounded, size: 26,)
-            : Image.asset("assets/images/ic_home_notification_bell.png",
-          width: 22,
-          height: 22,
-          color: kPrimaryColor,
-        )
+            ? Icon(
+                Icons.notifications_rounded,
+                size: 26,
+              )
+            : Image.asset(
+                "assets/images/ic_home_notification_bell.png",
+                width: 22,
+                height: 22,
+                color: kPrimaryColor,
+              )
       ],
       onTapActions: [
-            () => QuickHelp.goToNavigatorScreen(context, FeedHomeScreen(currentUser: widget.currentUser, preferences: widget.preferences,)), //QuickHelp.goToNavigatorScreen(context, LeadersPage(currentUser: widget.currentUser,)),
-            () => QuickHelp.goToNavigatorScreen(
+        () => QuickHelp.goToNavigatorScreen(
+            context,
+            FeedHomeScreen(
+              currentUser: widget.currentUser,
+              preferences: widget.preferences,
+            )), //QuickHelp.goToNavigatorScreen(context, LeadersPage(currentUser: widget.currentUser,)),
+        () => QuickHelp.goToNavigatorScreen(
             context,
             SearchPage(
               preferences: widget.preferences,
               currentUser: widget.currentUser,
             )),
-            () => QuickHelp.goToNavigatorScreen(context, NotificationsScreen(currentUser: widget.currentUser, preferences: widget.preferences,),),
+        () => QuickHelp.goToNavigatorScreen(
+              context,
+              NotificationsScreen(
+                currentUser: widget.currentUser,
+                preferences: widget.preferences,
+              ),
+            ),
       ],
       actionsIconsSize: 30,
       coinIconSize: 20,
       actionsColor: kPrimaryColor,
       coinsIcon: "assets/svg/ic_coin_with_star.svg",
       coins: GestureDetector(
-        onTap: () => QuickHelp.goToNavigatorScreen(context, RefillCoinsScreen(currentUser: widget.currentUser)),
+        onTap: () => QuickHelp.goToNavigatorScreen(
+            context, RefillCoinsScreen(currentUser: widget.currentUser)),
         child: getCoinsWidget(
           coinIconSize: 20,
           coinsColor: QuickHelp.isDarkMode(context)
@@ -423,7 +479,7 @@ class _HomeScreenState extends State<HomeScreen> {
           coinsIcon: "assets/svg/ic_coin_with_star.svg",
         ),
       ),
-     avatarTap: () => QuickHelp.goToNavigatorScreen(
+      avatarTap: () => QuickHelp.goToNavigatorScreen(
           context,
           ProfileMenuScreen(
             userModel: widget.currentUser != null
@@ -435,11 +491,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget getCoinsWidget({double? coinIconSize, Color? coinsColor, String? coinsIcon}){
-
+  Widget getCoinsWidget(
+      {double? coinIconSize, Color? coinsColor, String? coinsIcon}) {
     QueryBuilder<UserModel> queryBuilder =
-    QueryBuilder<UserModel>(UserModel.forQuery());
-    queryBuilder.whereEqualTo(keyVarObjectId, widget.currentUser!.objectId!);
+        QueryBuilder<UserModel>(UserModel.forQuery());
+    queryBuilder.whereEqualTo(keyVarObjectId, 'GHYauGQysT');
 
     return ParseLiveListWidget<UserModel>(
       query: queryBuilder,
@@ -450,7 +506,6 @@ class _HomeScreenState extends State<HomeScreen> {
       childBuilder: (BuildContext context,
           ParseLiveListElementSnapshot<ParseObject> snapshot) {
         if (snapshot.hasData) {
-
           UserModel updatedUser = snapshot.loadedData! as UserModel;
           widget.currentUser = updatedUser;
 
@@ -478,7 +533,6 @@ class _HomeScreenState extends State<HomeScreen> {
             coinsIcon: coinsIcon,
             coins: updatedUser.getCredits.toString(),
           );
-
         } else {
           return coinsWidget(
             coinIconSize: coinIconSize,
@@ -503,8 +557,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget coinsWidget({double? coinIconSize, Color? coinsColor, String? coinsIcon, String? coins}){
-
+  Widget coinsWidget(
+      {double? coinIconSize,
+      Color? coinsColor,
+      String? coinsIcon,
+      String? coins}) {
     return Row(
       children: [
         QuickActions.showSVGAsset(coinsIcon!,
@@ -595,13 +652,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () async {
                                 QuickHelp.hideLoadingDialog(context);
 
-                                UserModel? user = await QuickHelp.goToNavigatorScreenForResult(
-                                    context,
-                                    ProfileEdit(
-                                      currentUser: widget.currentUser,
-                                    ));
+                                UserModel? user = await QuickHelp
+                                    .goToNavigatorScreenForResult(
+                                        context,
+                                        ProfileEdit(
+                                          currentUser: widget.currentUser,
+                                        ));
 
-                                if(user != null){
+                                if (user != null) {
                                   widget.currentUser = user;
                                 }
                               },
@@ -624,30 +682,30 @@ class _HomeScreenState extends State<HomeScreen> {
     // Show tracking authorization dialog and ask for permission
     try {
       // If the system can show an authorization request dialog
-      TrackingStatus status = await AppTrackingTransparency.trackingAuthorizationStatus;
+      TrackingStatus status =
+          await AppTrackingTransparency.trackingAuthorizationStatus;
 
-      if(status == TrackingStatus.notSupported){
-
+      if (status == TrackingStatus.notSupported) {
         print("TrackingPermission notSupported");
-
       } else if (status == TrackingStatus.notDetermined) {
         // Show a custom explainer dialog before the system dialog
 
-        if(!appTrackingDialogShowing){
+        if (!appTrackingDialogShowing) {
           appTrackingDialogShowing = true;
 
           QuickHelp.showDialogPermission(
               context: context,
               dismissible: false,
-              confirmButtonText: "permissions.allow_tracking".tr().toUpperCase(),
+              confirmButtonText:
+                  "permissions.allow_tracking".tr().toUpperCase(),
               title: "permissions.allow_app_tracking".tr(),
               message: "permissions.app_tracking_explain".tr(),
               onPressed: () async {
                 QuickHelp.goBackToPreviousPage(context);
                 appTrackingDialogShowing = false;
-                await AppTrackingTransparency.requestTrackingAuthorization().then((value) async {
-
-                  if(status == TrackingStatus.authorized){
+                await AppTrackingTransparency.requestTrackingAuthorization()
+                    .then((value) async {
+                  if (status == TrackingStatus.authorized) {
                     await FacebookAuth.i.autoLogAppEventsEnabled(true);
                   }
                 });
@@ -659,7 +717,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  showError(int code){
+  showError(int code) {
     QuickHelp.hideLoadingDialog(context);
     QuickHelp.showErrorResult(context, code);
   }

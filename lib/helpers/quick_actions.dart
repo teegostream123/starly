@@ -19,11 +19,14 @@ import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
 class QuickActions {
-
-
-  static Widget avatarWidgetNotification({double? width, double? height, EdgeInsets? margin, String? imageUrl, UserModel? currentUser, }) {
-
-    if(imageUrl != null) {
+  static Widget avatarWidgetNotification({
+    double? width,
+    double? height,
+    EdgeInsets? margin,
+    String? imageUrl,
+    UserModel? currentUser,
+  }) {
+    if (imageUrl != null) {
       return Container(
         margin: margin,
         width: width,
@@ -57,12 +60,13 @@ class QuickActions {
           errorWidget: (context, url, error) => _avatarInitials(currentUser),
         ),
       );
-    }  else {
+    } else {
       return Container();
     }
   }
 
-  static Widget avatarWidget(UserModel currentUser, {double? width, double? height, EdgeInsets? margin, String? imageUrl}) {
+  static Widget avatarWidget(UserModel currentUser,
+      {double? width, double? height, EdgeInsets? margin, String? imageUrl}) {
     if (currentUser.getAvatar != null) {
       return Container(
         margin: margin,
@@ -80,7 +84,7 @@ class QuickActions {
           errorWidget: (context, url, error) => _avatarInitials(currentUser),
         ),
       );
-    } else if(imageUrl != null) {
+    } else if (imageUrl != null) {
       return Container(
         margin: margin,
         width: width,
@@ -108,14 +112,19 @@ class QuickActions {
       textSize: 18,
       avatarRadius: 10,
       backgroundColor:
-      QuickHelp.isDarkModeNoContext() ? Colors.white : kPrimaryColor,
+          QuickHelp.isDarkModeNoContext() ? Colors.white : kPrimaryColor,
       textColor: QuickHelp.isDarkModeNoContext()
           ? kContentColorLightTheme
           : kContentColorDarkTheme,
     );
   }
 
-  static Widget photosWidget(String? imageUrl, {double? borderRadius = 8, BoxFit? fit = BoxFit.cover, double? width, double? height, EdgeInsets? margin}) {
+  static Widget photosWidget(String? imageUrl,
+      {double? borderRadius = 8,
+      BoxFit? fit = BoxFit.cover,
+      double? width,
+      double? height,
+      EdgeInsets? margin}) {
     return Container(
       margin: margin,
       width: width,
@@ -129,13 +138,22 @@ class QuickActions {
             image: DecorationImage(image: imageProvider, fit: fit),
           ),
         ),
-        placeholder: (context, url) => _loadingWidget(width: width, height: height, radius: borderRadius),
-        errorWidget: (context, url, error) => _loadingWidget(width: width, height: height, radius: borderRadius),
+        placeholder: (context, url) =>
+            _loadingWidget(width: width, height: height, radius: borderRadius),
+        errorWidget: (context, url, error) =>
+            _loadingWidget(width: width, height: height, radius: borderRadius),
       ),
     );
   }
 
-  static Widget photosWidgetCircle(String imageUrl, {double? borderRadius = 8, BoxFit? fit = BoxFit.cover, double? width, double? height, EdgeInsets? margin, BoxShape? boxShape = BoxShape.rectangle, Widget? errorWidget}) {
+  static Widget photosWidgetCircle(String imageUrl,
+      {double? borderRadius = 8,
+      BoxFit? fit = BoxFit.cover,
+      double? width,
+      double? height,
+      EdgeInsets? margin,
+      BoxShape? boxShape = BoxShape.rectangle,
+      Widget? errorWidget}) {
     return Container(
       margin: margin,
       width: width,
@@ -149,13 +167,21 @@ class QuickActions {
             image: DecorationImage(image: imageProvider, fit: fit),
           ),
         ),
-        placeholder: (context, url) => _loadingWidget(width: width, height: height, radius: borderRadius),
-        errorWidget: (context, url, error) => _loadingWidget(width: width, height: height, radius: borderRadius),
+        placeholder: (context, url) =>
+            _loadingWidget(width: width, height: height, radius: borderRadius),
+        errorWidget: (context, url, error) =>
+            _loadingWidget(width: width, height: height, radius: borderRadius),
       ),
     );
   }
 
-  static Widget profileAvatar(String imageUrl, {double? borderRadius = 0, BoxFit? fit = BoxFit.cover, double? width, double? height, EdgeInsets? margin, BoxShape? boxShape = BoxShape.rectangle}) {
+  static Widget profileAvatar(String imageUrl,
+      {double? borderRadius = 0,
+      BoxFit? fit = BoxFit.cover,
+      double? width,
+      double? height,
+      EdgeInsets? margin,
+      BoxShape? boxShape = BoxShape.rectangle}) {
     return Container(
       margin: margin,
       width: width,
@@ -169,13 +195,20 @@ class QuickActions {
             image: DecorationImage(image: imageProvider, fit: fit),
           ),
         ),
-        placeholder: (context, url) => _loadingWidget(width: width, height: height, radius: borderRadius),
-        errorWidget: (context, url, error) => QuickActions.showSVGAsset("assets/svg/ic_avatar.svg"),
+        placeholder: (context, url) =>
+            _loadingWidget(width: width, height: height, radius: borderRadius),
+        errorWidget: (context, url, error) =>
+            QuickActions.showSVGAsset("assets/svg/ic_avatar.svg"),
       ),
     );
   }
 
-  static Widget profileCover(String imageUrl, {double? borderRadius = 0, BoxFit? fit = BoxFit.cover, double? width, double? height, EdgeInsets? margin}) {
+  static Widget profileCover(String imageUrl,
+      {double? borderRadius = 0,
+      BoxFit? fit = BoxFit.cover,
+      double? width,
+      double? height,
+      EdgeInsets? margin}) {
     return Container(
       margin: margin,
       width: width,
@@ -189,13 +222,17 @@ class QuickActions {
             image: DecorationImage(image: imageProvider, fit: fit),
           ),
         ),
-        placeholder: (context, url) => _loadingWidget(width: width, height: height, radius: borderRadius),
-        errorWidget: (context, url, error) => Center(child: QuickActions.showSVGAsset("assets/svg/ic_avatar.svg"),),
+        placeholder: (context, url) =>
+            _loadingWidget(width: width, height: height, radius: borderRadius),
+        errorWidget: (context, url, error) => Center(
+          child: QuickActions.showSVGAsset("assets/svg/ic_avatar.svg"),
+        ),
       ),
     );
   }
 
-  static Widget gifWidget(String imageUrl, {double? borderRadius = 8, BoxFit? fit = BoxFit.cover}) {
+  static Widget gifWidget(String imageUrl,
+      {double? borderRadius = 8, BoxFit? fit = BoxFit.cover}) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       imageBuilder: (context, imageProvider) => Container(
@@ -208,25 +245,23 @@ class QuickActions {
       placeholder: (context, url) => FadeShimmer(
         height: 80,
         width: 80,
-        fadeTheme: QuickHelp.isDarkMode(context)
-            ? FadeTheme.dark
-            : FadeTheme.light,
+        fadeTheme:
+            QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
         millisecondsDelay: 0,
       ),
       errorWidget: (context, url, error) => FadeShimmer(
         height: 80,
         width: 80,
-        fadeTheme: QuickHelp.isDarkMode(context)
-            ? FadeTheme.dark
-            : FadeTheme.light,
+        fadeTheme:
+            QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
         millisecondsDelay: 0,
       ),
     );
   }
 
-  static Widget _loadingWidget({double? width, double? height, double? radius}){
-
-   /* return FadeShimmer(
+  static Widget _loadingWidget(
+      {double? width, double? height, double? radius}) {
+    /* return FadeShimmer(
       width: width != null ? width : 60,
       height: height != null ? height : 60,
       radius: radius != null ? radius : 0,
@@ -235,15 +270,23 @@ class QuickActions {
     return Center(child: CircularProgressIndicator.adaptive());
   }
 
-  static showUserProfile(BuildContext context,UserModel currentUser, UserModel user, {ResumableState? resumeState} ){
-    QuickHelp.goToNavigatorScreen(context, UserProfileScreen(currentUser: currentUser, mUser: user, isFollowing: currentUser.getFollowing!.contains(user.objectId)));
+  static showUserProfile(
+      BuildContext context, UserModel currentUser, UserModel user,
+      {ResumableState? resumeState}) {
+    QuickHelp.goToNavigatorScreen(
+        context,
+        UserProfileScreen(
+            currentUser: currentUser,
+            mUser: user,
+            isFollowing: currentUser.getFollowing!.contains(user.objectId)));
   }
 
   static Widget noContentFound(String title, String explain, String image,
       {MainAxisAlignment? mainAxisAlignment = MainAxisAlignment.center,
       CrossAxisAlignment? crossAxisAlignment = CrossAxisAlignment.center,
       double? imageWidth = 91,
-      double? imageHeight = 91, Color? color}) {
+      double? imageHeight = 91,
+      Color? color}) {
     return Column(
       mainAxisAlignment: mainAxisAlignment!,
       crossAxisAlignment: crossAxisAlignment!,
@@ -253,7 +296,15 @@ class QuickActions {
           width: imageWidth,
           marginBottom: 20,
           color: kTransparentColor,
-          child: image.endsWith(".svg") ? QuickActions.showSVGAsset(image, color: color,) : Image.asset(image, color: color,),
+          child: image.endsWith(".svg")
+              ? QuickActions.showSVGAsset(
+                  image,
+                  color: color,
+                )
+              : Image.asset(
+                  image,
+                  color: color,
+                ),
         ),
         TextWithTap(
           title,
@@ -279,9 +330,9 @@ class QuickActions {
 
   static Widget noContentFoundReels(String title, String explain,
       {MainAxisAlignment? mainAxisAlignment = MainAxisAlignment.center,
-        CrossAxisAlignment? crossAxisAlignment = CrossAxisAlignment.center,
-        double? imageWidth = 91,
-        double? imageHeight = 91}) {
+      CrossAxisAlignment? crossAxisAlignment = CrossAxisAlignment.center,
+      double? imageWidth = 91,
+      double? imageHeight = 91}) {
     return Column(
       mainAxisAlignment: mainAxisAlignment!,
       crossAxisAlignment: crossAxisAlignment!,
@@ -291,7 +342,11 @@ class QuickActions {
           width: imageWidth,
           marginBottom: 20,
           color: kTransparentColor,
-          child: Icon(Icons.refresh_rounded, size: 90, color: Colors.white,),
+          child: Icon(
+            Icons.refresh_rounded,
+            size: 90,
+            color: Colors.white,
+          ),
         ),
         TextWithTap(
           title,
@@ -314,15 +369,22 @@ class QuickActions {
     );
   }
 
-  static Widget avatarBorder(UserModel user, {Function? onTap, double? width, double? height, EdgeInsets? avatarMargin, EdgeInsets? borderMargin, Color? borderColor = kPrimacyGrayColor, double? borderWidth = 1}){
-
+  static Widget avatarBorder(UserModel user,
+      {Function? onTap,
+      double? width,
+      double? height,
+      EdgeInsets? avatarMargin,
+      EdgeInsets? borderMargin,
+      Color? borderColor = kPrimacyGrayColor,
+      double? borderWidth = 1}) {
     return GestureDetector(
       onTap: () => onTap as Function(),
       child: Center(
         child: Container(
           width: width, //160,
           height: height, //160,
-          margin: borderMargin, //EdgeInsets.only(top: 10, bottom: 20, left: 30, right: 30),
+          margin:
+              borderMargin, //EdgeInsets.only(top: 10, bottom: 20, left: 30, right: 30),
           decoration: BoxDecoration(
             border: Border.all(
               width: borderWidth!,
@@ -330,32 +392,31 @@ class QuickActions {
             ),
             shape: BoxShape.circle,
           ),
-          child: QuickActions.avatarWidget(user, width: width, height: height, margin: avatarMargin),
+          child: QuickActions.avatarWidget(user,
+              width: width, height: height, margin: avatarMargin),
         ),
       ),
     );
   }
 
-  static createOrDeleteNotification(UserModel currentUser, UserModel toUser, String type, {PostsModel? post, LiveStreamingModel? live}) async {
-
-    QueryBuilder<NotificationsModel> queryBuilder = QueryBuilder<NotificationsModel>(NotificationsModel());
+  static createOrDeleteNotification(
+      UserModel currentUser, UserModel toUser, String type,
+      {PostsModel? post, LiveStreamingModel? live}) async {
+    QueryBuilder<NotificationsModel> queryBuilder =
+        QueryBuilder<NotificationsModel>(NotificationsModel());
     queryBuilder.whereEqualTo(NotificationsModel.keyAuthor, currentUser);
     queryBuilder.whereEqualTo(NotificationsModel.keyNotificationType, type);
-    if(post != null){
+    if (post != null) {
       queryBuilder.whereEqualTo(NotificationsModel.keyPost, post);
     }
 
     ParseResponse parseResponse = await queryBuilder.query();
 
-    if(parseResponse.success){
-
-      if(parseResponse.results != null){
-
+    if (parseResponse.success) {
+      if (parseResponse.results != null) {
         NotificationsModel notification = parseResponse.results!.first;
         await notification.delete();
-
       } else {
-
         NotificationsModel notificationsModel = NotificationsModel();
         notificationsModel.setAuthor = currentUser;
         notificationsModel.setAuthorId = currentUser.objectId!;
@@ -366,24 +427,24 @@ class QuickActions {
         notificationsModel.setNotificationType = type;
         notificationsModel.setRead = false;
 
-        if(post != null){
+        if (post != null) {
           notificationsModel.setPost = post;
         }
 
-        if(live != null){
+        if (live != null) {
           notificationsModel.setLive = live;
         }
 
         await notificationsModel.save();
 
-        if(post != null){
-
-          if(post.getAuthorId != currentUser.objectId){
-            SendNotifications.sendPush(currentUser, toUser, type, objectId: post.objectId!);
+        if (post != null) {
+          if (post.getAuthorId != currentUser.objectId) {
+            SendNotifications.sendPush(currentUser, toUser, type,
+                objectId: post.objectId!);
           }
-
-        } else if(live != null){
-          SendNotifications.sendPush(currentUser, toUser, type, objectId: live.objectId!);
+        } else if (live != null) {
+          SendNotifications.sendPush(currentUser, toUser, type,
+              objectId: live.objectId!);
         } else {
           SendNotifications.sendPush(currentUser, toUser, type);
         }
@@ -391,8 +452,14 @@ class QuickActions {
     }
   }
 
-  static Future<ParseResponse> report({required String type, required String message, String? description, required UserModel accuser, required UserModel accused, LiveStreamingModel? liveStreamingModel, PostsModel? postsModel}) async {
-
+  static Future<ParseResponse> report(
+      {required String type,
+      required String message,
+      String? description,
+      required UserModel accuser,
+      required UserModel accused,
+      LiveStreamingModel? liveStreamingModel,
+      PostsModel? postsModel}) async {
     ReportModel reportModel = ReportModel();
 
     reportModel.setReportType = type;
@@ -403,120 +470,125 @@ class QuickActions {
     reportModel.setAccused = accused;
     reportModel.setAccusedId = accused.objectId!;
 
-    if(liveStreamingModel != null) reportModel.setLiveStreaming = liveStreamingModel;
-    if(postsModel != null) reportModel.setPost = postsModel;
+    if (liveStreamingModel != null)
+      reportModel.setLiveStreaming = liveStreamingModel;
+    if (postsModel != null) reportModel.setPost = postsModel;
 
     reportModel.setMessage = message;
-    if(description != null) reportModel.setDescription = description;
+    if (description != null) reportModel.setDescription = description;
 
     return await reportModel.save();
-
   }
 
-  static Widget getVideoPlaceHolder(String url, {bool adaptive = false, bool showLoading = false}){
+  static Widget getVideoPlaceHolder(String url,
+      {bool adaptive = false, bool showLoading = false}) {
     return CachedNetworkImage(
       imageUrl: url,
       fit: BoxFit.cover,
-      placeholder: (ctx, value){
-        if(showLoading){
-          return adaptive ? CircularProgressIndicator.adaptive() : CircularProgressIndicator();
+      placeholder: (ctx, value) {
+        if (showLoading) {
+          return adaptive
+              ? CircularProgressIndicator.adaptive()
+              : CircularProgressIndicator();
         } else {
           return Container();
         }
       },
     );
   }
-  static Widget getImageFeed(BuildContext context, PostsModel post, {bool? cache = true}){
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: cache!? CachedNetworkImage(
-        imageUrl: post.isVideo!
-            ? post.getVideoThumbnail!.url!
-            : post.getImage!.url!,
-        fit: BoxFit.contain,
-        placeholder: (ctx, value){
-          return FadeShimmer(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
-            fadeTheme: QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
-          );
-        },
 
-      ) : Image.network(
-        post.isVideo!
-            ? post.getVideoThumbnail!.url!
-            : post.getImage!.url!,
-        fit: BoxFit.contain,
-        loadingBuilder:
-            (context, child, loadingProgress) {
-
-          if(loadingProgress != null){
-            return SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: kPrimaryColor,
-                ),
-              ),
-            );
-
-          } else {
-            return child;
-          }
-        },
-      )
-    );
-  }
-
-  static Widget getReelsImage(BuildContext context, PostsModel post, {bool? cache = true}){
+  static Widget getImageFeed(BuildContext context, PostsModel post,
+      {bool? cache = true}) {
     return SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: cache!? CachedNetworkImage(
-          imageUrl: post.isVideo!
-              ? post.getVideoThumbnail!.url!
-              : post.getImage!.url!,
-          fit: BoxFit.contain,
-          placeholder: (ctx, value){
-            return FadeShimmer(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-              fadeTheme: QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
-            );
-          },
+        child: cache!
+            ? CachedNetworkImage(
+                imageUrl: post.isVideo!
+                    ? post.getVideoThumbnail!.url!
+                    : post.getImage!.url!,
+                fit: BoxFit.contain,
+                placeholder: (ctx, value) {
+                  return FadeShimmer(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width,
+                    fadeTheme: QuickHelp.isDarkMode(context)
+                        ? FadeTheme.dark
+                        : FadeTheme.light,
+                  );
+                },
+              )
+            : Image.network(
+                post.isVideo!
+                    ? post.getVideoThumbnail!.url!
+                    : post.getImage!.url!,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress != null) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return child;
+                  }
+                },
+              ));
+  }
 
-        ) : Image.network(
-          post.isVideo!
-              ? post.getVideoThumbnail!.url!
-              : post.getImage!.url!,
-          fit: BoxFit.contain,
-          loadingBuilder:
-              (context, child, loadingProgress) {
-
-            if(loadingProgress != null){
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: kPrimaryColor,
-                  ),
-                ),
-              );
-
-            } else {
-              return child;
-            }
-          },
-        )
-    );
+  static Widget getReelsImage(BuildContext context, PostsModel post,
+      {bool? cache = true}) {
+    return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: cache!
+            ? CachedNetworkImage(
+                imageUrl: post.isVideo!
+                    ? post.getVideoThumbnail!.url!
+                    : post.getImage!.url!,
+                fit: BoxFit.contain,
+                placeholder: (ctx, value) {
+                  return FadeShimmer(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width,
+                    fadeTheme: QuickHelp.isDarkMode(context)
+                        ? FadeTheme.dark
+                        : FadeTheme.light,
+                  );
+                },
+              )
+            : Image.network(
+                post.isVideo!
+                    ? post.getVideoThumbnail!.url!
+                    : post.getImage!.url!,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress != null) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return child;
+                  }
+                },
+              ));
   }
 
   static Widget getVideoPlayer(PostsModel post) {
     return Container();
   }
-  static Widget showSVGAsset(String asset, {Color? color, double? width, double? height, double? size}){
 
+  static Widget showSVGAsset(String asset,
+      {Color? color, double? width, double? height, double? size}) {
     return SvgPicture.asset(
       asset,
       width: size != null ? size : width,

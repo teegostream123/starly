@@ -478,7 +478,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           autofocus: false,
                           style: TextStyle(fontSize: 15.0, color: Colors.black),
                           decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.visibility),
                             prefixIcon: Icon(Icons.person_2_outlined,
                                 color: Color(0xFFDDB300)),
                             border: InputBorder.none,
@@ -509,6 +508,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           autofocus: false,
                           style: TextStyle(fontSize: 15.0, color: Colors.black),
                           decoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.visibility,
+                              color: Color(0xFFDDB300),
+                            ),
                             prefixIcon: Icon(
                               Icons.lock_outline,
                               color: Color(0xFFDDB300),
@@ -556,7 +559,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     fontWeight: FontWeight.bold,
                     //matchParent: true,
                     press: () {
-                      showMobileDialog();
+                      //showMobileDialog();
                       //showMobileModal();
                     },
                   ),

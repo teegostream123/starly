@@ -11,6 +11,7 @@ import 'package:teego/app/setup.dart';
 import 'package:teego/auth/signup_screen.dart';
 import 'package:teego/auth/social_login.dart';
 import 'package:teego/auth/welcome_screen.dart';
+import 'package:teego/home/home_screen.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/ui/button_with_icon.dart';
 import 'package:teego/helpers/quick_help.dart';
@@ -32,6 +33,7 @@ import '../helpers/responsive.dart';
 import '../services/dynamic_link_service.dart';
 import '../utils/shared_manager.dart';
 import 'dispache_screen.dart';
+import 'package:http/http.dart' as http;
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 late ConfirmationResult confirmationResult;
@@ -297,9 +299,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> showSuccess() async {
-    QuickHelp.hideLoadingDialog(context);
+    // QuickHelp.hideLoadingDialog(context);
 
     UserModel? currentUser = await ParseUser.currentUser();
+    print(currentUser);
     if (currentUser != null) {
       QuickHelp.goToNavigatorScreen(
           context,
@@ -840,9 +843,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       text: "Sign Up",
                       fontWeight: FontWeight.bold,
                       //matchParent: true,
-                      press: () {
-                        showMobileDialog();
-                        //showMobileModal();
+                      press: () async {
+                        var response = await http.post(Uri.parse(
+                            "http://teego.khaasconcepts.com/apis/adduser.php?val-name=bakht&val-lname=biland&val-uname=bakht&val-pass=123456&val-email=sufiyankhanzada1254@gmail.com&val-about=nothing&role=Artirst&val-gender=male&val-date=23-4-2023"));
+                        if (response.statusCode == 200) {
+                          print("HERE IN 200");
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (builder) => HomeScreen(
+                              currentUser: UserModel(
+                                  'Bakht', '123456', 'bakht123@gmail.com'),
+                              preferences: preferences,
+                            ),
+                          ));
+                        }
                       },
                     ),
                     SizedBox(
