@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,20 +28,20 @@ class ProfileMenuScreen extends StatefulWidget {
   UserModel? userModel;
   SharedPreferences? preferences;
 
-  ProfileMenuScreen({Key? key, this.userModel, required this.preferences}) : super(key: key);
+  ProfileMenuScreen({Key? key, this.userModel, required this.preferences})
+      : super(key: key);
 
   @override
   _ProfileMenuScreenState createState() => _ProfileMenuScreenState();
 }
 
 class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
-
   @override
   Widget build(BuildContext context) {
-
     return ToolBar(
       leftButtonIcon: Icons.arrow_back,
-      onLeftButtonTap: () => QuickHelp.goBackToPreviousPage(context, result: widget.userModel),
+      onLeftButtonTap: () =>
+          QuickHelp.goBackToPreviousPage(context, result: widget.userModel),
       child: SafeArea(
         child: ContainerCorner(
           color: QuickHelp.isDarkMode(context)
@@ -129,20 +131,22 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                   ],
                 ),
                 onTap: () async {
+                  log("HERE IN USER MODEL");
+                  log(widget.userModel!.toString());
+                  UserModel? user =
+                      await QuickHelp.goToNavigatorScreenForResult(
+                          context,
+                          ProfileScreen(
+                            currentUser: widget.userModel,
+                          ));
 
-                  UserModel? user = await QuickHelp.goToNavigatorScreenForResult(
-                      context,
-                      ProfileScreen(
-                        currentUser: widget.userModel,
-                      ));
-
-                  if(user != null){
+                  if (user != null) {
                     widget.userModel = user;
                   }
                 },
               ),
               //profilOptions("profile_screen.op_live_family".tr(),"assets/svg/ic_tab_following_default.svg", ),
-             /* profilOptions(
+              /* profilOptions(
                 "profile_screen.op_top_giftters".tr(),
                 "assets/svg/ic_menu_gifters.svg",
                 GiftersScreen(currentUser: widget.userModel,),
@@ -156,22 +160,28 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
               ),*/
               //profilOptions("profile_screen.op_subscriptions".tr(),"assets/svg/ic_tab_following_default.svg", ),
 
-              widget.userModel!.getInvitedUsers!.length > 0 ?
-
-              profilOptions(
-                "profile_screen.op_invite_friends".tr(),
-                "assets/svg/ic_referral_menu.svg",
-                InvitedUsers(currentUser: widget.userModel, preferences: widget.preferences!,),
-              ) :
-              profilOptions(
-                "profile_screen.op_invite_friends".tr(),
-                "assets/svg/ic_referral_menu.svg",
-                  ReferralScreen(currentUser: widget.userModel,),
-              ),
+              widget.userModel!.getInvitedUsers!.length > 0
+                  ? profilOptions(
+                      "profile_screen.op_invite_friends".tr(),
+                      "assets/svg/ic_referral_menu.svg",
+                      InvitedUsers(
+                        currentUser: widget.userModel,
+                        preferences: widget.preferences!,
+                      ),
+                    )
+                  : profilOptions(
+                      "profile_screen.op_invite_friends".tr(),
+                      "assets/svg/ic_referral_menu.svg",
+                      ReferralScreen(
+                        currentUser: widget.userModel,
+                      ),
+                    ),
               profilOptions(
                 "profile_screen.op_blocked_users".tr(),
                 "assets/svg/ic_blocked_menu.svg",
-                  BlockedUsersScreen(currentUser: widget.userModel,),
+                BlockedUsersScreen(
+                  currentUser: widget.userModel,
+                ),
               ),
               coinBalanceOption(
                 "profile_screen.op_refill_coin_balance".tr(),
@@ -181,7 +191,10 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
               getMoneyOption(
                 "profile_screen.op_get_money".tr(),
                 "assets/svg/ic_redeem_menu.svg",
-                GetMoneyScreen(currentUser: widget.userModel, preferences: widget.preferences,),
+                GetMoneyScreen(
+                  currentUser: widget.userModel,
+                  preferences: widget.preferences,
+                ),
               ),
               /*instagramOption(
                 "profile_screen.op_connect_instagram".tr(),
@@ -191,7 +204,9 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
               profilOptions(
                 "profile_screen.op_settings".tr(),
                 "assets/svg/ic_settings_menu.svg",
-                SettingsScreen(currentUser: widget.userModel,),
+                SettingsScreen(
+                  currentUser: widget.userModel,
+                ),
               ),
             ],
           ),
@@ -222,8 +237,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
           QuickHelp.isDarkMode(context) ? kContentColorDarkTheme : kGreyColor2,
       urlIconColor: kTabIconDefaultColor,
       mainAxisAlignment: MainAxisAlignment.start,
-      onTap: () =>
-          QuickHelp.goToNavigatorScreen(context, widgetNav),
+      onTap: () => QuickHelp.goToNavigatorScreen(context, widgetNav),
     );
   }
 
@@ -348,122 +362,129 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
           )
         ],
       ),
-      onTap: () => route == RefillCoinsScreen.route ? QuickHelp.goToNavigatorScreen(context, RefillCoinsScreen(currentUser: widget.userModel,)) : QuickHelp.goToNavigator(context, route!),
+      onTap: () => route == RefillCoinsScreen.route
+          ? QuickHelp.goToNavigatorScreen(
+              context,
+              RefillCoinsScreen(
+                currentUser: widget.userModel,
+              ))
+          : QuickHelp.goToNavigator(context, route!),
     );
   }
 
   Widget getMoneyOption(String text, String svgIconURL, Widget widgetNav) {
     return ButtonWidget(
-      color: QuickHelp.isDarkMode(context)
-          ? kContentColorLightTheme
-          : kContentColorDarkTheme,
-      borderColor: QuickHelp.isDarkMode(context)
-          ? kTabIconDefaultColor
-          : kTransparentColor,
-      marginLeft: 10,
-      marginRight: 10,
-      borderRadiusAll: 10,
-      marginBottom: 5,
-      borderWidth: 1,
-      padding: EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ContainerCorner(
-            color: kTransparentColor,
-            child: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: SvgPicture.asset(
-                    svgIconURL,
-                    height: 30,
-                    width: 30,
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextWithTap(
-                      text,
-                      marginLeft: 10,
-                      fontSize: 18,
-                      color: QuickHelp.isDarkMode(context)
-                          ? kContentColorDarkTheme
-                          : kGreyColor2,
-                      //color: Colors.black,
-                    ),
-                    Row(
-                      children: [
-                        TextWithTap(
-                          QuickHelp.getDiamondsLeftToRedeem(
-                              widget.userModel!.getDiamonds!, widget.preferences!),
-                          marginRight: 2,
-                          marginLeft: 10,
-                          marginTop: 5,
-                          //color: Colors.black,
-                          color: QuickHelp.isDarkMode(context)
-                              ? kContentColorDarkTheme
-                              : kGreyColor2,
-                          fontWeight: FontWeight.bold,
-                          marginBottom: 5,
-                          fontSize: 15,
-                        ),
-                        TextWithTap(
-                          widget.userModel!.getPayouts! > 0
-                              ? "profile_screen.get_money_for_diamonds_".tr()
-                              : "profile_screen.get_money_for_diamonds".tr(),
-                          marginRight: 20,
-                          marginTop: 5,
-                          color: QuickHelp.isDarkMode(context)
-                              ? kContentColorDarkTheme
-                              : kGreyColor2,
-                          marginBottom: 5,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          ContainerCorner(
-            color: kTransparentColor,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/ic_diamond.svg",
+        color: QuickHelp.isDarkMode(context)
+            ? kContentColorLightTheme
+            : kContentColorDarkTheme,
+        borderColor: QuickHelp.isDarkMode(context)
+            ? kTabIconDefaultColor
+            : kTransparentColor,
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadiusAll: 10,
+        marginBottom: 5,
+        borderWidth: 1,
+        padding: EdgeInsets.only(top: 10, bottom: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ContainerCorner(
+              color: kTransparentColor,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: SvgPicture.asset(
+                      svgIconURL,
                       height: 30,
                       width: 30,
                     ),
-                    TextWithTap(
-                      widget.userModel!.getDiamonds.toString(),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                      marginRight: 20,
-                      marginLeft: 5,
-                      color: QuickHelp.isDarkMode(context)
-                          ? kContentColorDarkTheme
-                          : kGreyColor2,
-                      //color: Colors.black,
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextWithTap(
+                        text,
+                        marginLeft: 10,
+                        fontSize: 18,
+                        color: QuickHelp.isDarkMode(context)
+                            ? kContentColorDarkTheme
+                            : kGreyColor2,
+                        //color: Colors.black,
+                      ),
+                      Row(
+                        children: [
+                          TextWithTap(
+                            QuickHelp.getDiamondsLeftToRedeem(
+                                widget.userModel!.getDiamonds!,
+                                widget.preferences!),
+                            marginRight: 2,
+                            marginLeft: 10,
+                            marginTop: 5,
+                            //color: Colors.black,
+                            color: QuickHelp.isDarkMode(context)
+                                ? kContentColorDarkTheme
+                                : kGreyColor2,
+                            fontWeight: FontWeight.bold,
+                            marginBottom: 5,
+                            fontSize: 15,
+                          ),
+                          TextWithTap(
+                            widget.userModel!.getPayouts! > 0
+                                ? "profile_screen.get_money_for_diamonds_".tr()
+                                : "profile_screen.get_money_for_diamonds".tr(),
+                            marginRight: 20,
+                            marginTop: 5,
+                            color: QuickHelp.isDarkMode(context)
+                                ? kContentColorDarkTheme
+                                : kGreyColor2,
+                            marginBottom: 5,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-          )
-        ],
-      ),
-      onTap: () async {
-        UserModel? user = await QuickHelp.goToNavigatorScreenForResult(context, widgetNav);
+            ContainerCorner(
+              color: kTransparentColor,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/svg/ic_diamond.svg",
+                        height: 30,
+                        width: 30,
+                      ),
+                      TextWithTap(
+                        widget.userModel!.getDiamonds.toString(),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        marginRight: 20,
+                        marginLeft: 5,
+                        color: QuickHelp.isDarkMode(context)
+                            ? kContentColorDarkTheme
+                            : kGreyColor2,
+                        //color: Colors.black,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        onTap: () async {
+          UserModel? user =
+              await QuickHelp.goToNavigatorScreenForResult(context, widgetNav);
 
-        if(user != null){
-          widget.userModel = user;
-        }
-      }
-    );
+          if (user != null) {
+            widget.userModel = user;
+          }
+        });
   }
 }

@@ -17,7 +17,8 @@ import 'package:teego/services/dynamic_link_service.dart';
 import '../utils/shared_manager.dart';
 
 class SocialLogin {
-  static Future<void> loginFacebook(BuildContext context, SharedPreferences preferences) async {
+  static Future<void> loginFacebook(
+      BuildContext context, SharedPreferences preferences) async {
     final result = await FacebookAuth.i.login(
       permissions: [
         'email',
@@ -68,7 +69,8 @@ class SocialLogin {
     }
   }
 
-  static void getFbUserDetails(UserModel user, BuildContext context, SharedPreferences preferences) async {
+  static void getFbUserDetails(UserModel user, BuildContext context,
+      SharedPreferences preferences) async {
     final _userData = await FacebookAuth.i.getUserData(
       fields:
           "id,email,name,first_name,last_name,gender,birthday,picture.width(920).height(920),location",
@@ -84,18 +86,19 @@ class SocialLogin {
     user.setFacebookId = _userData['id'];
     user.setFirstName = firstName;
     user.setLastName = lastName;
-    user.username = username+QuickHelp.generateShortUId().toString();
+    user.username = username + QuickHelp.generateShortUId().toString();
 
-    if(_userData['email'] != null){
+    if (_userData['email'] != null) {
       user.setEmail = _userData['email'];
       user.setEmailPublic = _userData['email'];
     }
 
-    if(_userData['gender'] != null){
+    if (_userData['gender'] != null) {
       user.setGender = _userData['gender'];
     }
 
-    if(_userData['location'] != null && _userData['location']['name'] != null){
+    if (_userData['location'] != null &&
+        _userData['location']['name'] != null) {
       user.setLocation = _userData['location']['name'];
     }
 
@@ -109,7 +112,7 @@ class SocialLogin {
     user.setBio = Setup.bio;
     user.setHasPassword = false;
 
-    if(_userData['birthday'] != null){
+    if (_userData['birthday'] != null) {
       user.setBirthday = QuickHelp.getDateFromString(
           _userData['birthday'], QuickHelp.dateFormatFacebook);
     }
@@ -117,16 +120,19 @@ class SocialLogin {
     ParseResponse response = await user.save();
 
     if (response.success) {
-      getPhotoFromUrl(context, user, _userData['picture']['data']['url'], preferences);
+      getPhotoFromUrl(
+          context, user, _userData['picture']['data']['url'], preferences);
     } else {
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.showErrorResult(context, response.error!.code);
     }
   }
 
-  static GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+  static GoogleSignIn _googleSignIn =
+      GoogleSignIn(scopes: ['email', 'profile']);
 
-  static Future<void> googleLogin(BuildContext context, SharedPreferences preferences) async {
+  static Future<void> googleLogin(
+      BuildContext context, SharedPreferences preferences) async {
     try {
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       GoogleSignInAuthentication authentication = await account!.authentication;
@@ -152,10 +158,10 @@ class SocialLogin {
           QuickHelp.showAppNotificationAdvanced(
               context: context, title: "auth.gg_login_error".tr());
         }
-
       } else {
         QuickHelp.hideLoadingDialog(context);
-        QuickHelp.showAppNotificationAdvanced(context: context, title: "auth.gg_login_error".tr());
+        QuickHelp.showAppNotificationAdvanced(
+            context: context, title: "auth.gg_login_error".tr());
         await _googleSignIn.signOut();
       }
     } catch (error) {
@@ -163,7 +169,8 @@ class SocialLogin {
         QuickHelp.showAppNotificationAdvanced(
             context: context, title: "auth.gg_login_cancelled".tr());
       } else if (error == GoogleSignIn.kNetworkError) {
-        QuickHelp.showAppNotificationAdvanced(context: context, title: "not_connected".tr());
+        QuickHelp.showAppNotificationAdvanced(
+            context: context, title: "not_connected".tr());
       } else {
         QuickHelp.showAppNotificationAdvanced(
             context: context, title: "auth.gg_login_error".tr());
@@ -173,8 +180,12 @@ class SocialLogin {
     }
   }
 
-  static void getGoogleUserDetails(BuildContext context, UserModel user,
-      GoogleSignInAccount googleUser, String idToken, SharedPreferences preferences) async {
+  static void getGoogleUserDetails(
+      BuildContext context,
+      UserModel user,
+      GoogleSignInAccount googleUser,
+      String idToken,
+      SharedPreferences preferences) async {
     Map<String, dynamic>? idMap = QuickHelp.getInfoFromToken(idToken);
 
     String firstName = idMap!["given_name"];
@@ -187,7 +198,8 @@ class SocialLogin {
     user.setGoogleId = googleUser.id;
     user.setFirstName = firstName;
     user.setLastName = lastName;
-    user.username = username.toLowerCase().trim()+QuickHelp.generateShortUId().toString();
+    user.username =
+        username.toLowerCase().trim() + QuickHelp.generateShortUId().toString();
     user.setEmail = googleUser.email;
     user.setEmailPublic = googleUser.email;
     //user.setGender = await getGender();
@@ -204,7 +216,6 @@ class SocialLogin {
     ParseResponse response = await user.save();
 
     if (response.success) {
-
       getPhotoFromUrl(context, user, googleUser.photoUrl!, preferences);
     } else {
       QuickHelp.hideLoadingDialog(context);
@@ -212,7 +223,8 @@ class SocialLogin {
     }
   }
 
-  static void loginApple(BuildContext context, SharedPreferences preferences) async {
+  static void loginApple(
+      BuildContext context, SharedPreferences preferences) async {
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -246,15 +258,25 @@ class SocialLogin {
     }
   }
 
-  static void getAppleUserDetails(BuildContext context, UserModel user, AuthorizationCredentialAppleID credentialAppleID, SharedPreferences preferences) async {
-
+  static void getAppleUserDetails(
+      BuildContext context,
+      UserModel user,
+      AuthorizationCredentialAppleID credentialAppleID,
+      SharedPreferences preferences) async {
     var faker = Faker();
 
     String imageUrl = faker.image.image(
-        width: 640, height: 640, keywords: ["people", "sexy", "models"], random: true);
+        width: 640,
+        height: 640,
+        keywords: ["people", "sexy", "models"],
+        random: true);
 
-    String? firstName = credentialAppleID.givenName != null ? credentialAppleID.givenName : ""; //faker.person.firstName();
-    String? lastName = credentialAppleID.familyName != null ? credentialAppleID.familyName : "";
+    String? firstName = credentialAppleID.givenName != null
+        ? credentialAppleID.givenName
+        : ""; //faker.person.firstName();
+    String? lastName = credentialAppleID.familyName != null
+        ? credentialAppleID.familyName
+        : "";
     String? fullName = '$firstName $lastName';
 
     String username =
@@ -268,9 +290,10 @@ class SocialLogin {
     user.setAppleId = credentialAppleID.userIdentifier!;
     user.setFirstName = firstName;
     user.setLastName = lastName;
-    user.username = username.toLowerCase().trim()+QuickHelp.generateShortUId().toString();
+    user.username =
+        username.toLowerCase().trim() + QuickHelp.generateShortUId().toString();
 
-    if(credentialAppleID.email != null){
+    if (credentialAppleID.email != null) {
       user.setEmail = credentialAppleID.email!;
       user.setEmailPublic = credentialAppleID.email!;
     }
@@ -288,9 +311,9 @@ class SocialLogin {
     ParseResponse response = await user.save();
 
     if (response.success) {
-
-      if(SharedManager().getInvitee(preferences)!.isNotEmpty){
-        DynamicLinkService().registerInviteBy(user, SharedManager().getInvitee(preferences)!, context);
+      if (SharedManager().getInvitee(preferences)!.isNotEmpty) {
+        DynamicLinkService().registerInviteBy(
+            user, SharedManager().getInvitee(preferences)!, context);
         SharedManager().clearInvitee(preferences);
       }
 
@@ -301,8 +324,8 @@ class SocialLogin {
     }
   }
 
-  static void getPhotoFromUrl(
-      BuildContext context, UserModel user, String url, SharedPreferences preferences) async {
+  static void getPhotoFromUrl(BuildContext context, UserModel user, String url,
+      SharedPreferences preferences) async {
     File avatar = await QuickHelp.downloadFile(url, "avatar.jpeg") as File;
 
     ParseFileBase parseFile;
@@ -329,17 +352,25 @@ class SocialLogin {
     }
   }
 
-  static saveAgencyEarn(BuildContext context, UserModel user, SharedPreferences preferences){
-
-    if(SharedManager().getInvitee(preferences)!.isNotEmpty){
-      DynamicLinkService().registerInviteBy(user, SharedManager().getInvitee(preferences)!, context);
+  static saveAgencyEarn(
+      BuildContext context, UserModel user, SharedPreferences preferences) {
+    if (SharedManager().getInvitee(preferences)!.isNotEmpty) {
+      DynamicLinkService().registerInviteBy(
+          user, SharedManager().getInvitee(preferences)!, context);
       SharedManager().clearInvitee(preferences);
     }
   }
 
-  static void goHome(BuildContext context, UserModel userModel, SharedPreferences preferences) {
+  static void goHome(BuildContext context, UserModel userModel,
+      SharedPreferences preferences) {
     QuickHelp.hideLoadingDialog(context);
     QuickHelp.goToNavigatorScreen(
-        context, DispacheScreen(preferences: preferences, currentUser: userModel,), finish: true, back: false);
+        context,
+        DispacheScreen(
+          preferences: preferences,
+          currentUser: userModel,
+        ),
+        finish: true,
+        back: false);
   }
 }

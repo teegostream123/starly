@@ -844,18 +844,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.bold,
                       //matchParent: true,
                       press: () async {
-                        var response = await http.post(Uri.parse(
-                            "http://teego.khaasconcepts.com/apis/adduser.php?val-name=bakht&val-lname=biland&val-uname=bakht&val-pass=123456&val-email=sufiyankhanzada1254@gmail.com&val-about=nothing&role=Artirst&val-gender=male&val-date=23-4-2023"));
-                        if (response.statusCode == 200) {
-                          print("HERE IN 200");
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (builder) => HomeScreen(
-                              currentUser: UserModel(
-                                  'Bakht', '123456', 'bakht123@gmail.com'),
-                              preferences: preferences,
-                            ),
-                          ));
+                        final user = ParseUser.createUser(
+                          'abdullah',
+                          '123456789',
+                          'abdullah@gmail.com',
+                        );
+
+                        var response = await user.signUp();
+
+                        if (response.success) {
+                          print("success");
+                        } else {
+                          print("ERROR");
                         }
+
+                        // var response = await http.post(Uri.parse(
+                        //     "http://teego.khaasconcepts.com/apis/adduser.php?val-name=bakht&val-lname=biland&val-uname=bakht&val-pass=123456&val-email=sufiyankhanzada1254@gmail.com&val-about=nothing&role=Artirst&val-gender=male&val-date=23-4-2023"));
+                        // if (response.statusCode == 200) {
+                        //   print("HERE IN 200");
+                        //   Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (builder) => HomeScreen(
+                        //       currentUser: UserModel(
+                        //           'Bakht', '123456', 'bakht123@gmail.com'),
+                        //       preferences: preferences,
+                        //     ),
+                        //   ));
+                        // }
                       },
                     ),
                     SizedBox(

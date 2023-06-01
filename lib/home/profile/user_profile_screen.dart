@@ -33,7 +33,6 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-
   int tabIndex = 0;
 
   SharedPreferences? preferences;
@@ -52,31 +51,32 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   void initState() {
-
     init();
     super.initState();
   }
 
   init() async {
-   preferences = await SharedPreferences.getInstance();
+    preferences = await SharedPreferences.getInstance();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return ToolBar(
       centerTitle: true,
       extendBodyBehindAppBar: true,
       iconColor: Colors.white,
       rightIconColor: Colors.white,
       rightButtonTwoIcon: Icons.more_vert,
-      leftButtonIcon: QuickHelp.isIOSPlatform() ? Icons.arrow_back_ios : Icons.arrow_back,
+      leftButtonIcon:
+          QuickHelp.isIOSPlatform() ? Icons.arrow_back_ios : Icons.arrow_back,
       onLeftButtonTap: () => QuickHelp.goBackToPreviousPage(context),
       rightButtonTwoPress: () => openSheet(widget.mUser!, null),
       backgroundColor: Colors.black.withOpacity(0.5),
       child: SingleChildScrollView(
         child: Container(
-          color: QuickHelp.isDarkMode(context) ? kTabIconDefaultColor.withOpacity(0.1) : kGreyColor0,
+          color: QuickHelp.isDarkMode(context)
+              ? kTabIconDefaultColor.withOpacity(0.1)
+              : kGreyColor0,
           child: Column(
             children: [
               Container(
@@ -93,39 +93,38 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             : "null",
                         borderRadius: 0),
                     Positioned(
-                        bottom: 0,
-                        child: ContainerCorner(
-                          width: MediaQuery.of(context).size.width,
-                          height: 100,
-                          colors: [ Colors.black, Colors.transparent],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-
-                        ),
+                      bottom: 0,
+                      child: ContainerCorner(
+                        width: MediaQuery.of(context).size.width,
+                        height: 100,
+                        colors: [Colors.black, Colors.transparent],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                      ),
                     ),
                     Positioned(
-                        bottom: 0,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextWithTap(
-                              widget.mUser!.getFullName!,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              marginLeft: 10,
-                              color: Colors.white,
-                            ),
-                            Row(
-                              children: [
-                                TextWithTap(
-                                  QuickHelp.getGender(widget.mUser!),
-                                  fontSize: 16,
-                                  marginLeft: 10,
-                                  color: Colors.white,
-                                  marginBottom: 10,
-                                ),
-                                /*TextWithTap(
+                      bottom: 0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextWithTap(
+                            widget.mUser!.getFullName!,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            marginLeft: 10,
+                            color: Colors.white,
+                          ),
+                          Row(
+                            children: [
+                              TextWithTap(
+                                QuickHelp.getGender(widget.mUser!),
+                                fontSize: 16,
+                                marginLeft: 10,
+                                color: Colors.white,
+                                marginBottom: 10,
+                              ),
+                              /*TextWithTap(
                                   ", ",
                                   fontSize: 16,
                                   color: Colors.white,
@@ -137,16 +136,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   color: Colors.white,
                                   marginBottom: 10,
                                 )*/
-                              ],
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
               Container(
-                color: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : kContentColorDarkTheme,
+                color: QuickHelp.isDarkMode(context)
+                    ? kContentColorLightTheme
+                    : kContentColorDarkTheme,
                 margin: EdgeInsets.only(bottom: 7),
                 child: Padding(
                   padding: EdgeInsets.all(8),
@@ -174,7 +175,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               color: Colors.white,
                             ),
                             TextWithTap(
-                              widget.isFollowing! ? "live_streaming.live_unfollow".tr() :"live_streaming.live_follow".tr(),
+                              widget.isFollowing!
+                                  ? "live_streaming.live_unfollow".tr()
+                                  : "live_streaming.live_follow".tr(),
                               fontSize: 18,
                               color: Colors.white,
                               marginLeft: 5,
@@ -214,7 +217,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 40, right: 40) ,
+                      margin: EdgeInsets.only(left: 40, right: 40),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -231,8 +234,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   marginTop: 3,
                                 ),
                                 TextWithTap(
-                                  widget.mUser!.getFollowers!.length
-                                      .toString(),
+                                  widget.mUser!.getFollowers!.length.toString(),
                                   marginTop: 2,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17,
@@ -240,7 +242,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 ),
                               ],
                             ),
-                            onTap: ()=> widget.mUser!.getFollowers!.length > 0 ? openSheetFollow(false, widget.mUser!.getFollowers!) : null,
+                            onTap: () => widget.mUser!.getFollowers!.length > 0
+                                ? openSheetFollow(
+                                    false, widget.mUser!.getFollowers!)
+                                : null,
                           ),
                           Container(
                             color: QuickHelp.isDarkMode(context)
@@ -278,8 +283,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   marginTop: 3,
                                 ),
                                 TextWithTap(
-                                  widget.mUser!.getFollowing!.length
-                                      .toString(),
+                                  widget.mUser!.getFollowing!.length.toString(),
                                   marginTop: 2,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17,
@@ -287,7 +291,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 ),
                               ],
                             ),
-                            onTap: ()=> widget.mUser!.getFollowing!.length > 0 ? openSheetFollow(true, widget.mUser!.getFollowing!) : null,
+                            onTap: () => widget.mUser!.getFollowing!.length > 0
+                                ? openSheetFollow(
+                                    true, widget.mUser!.getFollowing!)
+                                : null,
                           ),
                         ],
                       ),
@@ -324,18 +331,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: ()=> indexTap(0),
+                          onTap: () => indexTap(0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_followers_active.svg",
-                                color: tabIndex == 0 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 0
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
-                              TextWithTap("feed.for_all".tr(),
+                              TextWithTap(
+                                "feed.for_all".tr(),
                                 fontSize: 16,
-                                color: tabIndex == 0 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 0
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ],
@@ -343,18 +355,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         SizedBox(width: 20),
                         GestureDetector(
-                          onTap: ()=> indexTap(1),
+                          onTap: () => indexTap(1),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_gold_star_small.svg",
-                                color: tabIndex == 1 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 1
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
-                              TextWithTap("feed.exclusive_".tr(),
+                              TextWithTap(
+                                "feed.exclusive_".tr(),
                                 fontSize: 16,
-                                color: tabIndex == 1 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 1
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ],
@@ -379,7 +396,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  indexTap(int index){
+  indexTap(int index) {
     setState(() {
       tabIndex = index;
     });
@@ -387,7 +404,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   Future<List<dynamic>?> _loadFeeds(bool? isExclusive) async {
     QueryBuilder<PostsModel> queryBuilder =
-    QueryBuilder<PostsModel>(PostsModel());
+        QueryBuilder<PostsModel>(PostsModel());
     queryBuilder.includeObject([
       PostsModel.keyAuthor,
       PostsModel.keyLastLikeAuthor,
@@ -437,8 +454,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             List<dynamic> results = snapshot.data! as List<dynamic>;
 
             return Column(
-              children: List.generate(results.length, (index){
-
+              children: List.generate(results.length, (index) {
                 PostsModel post = results[index];
 
                 var liked = post.getLikes!.length > 0 &&
@@ -469,7 +485,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       width: 50, height: 50),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       TextWithTap(
                                         post.getAuthor!.getFullName!,
@@ -523,55 +539,58 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       showPost(post)
                           ? post.isVideo!
-                          ? QuickActions.getImageFeed(context, post) //QuickActions.getVideoPlayer(post)
-                          : QuickActions.getImageFeed(context, post)
+                              ? QuickActions.getImageFeed(context,
+                                  post) //QuickActions.getVideoPlayer(post)
+                              : QuickActions.getImageFeed(context, post)
                           : GestureDetector(
-                        onTap: () => chargeUserAndShowImage(post),
-                        //onTap: () => getPremiumSubs(),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Blur(
-                              blurColor: Colors.transparent,
-                              blur: 25,
-                              child: QuickActions.getImageFeed(
-                                  context, post),
-                            ),
-                            ContainerCorner(
-                              //width: MediaQuery.of(context).size.width,
-                              //height: MediaQuery.of(context).size.width,
-                              color: Colors.white.withOpacity(0.5),
-                              borderRadius: 20,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    QuickActions.showSVGAsset(
-                                      "assets/svg/ic_coin_with_star.svg",
-                                      width: 24,
-                                      height: 24,
+                              onTap: () => chargeUserAndShowImage(post),
+                              //onTap: () => getPremiumSubs(),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Blur(
+                                    blurColor: Colors.transparent,
+                                    blur: 25,
+                                    child: QuickActions.getImageFeed(
+                                        context, post),
+                                  ),
+                                  ContainerCorner(
+                                    //width: MediaQuery.of(context).size.width,
+                                    //height: MediaQuery.of(context).size.width,
+                                    color: Colors.white.withOpacity(0.5),
+                                    borderRadius: 20,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          QuickActions.showSVGAsset(
+                                            "assets/svg/ic_coin_with_star.svg",
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                          TextWithTap(
+                                            "feed.post_cost_exclusive"
+                                                .tr(namedArgs: {
+                                              "coins":
+                                                  post.getPaidAmount!.toString()
+                                            }),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            marginLeft: 6,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    TextWithTap(
-                                      "feed.post_cost_exclusive".tr(
-                                          namedArgs: {
-                                            "coins": post.getPaidAmount!
-                                                .toString()
-                                          }),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      marginLeft: 6,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
                       Visibility(
                         visible: post.getLikes!.length > 0 ||
                             post.getLastDiamondAuthor != null,
@@ -586,9 +605,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 children: [
                                   post.getLastLikeAuthor != null
                                       ? QuickActions.avatarWidget(
-                                      post.getLastLikeAuthor!,
-                                      width: 24,
-                                      height: 24)
+                                          post.getLastLikeAuthor!,
+                                          width: 24,
+                                          height: 24)
                                       : Container(),
                                   TextWithTap(
                                     post.getLikes!.length.toString() +
@@ -610,9 +629,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 children: [
                                   post.getLastDiamondAuthor != null
                                       ? QuickActions.avatarWidget(
-                                      post.getLastDiamondAuthor!,
-                                      width: 24,
-                                      height: 24)
+                                          post.getLastDiamondAuthor!,
+                                          width: 24,
+                                          height: 24)
                                       : Container(),
                                   TextWithTap(""),
                                 ],
@@ -657,14 +676,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     : Colors.white,
                                 onTap: () {
                                   if (liked) {
-                                    post.removeLike = widget.currentUser!.objectId!;
+                                    post.removeLike =
+                                        widget.currentUser!.objectId!;
                                     //post.unset(PostsModel.keyLastLikeAuthor);
 
                                     _deleteLike(post);
                                     post.save();
                                   } else {
-                                    post.setLikes = widget.currentUser!.objectId!;
-                                    post.setLastLikeAuthor = widget.currentUser!;
+                                    post.setLikes =
+                                        widget.currentUser!.objectId!;
+                                    post.setLastLikeAuthor =
+                                        widget.currentUser!;
 
                                     post.save();
                                     _likePost(post);
@@ -741,7 +763,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   _deleteLike(PostsModel postsModel) async {
-
     QuickActions.createOrDeleteNotification(widget.currentUser!,
         postsModel.getAuthor!, NotificationsModel.notificationTypeLikedPost,
         post: postsModel);
@@ -764,8 +785,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           return _showFollow(following, usersIds);
         });
   }
-  Widget _showFollow(bool following, List<dynamic> usersIds) {
 
+  Widget _showFollow(bool following, List<dynamic> usersIds) {
     return GestureDetector(
       onTap: () => Navigator.of(context).pop(),
       child: Container(
@@ -789,7 +810,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   child: ContainerCorner(
                     radiusTopRight: 20.0,
                     radiusTopLeft: 20.0,
-                    color: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : Colors.white,
+                    color: QuickHelp.isDarkMode(context)
+                        ? kContentColorLightTheme
+                        : Colors.white,
                     child: showFollowersAndFollowingWidget(usersIds),
                   ),
                 );
@@ -801,9 +824,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  ParseLiveListWidget showFollowersAndFollowingWidget(List<dynamic> usersIds){
-
-    QueryBuilder<UserModel> queryBuilder = QueryBuilder<UserModel>(UserModel.forQuery());
+  ParseLiveListWidget showFollowersAndFollowingWidget(List<dynamic> usersIds) {
+    QueryBuilder<UserModel> queryBuilder =
+        QueryBuilder<UserModel>(UserModel.forQuery());
     queryBuilder.whereContainedIn(UserModel.keyId, usersIds);
 
     return ParseLiveListWidget<UserModel>(
@@ -814,92 +837,95 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       duration: Duration(seconds: 0),
       childBuilder: (BuildContext context,
           ParseLiveListElementSnapshot<UserModel> snapshot) {
-
         if (snapshot.hasData) {
           UserModel user = snapshot.loadedData as UserModel;
           return Padding(
-            padding:  EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () => QuickActions.showUserProfile(context, widget.currentUser!, user),
-                  child: QuickActions.avatarWidget(user,
+                  onTap: () => QuickActions.showUserProfile(
+                      context, widget.currentUser!, user),
+                  child: QuickActions.avatarWidget(
+                    user,
                     width: 50,
                     height: 50,
                   ),
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => QuickActions.showUserProfile(context, widget.currentUser!, user),
+                    onTap: () => QuickActions.showUserProfile(
+                        context, widget.currentUser!, user),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextWithTap(
-                                  user.getFullName!,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  marginLeft: 10,
-                                  color: QuickHelp.isDarkMode(context)
-                                      ? Colors.white
-                                      : Colors.black,
-                                  marginTop: 5,
-                                  marginRight: 5,
-                                ),
-                                ContainerCorner(
-                                  color: kTransparentColor,
-                                  marginLeft: 10,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      ContainerCorner(
-                                        marginRight: 10,
-                                        child: Row(
-                                          children: [
-                                            QuickActions.showSVGAsset(
-                                              "assets/svg/ic_diamond.svg",
-                                              height: 24,
-                                            ),
-                                            TextWithTap(
-                                              user.getDiamonds.toString(),
-                                              fontSize: 14,
-                                              marginLeft: 3,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextWithTap(
+                              user.getFullName!,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              marginLeft: 10,
+                              color: QuickHelp.isDarkMode(context)
+                                  ? Colors.white
+                                  : Colors.black,
+                              marginTop: 5,
+                              marginRight: 5,
+                            ),
+                            ContainerCorner(
+                              color: kTransparentColor,
+                              marginLeft: 10,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ContainerCorner(
+                                    marginRight: 10,
+                                    child: Row(
+                                      children: [
+                                        QuickActions.showSVGAsset(
+                                          "assets/svg/ic_diamond.svg",
+                                          height: 24,
                                         ),
-                                      ),
-                                      ContainerCorner(
-                                        marginLeft: 10,
-                                        child: Row(
-                                          children: [
-                                            QuickActions.showSVGAsset(
-                                              "assets/svg/ic_tab_following_default.svg",
-                                              color: kRedColor1,
-                                              height: 18,
-                                            ),
-                                            TextWithTap(user.getFollowers!.length.toString(),
-                                              fontSize: 12,
-                                              marginRight: 15,
-                                              marginLeft: 5,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ],
+                                        TextWithTap(
+                                          user.getDiamonds.toString(),
+                                          fontSize: 14,
+                                          marginLeft: 3,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                )
-                              ],
+                                  ContainerCorner(
+                                    marginLeft: 10,
+                                    child: Row(
+                                      children: [
+                                        QuickActions.showSVGAsset(
+                                          "assets/svg/ic_tab_following_default.svg",
+                                          color: kRedColor1,
+                                          height: 18,
+                                        ),
+                                        TextWithTap(
+                                          user.getFollowers!.length.toString(),
+                                          fontSize: 12,
+                                          marginRight: 15,
+                                          marginLeft: 5,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             )
-                        ),
+                          ],
+                        )),
                       ],
                     ),
                   ),
@@ -910,13 +936,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     borderRadius: 50,
                     height: 40,
                     width: 40,
-                    color: widget.currentUser!.getFollowing!.contains(user.objectId) ? kTicketBlueColor :  kRedColor1,
+                    color: widget.currentUser!.getFollowing!
+                            .contains(user.objectId)
+                        ? kTicketBlueColor
+                        : kRedColor1,
                     child: Icon(
-                      widget.currentUser!.getFollowing!.contains(user.objectId) ? Icons.chat_outlined : Icons.add,
+                      widget.currentUser!.getFollowing!.contains(user.objectId)
+                          ? Icons.chat_outlined
+                          : Icons.add,
                       color: Colors.white,
                     ),
-                    onTap: (){
-                      if(!widget.currentUser!.getFollowing!.contains(user.objectId)){
+                    onTap: () {
+                      if (!widget.currentUser!.getFollowing!
+                          .contains(user.objectId)) {
                         follow(user);
                       } else {
                         _gotToChat(widget.currentUser!, user);
@@ -1035,7 +1067,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  void follow(UserModel mUser)  async{
+  void follow(UserModel mUser) async {
     QuickHelp.showLoadingDialog(context);
 
     ParseResponse parseResponseUser;
@@ -1043,9 +1075,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     widget.currentUser!.setFollowing = mUser.objectId!;
     parseResponseUser = await widget.currentUser!.save();
 
-    if(parseResponseUser.success){
-
-      if(parseResponseUser.results != null){
+    if (parseResponseUser.success) {
+      if (parseResponseUser.results != null) {
         QuickHelp.hideLoadingDialog(context);
         setState(() {
           widget.currentUser = parseResponseUser.results!.first as UserModel;
@@ -1055,13 +1086,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
     ParseResponse parseResponse;
     parseResponse = await QuickCloudCode.followUser(
-        isFollowing: false,
-        author: widget.currentUser!,
-        receiver: mUser);
+        isFollowing: false, author: widget.currentUser!, receiver: mUser);
 
     if (parseResponse.success) {
-      QuickActions.createOrDeleteNotification(widget.currentUser!,
-          mUser, NotificationsModel.notificationTypeFollowers);
+      QuickActions.createOrDeleteNotification(widget.currentUser!, mUser,
+          NotificationsModel.notificationTypeFollowers);
     }
   }
 
@@ -1088,16 +1117,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       widget.currentUser!.removeCredit = post.getPaidAmount!;
       ParseResponse saved = await widget.currentUser!.save();
       if (saved.success) {
-        QuickCloudCode.sendGift(author: post.getAuthor!, credits: post.getPaidAmount!, preferences: preferences!);
+        QuickCloudCode.sendGift(
+            author: post.getAuthor!,
+            credits: post.getPaidAmount!,
+            preferences: preferences!);
 
         widget.currentUser = saved.results!.first! as UserModel;
 
         post.setPaidBy = widget.currentUser!.objectId!;
         ParseResponse savedPost = await post.save();
         if (savedPost.success) {
-
           QuickHelp.hideLoadingDialog(context);
-
         } else {
           QuickHelp.hideLoadingDialog(context);
           QuickHelp.showAppNotification(
@@ -1135,226 +1165,237 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           topRight: Radius.circular(25.0),
         ),
       ),
-      child: post != null ?
-      ContainerCorner(
-        radiusTopRight: 20.0,
-        radiusTopLeft: 20.0,
-        color: Colors.white,
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Visibility(
-                visible: widget.currentUser!.objectId != post.getAuthorId,
-                child: ButtonWithIcon(
-                  text: "feed.report_post"
-                      .tr(namedArgs: {"name": author.getFullName!}),
-                  //iconURL: "assets/svg/ic_blocked_menu.svg",
-                  icon: Icons.report_problem_outlined,
-                  iconColor: kPrimaryColor,
-                  iconSize: 26,
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    openReportMessage(author, post);
-                  },
+      child: post != null
+          ? ContainerCorner(
+              radiusTopRight: 20.0,
+              radiusTopLeft: 20.0,
+              color: Colors.white,
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Visibility(
+                      visible: widget.currentUser!.objectId != post.getAuthorId,
+                      child: ButtonWithIcon(
+                        text: "feed.report_post"
+                            .tr(namedArgs: {"name": author.getFullName!}),
+                        //iconURL: "assets/svg/ic_blocked_menu.svg",
+                        icon: Icons.report_problem_outlined,
+                        iconColor: kPrimaryColor,
+                        iconSize: 26,
+                        height: 60,
+                        radiusTopLeft: 25.0,
+                        radiusTopRight: 25.0,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        textColor: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        onTap: () {
+                          openReportMessage(author, post);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                        visible:
+                            widget.currentUser!.objectId != post.getAuthorId,
+                        child: Divider()),
+                    Visibility(
+                      visible: widget.currentUser!.objectId != post.getAuthorId,
+                      child: ButtonWithIcon(
+                        text: "feed.block_user"
+                            .tr(namedArgs: {"name": author.getFullName!}),
+                        textColor: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        //iconURL: "assets/images/ic_block_user.png",
+                        icon: Icons.block,
+                        iconColor: kPrimaryColor,
+                        iconSize: 26,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          QuickHelp.showDialogWithButtonCustom(
+                            context: context,
+                            title: "feed.post_block_title".tr(),
+                            message: "feed.post_block_message"
+                                .tr(namedArgs: {"name": author.getFullName!}),
+                            cancelButtonText: "cancel".tr(),
+                            confirmButtonText: "feed.post_block_confirm".tr(),
+                            onPressed: () => _blockUser(author),
+                          );
+                        },
+                        height: 60,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                    ),
+                    Visibility(
+                        visible:
+                            widget.currentUser!.objectId != post.getAuthorId,
+                        child: Divider()),
+                    Visibility(
+                      visible:
+                          widget.currentUser!.objectId == post.getAuthorId ||
+                              widget.currentUser!.isAdmin!,
+                      child: ButtonWithIcon(
+                        text: post.getExclusive!
+                            ? "feed.move_exclusive_post_pub".tr()
+                            : "feed.move_exclusive_post".tr(),
+                        iconURL: "assets/svg/config.svg",
+                        height: 60,
+                        radiusTopLeft: 25.0,
+                        radiusTopRight: 25.0,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        textColor: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        onTap: () {
+                          _moveExclusivePost(post);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                        visible: widget.currentUser!.isAdmin!,
+                        child: Divider()),
+                    Visibility(
+                      visible:
+                          widget.currentUser!.objectId == post.getAuthorId ||
+                              widget.currentUser!.isAdmin!,
+                      child: ButtonWithIcon(
+                        text: "feed.delete_post".tr(),
+                        iconURL: "assets/svg/config.svg",
+                        height: 60,
+                        radiusTopLeft: 25.0,
+                        radiusTopRight: 25.0,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        textColor: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        onTap: () {
+                          _deletePost(post);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                        visible:
+                            widget.currentUser!.objectId == post.getAuthorId ||
+                                widget.currentUser!.isAdmin!,
+                        child: Divider()),
+                    Visibility(
+                      visible: widget.currentUser!.isAdmin!,
+                      child: ButtonWithIcon(
+                        text: "feed.suspend_user".tr(),
+                        iconURL: "assets/svg/config.svg",
+                        height: 60,
+                        radiusTopLeft: 25.0,
+                        radiusTopRight: 25.0,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        textColor: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        onTap: () {
+                          _suspendUser(widget.mUser!);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                        visible: widget.currentUser!.isAdmin!,
+                        child: Divider()),
+                  ],
                 ),
               ),
-              Visibility(
-                  visible: widget.currentUser!.objectId != post.getAuthorId,
-                  child: Divider()),
-              Visibility(
-                visible: widget.currentUser!.objectId != post.getAuthorId,
-                child: ButtonWithIcon(
-                  text: "feed.block_user"
-                      .tr(namedArgs: {"name": author.getFullName!}),
-                  textColor: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  //iconURL: "assets/images/ic_block_user.png",
-                  icon: Icons.block,
-                  iconColor: kPrimaryColor,
-                  iconSize: 26,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    QuickHelp.showDialogWithButtonCustom(
-                      context: context,
-                      title: "feed.post_block_title".tr(),
-                      message: "feed.post_block_message"
-                          .tr(namedArgs: {"name": author.getFullName!}),
-                      cancelButtonText: "cancel".tr(),
-                      confirmButtonText: "feed.post_block_confirm".tr(),
-                      onPressed: () => _blockUser(author),
-                    );
-                  },
-                  height: 60,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
+            )
+          : ContainerCorner(
+              radiusTopRight: 20.0,
+              radiusTopLeft: 20.0,
+              color: Colors.white,
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Visibility(
+                      visible: true,
+                      child: ButtonWithIcon(
+                        text: "feed.reels_user_report"
+                            .tr(namedArgs: {"name": author.getFullName!}),
+                        //iconURL: "assets/svg/ic_blocked_menu.svg",
+                        icon: Icons.report_problem_outlined,
+                        iconColor: kPrimaryColor,
+                        iconSize: 26,
+                        height: 60,
+                        radiusTopLeft: 25.0,
+                        radiusTopRight: 25.0,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        textColor: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        onTap: () {
+                          openReportUserMessage(author);
+                        },
+                      ),
+                    ),
+                    Divider(),
+                    Visibility(
+                      visible: true,
+                      child: ButtonWithIcon(
+                        text: "feed.block_user"
+                            .tr(namedArgs: {"name": author.getFullName!}),
+                        textColor: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        //iconURL: "assets/images/ic_block_user.png",
+                        icon: Icons.block,
+                        iconColor: kPrimaryColor,
+                        iconSize: 26,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          QuickHelp.showDialogWithButtonCustom(
+                            context: context,
+                            title: "feed.post_block_title".tr(),
+                            message: "feed.post_block_message"
+                                .tr(namedArgs: {"name": author.getFullName!}),
+                            cancelButtonText: "cancel".tr(),
+                            confirmButtonText: "feed.post_block_confirm".tr(),
+                            onPressed: () => _blockUser(author),
+                          );
+                        },
+                        height: 60,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                    ),
+                    Visibility(visible: true, child: Divider()),
+                    Visibility(
+                      visible: widget.currentUser!.isAdmin!,
+                      child: ButtonWithIcon(
+                        text: "feed.suspend_user".tr(),
+                        iconURL: "assets/svg/config.svg",
+                        height: 60,
+                        radiusTopLeft: 25.0,
+                        radiusTopRight: 25.0,
+                        backgroundColor: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        textColor: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        onTap: () {
+                          _suspendUser(widget.mUser!);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                        visible: widget.currentUser!.isAdmin!,
+                        child: Divider()),
+                  ],
                 ),
               ),
-              Visibility(
-                  visible: widget.currentUser!.objectId != post.getAuthorId,
-                  child: Divider()),
-              Visibility(
-                visible: widget.currentUser!.objectId == post.getAuthorId ||
-                    widget.currentUser!.isAdmin!,
-                child: ButtonWithIcon(
-                  text: post.getExclusive! ? "feed.move_exclusive_post_pub".tr() : "feed.move_exclusive_post".tr(),
-                  iconURL: "assets/svg/config.svg",
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    _moveExclusivePost(post);
-                  },
-                ),
-              ),
-              Visibility(visible: widget.currentUser!.isAdmin!, child: Divider()),
-              Visibility(
-                visible: widget.currentUser!.objectId == post.getAuthorId ||
-                    widget.currentUser!.isAdmin!,
-                child: ButtonWithIcon(
-                  text: "feed.delete_post".tr(),
-                  iconURL: "assets/svg/config.svg",
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    _deletePost(post);
-                  },
-                ),
-              ),
-              Visibility(
-                  visible: widget.currentUser!.objectId == post.getAuthorId ||
-                      widget.currentUser!.isAdmin!,
-                  child: Divider()),
-              Visibility(
-                visible: widget.currentUser!.isAdmin!,
-                child: ButtonWithIcon(
-                  text: "feed.suspend_user".tr(),
-                  iconURL: "assets/svg/config.svg",
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    _suspendUser(widget.mUser!);
-                  },
-                ),
-              ),
-              Visibility(visible: widget.currentUser!.isAdmin!, child: Divider()),
-            ],
-          ),
-        ),
-      ) :
-      ContainerCorner(
-        radiusTopRight: 20.0,
-        radiusTopLeft: 20.0,
-        color: Colors.white,
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Visibility(
-                visible: true,
-                child: ButtonWithIcon(
-                  text: "feed.reels_user_report"
-                      .tr(namedArgs: {"name": author.getFullName!}),
-                  //iconURL: "assets/svg/ic_blocked_menu.svg",
-                  icon: Icons.report_problem_outlined,
-                  iconColor: kPrimaryColor,
-                  iconSize: 26,
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    openReportUserMessage(author);
-                  },
-                ),
-              ),
-              Divider(),
-              Visibility(
-                visible: true,
-                child: ButtonWithIcon(
-                  text: "feed.block_user"
-                      .tr(namedArgs: {"name": author.getFullName!}),
-                  textColor: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  //iconURL: "assets/images/ic_block_user.png",
-                  icon: Icons.block,
-                  iconColor: kPrimaryColor,
-                  iconSize: 26,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    QuickHelp.showDialogWithButtonCustom(
-                      context: context,
-                      title: "feed.post_block_title".tr(),
-                      message: "feed.post_block_message"
-                          .tr(namedArgs: {"name": author.getFullName!}),
-                      cancelButtonText: "cancel".tr(),
-                      confirmButtonText: "feed.post_block_confirm".tr(),
-                      onPressed: () => _blockUser(author),
-                    );
-                  },
-                  height: 60,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                ),
-              ),
-              Visibility(
-                  visible: true,
-                  child: Divider()),
-              Visibility(
-                visible: widget.currentUser!.isAdmin!,
-                child: ButtonWithIcon(
-                  text: "feed.suspend_user".tr(),
-                  iconURL: "assets/svg/config.svg",
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    _suspendUser(widget.mUser!);
-                  },
-                ),
-              ),
-              Visibility(visible: widget.currentUser!.isAdmin!, child: Divider()),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 
@@ -1440,45 +1481,45 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         Column(
                           children: List.generate(
                               QuickHelp.getReportCodeMessageList().length,
-                                  (index) {
-                                String code =
+                              (index) {
+                            String code =
                                 QuickHelp.getReportCodeMessageList()[index];
 
-                                return TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    print("Message: " +
-                                        QuickHelp.getReportMessage(code));
-                                    Navigator.of(context).pop();
-                                    _saveReport(
-                                        QuickHelp.getReportMessage(code), post);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
+                            return TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                print("Message: " +
+                                    QuickHelp.getReportMessage(code));
+                                Navigator.of(context).pop();
+                                _saveReport(
+                                    QuickHelp.getReportMessage(code), post);
+                              },
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextWithTap(
-                                            QuickHelp.getReportMessage(code),
-                                            color: kGrayColor,
-                                            fontSize: 15,
-                                            marginBottom: 5,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 18,
-                                            color: kGrayColor,
-                                          ),
-                                        ],
+                                    children: [
+                                      TextWithTap(
+                                        QuickHelp.getReportMessage(code),
+                                        color: kGrayColor,
+                                        fontSize: 15,
+                                        marginBottom: 5,
                                       ),
-                                      Divider(
-                                        height: 1.0,
-                                      )
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 18,
+                                        color: kGrayColor,
+                                      ),
                                     ],
                                   ),
-                                );
-                              }),
+                                  Divider(
+                                    height: 1.0,
+                                  )
+                                ],
+                              ),
+                            );
+                          }),
                         ),
                         ContainerCorner(
                           marginTop: 30,
@@ -1575,7 +1616,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
     userModel.setActivationStatus = true;
     ParseResponse parseResponse =
-    await QuickCloudCode.suspendUSer(objectId: userModel.objectId!);
+        await QuickCloudCode.suspendUSer(objectId: userModel.objectId!);
     if (parseResponse.success) {
       QuickHelp.goBackToPreviousPage(context);
 
@@ -1634,7 +1675,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     QuickHelp.showDialogWithButtonCustom(
       context: context,
       title: "feed.move_post_alert".tr(),
-      message: post.getExclusive! ? "feed.move_post_message_pub".tr()  : "feed.move_post_message".tr(),
+      message: post.getExclusive!
+          ? "feed.move_post_message_pub".tr()
+          : "feed.move_post_message".tr(),
       cancelButtonText: "no".tr(),
       confirmButtonText: "feed.move_post_yes_move".tr(),
       onPressed: () => _confirmMoveExclusivePost(post),
@@ -1654,11 +1697,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       QuickHelp.showAppNotificationAdvanced(
         context: context,
         title: "moved".tr(),
-        message: !postsModel.getExclusive! ? "feed.move_post_moved_pub".tr() : "feed.move_post_moved".tr(),
+        message: !postsModel.getExclusive!
+            ? "feed.move_post_moved_pub".tr()
+            : "feed.move_post_moved".tr(),
         user: postsModel.getAuthor,
         isError: null,
       );
-
     } else {
       QuickHelp.goBackToPreviousPage(context);
 
@@ -1729,45 +1773,45 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         Column(
                           children: List.generate(
                               QuickHelp.getReportCodeMessageList().length,
-                                  (index) {
-                                String code =
+                              (index) {
+                            String code =
                                 QuickHelp.getReportCodeMessageList()[index];
 
-                                return TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    print("Message: " +
-                                        QuickHelp.getReportMessage(code));
-                                    Navigator.of(context).pop();
-                                    _saveUserReport(
-                                        QuickHelp.getReportMessage(code), author);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
+                            return TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                print("Message: " +
+                                    QuickHelp.getReportMessage(code));
+                                Navigator.of(context).pop();
+                                _saveUserReport(
+                                    QuickHelp.getReportMessage(code), author);
+                              },
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextWithTap(
-                                            QuickHelp.getReportMessage(code),
-                                            color: kGrayColor,
-                                            fontSize: 15,
-                                            marginBottom: 5,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 18,
-                                            color: kGrayColor,
-                                          ),
-                                        ],
+                                    children: [
+                                      TextWithTap(
+                                        QuickHelp.getReportMessage(code),
+                                        color: kGrayColor,
+                                        fontSize: 15,
+                                        marginBottom: 5,
                                       ),
-                                      Divider(
-                                        height: 1.0,
-                                      )
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 18,
+                                        color: kGrayColor,
+                                      ),
                                     ],
                                   ),
-                                );
-                              }),
+                                  Divider(
+                                    height: 1.0,
+                                  )
+                                ],
+                              ),
+                            );
+                          }),
                         ),
                         ContainerCorner(
                           marginTop: 30,

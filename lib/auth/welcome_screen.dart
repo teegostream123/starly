@@ -352,8 +352,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           'google',
           google(authentication.accessToken!, _googleSignIn.currentUser!.id,
               authentication.idToken!));
+      print("GOOGLE RESPONSE ${response.results}");
       if (response.success) {
         UserModel? user = await ParseUser.currentUser();
+
+        print("GOOGLE User ${user}");
 
         if (user != null) {
           if (user.getUid == null) {
@@ -558,9 +561,32 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     text: "Sign in",
                     fontWeight: FontWeight.bold,
                     //matchParent: true,
-                    press: () {
-                      //showMobileDialog();
-                      //showMobileModal();
+                    press: () async {
+                      final user = ParseUser('abdullahjan', '123456789', null);
+
+                      var response = await user.login();
+
+                      if (response.success) {
+                        print("success");
+                        UserModel? user = await ParseUser.currentUser();
+                        var responseData = await ParseUser.forQuery();
+                        print("GOOGLE RESPONSE ${responseData}");
+
+                        // user!.setUserRole = 'artist';
+                        print("GOOGLE User ${user!.getUserRole}");
+
+                        if (user != null) {
+                          SocialLogin.goHome(context, user, preferences);
+                        } else {
+                          QuickHelp.hideLoadingDialog(context);
+                          QuickHelp.showAppNotificationAdvanced(
+                              context: context,
+                              title: "auth.gg_login_error".tr());
+                          await _googleSignIn.signOut();
+                        }
+                      } else {
+                        print("FAILED");
+                      }
                     },
                   ),
                   SizedBox(
