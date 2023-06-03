@@ -57,6 +57,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   TextEditingController password = TextEditingController();
   final formGlobalKey = GlobalKey<FormState>();
   BuildContext? dialogueContext;
+  bool passwordVisible = false;
 
   bool hasError = false;
 
@@ -75,6 +76,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
+    passwordVisible = false;
     initSharedPref();
     super.initState();
   }
@@ -500,6 +502,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               alignLabelWithHint: true,
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               hintText: 'Username',
+                              labelText: 'Username',
                               filled: true,
                               fillColor: Colors.grey.shade200,
                               errorBorder: OutlineInputBorder(
@@ -520,7 +523,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             height: 20,
                           ),
                           TextFormField(
-                            obscureText: true,
+                            obscureText: passwordVisible,
                             autofocus: false,
                             controller: password,
                             validator: (value) {
@@ -532,9 +535,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             style:
                                 TextStyle(fontSize: 15.0, color: Colors.black),
                             decoration: InputDecoration(
-                              suffixIcon: Icon(
-                                Icons.visibility,
-                                color: Color(0xFFDDB300),
+                              labelText: 'Password',
+                              suffixIcon: GestureDetector(
+                                child: Icon(
+                                    // Based on passwordVisible state choose the icon
+                                    passwordVisible == true
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Color(0xFFDDB300)),
+                                onTap: () {
+                                  setState(() {
+                                    passwordVisible = !passwordVisible;
+                                  });
+                                },
                               ),
                               prefixIcon: Icon(
                                 Icons.lock_outline,

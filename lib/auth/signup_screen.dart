@@ -58,6 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController password = TextEditingController();
   final formGlobalKey = GlobalKey<FormState>();
   BuildContext? dialogueContext;
+  bool _passwordVisible = false;
 
   bool hasError = false;
 
@@ -77,6 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     initSharedPref();
+    _passwordVisible = false;
     super.initState();
   }
 
@@ -504,7 +506,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   alignLabelWithHint: true,
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.auto,
-                                  hintText: 'User name',
+                                  hintText: 'Username',
+                                  label: Text('Username'),
                                   filled: true,
                                   fillColor: Colors.grey.shade200,
                                   errorBorder: OutlineInputBorder(
@@ -543,6 +546,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.auto,
                                   hintText: 'Email',
+                                  label: Text('Email'),
                                   filled: true,
                                   fillColor: Colors.grey.shade200,
                                   errorBorder: OutlineInputBorder(
@@ -563,7 +567,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 20,
                               ),
                               TextFormField(
-                                obscureText: true,
+                                obscureText: _passwordVisible,
                                 autofocus: false,
                                 controller: password,
                                 validator: (value) {
@@ -575,6 +579,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 style: TextStyle(
                                     fontSize: 15.0, color: Colors.black),
                                 decoration: InputDecoration(
+                                  label: Text('Password'),
                                   prefixIcon: Icon(Icons.lock_outline,
                                       color: Color(0xFFDDB300)),
                                   border: InputBorder.none,
@@ -582,8 +587,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.auto,
                                   hintText: 'Password',
-                                  suffixIcon: Icon(Icons.visibility,
-                                      color: Color(0xFFDDB300)),
+                                  suffixIcon: GestureDetector(
+                                    child: Icon(
+                                        // Based on passwordVisible state choose the icon
+                                        _passwordVisible == true
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Color(0xFFDDB300)),
+                                    onTap: () {
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
+                                  ),
                                   filled: true,
                                   fillColor: Colors.grey.shade200,
                                   errorBorder: OutlineInputBorder(
