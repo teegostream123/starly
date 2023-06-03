@@ -53,6 +53,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   TextEditingController phoneNumberEditingController = TextEditingController();
   TextEditingController pinCodeEditingController = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController password = TextEditingController();
+  final formGlobalKey = GlobalKey<FormState>();
+  BuildContext? dialogueContext;
 
   bool hasError = false;
 
@@ -438,186 +442,239 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             body: SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: ContainerCorner(
-                      width: Responsive.isMobile(context) ? 250 : 380,
-                      child: Image.asset(
-                        "assets/images/ic_logo.png",
-                        width: 100,
-                        height: 100,
+              child: Form(
+                key: formGlobalKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: ContainerCorner(
+                        width: Responsive.isMobile(context) ? 250 : 380,
+                        child: Image.asset(
+                          "assets/images/ic_logo.png",
+                          width: 100,
+                          height: 100,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                              fontSize: 26, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        TextField(
-                          obscureText: true,
-                          autofocus: false,
-                          style: TextStyle(fontSize: 15.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.person_2_outlined,
-                                color: Color(0xFFDDB300)),
-                            border: InputBorder.none,
-                            alignLabelWithHint: true,
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            hintText: 'Username',
-                            filled: true,
-                            fillColor: Colors.grey.shade200,
-                            errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextField(
-                          obscureText: true,
-                          autofocus: false,
-                          style: TextStyle(fontSize: 15.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.visibility,
-                              color: Color(0xFFDDB300),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                              color: Color(0xFFDDB300),
-                            ),
-                            alignLabelWithHint: true,
-                            floatingLabelBehavior: FloatingLabelBehavior.auto,
-                            border: InputBorder.none,
-                            hintText: 'Password',
-                            filled: true,
-                            fillColor: Colors.grey.shade200,
-                            errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(60),
-                                borderSide: BorderSide.none),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                                fontSize: 26, fontWeight: FontWeight.w700),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ButtonWithImage(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    height: 48,
-                    marginLeft: 30,
-                    marginRight: 30,
-                    borderRadius: 60,
-                    imageHeight: 25,
-                    imageWidth: 25,
-                    fontSize: 16,
-                    imageName: "",
-                    imageColor: kContentColorLightTheme,
-                    color: Color(0xFFDDB300),
-                    textColor: Colors.black,
-                    text: "Sign in",
-                    fontWeight: FontWeight.bold,
-                    //matchParent: true,
-                    press: () async {
-                      final user = ParseUser('abdullahjan', '123456789', null);
-
-                      var response = await user.login();
-
-                      if (response.success) {
-                        print("success");
-                        UserModel? user = await ParseUser.currentUser();
-                        var responseData = await ParseUser.forQuery();
-                        print("GOOGLE RESPONSE ${responseData}");
-
-                        // user!.setUserRole = 'artist';
-                        print("GOOGLE User ${user!.getUserRole}");
-
-                        if (user != null) {
-                          SocialLogin.goHome(context, user, preferences);
-                        } else {
-                          QuickHelp.hideLoadingDialog(context);
-                          QuickHelp.showAppNotificationAdvanced(
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextFormField(
+                            autofocus: false,
+                            controller: userName,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter a username";
+                              }
+                              return null;
+                            },
+                            style:
+                                TextStyle(fontSize: 15.0, color: Colors.black),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.person_2_outlined,
+                                  color: Color(0xFFDDB300)),
+                              border: InputBorder.none,
+                              alignLabelWithHint: true,
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              hintText: 'Username',
+                              filled: true,
+                              fillColor: Colors.grey.shade200,
+                              errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            autofocus: false,
+                            controller: password,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter password";
+                              }
+                              return null;
+                            },
+                            style:
+                                TextStyle(fontSize: 15.0, color: Colors.black),
+                            decoration: InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.visibility,
+                                color: Color(0xFFDDB300),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
+                                color: Color(0xFFDDB300),
+                              ),
+                              alignLabelWithHint: true,
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              border: InputBorder.none,
+                              hintText: 'Password',
+                              filled: true,
+                              fillColor: Colors.grey.shade200,
+                              errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(60),
+                                  borderSide: BorderSide.none),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ButtonWithImage(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      height: 48,
+                      marginLeft: 30,
+                      marginRight: 30,
+                      borderRadius: 60,
+                      imageHeight: 25,
+                      imageWidth: 25,
+                      fontSize: 16,
+                      imageName: "",
+                      imageColor: kContentColorLightTheme,
+                      color: Color(0xFFDDB300),
+                      textColor: Colors.black,
+                      text: "Sign in",
+                      fontWeight: FontWeight.bold,
+                      //matchParent: true,
+                      press: () async {
+                        if (formGlobalKey.currentState!.validate()) {
+                          showDialog(
+                              barrierDismissible: false,
                               context: context,
-                              title: "auth.gg_login_error".tr());
-                          await _googleSignIn.signOut();
+                              builder: (_ctx) {
+                                dialogueContext = _ctx;
+                                return Dialog(
+                                  backgroundColor: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CircularProgressIndicator(
+                                          color: Color(0xFFDDB300),
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        const Text('Loading...')
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+
+                          final user = ParseUser(
+                              userName.text.tr(), password.text.tr(), null);
+
+                          var response = await user.login();
+
+                          if (response.success) {
+                            // print("success");
+                            UserModel? user = await ParseUser.currentUser();
+                            // var responseData = await ParseUser.forQuery();
+                            // print("GOOGLE RESPONSE ${responseData}");
+
+                            // // user!.setUserRole = 'artist';
+                            // print("GOOGLE User ${user!.getUserRole}");
+
+                            if (user != null) {
+                              Navigator.of(dialogueContext!).pop();
+                              SocialLogin.goHome(context, user, preferences);
+                            } else {
+                              Navigator.of(dialogueContext!).pop();
+
+                              QuickHelp.hideLoadingDialog(context);
+                              QuickHelp.showAppNotificationAdvanced(
+                                  context: context,
+                                  title: "auth.gg_login_error".tr());
+                            }
+                          } else {
+                            Navigator.of(dialogueContext!).pop();
+
+                            QuickHelp.showAppNotificationAdvanced(
+                                context: context,
+                                title: "Invalid Username and password".tr());
+                          }
                         }
-                      } else {
-                        print("FAILED");
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ButtonWithImage(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    height: 48,
-                    marginLeft: 30,
-                    marginRight: 30,
-                    borderRadius: 60,
-                    imageHeight: 25,
-                    imageWidth: 25,
-                    fontSize: 16,
-                    imageName: "",
-                    imageColor: kContentColorLightTheme,
-                    color: Color.fromARGB(255, 133, 189, 229),
-                    textColor: Colors.white,
-                    text: "Social Sign in",
-                    fontWeight: FontWeight.bold,
-                    //matchParent: true,
-                    press: () {
-                      showMobileDialog();
-                      //showMobileModal();
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  termsAndPrivacyMobile(),
-                ],
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ButtonWithImage(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      height: 48,
+                      marginLeft: 30,
+                      marginRight: 30,
+                      borderRadius: 60,
+                      imageHeight: 25,
+                      imageWidth: 25,
+                      fontSize: 16,
+                      imageName: "",
+                      imageColor: kContentColorLightTheme,
+                      color: Color.fromARGB(255, 133, 189, 229),
+                      textColor: Colors.white,
+                      text: "Social Sign in",
+                      fontWeight: FontWeight.bold,
+                      //matchParent: true,
+                      press: () {
+                        showMobileDialog();
+                        //showMobileModal();
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    termsAndPrivacyMobile(),
+                  ],
+                ),
               ),
             ),
           ),
