@@ -45,8 +45,8 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
 
   @override
   void initState() {
-
     QuickHelp.saveCurrentRoute(route: ReelsHomeScreen.route);
+    checkUserRole();
 
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PreloadPageController(keepPage: true);
@@ -59,6 +59,18 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
     super.dispose();
   }
 
+  String? userRole;
+
+  checkUserRole() async {
+    UserModel? user = await ParseUser.currentUser();
+    print("HERE USER ROLE ${user!.getUserRole}");
+    setState(() {
+      userRole = user.getUserRole;
+    });
+
+    // return user.getUserRole;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ToolBarReels(
@@ -66,7 +78,8 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
       showAppBar: true,
       backgroundColor: kTransparentColor,
       centerTitle: true,
-      child: reelsVideoWidget(),  /*initTabs(),*/ /*TabBarView(
+      child: reelsVideoWidget(),
+      /*initTabs(),*/ /*TabBarView(
         controller: _tabController,
         children: <Widget>[
           reelsVideoWidget(),
@@ -75,28 +88,35 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
       ),*/
       // initTabs(), //myPageView, //getTabs(),
       rightWidgetTwo: GestureDetector(
-          child: QuickActions.avatarWidget(widget.currentUser!, width: 30, height: 30),
+        child: QuickActions.avatarWidget(widget.currentUser!,
+            width: 30, height: 30),
         onTap: goToVideoScreen,
       ),
-      rightWidget: ContainerCorner(
-        color: Colors.white.withOpacity(0.7),
-        borderRadius: 20,
-        marginRight: 10,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.video_library_outlined, size: 20, color: Colors.black,),
-            TextWithTap(
-              "feed.reels_new_video".tr(),
-              marginLeft: 5,
-              color: Colors.black,
-              textAlign: TextAlign.center,
-              alignment: Alignment.center,
-            ),
-          ],
-        ),
-        onTap: ()=> goToVideoScreen(),
-      ),
+      rightWidget: userRole == "artist"
+          ? ContainerCorner(
+              color: Colors.white.withOpacity(0.7),
+              borderRadius: 20,
+              marginRight: 10,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.video_library_outlined,
+                    size: 20,
+                    color: Colors.black,
+                  ),
+                  TextWithTap(
+                    "feed.reels_new_video".tr(),
+                    marginLeft: 5,
+                    color: Colors.black,
+                    textAlign: TextAlign.center,
+                    alignment: Alignment.center,
+                  ),
+                ],
+              ),
+              onTap: () => goToVideoScreen(),
+            )
+          : SizedBox(),
       /*appBar: AppBar(
         centerTitle: true,
         backgroundColor: kTransparentColor,
@@ -176,20 +196,18 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
         pageChanged: (page, user, post) {
           print("Page changed $page, ${user.objectId}, ${post.objectId}");
 
-            setViewer(post);
+          setViewer(post);
         },
       ),
     );
   }
 
-  setViewer(PostsModel post) async{
-
-    if(widget.currentUser!.objectId! != post.getAuthor!.objectId!){
+  setViewer(PostsModel post) async {
+    if (widget.currentUser!.objectId! != post.getAuthor!.objectId!) {
       post.setViewer = widget.currentUser!.objectId!;
       post.addView = 1;
       await post.save();
     }
-
   }
 
   @override
@@ -220,11 +238,9 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
     queryBuilder.whereValueExists(PostsModel.keyVideo, true);
     queryBuilder.orderByDescending(PostsModel.keyCreatedAt);
 
-    if(widget.post != null){
+    if (widget.post != null) {
       queryBuilder.whereEqualTo(PostsModel.keyObjectId, widget.post!.objectId);
-
     } else {
-
       //queryBuilder.whereEqualTo(PostsModel.keyExclusive, isExclusive);
       queryBuilder.whereNotContainedIn(
           PostsModel.keyAuthor, widget.currentUser!.getBlockedUsers!);
@@ -273,11 +289,11 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
 
   goToVideoScreen() {
     QuickHelp.goToNavigatorScreen(
-        context,
-        ReelsVideosScreen(
-          currentUser: widget.currentUser,
-          preferences: widget.preferences,
-        ),
+      context,
+      ReelsVideosScreen(
+        currentUser: widget.currentUser,
+        preferences: widget.preferences,
+      ),
     );
   }
 }

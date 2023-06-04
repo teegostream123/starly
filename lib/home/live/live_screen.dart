@@ -67,6 +67,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    checkUserRole();
 
     QuickHelp.saveCurrentRoute(route: LiveScreen.route);
 
@@ -255,37 +256,51 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     }
   }
 
+  String? userRole;
+
+  checkUserRole() async {
+    UserModel? user = await ParseUser.currentUser();
+    print("HERE USER ROLE ${user!.getUserRole}");
+    setState(() {
+      userRole = user.getUserRole;
+    });
+
+    // return user.getUserRole;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => checkPermission(true),
-        child: ContainerCorner(
-          onTap: () => checkPermission(true),
-          height: 60,
-          width: 60,
-          colors: [kPrimaryColor, kSecondaryColor],
-          borderRadius: 10,
-          shadowColor: kPrimaryColor,
-          shadowColorOpacity: 0.3,
-          setShadowToBottom: true,
-          blurRadius: 10,
-          spreadRadius: 3,
-          child: Container(
-            width: 20,
-            height: 20,
-            margin: EdgeInsets.all(12),
-            child: QuickActions.showSVGAsset(
-              "assets/svg/ic_tab_live_selected.svg",
-              color: Colors.white,
-              width: 20,
-              height: 20,
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: userRole == "artist"
+          ? FloatingActionButton(
+              onPressed: () => checkPermission(true),
+              child: ContainerCorner(
+                onTap: () => checkPermission(true),
+                height: 60,
+                width: 60,
+                colors: [kPrimaryColor, kSecondaryColor],
+                borderRadius: 10,
+                shadowColor: kPrimaryColor,
+                shadowColorOpacity: 0.3,
+                setShadowToBottom: true,
+                blurRadius: 10,
+                spreadRadius: 3,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  margin: EdgeInsets.all(12),
+                  child: QuickActions.showSVGAsset(
+                    "assets/svg/ic_tab_live_selected.svg",
+                    color: Colors.white,
+                    width: 20,
+                    height: 20,
+                  ),
+                ),
+              ),
+            )
+          : SizedBox(),
       appBar: AppBar(
         centerTitle: true,
         title: TabBar(

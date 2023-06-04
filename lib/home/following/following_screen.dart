@@ -45,11 +45,23 @@ class _FollowingScreenState extends State<FollowingScreen>
 
   @override
   void initState() {
-
     QuickHelp.saveCurrentRoute(route: FollowingScreen.route);
 
     super.initState();
+    checkUserRole();
     _future = _loadLive();
+  }
+
+  String? userRole;
+
+  checkUserRole() async {
+    UserModel? user = await ParseUser.currentUser();
+    print("HERE USER ROLE ${user!.getUserRole}");
+    setState(() {
+      userRole = user.getUserRole;
+    });
+
+    // return user.getUserRole;
   }
 
   @override
@@ -59,32 +71,34 @@ class _FollowingScreenState extends State<FollowingScreen>
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => checkPermission(true),
-        child: ContainerCorner(
-          height: 60,
-          width: 60,
-          onTap: () => checkPermission(true),
-          colors: [kPrimaryColor, kSecondaryColor],
-          borderRadius: 10,
-          shadowColor: kPrimaryColor,
-          shadowColorOpacity: 0.3,
-          setShadowToBottom: true,
-          blurRadius: 10,
-          spreadRadius: 3,
-          child: Container(
-            width: 20,
-            height: 20,
-            margin: EdgeInsets.all(12),
-            child: QuickActions.showSVGAsset(
-              "assets/svg/ic_tab_live_selected.svg",
-              color: Colors.white,
-              width: 20,
-              height: 20,
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: userRole == "artist"
+          ? FloatingActionButton(
+              onPressed: () => checkPermission(true),
+              child: ContainerCorner(
+                height: 60,
+                width: 60,
+                onTap: () => checkPermission(true),
+                colors: [kPrimaryColor, kSecondaryColor],
+                borderRadius: 10,
+                shadowColor: kPrimaryColor,
+                shadowColorOpacity: 0.3,
+                setShadowToBottom: true,
+                blurRadius: 10,
+                spreadRadius: 3,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  margin: EdgeInsets.all(12),
+                  child: QuickActions.showSVGAsset(
+                    "assets/svg/ic_tab_live_selected.svg",
+                    color: Colors.white,
+                    width: 20,
+                    height: 20,
+                  ),
+                ),
+              ),
+            )
+          : SizedBox(),
       body: ContainerCorner(
         marginAll: 2,
         color: kTransparentColor,
@@ -95,7 +109,6 @@ class _FollowingScreenState extends State<FollowingScreen>
   }
 
   Future<dynamic> _loadLive() async {
-
     QueryBuilder<UserModel> queryUsers = QueryBuilder(UserModel.forQuery());
     queryUsers.whereValueExists(UserModel.keyUserStatus, true);
     queryUsers.whereEqualTo(UserModel.keyUserStatus, true);
@@ -113,7 +126,8 @@ class _FollowingScreenState extends State<FollowingScreen>
     queryBuilder.whereContainedIn(
         LiveStreamingModel.keyAuthorId, widget.currentUser!.getFollowing!);
 
-    queryBuilder.whereDoesNotMatchQuery(LiveStreamingModel.keyAuthor, queryUsers);
+    queryBuilder.whereDoesNotMatchQuery(
+        LiveStreamingModel.keyAuthor, queryUsers);
 
     queryBuilder.setLimit(30);
 
@@ -590,7 +604,6 @@ class _FollowingScreenState extends State<FollowingScreen>
                                 live.getPrivateGift!.getCoins!) {
                               _payForPrivateLive(live);
                               //sendGift(live);
-
                             } else {
                               CoinsFlowPayment(
                                 context: context,
@@ -647,7 +660,9 @@ class _FollowingScreenState extends State<FollowingScreen>
     await giftsSentModel.save();
 
     ParseResponse response = await QuickCloudCode.sendGift(
-        author: live.getAuthor!, credits: live.getPrivateGift!.getCoins!, preferences: widget.preferences!);
+        author: live.getAuthor!,
+        credits: live.getPrivateGift!.getCoins!,
+        preferences: widget.preferences!);
 
     if (response.success) {
       updateCurrentUserCredit(
@@ -671,8 +686,8 @@ class _FollowingScreenState extends State<FollowingScreen>
   }
 
   sendMessage(LiveStreamingModel live, GiftsSentModel giftsSentModel) async {
-    live.addDiamonds =
-        QuickHelp.getDiamondsForReceiver(live.getPrivateGift!.getCoins!, widget.preferences!);
+    live.addDiamonds = QuickHelp.getDiamondsForReceiver(
+        live.getPrivateGift!.getCoins!, widget.preferences!);
     await live.save();
 
     LiveMessagesModel liveMessagesModel = new LiveMessagesModel();

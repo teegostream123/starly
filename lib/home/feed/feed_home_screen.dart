@@ -119,6 +119,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
 
   @override
   void initState() {
+    checkUserRole();
     super.initState();
 
     _future = _loadFeeds(isExclusive: false);
@@ -183,6 +184,18 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
     super.dispose();
   }
 
+  String? userRole;
+
+  checkUserRole() async {
+    UserModel? user = await ParseUser.currentUser();
+    print("HERE USER ROLE ${user!.getUserRole}");
+    setState(() {
+      userRole = user.getUserRole;
+    });
+
+    // return user.getUserRole;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ToolBar(
@@ -230,19 +243,21 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
           ),
         ],
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () => checkPermission(),
-        child: ContainerCorner(
-          onTap: () => checkPermission(),
-          child: FloatingActionButton(
-              backgroundColor: kPrimaryColor,
-              onPressed: () => checkPermission(),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              )),
-        ),
-      ),
+      floatingActionButton: userRole == "artist"
+          ? GestureDetector(
+              onTap: () => checkPermission(),
+              child: ContainerCorner(
+                onTap: () => checkPermission(),
+                child: FloatingActionButton(
+                    backgroundColor: kPrimaryColor,
+                    onPressed: () => checkPermission(),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    )),
+              ),
+            )
+          : SizedBox(),
     );
   }
 
@@ -510,7 +525,8 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       height: MediaQuery.of(context).size.width,
-                                      child: Image.asset("assets/images/blurred_image.jpg"),
+                                      child: Image.asset(
+                                          "assets/images/blurred_image.jpg"),
                                     ),
                                     ContainerCorner(
                                       color: Colors.white.withOpacity(0.5),
@@ -699,8 +715,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
         });
   }
 
-  Widget getAdsFuture(){
-
+  Widget getAdsFuture() {
     return FutureBuilder(
         future: QuickHelp.isIOSPlatform() ? loadAds() : loadNativeAds(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -709,7 +724,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
               child: QuickHelp.showLoadingAnimation(),
             );
           } else if (snapshot.hasData) {
-
             AdWithView ad = snapshot.data as AdWithView;
 
             return Container(
@@ -720,19 +734,20 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                   ? kContentColorLightTheme
                   : Colors.white,
               margin: EdgeInsets.only(top: 7),
-              child: AdWidget(ad: ad, key: Key(
-                ad.hashCode.toString(),
-              ),),
+              child: AdWidget(
+                ad: ad,
+                key: Key(
+                  ad.hashCode.toString(),
+                ),
+              ),
             );
           } else {
             return Container();
           }
-        }
-    );
+        });
   }
 
   Future<dynamic> loadNativeAds() async {
-
     NativeAd _listAd = NativeAd(
       adUnitId: Constants.getAdmobFeedNativeUnit(),
       factoryId: "listTile",
@@ -756,7 +771,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
   }
 
   Future<dynamic> loadAds() async {
-
     BannerAdListener bannerAdListener = BannerAdListener(
       onAdWillDismissScreen: (ad) {
         debugPrint("Ad Got onAdWillDismissScreen");
@@ -1563,7 +1577,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
   }
 
   uploadVideo(String videoPath, String coverPath, StateSetter setState) async {
-
     if (QuickHelp.isWebPlatform()) {
       ParseWebFile file = ParseWebFile(null, name: "video.mp4", url: videoPath);
       ParseWebFile thumbnail =
@@ -1575,7 +1588,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
       parseFile = ParseWebFile(file.file, name: file.name);
       parseFileThumbnail = ParseWebFile(thumbnail.file, name: thumbnail.name);
     } else {
-
       parseFile = ParseFile(
         null,
         url: videoPath,
