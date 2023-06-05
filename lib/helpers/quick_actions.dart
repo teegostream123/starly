@@ -108,7 +108,7 @@ class QuickActions {
 
   static Widget _avatarInitials(UserModel currentUser) {
     return AvatarInitials(
-      name: '${currentUser.getFirstName}',
+      name: '${currentUser.getUsername}',
       textSize: 18,
       avatarRadius: 10,
       backgroundColor:

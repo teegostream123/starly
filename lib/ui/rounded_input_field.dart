@@ -22,6 +22,8 @@ class RoundedInputField extends StatelessWidget {
   final Color? iconColor;
   final int? maxLines;
   final int? maxLength;
+  final bool? read;
+  final TextStyle? hintstyle;
   const RoundedInputField({
     Key? key,
     this.fieldKey,
@@ -42,6 +44,8 @@ class RoundedInputField extends StatelessWidget {
     this.iconColor,
     this.maxLines,
     this.maxLength,
+    this.read,
+    this.hintstyle,
   }) : super(key: key);
 
   @override
@@ -51,6 +55,7 @@ class RoundedInputField extends StatelessWidget {
       visible: visible,
       child: TextFormField(
         key: fieldKey,
+        readOnly: read ?? false,
         onTap: onTap as void Function()?,
         keyboardType: textInputType,
         inputFormatters: inputFormatters,
@@ -58,19 +63,24 @@ class RoundedInputField extends StatelessWidget {
         controller: controller,
         autovalidateMode: autovalidateMode,
         validator: validator,
+
         cursorColor: kPrimaryColor,
         textInputAction: textInputAction,
         maxLines: maxLines,
         maxLength: maxLength,
-        onEditingComplete: () => isNodeNext!? node.nextFocus() : node.unfocus(), // Move focus to next
+        onEditingComplete: () => isNodeNext!
+            ? node.nextFocus()
+            : node.unfocus(), // Move focus to next
         //style: QuickHelp.isDarkMode(context) ? TextStyle(color: Colors.black, fontSize: 16) : TextStyle(color: Colors.black, fontSize: 16),
         decoration: InputDecoration(
-          icon: icon != null ? Icon(
-            icon,
-            color: iconColor,
-          ) : null,
+          icon: icon != null
+              ? Icon(
+                  icon,
+                  color: iconColor,
+                )
+              : null,
           hintText: hintText,
-          //hintStyle: QuickHelp.isDarkMode(context) ? TextStyle(color: kColorsGrey500): TextStyle(color: kColorsGrey500),
+          hintStyle: hintstyle ?? TextStyle(),
           border: inputBorder,
           labelText: labelText != null ? labelText! : null,
         ),

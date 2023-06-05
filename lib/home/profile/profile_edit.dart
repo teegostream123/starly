@@ -25,7 +25,6 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 // ignore: must_be_immutable
 class ProfileEdit extends StatefulWidget {
-
   static String route = "/ProfileEdit";
 
   UserModel? currentUser;
@@ -37,7 +36,6 @@ class ProfileEdit extends StatefulWidget {
 }
 
 class _ProfileEditState extends State<ProfileEdit> {
-
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fullNameEditingController = TextEditingController();
   TextEditingController aboutYouTitleEditingController =
@@ -69,7 +67,6 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   _getUser() async {
-
     fullNameEditingController.text = widget.currentUser!.getFullName!;
     aboutYouTitleEditingController.text = widget.currentUser!.getAboutYou!;
     userBirthday = widget.currentUser!.getBirthday != null
@@ -93,8 +90,12 @@ class _ProfileEditState extends State<ProfileEdit> {
         : "profile_screen.gender_invalid".tr();
 
     setState(() {
-      userAvatar = widget.currentUser!.getAvatar != null ? widget.currentUser!.getAvatar!.url! : "";
-      userCover = widget.currentUser!.getCover != null ? widget.currentUser!.getCover!.url! : "";
+      userAvatar = widget.currentUser!.getAvatar != null
+          ? widget.currentUser!.getAvatar!.url!
+          : "";
+      userCover = widget.currentUser!.getCover != null
+          ? widget.currentUser!.getCover!.url!
+          : "";
     });
   }
 
@@ -106,12 +107,15 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   @override
   Widget build(BuildContext context) {
-
-    userAvatar = widget.currentUser!.getAvatar != null ? widget.currentUser!.getAvatar!.url! : "";
-    userCover = widget.currentUser!.getCover != null ? widget.currentUser!.getCover!.url! : "";
+    userAvatar = widget.currentUser!.getAvatar != null
+        ? widget.currentUser!.getAvatar!.url!
+        : 'https://png.pngitem.com/pimgs/s/24-248226_computer-icons-user-profile-clip-art-login-user.png';
+    userCover = widget.currentUser!.getCover != null
+        ? widget.currentUser!.getCover!.url!
+        : "https://png.pngitem.com/pimgs/s/24-248226_computer-icons-user-profile-clip-art-login-user.png";
 
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScopeNode focusScopeNode = FocusScope.of(context);
         if (!focusScopeNode.hasPrimaryFocus &&
             focusScopeNode.focusedChild != null) {
@@ -121,9 +125,12 @@ class _ProfileEditState extends State<ProfileEdit> {
       child: ToolBar(
         title: "page_title.edit_profile_title".tr(),
         leftButtonIcon: Icons.arrow_back,
-        onLeftButtonTap: () => QuickHelp.goBackToPreviousPage(context, result: widget.currentUser),
+        onLeftButtonTap: () =>
+            QuickHelp.goBackToPreviousPage(context, result: widget.currentUser),
         child: ContainerCorner(
-          color: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : kContentColorDarkTheme,
+          color: QuickHelp.isDarkMode(context)
+              ? kContentColorLightTheme
+              : kContentColorDarkTheme,
           child: ListView(
             children: [
               Stack(
@@ -163,7 +170,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 right: 5,
                               ),
                             ),
-                            onTap: ()=> checkPermission(true),
+                            onTap: () => checkPermission(true),
                           ),
                           Positioned(
                             bottom: 10,
@@ -179,7 +186,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 color: Colors.white,
                                 size: 22,
                               ),
-                              onTap: ()=> checkPermission(true),
+                              onTap: () => checkPermission(true),
                             ),
                           ),
                         ],
@@ -224,7 +231,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     ContainerCorner(
                       marginTop: 20,
-                      color: QuickHelp.isDarkMode(context) ? kGreyColor2: kGreyColor0,
+                      color: QuickHelp.isDarkMode(context)
+                          ? kGreyColor2
+                          : kGreyColor0,
                       height: 1,
                     )
                   ],
@@ -247,7 +256,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                       marginRight: 10,
                       width: MediaQuery.of(context).size.width - 20,
                       borderRadius: 10,
-                      color: QuickHelp.isDarkMode(context) ? kGreyColor2: kGreyColor0,
+                      color: QuickHelp.isDarkMode(context)
+                          ? kGreyColor2
+                          : kGreyColor0,
                       child: TextWithTap(
                         widget.currentUser!.getAboutYou!.isNotEmpty
                             ? widget.currentUser!.getAboutYou!
@@ -260,7 +271,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     ContainerCorner(
                       marginTop: 20,
-                      color: QuickHelp.isDarkMode(context) ? kGreyColor2: kGreyColor0,
+                      color: QuickHelp.isDarkMode(context)
+                          ? kGreyColor2
+                          : kGreyColor0,
                       height: 1,
                     )
                   ],
@@ -286,7 +299,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     ContainerCorner(
                       marginTop: 10,
-                      color: QuickHelp.isDarkMode(context) ? kGreyColor2: kGreyColor0,
+                      color: QuickHelp.isDarkMode(context)
+                          ? kGreyColor2
+                          : kGreyColor0,
                       height: 1,
                     )
                   ],
@@ -313,7 +328,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     ContainerCorner(
                       marginTop: 10,
-                      color: QuickHelp.isDarkMode(context) ? kGreyColor2: kGreyColor0,
+                      color: QuickHelp.isDarkMode(context)
+                          ? kGreyColor2
+                          : kGreyColor0,
                       height: 1,
                     )
                   ],
@@ -343,7 +360,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return GestureDetector(
-            onTap: (){
+            onTap: () {
               FocusScopeNode focusScopeNode = FocusScope.of(context);
               if (!focusScopeNode.hasPrimaryFocus &&
                   focusScopeNode.focusedChild != null) {
@@ -372,7 +389,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 height: 140,
                                 margin: EdgeInsets.only(
                                     top: 10, bottom: 20, left: 30, right: 30),
-                                child: QuickActions.avatarWidget(widget.currentUser!),
+                                child: QuickActions.avatarWidget(
+                                    widget.currentUser!),
                               ),
                             ],
                           ),
@@ -409,10 +427,15 @@ class _ProfileEditState extends State<ProfileEdit> {
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             _updateNow();
-                          } else if(!isValidBirthday){
-                            QuickHelp.showAppNotification(context: context, title: "profile_screen.choose_birthday".tr());
-                          } else if(!isValidGender){
-                            QuickHelp.showAppNotification(context: context, title: "profile_screen.gender_invalid_select".tr());
+                          } else if (!isValidBirthday) {
+                            QuickHelp.showAppNotification(
+                                context: context,
+                                title: "profile_screen.choose_birthday".tr());
+                          } else if (!isValidGender) {
+                            QuickHelp.showAppNotification(
+                                context: context,
+                                title: "profile_screen.gender_invalid_select"
+                                    .tr());
                           }
                         },
                       ),
@@ -433,13 +456,12 @@ class _ProfileEditState extends State<ProfileEdit> {
 
       if (value.isEmpty) {
         return "profile_screen.no_full_name".tr();
-      }
-       else if (firstSpace < 1) {
+      } else if (firstSpace < 1) {
         return "profile_screen.full_name_please".tr();
       } else if (fullNameEditingController.text.endsWith(" ")) {
         return "profile_screen.full_name_please".tr();
       }
-       /*else if (fullNameEditingController.text == widget.currentUser!.getFullName!) {
+      /*else if (fullNameEditingController.text == widget.currentUser!.getFullName!) {
         return "settings_screen.same_name_inserted".tr();
       }*/
       else {
@@ -626,17 +648,20 @@ class _ProfileEditState extends State<ProfileEdit> {
     widget.currentUser!.setLastName = lastName;
     widget.currentUser!.setGender = mySelectedGender;
     widget.currentUser!.username = username.toLowerCase();
-    widget.currentUser!.setBirthday = QuickHelp.getDate(birthdayEditingController.text);
+    widget.currentUser!.setBirthday =
+        QuickHelp.getDate(birthdayEditingController.text);
 
-    if(aboutYouTitleEditingController.text.isNotEmpty){
+    if (aboutYouTitleEditingController.text.isNotEmpty) {
       widget.currentUser!.setAboutYou = aboutYouTitleEditingController.text;
     }
 
     ParseResponse userResult = await widget.currentUser!.save();
 
     if (userResult.success) {
-      QuickHelp.hideLoadingDialog(context, result: userResult.results!.first as UserModel);
-      QuickHelp.hideLoadingDialog(context, result: userResult.results!.first as UserModel);
+      QuickHelp.hideLoadingDialog(context,
+          result: userResult.results!.first as UserModel);
+      QuickHelp.hideLoadingDialog(context,
+          result: userResult.results!.first as UserModel);
 
       widget.currentUser = userResult.results!.first as UserModel;
 
@@ -727,7 +752,6 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   _choosePhoto(bool isAvatar) async {
-
     final List<AssetEntity>? result = await AssetPicker.pickAssets(
       context,
       pickerConfig: AssetPickerConfig(
@@ -754,17 +778,23 @@ class _ProfileEditState extends State<ProfileEdit> {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: path,
         aspectRatioPresets: [
-          isAvatar == true ? CropAspectRatioPreset.square : CropAspectRatioPreset.ratio16x9,
+          isAvatar == true
+              ? CropAspectRatioPreset.square
+              : CropAspectRatioPreset.ratio16x9,
         ],
         //maxHeight: 480,
         //maxWidth: 740,
-        aspectRatio: isAvatar == true ? CropAspectRatio(ratioX: 4, ratioY: 4) : CropAspectRatio(ratioX: 16, ratioY: 9),
+        aspectRatio: isAvatar == true
+            ? CropAspectRatio(ratioX: 4, ratioY: 4)
+            : CropAspectRatio(ratioX: 16, ratioY: 9),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "edit_photo".tr(),
               toolbarColor: kPrimaryColor,
               toolbarWidgetColor: Colors.white,
-              initAspectRatio: isAvatar == true ? CropAspectRatioPreset.square : CropAspectRatioPreset.ratio16x9,
+              initAspectRatio: isAvatar == true
+                  ? CropAspectRatioPreset.square
+                  : CropAspectRatioPreset.ratio16x9,
               lockAspectRatio: false),
           IOSUiSettings(
             minimumAspectRatio: 1.0,
@@ -772,7 +802,6 @@ class _ProfileEditState extends State<ProfileEdit> {
         ]);
 
     if (croppedFile != null) {
-
       //compressImage(QuickHelp.asImageFile(croppedFile), isAvatar);
       compressImage(croppedFile.path, isAvatar);
     } else {
@@ -782,22 +811,18 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   void compressImage(String path, bool isAvatar) {
-
     QuickHelp.showLoadingAnimation();
     //QuickHelp.showLoadingDialogWithText(context, description: "crop_image_scree.optimizing_image".tr(), useLogo: true);
 
-    Future.delayed(Duration(seconds: 1), () async{
+    Future.delayed(Duration(seconds: 1), () async {
       var result = await QuickHelp.compressImage(path);
 
-      if(result != null){
-
+      if (result != null) {
         //QuickHelp.hideLoadingDialog(context);
         //QuickHelp.showLoadingDialogWithText(context, description: "crop_image_scree.optimizing_image_uploading".tr());
 
         uploadFile(result, isAvatar);
-
       } else {
-
         QuickHelp.hideLoadingDialog(context);
 
         QuickHelp.showAppNotificationAdvanced(
@@ -807,12 +832,10 @@ class _ProfileEditState extends State<ProfileEdit> {
         );
       }
     });
-
   }
 
   uploadFile(File imageFile, bool isAvatar) async {
-
-    if(imageFile.absolute.path.isNotEmpty){
+    if (imageFile.absolute.path.isNotEmpty) {
       parseFile = ParseFile(File(imageFile.absolute.path), name: "avatar.jpg");
     } else {
       parseFile = ParseWebFile(imageFile.readAsBytesSync(), name: "avatar.jpg");
@@ -826,7 +849,7 @@ class _ProfileEditState extends State<ProfileEdit> {
 
     ParseResponse parseResponse = await widget.currentUser!.save();
 
-    if(parseResponse.success){
+    if (parseResponse.success) {
       widget.currentUser = parseResponse.results!.first as UserModel;
       QuickHelp.hideLoadingDialog(context);
       _getUser();

@@ -45,18 +45,23 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
   TextEditingController aboutYouTitleEditingController =
       TextEditingController();
   TextEditingController birthdayEditingController = TextEditingController();
+  TextEditingController roleEditingController = TextEditingController();
 
   String typeName = "name";
   String typeBirthday = "birthday";
   String typeGender = "gender";
+  String typeRole = "user";
 
   bool isValidBirthday = false;
   bool isValidGender = false;
   bool isValidName = false;
+  bool isValidRole = false;
+
   String myBirthday = "";
   String? mySelectedGender;
   String userBirthday = "";
   String userGender = "";
+  String userRole = "";
 
   String userAvatar = "";
   String userCover = "";
@@ -89,13 +94,15 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
           QuickHelp.getBirthdayFromDate(widget.currentUser!.getBirthday!);
     }
 
-    if (widget.currentUser!.getGender != null && widget.currentUser!.getGender!.isNotEmpty) {
+    if (widget.currentUser!.getGender != null &&
+        widget.currentUser!.getGender!.isNotEmpty) {
       isValidGender = true;
 
       mySelectedGender = widget.currentUser!.getGender!;
     }
 
-    userGender = widget.currentUser!.getGender != null && widget.currentUser!.getGender!.isNotEmpty
+    userGender = widget.currentUser!.getGender != null &&
+            widget.currentUser!.getGender!.isNotEmpty
         ? QuickHelp.getGender(widget.currentUser!)
         : "profile_screen.gender_invalid".tr();
 
@@ -154,7 +161,6 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
         title: "page_title.edit_profile_title".tr(),
         leftButtonIcon: Icons.output,
         onLeftButtonTap: () {
-
           QuickHelp.showDialogWithButtonCustom(
               context: context,
               title: "account_settings.logout_user_sure".tr(),
@@ -183,7 +189,6 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
         rightButtonIcon: Icons.check_outlined,
         rightButtonPress: () {
           if (!isValidBirthday || !isValidGender || !isValidName) {
-
             QuickHelp.showAppNotificationAdvanced(
               context: context,
               title: "profile_screen.complete_profile".tr(),
@@ -192,10 +197,13 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
               user: widget.currentUser!,
             );
           } else {
-
             QuickHelp.goToNavigatorScreen(
-                context, DispacheScreen(currentUser: widget.currentUser, preferences: widget.preferences),
-                finish: true, back: false);
+                context,
+                DispacheScreen(
+                    currentUser: widget.currentUser,
+                    preferences: widget.preferences),
+                finish: true,
+                back: false);
           }
         },
         child: ContainerCorner(
@@ -257,6 +265,36 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
                     ),
                     TextWithTap(
                       widget.currentUser!.getFullName!,
+                      marginRight: 5,
+                      marginLeft: 10,
+                      color: kGrayColor,
+                    ),
+                    ContainerCorner(
+                      marginTop: 20,
+                      color: QuickHelp.isDarkMode(context)
+                          ? kGreyColor2
+                          : kGreyColor0,
+                      height: 1,
+                    )
+                  ],
+                ),
+                onTap: () => _changeName(),
+              ),
+              ContainerCorner(
+                marginTop: 10,
+                color: kTransparentColor,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextWithTap(
+                      "Role".tr(),
+                      marginLeft: 10,
+                      marginBottom: 5,
+                    ),
+                    TextWithTap(
+                      widget.currentUser!.getUserRole == null
+                          ? 'user'
+                          : widget.currentUser!.getUserRole!,
                       marginRight: 5,
                       marginLeft: 10,
                       color: kGrayColor,
@@ -498,6 +536,19 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
       }
     }
 
+    // String? _validateRole(String value) {
+    //   if (value.isEmpty) {
+    //     return "Role cannot be empty".tr();
+    //     // } else if (value) {
+    //     //   return "profile_screen.full_name_please".tr();
+    //     // } else if (fullNameEditingController.text.endsWith(" ")) {
+    //     //   return "profile_screen.full_name_please".tr();
+    //     // } else {
+    //   }
+    //   isValidRole = true;
+    //   return null;
+    // }
+
     String? _validateBirthday(String value) {
       isValidBirthday = false;
       if (value.isEmpty) {
@@ -522,6 +573,7 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
         children: [
           RoundedInputField(
             // Full name
+
             inputFormatters: [FirstUpperCaseTextFormatter()],
             isNodeNext: false,
             textInputAction: TextInputAction.done,
@@ -531,6 +583,19 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
             validator: (value) {
               return _validateFullName(value!);
             },
+
+            // autovalidateMode: AutovalidateMode.onUserInteraction,
+          ),
+          RoundedInputField(
+            // Full name
+            read: true,
+            inputFormatters: [FirstUpperCaseTextFormatter()],
+            isNodeNext: false,
+            textInputAction: TextInputAction.done,
+            hintText: "Your role User".tr(),
+            hintstyle: TextStyle(color: Colors.black),
+            controller: roleEditingController,
+            // autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           ContainerCorner(
             marginLeft: 25,
@@ -677,6 +742,7 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
     widget.currentUser!.setLastName = lastName;
     widget.currentUser!.setGender = mySelectedGender!;
     widget.currentUser!.username = username.toLowerCase();
+    widget.currentUser!.setUserRole = "user";
     widget.currentUser!.setBirthday =
         QuickHelp.getDate(birthdayEditingController.text);
 
@@ -782,7 +848,6 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
   }
 
   _choosePhoto(bool isAvatar) async {
-
     final List<AssetEntity>? result = await AssetPicker.pickAssets(
       context,
       pickerConfig: AssetPickerConfig(
@@ -809,17 +874,23 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: path,
         aspectRatioPresets: [
-          isAvatar == true ? CropAspectRatioPreset.square : CropAspectRatioPreset.ratio16x9,
+          isAvatar == true
+              ? CropAspectRatioPreset.square
+              : CropAspectRatioPreset.ratio16x9,
         ],
         //maxHeight: 480,
         //maxWidth: 740,
-        aspectRatio: isAvatar == true ? CropAspectRatio(ratioX: 4, ratioY: 4) : CropAspectRatio(ratioX: 16, ratioY: 9),
+        aspectRatio: isAvatar == true
+            ? CropAspectRatio(ratioX: 4, ratioY: 4)
+            : CropAspectRatio(ratioX: 16, ratioY: 9),
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: "edit_photo".tr(),
               toolbarColor: kPrimaryColor,
               toolbarWidgetColor: Colors.white,
-              initAspectRatio: isAvatar == true ? CropAspectRatioPreset.square : CropAspectRatioPreset.ratio16x9,
+              initAspectRatio: isAvatar == true
+                  ? CropAspectRatioPreset.square
+                  : CropAspectRatioPreset.ratio16x9,
               lockAspectRatio: false),
           IOSUiSettings(
             minimumAspectRatio: 1.0,
@@ -827,7 +898,6 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
         ]);
 
     if (croppedFile != null) {
-
       compressImage(croppedFile.path, isAvatar);
     } else {
       QuickHelp.hideLoadingDialog(context);
@@ -836,18 +906,15 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
   }
 
   void compressImage(String path, bool isAvatar) {
+    QuickHelp.showLoadingDialogWithText(context,
+        description: "crop_image_scree.optimizing_image".tr(), useLogo: true);
 
-    QuickHelp.showLoadingDialogWithText(context, description: "crop_image_scree.optimizing_image".tr(), useLogo: true);
-
-    Future.delayed(Duration(seconds: 1), () async{
+    Future.delayed(Duration(seconds: 1), () async {
       var result = await QuickHelp.compressImage(path);
 
-      if(result != null){
-
+      if (result != null) {
         uploadFile(result, isAvatar);
-
       } else {
-
         QuickHelp.hideLoadingDialog(context);
 
         QuickHelp.showAppNotificationAdvanced(
@@ -860,8 +927,7 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
   }
 
   uploadFile(File imageFile, bool isAvatar) async {
-
-    if(imageFile.absolute.path.isNotEmpty){
+    if (imageFile.absolute.path.isNotEmpty) {
       parseFile = ParseFile(File(imageFile.absolute.path), name: "avatar.jpg");
     } else {
       parseFile = ParseWebFile(imageFile.readAsBytesSync(), name: "avatar.jpg");
@@ -875,13 +941,11 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
 
     ParseResponse parseResponse = await widget.currentUser!.save();
 
-    if(parseResponse.success){
+    if (parseResponse.success) {
       widget.currentUser = parseResponse.results!.first as UserModel;
       QuickHelp.hideLoadingDialog(context);
       _getUser();
-
     } else {
-
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.showAppNotificationAdvanced(
         context: context,
