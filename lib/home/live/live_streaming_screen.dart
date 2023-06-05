@@ -426,11 +426,11 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         }
       },
     ));
-// https://agora-token-service-production-e31c.up.railway.app/rtc/4EVjzR6ufY1687861873/1/uid/1143726920
+
     callchanneltoken(channelname, uuid, role) async {
       var tokenrtc = null;
       String url =
-          'https://agora-token-service-production-e31c.up.railway.app/rtc/$channelname/${role}/uid/${uuid}';
+          'https://agora-token-service-production-3fac.up.railway.app/rtc/$channelname/${role}/uid/${uuid}';
       print(url);
 
       // Send the request
