@@ -29,7 +29,6 @@ class InvitedUsers extends StatefulWidget {
 }
 
 class _InvitedUsersState extends State<InvitedUsers> {
-
   final DynamicLinkService _dynamicLinkService = DynamicLinkService();
 
   @override
@@ -66,23 +65,23 @@ class _InvitedUsersState extends State<InvitedUsers> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _invitedFriends(context),
-           Column(
-             children: [
-               buttonsToInvite(),
-               creditsToInvite(),
-             ],
-           )
+            Column(
+              children: [
+                buttonsToInvite(),
+                creditsToInvite(),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 
-
   Widget _invitedFriends(BuildContext showContext) {
-
-    QueryBuilder<InvitedUsersModel> query = QueryBuilder<InvitedUsersModel>(InvitedUsersModel());
-    query.whereEqualTo(InvitedUsersModel.keyInvitedById, widget.currentUser!.objectId);
+    QueryBuilder<InvitedUsersModel> query =
+        QueryBuilder<InvitedUsersModel>(InvitedUsersModel());
+    query.whereEqualTo(
+        InvitedUsersModel.keyInvitedById, widget.currentUser!.objectId);
 
     query.includeObject([
       InvitedUsersModel.keyInvitedBy,
@@ -102,17 +101,21 @@ class _InvitedUsersState extends State<InvitedUsers> {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onTap: ()=> QuickActions.showUserProfile(context, widget.currentUser!, invitedUsersModel.getAuthor!),
+            onTap: () => QuickActions.showUserProfile(
+                context, widget.currentUser!, invitedUsersModel.getAuthor!),
             child: Row(
               children: [
-                QuickActions.avatarWidget(invitedUsersModel.getAuthor!,
+                QuickActions.avatarWidget(
+                  invitedUsersModel.getAuthor!,
                   width: 50,
                   height: 50,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextWithTap(invitedUsersModel.getAuthor!.getFullName!, marginBottom: 5,
+                    TextWithTap(
+                      invitedUsersModel.getAuthor!.getFullName!,
+                      marginBottom: 5,
                       marginLeft: 10,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -126,7 +129,10 @@ class _InvitedUsersState extends State<InvitedUsers> {
                           child: Row(
                             children: [
                               TextWithTap(
-                                "invite_friends.exp_valid".tr(namedArgs: {"date" : QuickHelp.getTimeAndDate(invitedUsersModel.getValidUntil!)}),
+                                "invite_friends.exp_valid".tr(namedArgs: {
+                                  "date": QuickHelp.getTimeAndDate(
+                                      invitedUsersModel.getValidUntil!)
+                                }),
                                 fontSize: 14,
                                 marginLeft: 3,
                                 fontWeight: FontWeight.normal,
@@ -177,7 +183,7 @@ class _InvitedUsersState extends State<InvitedUsers> {
   Widget buttonsToInvite() {
     return ContainerCorner(
       child: Column(
-        children:[
+        children: [
           ButtonWithIcon(
             text: "profile_screen.op_invite_friends".tr().toUpperCase(),
             fontSize: 17,
@@ -198,7 +204,6 @@ class _InvitedUsersState extends State<InvitedUsers> {
   }
 
   Widget creditsToInvite() {
-
     return ContainerCorner(
       color: kPrimacyGrayColor,
       height: 50,
@@ -209,7 +214,7 @@ class _InvitedUsersState extends State<InvitedUsers> {
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children:[
+        children: [
           TextWithTap(
             "invite_friends.turn_over_this_month".tr().toUpperCase(),
             fontSize: 14,
@@ -285,7 +290,8 @@ class _InvitedUsersState extends State<InvitedUsers> {
                             fontWeight: FontWeight.bold,
                           ),
                           TextWithTap(
-                            "invite_friends.contact_us_via_whatsapp".tr(namedArgs: {"app_name": Setup.appName}),
+                            "invite_friends.contact_us_via_whatsapp"
+                                .tr(namedArgs: {"app_name": Setup.appName}),
                             fontSize: 16,
                             textAlign: TextAlign.center,
                             marginLeft: 20,
@@ -312,7 +318,8 @@ class _InvitedUsersState extends State<InvitedUsers> {
 
     if (uri != null) {
       QuickHelp.hideLoadingDialog(context);
-      Share.share("settings_screen.share_app_url".tr(namedArgs: {"app_name": Config.appName, "url": uri.toString()}));
+      Share.share("settings_screen.share_app_url"
+          .tr(namedArgs: {"app_name": Config.appName, "url": uri.toString()}));
     } else {
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.showAppNotificationAdvanced(
@@ -323,5 +330,3 @@ class _InvitedUsersState extends State<InvitedUsers> {
     }
   }
 }
-
-

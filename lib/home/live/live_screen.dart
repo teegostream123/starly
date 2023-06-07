@@ -16,6 +16,7 @@ import 'package:teego/home/coins/coins_payment_widget.dart';
 import 'package:teego/home/live/live_preview.dart';
 import 'package:teego/home/live/live_streaming_screen.dart';
 import 'package:teego/home/profile/profile_edit.dart';
+import 'package:teego/home/profile/user_screen.dart';
 import 'package:teego/models/GiftsSentModel.dart';
 import 'package:teego/models/LiveStreamingModel.dart';
 import 'package:teego/models/UserModel.dart';
@@ -508,7 +509,10 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
 
                         return GestureDetector(
                           onTap: () {
-                            user.setUserRole = 'user';
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (builder) => UserScreen(
+                                      userModel: user,
+                                    )));
                           },
                           child: Stack(children: [
                             ContainerCorner(
