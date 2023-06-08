@@ -232,7 +232,7 @@
     "gender_invalid_select": "Please select your gender",
     "choose_birthday": "Your birthday please",
     "invalid_date": "Invalid birthday",
-    "full_name_please": "Your real fullname please",
+    "full_name_please": "Please enter full name with space",
     "full_name_hint": "John Doe",
     "birthday_hint": "01/01/2000",
     "email_hint": "name@domain.com",
