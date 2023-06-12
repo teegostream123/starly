@@ -287,36 +287,6 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithTap(
-                      "Role".tr(),
-                      marginLeft: 10,
-                      marginBottom: 5,
-                    ),
-                    TextWithTap(
-                      widget.currentUser!.getUserRole == null
-                          ? 'user'
-                          : widget.currentUser!.getUserRole!,
-                      marginRight: 5,
-                      marginLeft: 10,
-                      color: kGrayColor,
-                    ),
-                    ContainerCorner(
-                      marginTop: 20,
-                      color: QuickHelp.isDarkMode(context)
-                          ? kGreyColor2
-                          : kGreyColor0,
-                      height: 1,
-                    )
-                  ],
-                ),
-                onTap: () => _changeName(),
-              ),
-              ContainerCorner(
-                marginTop: 10,
-                color: kTransparentColor,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextWithTap(
                       "profile_screen.about_me".tr(),
                       marginLeft: 10,
                       marginBottom: 5,
@@ -584,17 +554,6 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
               return _validateFullName(value!);
             },
 
-            // autovalidateMode: AutovalidateMode.onUserInteraction,
-          ),
-          RoundedInputField(
-            // Full name
-            read: true,
-            inputFormatters: [FirstUpperCaseTextFormatter()],
-            isNodeNext: false,
-            textInputAction: TextInputAction.done,
-            hintText: "Your role User".tr(),
-            hintstyle: TextStyle(color: Colors.black),
-            controller: roleEditingController,
             // autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           ContainerCorner(

@@ -2946,18 +2946,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     await liveMessagesModel.save();
   }
 
-  Widget liveMessages() {
-    if (isBroadcaster && liveMessageSent == false) {
-      /* SendNotifications.sendPush(
-          widget.currentUser, widget.currentUser, SendNotifications.typeLive,
-          objectId: liveStreamingModel.objectId!);*/
-      sendMessage(
-          LiveMessagesModel.messageTypeSystem,
-          "live_streaming.live_streaming_created_message".tr(),
-          widget.currentUser);
-      liveMessageSent = true;
-    }
-
+  Future<List<ParseObject>> doUserQuery() async {
     QueryBuilder<LiveMessagesModel> queryBuilder =
         QueryBuilder<LiveMessagesModel>(LiveMessagesModel());
     queryBuilder.whereEqualTo(
@@ -2970,39 +2959,121 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     ]);
     queryBuilder.orderByDescending(LiveMessagesModel.keyCreatedAt);
 
+    final ParseResponse apiResponse = await queryBuilder.query();
+
+    if (apiResponse.success && apiResponse.results != null) {
+      return apiResponse.results as List<ParseObject>;
+    } else {
+      return [];
+    }
+  }
+
+  Widget liveMessages() {
+    if (isBroadcaster && liveMessageSent == false) {
+      /* SendNotifications.sendPush(
+          widget.currentUser, widget.currentUser, SendNotifications.typeLive,
+          objectId: liveStreamingModel.objectId!);*/
+      sendMessage(
+          LiveMessagesModel.messageTypeSystem,
+          "live_streaming.live_streaming_created_message".tr(),
+          widget.currentUser);
+      liveMessageSent = true;
+    }
+
     var size = MediaQuery.of(context).size;
-    return ContainerCorner(
-      color: kTransparentColor,
-      marginLeft: 10,
-      marginRight: 10,
-      height: 300,
-      width: size.width / 1.3,
-      marginBottom: 15,
-      //color: kTransparentColor,
-      child: ParseLiveListWidget<LiveMessagesModel>(
-        query: queryBuilder,
-        reverse: true,
-        key: Key(liveMessageObjectId),
-        duration: Duration(microseconds: 500),
-        childBuilder: (BuildContext context,
-            ParseLiveListElementSnapshot<LiveMessagesModel> snapshot) {
-          if (snapshot.failed) {
-            return Text('not_connected'.tr());
-          } else if (snapshot.hasData) {
-            LiveMessagesModel liveMessage = snapshot.loadedData!;
+    return FutureBuilder<List<ParseObject>>(
+        future: doUserQuery(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            default:
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error...: ${snapshot.error.toString()}"),
+                );
+              } else {
+                if (snapshot.data!.isEmpty) {
+                  return Center(
+                    child: Text('None user found'),
+                  );
+                }
 
-            bool isMe =
-                liveMessage.getAuthorId == widget.currentUser.objectId &&
-                    liveMessage.getLiveStreaming!.getAuthorId! ==
-                        widget.currentUser.objectId;
+                return Container(
+                  color: Colors.black38,
+                  height: 300,
+                  width: size.width / 1.3,
+                  child: ListView.builder(
+                      padding: EdgeInsets.only(top: 10.0),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final user = snapshot.data![index] as LiveMessagesModel;
 
-            return getMessages(liveMessage, isMe);
-          } else {
-            return Container();
+                        return ListTile(
+                          leading: Padding(
+                            padding: EdgeInsets.only(top: 15.0),
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.white,
+                              backgroundImage: NetworkImage(
+                                  user.getAuthor!.getAvatar!.url.toString()),
+                            ),
+                          ),
+                          title: Text(
+                            user.getAuthor!.getFullName!,
+                            style: TextStyle(
+                                color: Color(0xFFE5B400),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+
+                          subtitle: Text(
+                            user.getMessage!,
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
+
+                          // subtitle: Text(user.createdAt.toString()),
+                        );
+                      }),
+                );
+              }
           }
-        },
-      ),
-    );
+        });
+    // Container(
+    //   color: Colors.red,
+    //   height: 300,
+    //   width: size.width / 1.3,
+    // );
+    // ContainerCorner(
+    //   color: kTransparentColor,
+    //   marginLeft: 10,
+    //   marginRight: 10,
+    //   height: 300,
+    //   width: size.width / 1.3,
+    //   marginBottom: 15,
+    //   //color: kTransparentColor,
+    //   child: ParseLiveListWidget<LiveMessagesModel>(
+    //     query: queryBuilder,
+    //     reverse: true,
+    //     key: Key(liveMessageObjectId),
+    //     duration: Duration(microseconds: 500),
+    //     childBuilder: (BuildContext context,
+    //         ParseLiveListElementSnapshot<LiveMessagesModel> snapshot) {
+    //       if (snapshot.failed) {
+    //         return Text('not_connected'.tr());
+    //       } else if (snapshot.hasData) {
+    //         LiveMessagesModel liveMessage = snapshot.loadedData!;
+
+    //         bool isMe =
+    //             liveMessage.getAuthorId == widget.currentUser.objectId &&
+    //                 liveMessage.getLiveStreaming!.getAuthorId! ==
+    //                     widget.currentUser.objectId;
+
+    //         return getMessages(liveMessage, isMe);
+    //       } else {
+    //         return Container();
+    //       }
+    //     },
+    //   ),
+    // );
   }
 
   Widget getMessages(LiveMessagesModel liveMessages, bool isMe) {
