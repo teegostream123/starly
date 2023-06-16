@@ -37,14 +37,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-
     QuickHelp.saveCurrentRoute(route: ProfileScreen.route);
+    checkUserRole();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  String? userRole;
+
+  checkUserRole() async {
+    UserModel? user = await ParseUser.currentUser();
+    print("HERE USER ROLE ${user!.getUserRole}");
+    setState(() {
+      userRole = user.getUserRole;
+    });
+
+    // return user.getUserRole;
   }
 
   @override
@@ -106,31 +118,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       right: 0,
                       child: Container(
                         margin: EdgeInsets.all(8),
-                        child: FloatingActionButton(
-                          child: ContainerCorner(
-                            height: 60,
-                            width: 60,
-                            colors: [kPrimaryColor, kSecondaryColor],
-                            borderRadius: 10,
-                            shadowColor: kPrimaryColor,
-                            shadowColorOpacity: 0.3,
-                            setShadowToBottom: true,
-                            blurRadius: 10,
-                            spreadRadius: 3,
-                            child: Container(
-                              width: 20,
-                              height: 20,
-                              margin: EdgeInsets.all(12),
-                              child: QuickActions.showSVGAsset(
-                                "assets/svg/ic_tab_live_selected.svg",
-                                color: Colors.white,
-                                width: 20,
-                                height: 20,
-                              ),
-                            ),
-                          ),
-                          onPressed: () => checkPermission(),
-                        ),
+                        child: userRole == "artist"
+                            ? FloatingActionButton(
+                                child: ContainerCorner(
+                                  height: 60,
+                                  width: 60,
+                                  colors: [kPrimaryColor, kSecondaryColor],
+                                  borderRadius: 10,
+                                  shadowColor: kPrimaryColor,
+                                  shadowColorOpacity: 0.3,
+                                  setShadowToBottom: true,
+                                  blurRadius: 10,
+                                  spreadRadius: 3,
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    margin: EdgeInsets.all(12),
+                                    child: QuickActions.showSVGAsset(
+                                      "assets/svg/ic_tab_live_selected.svg",
+                                      color: Colors.white,
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () => checkPermission(),
+                              )
+                            : SizedBox(),
                       ),
                     ),
                     Positioned(
@@ -312,18 +326,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: ()=> indexTap(0),
+                          onTap: () => indexTap(0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_followers_active.svg",
-                                color: tabIndex == 0 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 0
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
-                              TextWithTap("feed.for_all".tr(),
+                              TextWithTap(
+                                "feed.for_all".tr(),
                                 fontSize: 16,
-                                color: tabIndex == 0 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 0
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ],
@@ -331,18 +350,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(width: 20),
                         GestureDetector(
-                          onTap: ()=> indexTap(1),
+                          onTap: () => indexTap(1),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_gold_star_small.svg",
-                                color: tabIndex == 1 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 1
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
-                              TextWithTap("feed.exclusive_".tr(),
+                              TextWithTap(
+                                "feed.exclusive_".tr(),
                                 fontSize: 16,
-                                color: tabIndex == 1 ? kPrimaryColor : kDisabledGrayColor,
+                                color: tabIndex == 1
+                                    ? kPrimaryColor
+                                    : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ],
@@ -367,7 +391,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  indexTap(int index){
+  indexTap(int index) {
     setState(() {
       tabIndex = index;
     });
@@ -582,7 +606,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<List<dynamic>?> _loadFeeds(bool? isExclusive) async {
     QueryBuilder<PostsModel> queryBuilder =
-    QueryBuilder<PostsModel>(PostsModel());
+        QueryBuilder<PostsModel>(PostsModel());
     queryBuilder.includeObject([
       PostsModel.keyAuthor,
       PostsModel.keyLastLikeAuthor,
@@ -632,8 +656,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             List<dynamic> results = snapshot.data! as List<dynamic>;
 
             return Column(
-              children: List.generate(results.length, (index){
-
+              children: List.generate(results.length, (index) {
                 PostsModel post = results[index];
 
                 var liked = post.getLikes!.length > 0 &&
@@ -663,7 +686,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       width: 50, height: 50),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       TextWithTap(
                                         post.getAuthor!.getFullName!,
@@ -738,9 +761,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   post.getLastLikeAuthor != null
                                       ? QuickActions.avatarWidget(
-                                      post.getLastLikeAuthor!,
-                                      width: 24,
-                                      height: 24)
+                                          post.getLastLikeAuthor!,
+                                          width: 24,
+                                          height: 24)
                                       : Container(),
                                   TextWithTap(
                                     post.getLikes!.length.toString() +
@@ -762,9 +785,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   post.getLastDiamondAuthor != null
                                       ? QuickActions.avatarWidget(
-                                      post.getLastDiamondAuthor!,
-                                      width: 24,
-                                      height: 24)
+                                          post.getLastDiamondAuthor!,
+                                          width: 24,
+                                          height: 24)
                                       : Container(),
                                   TextWithTap(""),
                                 ],
@@ -809,14 +832,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     : Colors.white,
                                 onTap: () {
                                   if (liked) {
-                                    post.removeLike = widget.currentUser!.objectId!;
+                                    post.removeLike =
+                                        widget.currentUser!.objectId!;
                                     //post.unset(PostsModel.keyLastLikeAuthor);
 
                                     _deleteLike(post);
                                     post.save();
                                   } else {
-                                    post.setLikes = widget.currentUser!.objectId!;
-                                    post.setLastLikeAuthor = widget.currentUser!;
+                                    post.setLikes =
+                                        widget.currentUser!.objectId!;
+                                    post.setLastLikeAuthor =
+                                        widget.currentUser!;
 
                                     post.save();
                                     _likePost(post);
