@@ -679,9 +679,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             var response = await user.signUp();
 
                             if (response.success) {
-                              UserModel? user = await ParseUser.currentUser();
+                              UserModel user = await ParseUser.currentUser();
 
-                              if (user != null) {
+                              //user.setGender = await getGender();
+                              user.setUid = QuickHelp.generateUId();
+                              user.setPopularity = 0;
+                              user.setUserRole = UserModel.roleUser;
+                              user.setPrefMinAge = Setup.minimumAgeToRegister;
+                              user.setPrefMaxAge = Setup.maximumAgeToRegister;
+                              user.setLocationTypeNearBy = true;
+                              user.addCredit = Setup.welcomeCredit;
+                              user.setBio = Setup.bio;
+                              user.setHasPassword = false;
+                              //user.setBirthday = QuickHelp.getDateFromString(_userData!['birthday'], QuickHelp.dateFormatFacebook);
+                              ParseResponse response = await user.save();
+
+                              if (user != null && response.success) {
                                 SocialLogin.goHome(context, user, preferences);
                               } else {
                                 QuickHelp.hideLoadingDialog(dialogueContext!);
