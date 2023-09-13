@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>188663119667-c8biqa8qgvle5huu32vl39oabo0e3kb2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.188663119667-c8biqa8qgvle5huu32vl39oabo0e3kb2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>188663119667-b3sju6ebb611ktrkaeadlke8bqnr3fq7.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDO9qqN8sVldQiDTkhBPgGqBKkjsBPLk3U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>188663119667</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tiganlab.teego</string>
+	<key>PROJECT_ID</key>
+	<string>teego-58a2a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>teego-58a2a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:188663119667:ios:d0df7bca87e425cc0bc846</string>
+</dict>
+</plist>
