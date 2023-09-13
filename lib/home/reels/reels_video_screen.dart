@@ -4,7 +4,11 @@ import 'dart:typed_data';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mime/mime.dart';
+<<<<<<< HEAD
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+=======
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/constants.dart';
@@ -151,7 +155,11 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
                                   maxLines: 100,
                                   controller: postContent,
                                   autovalidateMode:
+<<<<<<< HEAD
                                       AutovalidateMode.onUserInteraction,
+=======
+                                  AutovalidateMode.onUserInteraction,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                   style: TextStyle(
                                     color: kGreyColor2,
                                     fontSize: 16,
@@ -188,10 +196,17 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
                                   child: uploadPhoto != null
                                       ? Image.file(File(uploadPhoto!))
                                       : Icon(
+<<<<<<< HEAD
                                           Icons.video_library_outlined,
                                           color: kPrimaryColor,
                                           size: 80,
                                         ),
+=======
+                                    Icons.video_library_outlined,
+                                    color: kPrimaryColor,
+                                    size: 80,
+                                  ),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                   onTap: () => _pickFile(setState),
                                 ),
                               ),
@@ -207,17 +222,33 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
                                     textColor: Colors.white,
                                     onTap: () {
                                       if (isVideo!) {
+<<<<<<< HEAD
                                         if (Constants.isSelfHosted) {
+=======
+
+                                        if(Constants.isSelfHosted){
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                           initDoSpaces(
                                             videoFile,
                                             text: postContent.text,
                                           );
+<<<<<<< HEAD
                                         } else {
+=======
+
+                                        } else {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                           initFileUpload(
                                             videoFile,
                                             text: postContent.text,
                                           );
                                         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                       } else {
                                         if (parseFile != null &&
                                             uploadPhoto != null) {
@@ -282,8 +313,13 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
 
   prepareVideo(File file, Uint8List previewPath, StateSetter setState) async {
     VideoEditorModel? videoEditorModel =
+<<<<<<< HEAD
         await QuickHelp.goToNavigatorScreenForResult(
             context, VideoEditorScreen(file: file));
+=======
+    await QuickHelp.goToNavigatorScreenForResult(
+        context, VideoEditorScreen(file: file));
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     if (videoEditorModel != null) {
       print("Exported cover received ${videoEditorModel.coverPath}");
@@ -293,15 +329,26 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
       //initDoSpaces(videoFile.getVideoFile(), videoFile.getCoverPath()!, setState);
       videoFile = videoEditorModel.getVideoFile();
 
+<<<<<<< HEAD
       parseFileThumbnail =
           ParseFile(File(videoEditorModel.coverPath!), name: "thumbnail.jpg");
+=======
+      parseFileThumbnail = ParseFile(File(videoEditorModel.coverPath!), name: "thumbnail.jpg");
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       setState(() {
         uploadPhoto = videoEditorModel.coverPath!;
       });
     }
   }
 
+<<<<<<< HEAD
   initDoSpaces(File? videoFile, {String? text}) async {
+=======
+
+
+  initDoSpaces(File? videoFile, {String? text}) async {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     QuickHelp.showLoadingDialog(context);
 
     dospace.Spaces spaces = new dospace.Spaces(
@@ -316,11 +363,19 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
     String? etag = await spaces
         .bucket(SharedManager().getS3Bucket(widget.preferences))
         .uploadFile(
+<<<<<<< HEAD
           fileName,
           videoFile,
           'video/mp4',
           dospace.Permissions.public,
         );
+=======
+      fileName,
+      videoFile,
+      'video/mp4',
+      dospace.Permissions.public,
+    );
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     print('upload: $etag');
     print('Url: $url');
@@ -337,6 +392,10 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
   }
 
   initFileUpload(File? videoFile, {String? text}) async {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     QuickHelp.showLoadingDialog(context);
 
     parseFile = ParseFile(
@@ -346,9 +405,17 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
     );
 
     savePost(text: text);
+<<<<<<< HEAD
   }
 
   savePost({String? text}) async {
+=======
+
+  }
+
+  savePost({String? text}) async {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     PostsModel postsModel = PostsModel();
     postsModel.setAuthor = widget.currentUser!;
     postsModel.setAuthorId = widget.currentUser!.objectId!;
@@ -401,12 +468,21 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
       title: "page_title.reels_videos_title"
           .tr(namedArgs: {"name": user!.getFullName!}),
       centerTitle: QuickHelp.isAndroidPlatform() ? true : false,
+<<<<<<< HEAD
       leftButtonIcon: QuickHelp.isAndroidPlatform()
           ? Icons.arrow_back_outlined
           : Icons.arrow_back_ios,
       rightButtonTwoPress:
           widget.mUser != null ? () => openSheet(widget.mUser!) : null,
       rightButtonTwoIcon: widget.mUser != null ? Icons.more_vert : null,
+=======
+      leftButtonIcon: QuickHelp.isAndroidPlatform() ? Icons.arrow_back_outlined : Icons.arrow_back_ios,
+      rightButtonTwoPress:
+          widget.mUser != null ? () => openSheet(widget.mUser!) : null,
+      rightButtonTwoIcon: widget.mUser != null
+          ? Icons.more_vert
+          : null,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       onLeftButtonTap: () => QuickHelp.goBackToPreviousPage(context),
       child: reelsScreen(),
       elevation: 1,
@@ -492,8 +568,12 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
                               text: following
                                   ? "feed.reels_unfollow_user".tr()
                                   : "feed.reels_follow_user".tr(),
+<<<<<<< HEAD
                               color:
                                   following ? kPrimaryColor : kPrimacyGrayColor,
+=======
+                              color: following ? kPrimaryColor : kPrimacyGrayColor,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                               svgName: 'ic_menu_followers',
                               borderRadius: 5,
                               fontSize: 16,
@@ -546,11 +626,15 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
                               fontSize: 16,
                               textColor: Colors.black,
                               fontWeight: FontWeight.bold,
+<<<<<<< HEAD
                               onTap: () =>
                                   QuickHelp.goToNavigatorScreenForResult(
                                       context,
                                       ReelsSavedVideosScreen(
                                           currentUser: widget.currentUser)),
+=======
+                              onTap: ()=> QuickHelp.goToNavigatorScreenForResult(context, ReelsSavedVideosScreen(currentUser: widget.currentUser)),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                             ),
                           ),
                           ButtonWithIcon(
@@ -602,6 +686,7 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
         PostsModel post = snapshot.loadedData as PostsModel;
 
         return GestureDetector(
+<<<<<<< HEAD
           onTap: () {
             QuickHelp.goToNavigatorScreen(
                 context,
@@ -609,6 +694,10 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
                   currentUser: widget.currentUser,
                   post: post,
                 ));
+=======
+          onTap: (){
+            QuickHelp.goToNavigatorScreen(context, ReelsSingleScreen(currentUser: widget.currentUser, post: post,));
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           },
           child: Stack(
             children: [

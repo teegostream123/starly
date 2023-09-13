@@ -8,6 +8,10 @@ import '../../models/UserModel.dart';
 
 // ignore: must_be_immutable
 class RefillCoinsScreen extends StatefulWidget {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   static String route = "/menu/refill";
 
   UserModel? currentUser;
@@ -19,6 +23,10 @@ class RefillCoinsScreen extends StatefulWidget {
 }
 
 class _RefillCoinsScreenState extends State<RefillCoinsScreen> {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   @override
   Widget build(BuildContext context) {
     return ToolBar(
@@ -26,9 +34,13 @@ class _RefillCoinsScreenState extends State<RefillCoinsScreen> {
       centerTitle: QuickHelp.isAndroidPlatform() ? true : false,
       leftButtonIcon: Icons.arrow_back_ios,
       onLeftButtonTap: () => QuickHelp.goBackToPreviousPage(context),
+<<<<<<< HEAD
       child: CoinsRcScreen(
         currentUser: widget.currentUser,
       ),
+=======
+      child: CoinsScreen(currentUser: widget.currentUser,),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     );
   }
 }

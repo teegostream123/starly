@@ -1,15 +1,23 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+<<<<<<< HEAD
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+=======
+import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/constants.dart';
 import 'package:teego/helpers/quick_actions.dart';
+<<<<<<< HEAD
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/coins/coins_rc_screen.dart';
 import 'package:teego/home/feed/feed_home_screen.dart';
@@ -18,6 +26,15 @@ import 'package:teego/home/message/message_list_screen.dart';
 import 'package:teego/home/profile/profile_edit.dart';
 import 'package:teego/home/profile/profile_menu_screen.dart';
 import 'package:teego/home/reels/reels_home_screen.dart';
+=======
+import 'package:teego/home/reels/reels_home_screen.dart';
+import 'package:teego/home/message/message_list_screen.dart';
+import 'package:teego/home/coins/coins_rc_screen.dart';
+import 'package:teego/home/feed/feed_home_screen.dart';
+import 'package:teego/home/following/following_screen.dart';
+import 'package:teego/home/profile/profile_edit.dart';
+import 'package:teego/home/profile/profile_menu_screen.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/home/search/search_creen.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/providers/calls_providers.dart';
@@ -26,13 +43,24 @@ import 'package:teego/ui/button_widget.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
+<<<<<<< HEAD
 import 'package:teego/utils/shared_manager.dart';
 import 'package:teego/widgets/component.dart';
+=======
+import 'package:teego/helpers/quick_help.dart';
+import 'package:teego/utils/shared_manager.dart';
+import 'package:teego/widgets/component.dart';
+import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
 import '../auth/welcome_screen.dart';
 import 'admob/AppLifecycleReactor.dart';
 import 'admob/AppOpenAdManager.dart';
+<<<<<<< HEAD
 import 'coins/coins_screen.dart';
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'coins/refill_coins_screen.dart';
 import 'live/live_screen.dart';
 import 'notifications/notifications_screen.dart';
@@ -57,18 +85,28 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late AppLifecycleReactor _appLifecycleReactor;
 
+<<<<<<< HEAD
   // BannerAd? _anchoredAdaptiveAd;
   // bool _isLoaded = false;
+=======
+  BannerAd? _anchoredAdaptiveAd;
+  bool _isLoaded = false;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+<<<<<<< HEAD
     // _loadAd();
+=======
+    _loadAd();
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   @override
   void dispose() {
     super.dispose();
+<<<<<<< HEAD
     // _anchoredAdaptiveAd?.dispose();
   }
 
@@ -108,6 +146,47 @@ class _HomeScreenState extends State<HomeScreen> {
   //   );
   //   return _anchoredAdaptiveAd!.load();
   // }
+=======
+    _anchoredAdaptiveAd?.dispose();
+  }
+
+  Future<void> _loadAd() async {
+    // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
+    final AnchoredAdaptiveBannerAdSize? size =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.of(context).size.width.truncate());
+
+    if (size == null) {
+      print('Unable to get height of anchored banner.');
+      return;
+    } else {
+      print('Got to get height of anchored banner.');
+    }
+
+    _anchoredAdaptiveAd = BannerAd(
+      // TODO: replace these test ad units with your own ad unit.
+      adUnitId: Constants.getAdmobHomeBannerUnit(),
+      size: size,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          print('$ad loaded: ${ad.responseInfo}');
+          setState(() {
+            // When the ad is loaded, get the ad size and use it to set
+            // the height of the ad container.
+            _anchoredAdaptiveAd = ad as BannerAd;
+            _isLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          print('Anchored adaptive banner failedToLoad: $error');
+          ad.dispose();
+        },
+      ),
+    );
+    return _anchoredAdaptiveAd!.load();
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   TextEditingController inviteTextController = TextEditingController();
   bool hasNotification = false;
@@ -410,6 +489,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: _widgetOptions().elementAt(_selectedIndex),
           ),
+<<<<<<< HEAD
           // if (_anchoredAdaptiveAd != null &&
           //     _isLoaded &&
           //     checkHomeBannerAdReels())
@@ -419,6 +499,17 @@ class _HomeScreenState extends State<HomeScreen> {
               // height: _anchoredAdaptiveAd!.size.height.toDouble(),
               // child: AdWidget(ad: _anchoredAdaptiveAd!),
               )
+=======
+          if (_anchoredAdaptiveAd != null &&
+              _isLoaded &&
+              checkHomeBannerAdReels())
+            Container(
+              //color: Colors.green,
+              width: _anchoredAdaptiveAd!.size.width.toDouble(),
+              height: _anchoredAdaptiveAd!.size.height.toDouble(),
+              child: AdWidget(ad: _anchoredAdaptiveAd!),
+            )
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           //Container(height: 50, color: Colors.purpleAccent,)
         ],
       ), //_widgetOptions().elementAt(_selectedIndex),
@@ -441,7 +532,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 "assets/images/ic_home_notification_bell.png",
                 width: 22,
                 height: 22,
+<<<<<<< HEAD
                 // color: Colors.red,
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                 color: kPrimaryColor,
               )
       ],
@@ -458,6 +552,7 @@ class _HomeScreenState extends State<HomeScreen> {
               preferences: widget.preferences,
               currentUser: widget.currentUser,
             )),
+<<<<<<< HEAD
         // ()async{
         //
         //
@@ -468,6 +563,8 @@ class _HomeScreenState extends State<HomeScreen> {
         //   return streamingsss.objectId;
         // }
 
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         () => QuickHelp.goToNavigatorScreen(
               context,
               NotificationsScreen(

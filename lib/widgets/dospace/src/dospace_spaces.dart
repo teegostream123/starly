@@ -1,10 +1,18 @@
 import 'dart:async';
+<<<<<<< HEAD
 
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
 
 import 'dospace_bucket.dart';
 import 'dospace_client.dart';
+=======
+import 'package:http/http.dart' as http;
+import 'package:xml/xml.dart' as xml;
+
+import 'dospace_client.dart';
+import 'dospace_bucket.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
 class Spaces extends Client {
   Spaces(
@@ -44,7 +52,11 @@ class Spaces extends Client {
       for (xml.XmlElement buckets in root.findElements('Buckets')) {
         for (xml.XmlElement bucket in buckets.findElements('Bucket')) {
           for (xml.XmlElement name in bucket.findElements('Name')) {
+<<<<<<< HEAD
             res.add(name.innerText);
+=======
+            res.add(name.text);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           }
         }
       }

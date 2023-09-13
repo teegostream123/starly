@@ -1,6 +1,10 @@
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
+=======
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/helpers/quick_actions.dart';
@@ -41,7 +45,11 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
   // Ads
   static final _kAdIndex = 4;
 
+<<<<<<< HEAD
   // AnchoredAdaptiveBannerAdSize? _size;
+=======
+  AnchoredAdaptiveBannerAdSize? _size;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   @override
   void initState() {
@@ -54,6 +62,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+<<<<<<< HEAD
     //initAdsSize();
   }
 
@@ -73,6 +82,27 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
   //     print('Got to get height of anchored banner.');
   //   }
   // }
+=======
+    initAdsSize();
+  }
+
+  initAdsSize() async {
+    // Get an AnchoredAdaptiveBannerAdSize before loading the ad.
+    final AnchoredAdaptiveBannerAdSize? size =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.of(context).size.width.truncate());
+
+    if (size == null) {
+      print('Unable to get height of anchored banner.');
+      return;
+    } else {
+      setState(() {
+        _size = size;
+      });
+      print('Got to get height of anchored banner.');
+    }
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   disposeLiveQuery() {
     if (subscription != null) {
@@ -178,6 +208,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
     );
   }
 
+<<<<<<< HEAD
   // Widget getAd() {
   //   BannerAdListener bannerAdListener =
   //       BannerAdListener(onAdWillDismissScreen: (ad) {
@@ -207,6 +238,37 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
   //     child: AdWidget(ad: bannerAd),
   //   );
   // }
+=======
+  Widget getAd() {
+    BannerAdListener bannerAdListener =
+        BannerAdListener(onAdWillDismissScreen: (ad) {
+      ad.dispose();
+    }, onAdClosed: (ad) {
+      ad.dispose();
+      debugPrint("Ad Got Closeed");
+    }, onAdFailedToLoad: (ad, error) {
+      ad.dispose();
+    });
+
+    BannerAd bannerAd = BannerAd(
+      //size: AdSize.banner,
+      size: _size!,
+      adUnitId: Constants.getAdmobChatListBannerUnit(),
+      listener: bannerAdListener,
+      request: const AdRequest(),
+    );
+
+    bannerAd..load();
+
+    return Container(
+      height: _size != null ? _size!.height.roundToDouble() : 0,
+      width: _size != null ? _size!.width.toDouble() : 0,
+      key: UniqueKey(),
+      alignment: Alignment.center,
+      child: AdWidget(ad: bannerAd),
+    );
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   Future<dynamic> _loadMessagesList() async {
     //print("IndexPint 1");
@@ -543,6 +605,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
+<<<<<<< HEAD
                   // if (index % _kAdIndex == 0) {
                   //   if (_size != null) {
                   //     return getAd();
@@ -550,6 +613,15 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   //     return Container();
                   //   }
                   // }
+=======
+                  if (index % _kAdIndex == 0) {
+                    if (_size != null) {
+                      return getAd();
+                    } else {
+                      return Container();
+                    }
+                  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                   return Container();
                 },
               );

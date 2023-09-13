@@ -1,4 +1,5 @@
 import 'dart:async';
+<<<<<<< HEAD
 import 'package:devicelocale/devicelocale.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,10 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+=======
+
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/constants.dart';
+<<<<<<< HEAD
 import 'package:teego/app/navigation_service.dart';
 import 'package:teego/app/setup.dart';
 import 'package:teego/auth/dispache_screen.dart';
@@ -20,6 +28,16 @@ import 'package:teego/auth/welcome_screen.dart';
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/coins/refill_coins_screen.dart';
 import 'package:teego/home/following/following_screen.dart';
+=======
+import 'package:teego/app/setup.dart';
+import 'package:teego/auth/dispache_screen.dart';
+import 'package:teego/auth/forgot_screen.dart';
+import 'package:teego/home/reels/reels_home_screen.dart';
+import 'package:teego/home/message/message_list_screen.dart';
+import 'package:teego/home/coins/refill_coins_screen.dart';
+import 'package:teego/home/following/following_screen.dart';
+import 'package:teego/auth/welcome_screen.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/home/home_screen.dart';
 import 'package:teego/home/leaders/leaders_screen.dart';
 import 'package:teego/home/live/live_preview.dart';
@@ -37,6 +55,7 @@ import 'package:teego/home/menu/settings/privacy_settings_screen.dart';
 import 'package:teego/home/menu/settings/qr_code_scanner.dart';
 import 'package:teego/home/menu/settings_screen.dart';
 import 'package:teego/home/menu/statistics_screen.dart';
+<<<<<<< HEAD
 import 'package:teego/home/message/message_list_screen.dart';
 import 'package:teego/home/message/message_screen.dart';
 import 'package:teego/home/profile/profile_edit.dart';
@@ -44,6 +63,13 @@ import 'package:teego/home/profile/profile_menu_screen.dart';
 import 'package:teego/home/profile/profile_screen.dart';
 import 'package:teego/home/profile/user_profile_screen.dart';
 import 'package:teego/home/reels/reels_home_screen.dart';
+=======
+import 'package:teego/home/message/message_screen.dart';
+import 'package:teego/home/profile/profile_edit.dart';
+import 'package:teego/home/profile/profile_screen.dart';
+import 'package:teego/home/profile/profile_menu_screen.dart';
+import 'package:teego/home/profile/user_profile_screen.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/home/search/search_creen.dart';
 import 'package:teego/home/web/web_url_screen.dart';
 import 'package:teego/models/CallsModel.dart';
@@ -56,6 +82,7 @@ import 'package:teego/models/LeadersModel.dart';
 import 'package:teego/models/MessageModel.dart';
 import 'package:teego/models/NotificationsModel.dart';
 import 'package:teego/models/PictureModel.dart';
+<<<<<<< HEAD
 import 'package:teego/models/PostsModel.dart';
 import 'package:teego/models/ReportModel.dart';
 import 'package:teego/models/UserModel.dart';
@@ -77,16 +104,54 @@ import 'models/LiveStreamingModel.dart';
 import 'models/MessageListModel.dart';
 import 'models/PaymentsModel.dart';
 import 'services/dynamic_link_service.dart';
+=======
+import 'package:teego/helpers/quick_help.dart';
+import 'package:teego/models/PostsModel.dart';
+import 'package:teego/models/ReportModel.dart';
+import 'package:teego/models/WithdrawModel.dart';
+import 'package:teego/providers/calls_providers.dart';
+import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:teego/models/UserModel.dart';
+import 'package:teego/app/navigation_service.dart';
+import 'package:teego/utils/theme.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:upgrader/upgrader.dart';
+import 'home/leaders/select_country.dart';
+import 'home/menu/withdraw_history_screen.dart';
+import 'models/GiftSendersGlobalModel.dart';
+import 'models/GiftSendersModel.dart';
+import 'models/PaymentsModel.dart';
+import 'services/dynamic_link_service.dart';
+import 'app/config.dart';
+
+import 'home/feed/comment_post_screen.dart';
+import 'home/location_screen.dart';
+import 'home/menu/referral_program_screen.dart';
+import 'home/notifications/notifications_screen.dart';
+import 'models/LiveMessagesModel.dart';
+import 'models/LiveStreamingModel.dart';
+import 'models/MessageListModel.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+<<<<<<< HEAD
 
   await Future.wait([
     EasyLocalization.ensureInitialized(),
     Firebase.initializeApp(),
   ]);
+=======
+  await EasyLocalization.ensureInitialized();
+
+  await Firebase.initializeApp();
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   if (QuickHelp.isMobile()) {
@@ -128,11 +193,17 @@ void main() async {
     clientKey: Config.clientKey,
     liveQueryUrl: Config.liveQueryUrl,
     autoSendSessionId: true,
+<<<<<<< HEAD
 
     //TODO: check core store;
     // coreStore: QuickHelp.isWebPlatform()
     //     ? await CoreStoreSharedPrefsImp.getInstance()
     //     : await CoreStoreSembastImp.getInstance(password: Config.appId),
+=======
+    coreStore: QuickHelp.isWebPlatform()
+        ? await CoreStoreSharedPrefsImp.getInstance()
+        : await CoreStoreSembastImp.getInstance(password: Config.appId),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     debug: Setup.isDebug,
     appName: Setup.appName,
     appPackageName: Setup.appPackageName,
@@ -330,6 +401,10 @@ class _AppState extends State<App> with WidgetsBindingObserver {
             future: QuickHelp.getUserAwait(),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
+<<<<<<< HEAD
+=======
+                case ConnectionState.none:
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                 case ConnectionState.waiting:
                   return Scaffold(
                     body: QuickHelp.appLoadingLogo(),

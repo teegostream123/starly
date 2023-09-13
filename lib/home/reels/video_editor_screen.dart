@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:helpers/helpers.dart' show OpacityTransition, SwipeTransition;
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/reels/video_crop_screen.dart';
+<<<<<<< HEAD
+=======
+import 'package:teego/models/others/video_editor_model.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:video_editor/video_editor.dart';
@@ -34,6 +38,7 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
   void initState() {
     _controller = VideoEditorController.file(widget.file,
         maxDuration: const Duration(minutes: 3),
+<<<<<<< HEAD
         cropStyle: CropGridStyle(
             //croppingBackground: Colors.black45,
             //background: kTransparentColor,
@@ -53,6 +58,27 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
           onTrimmingColor: kPrimaryColor,
         ))
       ..initialize().then((_) => setState(() {}));
+=======
+      cropStyle: CropGridStyle(
+        //croppingBackground: Colors.black45,
+        //background: kTransparentColor,
+        //boundariesColor: kTransparentColor
+      ),
+      coverStyle: CoverSelectionStyle(
+        selectedBorderColor: Colors.white,
+        borderWidth: 2,
+        borderRadius: 5,
+      ),
+      trimStyle: TrimSliderStyle(
+        background: kTransparentColor,
+        edgesType: TrimSliderEdgesType.bar,
+        positionLineWidth: 8,
+        lineWidth: 4,
+        onTrimmedColor: kPrimaryColor,
+        onTrimmingColor: kPrimaryColor,
+      )
+    )..initialize().then((_) => setState(() {}));
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     super.initState();
   }
@@ -75,6 +101,7 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
     _exportingProgress.value = 0;
     _isExporting.value = true;
     // NOTE: To use `-crf 1` and [VideoExportPreset] you need `ffmpeg_kit_flutter_min_gpl` package (with `ffmpeg_kit` only it won't work)
+<<<<<<< HEAD
 
     //TODO: Export video;
     // await _controller.exportVideo(
@@ -107,10 +134,46 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
     //     setState(() => _exported = true);
     //   },
     // );
+=======
+    await _controller.exportVideo(
+      //preset: VideoExportPreset.medium,
+      // customInstruction: "-crf 17",
+      onProgress: (stats, value) => _exportingProgress.value = value,
+      onError: (e, s) => _exportText = "Error on export video :(",
+      onCompleted: (file) async {
+        _isExporting.value = false;
+
+        await _controller.extractCover(
+          onError: (e, s) => _exportText = "Error on cover exportation :(",
+          onCompleted: (cover) {
+            if (!mounted) return;
+
+            //_exportText = "Cover exported! ${cover.path}";
+
+            print("Exported cover ${cover.path}");
+            print("Exported Video ${file.path}");
+
+            VideoEditorModel videoEditorModel = VideoEditorModel();
+            videoEditorModel.setCoverPath(cover.path);
+            videoEditorModel.setVideoFile(file);
+
+            QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
+          },
+        );
+
+        _exportText = "Video success export!";
+        setState(() => _exported = true);
+      },
+    );
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     return ToolBar(
       title: "page_title.reels_edit_video".tr(),
       centerTitle: QuickHelp.isAndroidPlatform() ? true : false,
@@ -120,6 +183,7 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
       rightButtonPress: _openCropScreen,
       rightButtonTwoIcon: Icons.check_sharp,
       rightButtonTwoPress: _exportVideo,
+<<<<<<< HEAD
       backgroundColor: QuickHelp.isDarkModeNoContext()
           ? null
           : kColorsGrey300.withOpacity(0.5),
@@ -245,6 +309,122 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
                 ])
               ]),
             )
+=======
+      backgroundColor: QuickHelp.isDarkModeNoContext() ? null : kColorsGrey300.withOpacity(0.5),
+      child: _controller.initialized
+          ? ContainerCorner(
+         color: QuickHelp.isDarkModeNoContext() ? null : kColorsGrey300.withOpacity(0.5),
+              padding: EdgeInsets.only(top: 10),
+            child: Stack(children: [
+              Column(children: [
+                //_topNavBar(),
+                Expanded(
+                    child: DefaultTabController(
+                        length: 2,
+                        child: Column(children: [
+                          Expanded(
+                              child: TabBarView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: [
+                                  Stack(alignment: Alignment.center, children: [
+                                    CropGridViewer.edit(
+                                      controller: _controller,
+                                      //showGrid: false,
+                                    ),
+                                    AnimatedBuilder(
+                                      animation: _controller.video,
+                                      builder: (_, __) => OpacityTransition(
+                                        visible: !_controller.isPlaying,
+                                        child: GestureDetector(
+                                          onTap: _controller.video.play,
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: const BoxDecoration(
+                                              color: Colors.white,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(Icons.play_arrow,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                  CoverViewer(controller: _controller)
+                                ],
+                              )),
+                          ContainerCorner(
+                              color: kPrimacyGrayColor.withOpacity(0.2),
+                              radiusTopRight: 30,
+                              radiusTopLeft: 30,
+                              height: 200,
+                              marginTop: 10,
+                              child: Column(children: [
+                                TabBar(
+                                  indicatorColor: Colors.white,
+                                  tabs: [
+                                    Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Icon(Icons.cut_rounded)),
+                                          Text('video_editor.video_editor_trim').tr()
+                                        ]),
+                                    Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Icon(Icons.video_label_rounded)),
+                                          Text('video_editor.video_editor_cover').tr()
+                                        ],
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: TabBarView(
+                                    children: [
+                                      Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: _trimSlider()),
+                                      Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [_coverSelection()]),
+                                    ],
+                                  ),
+                                )
+                              ])),
+                          _customSnackBar(),
+                          ValueListenableBuilder(
+                            valueListenable: _isExporting,
+                            builder: (_, bool export, __) => OpacityTransition(
+                              visible: export,
+                              child: AlertDialog(
+                                backgroundColor: Colors.white,
+                                title: ValueListenableBuilder(
+                                  valueListenable: _exportingProgress,
+                                  builder: (_, double value, __) => Text("video_editor.video_editor_rendering",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ).tr(namedArgs: {"percent" : "${(value * 100).ceil()}"}),
+                                ),
+                              ),
+                            ),
+                          )
+                        ])))
+              ])
+            ]),
+          )
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           : Center(child: QuickHelp.showLoadingAnimation()),
     );
   }
@@ -267,14 +447,19 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: height / 4),
             child: Row(children: [
+<<<<<<< HEAD
               TextWithTap(
                 formatter(Duration(seconds: pos.toInt())),
                 color: null,
               ),
+=======
+              TextWithTap(formatter(Duration(seconds: pos.toInt())), color: null,),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               const Expanded(child: SizedBox()),
               OpacityTransition(
                 visible: true, //_controller.isTrimming,
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
+<<<<<<< HEAD
                   TextWithTap(
                     formatter(Duration(seconds: start.toInt())),
                     color: Colors.red,
@@ -284,6 +469,11 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
                     formatter(Duration(seconds: end.toInt())),
                     color: null,
                   ),
+=======
+                  TextWithTap(formatter(Duration(seconds: start.toInt())), color: Colors.red,),
+                  const SizedBox(width: 10),
+                  TextWithTap(formatter(Duration(seconds: end.toInt())), color: null,),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                 ]),
               )
             ]),
@@ -299,7 +489,11 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
             height: height,
             horizontalMargin: height / 4,
             child: TrimTimeline(
+<<<<<<< HEAD
                 textStyle: TextStyle(color: null),
+=======
+              textStyle: TextStyle(color: null),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                 controller: _controller,
                 padding: const EdgeInsets.only(top: 10, bottom: 10))),
       )

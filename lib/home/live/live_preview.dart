@@ -10,8 +10,11 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
+<<<<<<< HEAD
 import 'package:teego/home/live/select_screen.dart';
 import 'package:teego/home/live/zego_live_stream.dart';
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/models/HashTagsModel.dart';
 import 'package:teego/models/LiveStreamingModel.dart';
 import 'package:teego/models/UserModel.dart';
@@ -21,12 +24,18 @@ import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+<<<<<<< HEAD
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 import '../../app/constants.dart';
 import '../../app/setup.dart';
 import 'constant.dart';
+=======
+
+import '../../app/constants.dart';
+import '../../app/setup.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'live_streaming_screen.dart';
 
 // ignore: must_be_immutable
@@ -56,10 +65,13 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
 
   TextEditingController hashTagsEditTextController = TextEditingController();
 
+<<<<<<< HEAD
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController userIdController = TextEditingController();
   var host = false;
 
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   bool partyBtnSelected = false;
   bool goLiveBtnSelected = true;
   bool battleBtnSelected = false;
@@ -149,8 +161,11 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
             end: Alignment.topCenter,
           ),
         ),
+<<<<<<< HEAD
 
         // Change Image code starts from here
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         Center(
           child: ContainerCorner(
             onTap: () => checkPermission(true),
@@ -167,7 +182,10 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                           child: Icon(
                             Icons.image,
                             size: 100,
+<<<<<<< HEAD
                             // color: Colors.red,
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                           ),
                         ),
                 ),
@@ -350,6 +368,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                     marginRight: 10,
                     borderRadius: 50,
                     svgURL: "assets/svg/ic_tab_live_selected.svg",
+<<<<<<< HEAD
                     onTap: () async {
                       // if (parseFileUrl != null) {
                       //   createLive();
@@ -395,6 +414,21 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                         print(t);
                       }
                       // Navigator.push(context, MaterialPageRoute(builder: (_) => SelectScreen()));
+=======
+                    onTap: () {
+                      if (parseFileUrl != null) {
+                        createLive();
+                      } else {
+                        QuickHelp.showAppNotificationAdvanced(
+                            context: context,
+                            title: "live_streaming.live_set_cover_photo".tr(),
+                            message:
+                                "live_streaming.live_set_cover_photo_add".tr(),
+                            isError: true);
+                      }
+
+                      //selectButton(LiveStreamingModel.liveTypeGoLive);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                     },
                     text: "live_streaming.btn_go_live".tr().toUpperCase(),
                     beginColor:
@@ -789,8 +823,13 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
   void isFirstLive() async {
     QueryBuilder<LiveStreamingModel> queryBuilder =
         QueryBuilder(LiveStreamingModel());
+<<<<<<< HEAD
     // queryBuilder.whereEqualTo(
     //     LiveStreamingModel.keyAuthorId, widget.currentUser!.objectId);
+=======
+    queryBuilder.whereEqualTo(
+        LiveStreamingModel.keyAuthorId, widget.currentUser!.objectId);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     ParseResponse parseResponse = await queryBuilder.count();
 
@@ -803,6 +842,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
     }
   }
 
+<<<<<<< HEAD
   Future createLive() async {
     try {
       // get what is required from a stream
@@ -858,16 +898,48 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
         QuickHelp.hideLoadingDialog(context);
 
         QuickHelp.showAppNotificationAdvanced(
+=======
+  void createLive() async {
+    QuickHelp.showLoadingDialog(context, isDismissible: false);
+
+    QueryBuilder<LiveStreamingModel> queryBuilder =
+        QueryBuilder(LiveStreamingModel());
+    queryBuilder.whereEqualTo(
+        LiveStreamingModel.keyAuthorId, widget.currentUser!.objectId);
+    queryBuilder.whereEqualTo(LiveStreamingModel.keyStreaming, true);
+
+    ParseResponse parseResponse = await queryBuilder.query();
+    if (parseResponse.success) {
+      if (parseResponse.results != null) {
+        LiveStreamingModel live =
+            parseResponse.results!.first! as LiveStreamingModel;
+
+        live.setStreaming = false;
+        await live.save();
+// yeh sahi hoga if issue aye ga
+        createLiveFinish();
+      } else {
+        createLiveFinish();
+      }
+    } else {
+      QuickHelp.hideLoadingDialog(context);
+
+      QuickHelp.showAppNotificationAdvanced(
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           context: context,
           title: "live_streaming.live_set_cover_error".tr(),
           message: parseResponse.error!.message,
           isError: true,
+<<<<<<< HEAD
           user: widget.currentUser,
         );
       }
     } catch (e, t) {
       print(e);
       print(t);
+=======
+          user: widget.currentUser);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -1181,11 +1253,19 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
         if (QuickHelp.isWebPlatform()) {
           //Seems weird, but this lets you get the data from the selected file as an Uint8List very easily.
           ParseWebFile file =
+<<<<<<< HEAD
               ParseWebFile(null, name: "avatar.jpg", url: result.path);
           await file.download();
           parseFile = ParseWebFile(file.file, name: file.name);
         } else {
           parseFile = ParseFile(File(result.path), name: "avatar.jpg");
+=======
+              ParseWebFile(null, name: "avatar.jpg", url: result.absolute.path);
+          await file.download();
+          parseFile = ParseWebFile(file.file, name: file.name);
+        } else {
+          parseFile = ParseFile(File(result.absolute.path), name: "avatar.jpg");
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         }
 
         ParseResponse parseResponse = await parseFile!.save();
@@ -1226,6 +1306,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
     super.dispose();
   }
 }
+<<<<<<< HEAD
 final hostConfig = ZegoUIKitPrebuiltLiveStreamingConfig.host(
   plugins: [ZegoUIKitSignalingPlugin()],
 )..audioVideoViewConfig.foregroundBuilder =
@@ -1356,3 +1437,5 @@ Widget hostAudioVideoViewForegroundBuilder(
     ),
   );
 }
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081

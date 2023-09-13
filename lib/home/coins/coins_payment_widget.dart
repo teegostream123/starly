@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+<<<<<<< HEAD
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+=======
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
@@ -73,12 +77,22 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
   bool _loading = true;
   InAppPurchaseModel? _inAppPurchaseModel;
 
+<<<<<<< HEAD
   List<InAppPurchaseModel> getInAppList() {
+=======
+
+  List<InAppPurchaseModel> getInAppList() {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     List<Package> myProductList = offerings.current!.availablePackages;
 
     List<InAppPurchaseModel> inAppPurchaseList = [];
 
     for (Package package in myProductList) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       if (package.identifier == Config.credit200) {
         InAppPurchaseModel credits200 = InAppPurchaseModel(
             id: Config.credit200,
@@ -102,7 +116,11 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
             coins: 1000,
             price: package.storeProduct.priceString,
             image: "assets/images/ic_coins_1.png",
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.1).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
             package: package,
@@ -139,7 +157,11 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
             image: "assets/images/ic_coins_6.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.1).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             package: package,
             currency: package.storeProduct.currencyCode,
             currencySymbol: package.storeProduct.currencyCode);
@@ -154,7 +176,11 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
             id: Config.credit2100,
             coins: 2100,
             price: package.storeProduct.priceString,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.2).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.2).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             image: "assets/images/ic_coins_5.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
@@ -172,7 +198,11 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
             id: Config.credit5250,
             coins: 5250,
             price: package.storeProduct.priceString,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.3).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.3).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             image: "assets/images/ic_coins_7.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
@@ -190,7 +220,11 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
             id: Config.credit10500,
             coins: 10500,
             price: package.storeProduct.priceString,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.4).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.4).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             image: "assets/images/ic_coins_2.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
@@ -249,10 +283,19 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
     return _showGiftAndGetCoinsBottomSheet();
   }
 
+<<<<<<< HEAD
   _purchaseProduct(InAppPurchaseModel inAppPurchaseModel) async {
     QuickHelp.showLoadingDialog(context);
 
     try {
+=======
+  _purchaseProduct(InAppPurchaseModel inAppPurchaseModel) async{
+
+    QuickHelp.showLoadingDialog(context);
+
+    try {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.showAppNotificationAdvanced(
         context: context,
@@ -262,6 +305,7 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
         message: "in_app_purchases.coins_added_to_account".tr(),
         isError: false,
       );
+<<<<<<< HEAD
     } on PlatformException catch (e) {
       var errorCode = PurchasesErrorHelper.getErrorCode(e);
 
@@ -270,12 +314,33 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
 
         QuickHelp.showAppNotificationAdvanced(
           context: context,
+=======
+
+    } on PlatformException catch (e) {
+
+      var errorCode = PurchasesErrorHelper.getErrorCode(e);
+
+      if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+
+        QuickHelp.hideLoadingDialog(context);
+
+        QuickHelp.showAppNotificationAdvanced(
+          context:context,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           user: widget.currentUser,
           title: "in_app_purchases.purchase_cancelled_title".tr(),
           message: "in_app_purchases.purchase_cancelled".tr(),
         );
+<<<<<<< HEAD
       } else if (errorCode != PurchasesErrorCode.invalidReceiptError) {
         _handleInvalidPurchase();
+=======
+
+      } else if (errorCode != PurchasesErrorCode.invalidReceiptError) {
+
+        _handleInvalidPurchase();
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       } else {
         handleError(e);
       }
@@ -283,6 +348,7 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
   }
 
   void _handleInvalidPurchase() {
+<<<<<<< HEAD
     QuickHelp.showAppNotification(
         context: context, title: "in_app_purchases.invalid_purchase".tr());
     QuickHelp.hideLoadingDialog(context);
@@ -290,6 +356,16 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
 
   void registerPayment(
       CustomerInfo customerInfo, InAppPurchaseModel productDetails) async {
+=======
+
+    QuickHelp.showAppNotification(context:context, title: "in_app_purchases.invalid_purchase".tr());
+    QuickHelp.hideLoadingDialog(context);
+  }
+
+
+  void registerPayment(CustomerInfo customerInfo, InAppPurchaseModel productDetails) async {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     // Save all payment information
     PaymentsModel paymentsModel = PaymentsModel();
     paymentsModel.setAuthor = widget.currentUser;
@@ -301,19 +377,29 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
     paymentsModel.setTransactionId = customerInfo.originalPurchaseDate!;
     paymentsModel.setCurrency = productDetails.currency!.toUpperCase();
     paymentsModel.setPrice = productDetails.price.toString();
+<<<<<<< HEAD
     paymentsModel.setMethod = QuickHelp.isAndroidPlatform()
         ? "Google Play"
         : QuickHelp.isIOSPlatform()
             ? "App Store"
             : "";
+=======
+    paymentsModel.setMethod = QuickHelp.isAndroidPlatform()? "Google Play" : QuickHelp.isIOSPlatform() ? "App Store" : "";
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     paymentsModel.setStatus = PaymentsModel.paymentStatusCompleted;
 
     await paymentsModel.save();
   }
 
   void handleError(PlatformException error) {
+<<<<<<< HEAD
     QuickHelp.hideLoadingDialog(context);
     QuickHelp.showAppNotification(context: context, title: error.message);
+=======
+
+    QuickHelp.hideLoadingDialog(context);
+    QuickHelp.showAppNotification(context:context, title: error.message);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   showPendingUI() {
@@ -322,6 +408,10 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
   }
 
   Widget _showGiftAndGetCoinsBottomSheet() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     return StatefulBuilder(builder: (context, setState) {
       return Container(
         decoration: BoxDecoration(
@@ -334,7 +424,13 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
         child: ContainerCorner(
           color: kTransparentColor,
           child: IndexedStack(
+<<<<<<< HEAD
             index: widget.showOnlyCoinsPurchase! ? 1 : bottomSheetCurrentIndex,
+=======
+            index: widget.showOnlyCoinsPurchase!
+                ? 1
+                : bottomSheetCurrentIndex,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             children: [
               Scaffold(
                 backgroundColor: kTransparentColor,
@@ -594,6 +690,10 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
   }
 
   Widget getBody() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     if (_loading) {
       return QuickHelp.appLoading();
     } else if (_isAvailable) {
@@ -608,7 +708,11 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
           childAspectRatio: 0.6,
           children: List.generate(
             getInAppList().length,
+<<<<<<< HEAD
             (index) {
+=======
+                (index) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               InAppPurchaseModel inApp = getInAppList()[index];
 
               return GestureDetector(
@@ -655,6 +759,7 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
                                 ),
                                 inApp.discount != null
                                     ? TextWithTap(
+<<<<<<< HEAD
                                         "${inApp.currencySymbol} ${inApp.discount}",
                                         marginBottom: 5,
                                         fontWeight: FontWeight.bold,
@@ -662,13 +767,30 @@ class _CoinsFlowWidgetState extends State<_CoinsFlowWidget>
                                         decoration: TextDecoration.lineThrough,
                                         color: kGrayColor,
                                       )
+=======
+                                  "${inApp.currencySymbol} ${inApp.discount}",
+                                  marginBottom: 5,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  decoration:
+                                  TextDecoration.lineThrough,
+                                  color: kGrayColor,
+                                )
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                     : Container(),
                                 TextWithTap(
                                   inApp.type == InAppPurchaseModel.typePopular
                                       ? 'coins.popular_'.tr()
+<<<<<<< HEAD
                                       : inApp.type == InAppPurchaseModel.typeHot
                                           ? 'coins.hot_'.tr()
                                           : "",
+=======
+                                      : inApp.type ==
+                                      InAppPurchaseModel.typeHot
+                                      ? 'coins.hot_'.tr()
+                                      : "",
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                   color: Colors.white,
                                   fontSize: 17,
                                   marginTop: 3,

@@ -1,6 +1,10 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, '11.0'
+<<<<<<< HEAD
 platform :ios, '14.0'
+=======
+platform :ios, '12.1'
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 $FirebaseAnalyticsWithoutAdIdSupport = true
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
@@ -40,6 +44,7 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+<<<<<<< HEAD
     # Start of the permission_handler configuration
     target.build_configurations.each do |config|
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
@@ -49,6 +54,8 @@ post_install do |installer|
       ]
     end
     # End of the permission_handler configuration
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     target.build_configurations.each do |config|
      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64 i386'
        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.1'

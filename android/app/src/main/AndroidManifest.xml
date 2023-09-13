@@ -10,9 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
+<<<<<<< HEAD
     <!--Billing-->
     <uses-permission android:name="com.android.vending.BILLING"/>
 
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     <!--Storage-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

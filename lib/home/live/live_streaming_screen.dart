@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+<<<<<<< HEAD
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -12,6 +13,21 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:teego/app/config.dart';
+=======
+import 'package:http/http.dart' as http;
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:lottie/lottie.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+
+import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
+import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_cloud.dart';
 import 'package:teego/helpers/quick_help.dart';
@@ -33,7 +49,14 @@ import 'package:teego/ui/button_with_gradient.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
+<<<<<<< HEAD
 import 'package:wakelock/wakelock.dart';
+=======
+import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:teego/utils/shared_manager.dart';
+import 'package:wakelock/wakelock.dart';
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import '../../app/setup.dart';
 import '../../models/ReportModel.dart';
 
@@ -201,8 +224,13 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     Wakelock.disable();
     // clear users
     _users.clear();
+<<<<<<< HEAD
     //TODO: destroy sdk and leave channel
     // _engine.();
+=======
+    // destroy sdk and leave channel
+    _engine.destroy();
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     if (subscription != null) {
       liveQuery.client.unSubscribe(subscription!);
@@ -347,6 +375,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       streamId = (await _engine.createDataStream(false, false))!;
     }*/
 
+<<<<<<< HEAD
     _engine.registerEventHandler(RtcEngineEventHandler(
       onExtensionError: (provider, extension, error, message) {
         print("onExtensionError $provider $extension $error $message");
@@ -385,6 +414,27 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
             'AgoraLive firstRemoteVideoFrame: $uid $width, $height, time: $elapsed');
       },
       onFirstLocalVideoFrame: (connection, width, height, elapsed) {
+=======
+    _engine.setEventHandler(RtcEngineEventHandler(
+      rtmpStreamingEvent: (string, rtmpEvent) {
+        print('AgoraLive rtmpStreamingEvent: $string, event: $rtmpEvent');
+      },
+      joinChannelSuccess: (channel, uid, elapsed) {
+        setState(() {
+          startTimerToEndLive(context, 5);
+
+          if (isBroadcaster && uid == widget.currentUser.getUid) {
+            print(
+                'AgoraLive isBroadcaster: $channel, uid: $uid,  elapsed $elapsed');
+          }
+        });
+      },
+      firstRemoteVideoFrame: (uid, width, height, elapsed) {
+        print(
+            'AgoraLive firstRemoteVideoFrame: $uid $width, $height, time: $elapsed');
+      },
+      firstLocalVideoFrame: (width, height, elapsed) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         print(
             'AgoraLive firstLocalVideoFrame: $width, $height, time: $elapsed');
 
@@ -396,6 +446,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
           });
         }
       },
+<<<<<<< HEAD
       onError: (type, errorCode) {
         print('AgoraLive error $errorCode with type $type');
         print('AgoraLive error my my error $errorCode');
@@ -403,6 +454,14 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         _engine.leaveChannel();
 
         if (type == ErrorCodeType.errJoinChannelRejected) {
+=======
+      error: (ErrorCode errorCode) {
+        print('AgoraLive error $errorCode');
+        print('AgoraLive error my my error $errorCode');
+
+        // JoinChannelRejected
+        if (errorCode == ErrorCode.JoinChannelRejected) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           _engine.leaveChannel();
           QuickHelp.goToPageWithClear(
               context,
@@ -412,13 +471,21 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
               ));
         }
       },
+<<<<<<< HEAD
       onLeaveChannel: (connection, stats) {
+=======
+      leaveChannel: (stats) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         setState(() {
           print('AgoraLive onLeaveChannel');
           _users.clear();
         });
       },
+<<<<<<< HEAD
       onUserJoined: (connection, uid, elapsed) {
+=======
+      userJoined: (uid, elapsed) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         setState(() {
           _users.add(uid);
           liveJoined = true;
@@ -428,7 +495,11 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         print('AgoraLive userJoined: $uid');
         updateViewers(uid, widget.currentUser.objectId!);
       },
+<<<<<<< HEAD
       onUserOffline: (connection, uid, elapsed) {
+=======
+      userOffline: (uid, elapsed) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         if (!isBroadcaster) {
           setState(() {
             print('AgoraLive userOffline: $uid');
@@ -443,6 +514,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       },
     ));
 
+<<<<<<< HEAD
     Future<String> callchanneltoken(
       String channelname,
       int uuid,
@@ -452,6 +524,12 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       String url =
           'https://teego-stream-d966ccb74ccd.herokuapp.com/access_token?channelName=$channelname&uid=$uuid&role=$role';
 
+=======
+    callchanneltoken(channelname, uuid, role) async {
+      var tokenrtc = null;
+      String url =
+          'https://agora-token-service-production-3fac.up.railway.app/rtc/$channelname/${role}/uid/${uuid}';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       print(url);
 
       // Send the request
@@ -460,7 +538,11 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
       if (response.statusCode == 200) {
         // If the server returns an OK response, then parse the JSON.
         Map<String, dynamic> json = jsonDecode(response.body);
+<<<<<<< HEAD
         String newToken = json['token'];
+=======
+        String newToken = json['rtcToken'];
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         debugPrint('Token Received: $newToken');
         // Use the token to join a channel or renew an expiring token
         // setToken(newToken);
@@ -475,6 +557,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     }
 
     var tokenchannel = await callchanneltoken(
+<<<<<<< HEAD
         widget.channelName, widget.currentUser.getUid!, 'publisher');
     print(
         "the channel name for this new ${widget.channelName} user object ${widget.currentUser.objectId}  user uid ${widget.currentUser.getUid!} token channel $tokenchannel");
@@ -541,6 +624,39 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     } catch (e, t) {
       print(e);
       print(t);
+=======
+        widget.channelName, widget.currentUser.getUid!, 2);
+    print(
+        "the channel name for this new ${widget.channelName} ${widget.currentUser.objectId} ${widget.currentUser.getUid!} ${tokenchannel}");
+    await _engine.joinChannel(tokenchannel, widget.channelName,
+        widget.currentUser.objectId, widget.currentUser.getUid!);
+  }
+
+  Future<void> _initAgoraRtcEngine() async {
+    // Create RTC client instance
+
+    RtcEngineContext context = RtcEngineContext(
+        SharedManager().getStreamProviderKey(widget.preferences));
+    _engine = await RtcEngine.createWithContext(context);
+    print("preference print here testing ${widget.preferences}");
+    if (isBroadcaster || isUserInvited) {
+      await _engine.startPreview();
+    }
+
+    await _engine.enableVideo();
+
+    await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine.setVideoEncoderConfiguration(VideoEncoderConfiguration(
+      mirrorMode: VideoMirrorMode.Disabled,
+      frameRate: VideoFrameRate.Fps15,
+      dimensions: VideoDimensions(width: 640, height: 480),
+    ));
+
+    if (isBroadcaster || isUserInvited) {
+      await _engine.setClientRole(ClientRole.Broadcaster);
+    } else {
+      await _engine.setClientRole(ClientRole.Audience);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -842,6 +958,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
   }
 
   Widget _getRenderViews() {
+<<<<<<< HEAD
     return const SizedBox();
     //TODO: return surface view;
     // if (invitedToPartyUidSelected == widget.currentUser.getUid!) {
@@ -855,6 +972,19 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     //   //   uid: invitedToPartyUidSelected,
     //   // );
     // }
+=======
+    if (invitedToPartyUidSelected == widget.currentUser.getUid!) {
+      return RtcLocalView.SurfaceView(
+        zOrderMediaOverlay: true,
+        zOrderOnTop: true,
+      );
+    } else {
+      return RtcRemoteView.SurfaceView(
+        channelId: widget.channelName,
+        uid: invitedToPartyUidSelected,
+      );
+    }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   inviteCoBroadcaster() {}
@@ -3292,7 +3422,11 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     } else {
       if (message.getCoHostAuthorAvailable! && !coHostAvailable) {
         await _engine.enableLocalVideo(true);
+<<<<<<< HEAD
         await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+=======
+        await _engine.setClientRole(ClientRole.Broadcaster);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
         if (!mounted) return;
         setState(() {
@@ -4689,6 +4823,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
             child: invitedUserPartyShowing!.isNotEmpty
                 ? Stack(
                     children: [
+<<<<<<< HEAD
                       //TODO: view surface;
                       // if (userSelected == widget.currentUser.getUid)
                       //   RtcLocalView.SurfaceView(
@@ -4699,6 +4834,17 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                       //     channelId: widget.channelName,
                       //     uid: userSelected,
                       //   ),
+=======
+                      if (userSelected == widget.currentUser.getUid)
+                        RtcLocalView.SurfaceView(
+                          channelId: widget.channelName,
+                        )
+                      else
+                        RtcRemoteView.SurfaceView(
+                          channelId: widget.channelName,
+                          uid: userSelected,
+                        ),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                       Visibility(
                         visible: isBroadcaster,
                         child: Column(
@@ -4834,6 +4980,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                 child: invitedUserPartyShowing!.isNotEmpty
                     ? Stack(
                         children: [
+<<<<<<< HEAD
                           //TODO: view;
 
                           // if (userSelected == widget.currentUser.getUid)
@@ -4845,6 +4992,17 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                           //     channelId: widget.channelName,
                           //     uid: userSelected,
                           //   ),
+=======
+                          if (userSelected == widget.currentUser.getUid)
+                            RtcLocalView.SurfaceView(
+                              channelId: widget.channelName,
+                            )
+                          else
+                            RtcRemoteView.SurfaceView(
+                              channelId: widget.channelName,
+                              uid: userSelected,
+                            ),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                           Visibility(
                             visible: isBroadcaster,
                             child: Column(
@@ -4969,13 +5127,21 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         invitedUserPartyVideoMuted!.remove(uid);
       });
 
+<<<<<<< HEAD
       _engine.muteRemoteVideoStream(uid: uid, mute: false);
+=======
+      _engine.muteRemoteVideoStream(uid, false);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     } else {
       setState(() {
         invitedUserPartyVideoMuted!.add(uid);
       });
 
+<<<<<<< HEAD
       _engine.muteRemoteAudioStream(uid: uid, mute: true);
+=======
+      _engine.muteRemoteVideoStream(uid, true);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -4985,13 +5151,21 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         invitedUserPartyAudioMuted!.remove(uid);
       });
 
+<<<<<<< HEAD
       _engine.muteRemoteAudioStream(uid: uid, mute: false);
+=======
+      _engine.muteRemoteAudioStream(uid, false);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     } else {
       setState(() {
         invitedUserPartyAudioMuted!.add(uid);
       });
 
+<<<<<<< HEAD
       _engine.muteRemoteAudioStream(uid: uid, mute: false);
+=======
+      _engine.muteRemoteAudioStream(uid, true);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -5201,6 +5375,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
         "want to join ${live.getStreamingChannel!},   ${widget.currentUser.objectId}, ${widget.currentUser.getUid!}");
 
     await _engine.leaveChannel();
+<<<<<<< HEAD
 
     print('Join chennel todo implemented');
 
@@ -5211,6 +5386,10 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
     //   widget.currentUser.objectId,
     //   widget.currentUser.getUid!,
     // );
+=======
+    await _engine.joinChannel(null, live.getStreamingChannel!,
+        widget.currentUser.objectId, widget.currentUser.getUid!);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     liveQuery.client.unSubscribe(subscription!);
 

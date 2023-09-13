@@ -6,12 +6,15 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+<<<<<<< HEAD
 def  keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('keystore.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -31,6 +34,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+<<<<<<< HEAD
 //def keystoreProperties = new Properties()
 //def keystorePropertiesFile = rootProject.file('key.properties')
 //if (keystorePropertiesFile.exists()) {
@@ -38,6 +42,15 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 //}
 android {
     compileSdkVersion 34
+=======
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+android {
+    compileSdkVersion 33
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -47,12 +60,17 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.tiganlab.teego1"
         minSdkVersion 24
+<<<<<<< HEAD
         targetSdkVersion 34
+=======
+        targetSdkVersion 33
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
     }
 
+<<<<<<< HEAD
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
@@ -67,6 +85,19 @@ android {
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
+=======
+    // signingConfigs {
+    //     release {
+    //         keyAlias keystoreProperties['keyAlias']
+    //         keyPassword keystoreProperties['keyPassword']
+    //         storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+    //         storePassword keystoreProperties['storePassword']
+    //     }
+    // }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         }
     }
     lint {

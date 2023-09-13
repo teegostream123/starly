@@ -23,9 +23,13 @@ class _ReelsPageState extends State<ReelsPage> {
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
     _controllers = _videoUrls
         .map((url) => VideoPlayerController.networkUrl(Uri.parse(url)))
         .toList();
+=======
+    _controllers = _videoUrls.map((url) => VideoPlayerController.network(url)).toList();
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     _pageController = PageController(initialPage: _currentIndex);
   }
 
@@ -43,14 +47,25 @@ class _ReelsPageState extends State<ReelsPage> {
           controller: _pageController,
           itemCount: _controllers.length,
           scrollDirection: Axis.vertical,
+<<<<<<< HEAD
           onPageChanged: (index) {
             setState(() => _currentIndex = index);
 
             if (_currentIndex == index) {
+=======
+          onPageChanged: (index){
+            setState(() => _currentIndex = index);
+
+            if(_currentIndex == index){
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               _controllers[index].play();
             } else {
               _controllers[index].pause();
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           },
           itemBuilder: (context, index) {
             final controller = _controllers[index];
@@ -72,4 +87,8 @@ class _ReelsPageState extends State<ReelsPage> {
       ),
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081

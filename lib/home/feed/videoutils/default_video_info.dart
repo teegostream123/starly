@@ -1,8 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 // import 'package:hashtagable/widgets/hashtag_text.dart';
 import 'package:like_button/like_button.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+=======
+import 'package:hashtagable/widgets/hashtag_text.dart';
+import 'package:like_button/like_button.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/home/reels/reels_video_screen.dart';
 import 'package:teego/models/CommentsModel.dart';
 import 'package:teego/ui/text_with_tap.dart';
@@ -60,9 +66,13 @@ class DefaultVideoInfoWidget extends StatelessWidget {
 
                   /// song name
 
+<<<<<<< HEAD
                   // _hashtagWidget(),
 
                   Text('Hashtage widget removed from khuram'),
+=======
+                  _hashtagWidget(),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                   SizedBox(height: 8.0),
 
                   if (postModel!.getText != null &&
@@ -323,6 +333,7 @@ class DefaultVideoInfoWidget extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   // Widget _hashtagWidget() {
   //   return Row(
   //     mainAxisSize: MainAxisSize.min,
@@ -345,6 +356,30 @@ class DefaultVideoInfoWidget extends StatelessWidget {
   //     ],
   //   );
   // }
+=======
+  Widget _hashtagWidget() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 220,
+          height: 20,
+          child: HashTagText(
+            text: "#welcome #teego #reels",
+            decoratedStyle: TextStyle(
+                fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+            basicStyle: TextStyle(fontSize: 14, color: Colors.white),
+            onTap: (text) {
+              print(text);
+            },
+          ),
+        )
+      ],
+    );
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   /// Rainbow branch information
   Widget _rainBowBrandWidget() {
@@ -377,7 +412,11 @@ class DefaultVideoInfoWidget extends StatelessWidget {
 
   /// Show user name and the time video uploaded
 
+<<<<<<< HEAD
   goToProfile(BuildContext context, {UserModel? author}) {
+=======
+  goToProfile(BuildContext context, {UserModel? author}){
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     if (author!.objectId == currentUser!.objectId!) {
       QuickHelp.goToNavigatorScreen(
         context,
@@ -402,7 +441,11 @@ class DefaultVideoInfoWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
+<<<<<<< HEAD
           onTap: () => goToProfile(context, author: postModel!.getAuthor!),
+=======
+          onTap: ()=> goToProfile(context, author: postModel!.getAuthor!),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           child: QuickActions.avatarWidget(
             postModel!.getAuthor!,
             width: 45,
@@ -1197,7 +1240,12 @@ class DefaultVideoInfoWidget extends StatelessWidget {
           CommentsModel comment = snapshot.loadedData!;
 
           return GestureDetector(
+<<<<<<< HEAD
             onTap: () {
+=======
+            onTap: (){
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               if (FocusScope.of(context).hasFocus) {
                 FocusScope.of(context).unfocus();
               }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+<<<<<<< HEAD
 import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,18 +16,48 @@ import 'package:teego/auth/social_login.dart';
 import 'package:teego/auth/welcome_screen.dart';
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/models/UserModel.dart';
+=======
+import 'package:faker/faker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:teego/app/config.dart';
+import 'package:teego/app/setup.dart';
+import 'package:teego/auth/signup_screen.dart';
+import 'package:teego/auth/social_login.dart';
+import 'package:teego/auth/welcome_screen.dart';
+import 'package:teego/home/home_screen.dart';
+import 'package:teego/models/UserModel.dart';
+import 'package:teego/ui/button_with_icon.dart';
+import 'package:teego/helpers/quick_help.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/ui/button_with_image.dart';
 import 'package:teego/ui/button_with_svg.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
+<<<<<<< HEAD
 import 'package:teego/utils/datoo_exeption.dart';
+=======
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:teego/utils/datoo_exeption.dart';
+import 'package:teego/widgets/CountDownTimer.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
 import '../app/constants.dart';
 import '../helpers/responsive.dart';
 import '../services/dynamic_link_service.dart';
 import '../utils/shared_manager.dart';
 import 'dispache_screen.dart';
+<<<<<<< HEAD
+=======
+import 'package:http/http.dart' as http;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 late ConfirmationResult confirmationResult;
@@ -41,7 +72,13 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+<<<<<<< HEAD
 
+=======
+  String _selectedGender = 'male';
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   PhoneNumber number = PhoneNumber(isoCode: Config.initialCountry);
 
   TextEditingController firstName = TextEditingController();
@@ -83,6 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     Constants.queryParseConfig(preferences);
   }
 
+<<<<<<< HEAD
   // void _sendVerificationCode(bool resend) async {
   //   QuickHelp.showLoadingDialog(context, isDismissible: false);
 
@@ -200,6 +238,125 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //     }
   //   }
   // }
+=======
+  void _sendVerificationCode(bool resend) async {
+    QuickHelp.showLoadingDialog(context, isDismissible: false);
+
+    PhoneVerificationCompleted verificationCompleted =
+        (PhoneAuthCredential phoneAuthCredential) async {
+      await _auth.signInWithCredential(phoneAuthCredential);
+
+      print('Verified automatically');
+
+      _checkUserAccount();
+    };
+
+    PhoneVerificationFailed verificationFailed = (FirebaseAuthException e) {
+      QuickHelp.hideLoadingDialog(context);
+
+      print(
+          'Phone number verification failed. Code: ${e.code}. Message: ${e.message}');
+
+      if (e.code == "web-context-cancelled") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "auth.canceled_phone".tr());
+      } else if (e.code == "invalid-verification-code") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "auth.invalid_code".tr());
+      } else if (e.code == "network-request-failed") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "no_internet_connection".tr());
+      } else if (e.code == "invalid-phone-number") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "auth.invalid_phone_number".tr());
+      } else {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "try_again_later".tr());
+      }
+    };
+
+    PhoneCodeSent codeSent =
+        (String verificationId, [int? forceResendingToken]) async {
+      QuickHelp.hideLoadingDialog(context);
+      // Check your phone for the sms code
+      _verificationId = verificationId;
+      _tokenResend = forceResendingToken;
+
+      print('Verification code sent');
+
+      if (!resend) {
+        //_updateCurrentState();
+        nextPosition();
+      }
+
+      setState(() {
+        _showResend = false;
+      });
+    };
+
+    PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
+        (String verificationId) {
+      _verificationId = verificationId;
+      print('PhoneCodeAutoRetrievalTimeout');
+    };
+
+    try {
+      if (QuickHelp.isWebPlatform()) {
+        confirmationResult =
+            await _auth.signInWithPhoneNumber(number.phoneNumber!);
+        //userCredential = await confirmationResult.confirm('123456');
+      } else {
+        await _auth.verifyPhoneNumber(
+            phoneNumber: number.phoneNumber!,
+            timeout: const Duration(seconds: 5),
+            verificationCompleted: verificationCompleted,
+            verificationFailed: verificationFailed,
+            codeSent: codeSent,
+            forceResendingToken: _tokenResend,
+            codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+      }
+    } on FirebaseAuthException catch (e) {
+      QuickHelp.hideLoadingDialog(context);
+
+      if (e.code == "web-context-cancelled") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "auth.canceled_phone".tr());
+      } else if (e.code == "invalid-verification-code") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "auth.invalid_code".tr());
+      } else if (e.code == "network-request-failed") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "no_internet_connection".tr());
+      } else if (e.code == "invalid-phone-number") {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "auth.invalid_phone_number".tr());
+      } else {
+        QuickHelp.showAppNotificationAdvanced(
+            context: context,
+            title: "error".tr(),
+            message: "try_again_later".tr());
+      }
+    }
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   Future<void> verifyCode(String pinCode) async {
     _pinCode = pinCode;
@@ -278,7 +435,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _processLogin(String? username, String password) async {
     final user = ParseUser(username, password, null);
 
+<<<<<<< HEAD
     final response = await user.login();
+=======
+    var response = await user.login();
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     if (response.success) {
       showSuccess();
@@ -294,6 +455,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     print(currentUser);
     if (currentUser != null) {
       QuickHelp.goToNavigatorScreen(
+<<<<<<< HEAD
         context,
         DispacheScreen(
           currentUser: currentUser,
@@ -302,6 +464,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         finish: true,
         back: false,
       );
+=======
+          context,
+          DispacheScreen(
+            currentUser: currentUser,
+            preferences: preferences,
+          ),
+          finish: true,
+          back: false);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -686,7 +857,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               //user.setBirthday = QuickHelp.getDateFromString(_userData!['birthday'], QuickHelp.dateFormatFacebook);
                               ParseResponse response = await user.save();
 
+<<<<<<< HEAD
                               if (response.success) {
+=======
+                              if (user != null && response.success) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                 SocialLogin.goHome(context, user, preferences);
                               } else {
                                 QuickHelp.hideLoadingDialog(dialogueContext!);

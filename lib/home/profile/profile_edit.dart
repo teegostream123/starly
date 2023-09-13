@@ -4,7 +4,11 @@ import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+<<<<<<< HEAD
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:image_cropper/image_cropper.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -834,12 +838,20 @@ class _ProfileEditState extends State<ProfileEdit> {
     });
   }
 
+<<<<<<< HEAD
   uploadFile(XFile imageFile, bool isAvatar) async {
     if (imageFile.path.isNotEmpty) {
       parseFile = ParseFile(File(imageFile.path), name: "avatar.jpg");
     } else {
       final bytes = await imageFile.readAsBytes();
       parseFile = ParseWebFile(bytes, name: "avatar.jpg");
+=======
+  uploadFile(File imageFile, bool isAvatar) async {
+    if (imageFile.absolute.path.isNotEmpty) {
+      parseFile = ParseFile(File(imageFile.absolute.path), name: "avatar.jpg");
+    } else {
+      parseFile = ParseWebFile(imageFile.readAsBytesSync(), name: "avatar.jpg");
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
 
     if (isAvatar == true) {

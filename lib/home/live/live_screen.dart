@@ -1,8 +1,14 @@
 import 'dart:io';
 
+<<<<<<< HEAD
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:faker/faker.dart';
+=======
+import 'package:fade_shimmer/fade_shimmer.dart';
+import 'package:faker/faker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
@@ -15,8 +21,11 @@ import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/coins/coins_payment_widget.dart';
 import 'package:teego/home/live/live_preview.dart';
 import 'package:teego/home/live/live_streaming_screen.dart';
+<<<<<<< HEAD
 import 'package:teego/home/live/select_screen.dart';
 import 'package:teego/home/live/zego_live_stream.dart';
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/home/profile/profile_edit.dart';
 import 'package:teego/home/profile/user_screen.dart';
 import 'package:teego/models/GiftsSentModel.dart';
@@ -25,15 +34,22 @@ import 'package:teego/models/UserModel.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
+<<<<<<< HEAD
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
+=======
+import 'package:easy_localization/easy_localization.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
 import '../../models/LiveMessagesModel.dart';
 import '../../models/ReportModel.dart';
 import '../../ui/button_with_icon.dart';
 import '../location_screen.dart';
 import '../message/message_screen.dart';
+<<<<<<< HEAD
 import 'artist_screen.dart';
 import 'live_party.dart';
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
 // ignore: must_be_immutable
 class LiveScreen extends StatefulWidget {
@@ -50,7 +66,11 @@ class LiveScreen extends StatefulWidget {
 }
 
 class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
+<<<<<<< HEAD
   int tabsLength = 2;
+=======
+  int tabsLength = 4;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   int tabTypeForYou = 0;
   int tabTypeNearby = 1;
@@ -65,6 +85,11 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   List<dynamic> liveResults = <dynamic>[];
   late QueryBuilder<LiveStreamingModel> queryBuilder;
 
+<<<<<<< HEAD
+=======
+  var _future;
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -90,7 +115,11 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
 
   updateLives() {
     print("LiveIndex: $tabIndex");
+<<<<<<< HEAD
     // _future = _loadLive(tabIndex);
+=======
+    _future = _loadLive(tabIndex);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   @override
@@ -324,7 +353,10 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                 Icon(
                   Icons.people,
                   size: 18,
+<<<<<<< HEAD
                   // color: Colors.red,
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                   color: kPrimaryColor,
                 )),
             tabsRows(
@@ -343,10 +375,15 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: [
+<<<<<<< HEAD
           // artistWidget(),
           ArtistScreen(),
           LivePartyScreen(),
           // initQuery(tabTypeForYou),
+=======
+          artistWidget(),
+          initQuery(tabTypeForYou),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         ],
         //children: List.generate(tabsLength, (index) => initQuery(index)),
       ),
@@ -369,6 +406,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     }
     return null;
   }
+<<<<<<< HEAD
   // function to load all the streams from parser db
   // then show the list in the live party tab
   // on tap of the item will join the stream as a audience
@@ -444,6 +482,69 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
       print(e);
       print(t);
       rethrow;
+=======
+
+  Future<dynamic> _loadLive(int? category) async {
+    QueryBuilder<UserModel> queryUsers = QueryBuilder(UserModel.forQuery());
+    queryUsers.whereValueExists(UserModel.keyUserStatus, true);
+    queryUsers.whereEqualTo(UserModel.keyUserStatus, true);
+
+    queryBuilder = QueryBuilder<LiveStreamingModel>(LiveStreamingModel());
+
+    queryBuilder.whereEqualTo(LiveStreamingModel.keyStreaming, true);
+    queryBuilder.whereNotEqualTo(
+        LiveStreamingModel.keyAuthorUid, widget.currentUser!.getUid);
+    queryBuilder.whereNotContainedIn(
+        LiveStreamingModel.keyAuthor, widget.currentUser!.getBlockedUsers!);
+    queryBuilder.whereValueExists(LiveStreamingModel.keyAuthor, true);
+    queryBuilder.whereDoesNotMatchQuery(
+        LiveStreamingModel.keyAuthor, queryUsers);
+
+    if (category == tabTypeForYou) {
+      //queryBuilder.orderByDescending(keyVarCreatedAt);
+      queryBuilder.orderByDescending(LiveStreamingModel.keyAuthorTotalDiamonds);
+    } else if (category == tabTypeNearby) {
+      // Nearby
+      if (widget.currentUser!.getGeoPoint != null) {
+        queryBuilder.whereWithinKilometers(LiveStreamingModel.keyLiveGeoPoint,
+            widget.currentUser!.getGeoPoint!, Setup.maxDistanceToNearBy);
+        queryBuilder.orderByDescending(LiveStreamingModel.keyLiveGeoPoint);
+      }
+    } else if (category == tabTypeNew) {
+      // New
+      queryBuilder.whereEqualTo(LiveStreamingModel.keyFirstLive, true);
+      queryBuilder.orderByDescending(LiveStreamingModel.keyCreatedAt);
+    } else if (category == tabTypePopular) {
+      // Popular
+      queryBuilder.whereGreaterThanOrEqualsTo(
+          LiveStreamingModel.keyStreamingDiamonds,
+          Setup.minimumDiamondsToPopular);
+      queryBuilder.orderByDescending(LiveStreamingModel.keyAuthorTotalDiamonds);
+    }
+
+    queryBuilder.setLimit(25);
+    queryBuilder.includeObject([
+      LiveStreamingModel.keyAuthor,
+      LiveStreamingModel.keyAuthorInvited,
+      LiveStreamingModel.keyPrivateLiveGift
+    ]);
+
+    ParseResponse apiResponse = await queryBuilder.query();
+    if (apiResponse.success) {
+      if (apiResponse.results != null) {
+        //setupLiveQuery();
+
+        setState(() {
+          liveResults.clear();
+        });
+
+        return apiResponse.results;
+      } else {
+        return [];
+      }
+    } else {
+      return null;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -462,6 +563,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     }
   }
 
+<<<<<<< HEAD
   // Widget artistWidget() {
   //   return Container(
   //       child: FutureBuilder<List<ParseObject>>(
@@ -654,17 +756,205 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   //             }
   //           }));
   // }
+=======
+  Widget artistWidget() {
+    return Container(
+        child: FutureBuilder<List<ParseObject>>(
+            future: doUserQuery(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return GridView.custom(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  primary: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                  ),
+                  childrenDelegate: SliverChildBuilderDelegate(
+                    childCount: 8,
+                    (BuildContext context, int index) {
+                      return FadeShimmer(
+                        height: 60,
+                        width: 60,
+                        radius: 4,
+                        fadeTheme: QuickHelp.isDarkModeNoContext()
+                            ? FadeTheme.dark
+                            : FadeTheme.light,
+                      );
+                    },
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error...: ${snapshot.error.toString()}"),
+                );
+              } else if (snapshot.data!.isEmpty) {
+                return Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: QuickActions.noContentFound(
+                    "No Artist for now".tr(),
+                    "Stay tuned with us".tr(),
+                    "assets/svg/ic_tab_live_default.svg",
+                  ),
+                ));
+              } else {
+                return RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  color: Colors.white,
+                  backgroundColor: kPrimaryColor,
+                  strokeWidth: 2.0,
+                  onRefresh: () {
+                    _refreshIndicatorKey.currentState?.show(atTop: true);
+                    return doUserQuery();
+                  },
+                  child: GridView.custom(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 2,
+                      mainAxisSpacing: 2,
+                    ),
+                    childrenDelegate: SliverChildBuilderDelegate(
+                      childCount: snapshot.data!.length,
+                      (BuildContext context, int index) {
+                        final user = snapshot.data![index] as UserModel;
+
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (builder) => UserScreen(
+                                      userModel: user,
+                                    )));
+                          },
+                          child: Stack(children: [
+                            ContainerCorner(
+                              color: kTransparentColor,
+                              child: QuickActions.photosWidget(
+                                  user.getAvatar == null
+                                      ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuk4zd55uaQfv6DaY9RpS8a4lVNnVcyKf2YVHO5z3IAzZypmoFzSG4wSSuimSvjc_L-fk&usqp=CAU'
+                                      : user.getAvatar!.url,
+                                  borderRadius: 5),
+                            ),
+                            Positioned(
+                              top: 0,
+                              child: ContainerCorner(
+                                radiusTopLeft: 5,
+                                radiusTopRight: 5,
+                                height: 40,
+                                width: (MediaQuery.of(context).size.width /
+                                        numberOfColumns) -
+                                    5,
+                                alignment: Alignment.center,
+                                colors: [
+                                  Colors.black,
+                                  Colors.black.withOpacity(0.05)
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                child: ContainerCorner(
+                                  color: kTransparentColor,
+                                  marginLeft: 10,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          // TextWithTap(
+                                          //   'View Profile'.toString(),
+                                          //   color: Colors.white,
+                                          //   fontSize: 14,
+                                          //   marginRight: 15,
+                                          //   marginLeft: 5,
+                                          // ),
+                                          // QuickActions.showSVGAsset(
+                                          //   "assets/svg/ic_diamond.svg",
+                                          //   height: 24,
+                                          // ),
+                                          // TextWithTap(
+                                          //   liveStreaming
+                                          //       .getAuthor!.getDiamondsTotal!
+                                          //       .toString(),
+                                          //   color: Colors.white,
+                                          //   fontSize: 14,
+                                          //   marginLeft: 3,
+                                          // ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              child: ContainerCorner(
+                                radiusBottomLeft: 5,
+                                radiusBottomRight: 5,
+                                height: 40,
+                                width: (MediaQuery.of(context).size.width /
+                                        numberOfColumns) -
+                                    5,
+                                alignment: Alignment.center,
+                                colors: [
+                                  Colors.black,
+                                  Colors.black.withOpacity(0.05)
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Row(
+                                    children: [
+                                      QuickActions.showSVGAsset(
+                                        "assets/svg/ic_small_viewers.svg",
+                                        height: 18,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          TextWithTap(
+                                            user.getFullName!,
+                                            color: Colors.white,
+                                            overflow: TextOverflow.ellipsis,
+                                            marginLeft: 10,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              }
+            }));
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   Widget initQuery(int category) {
     return Container(
       margin: EdgeInsets.all(2),
       child: FutureBuilder(
+<<<<<<< HEAD
           future: _loadLive(tabIndex),
           builder: (BuildContext context, snapshot) {
             print([
               'snapshot connection state',
               snapshot.connectionState,
             ]);
+=======
+          future: _future,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             if (snapshot.connectionState == ConnectionState.waiting) {
               return GridView.custom(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -692,7 +982,10 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
               liveResults = snapshot.data! as List<dynamic>;
 
               if (liveResults.isNotEmpty) {
+<<<<<<< HEAD
                 print('inside liver result is not empty');
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                 return RefreshIndicator(
                   key: _refreshIndicatorKey,
                   color: Colors.white,
@@ -711,6 +1004,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                     ),
                     childrenDelegate: SliverChildBuilderDelegate(
                       childCount: liveResults.length,
+<<<<<<< HEAD
                       // childCount: 3,
                       (BuildContext context, int index) {
                         print(['available live index is', index]);
@@ -861,6 +1155,149 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                         //     ),
                         //   ]),
                         // );
+=======
+                      (BuildContext context, int index) {
+                        final LiveStreamingModel liveStreaming =
+                            liveResults[index] as LiveStreamingModel;
+                        return GestureDetector(
+                          onLongPress: () {
+                            if (liveStreaming.getAuthorId !=
+                                widget.currentUser!.objectId) {
+                              openSheet(
+                                  liveStreaming.getAuthor!, liveStreaming);
+                            }
+                          },
+                          onTap: () {
+                            checkPermission(false,
+                                channel: liveStreaming.getStreamingChannel,
+                                liveStreamingModel: liveStreaming);
+                          },
+                          child: Stack(children: [
+                            ContainerCorner(
+                              color: kTransparentColor,
+                              child: QuickActions.photosWidget(
+                                  liveStreaming.getImage!.url!,
+                                  borderRadius: 5),
+                            ),
+                            Positioned(
+                              top: 0,
+                              child: ContainerCorner(
+                                radiusTopLeft: 5,
+                                radiusTopRight: 5,
+                                height: 40,
+                                width: (MediaQuery.of(context).size.width /
+                                        numberOfColumns) -
+                                    5,
+                                alignment: Alignment.center,
+                                colors: [
+                                  Colors.black,
+                                  Colors.black.withOpacity(0.05)
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                child: ContainerCorner(
+                                  color: kTransparentColor,
+                                  marginLeft: 10,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          QuickActions.showSVGAsset(
+                                            "assets/svg/ic_small_viewers.svg",
+                                            height: 18,
+                                          ),
+                                          TextWithTap(
+                                            liveStreaming.getViewersCount
+                                                .toString(),
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            marginRight: 15,
+                                            marginLeft: 5,
+                                          ),
+                                          QuickActions.showSVGAsset(
+                                            "assets/svg/ic_diamond.svg",
+                                            height: 24,
+                                          ),
+                                          TextWithTap(
+                                            liveStreaming
+                                                .getAuthor!.getDiamondsTotal!
+                                                .toString(),
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            marginLeft: 3,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: liveStreaming.getPrivate!,
+                              child: Center(
+                                child: Icon(
+                                  Icons.vpn_key,
+                                  color: Colors.white,
+                                  size: 35,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              child: ContainerCorner(
+                                radiusBottomLeft: 5,
+                                radiusBottomRight: 5,
+                                height: 40,
+                                width: (MediaQuery.of(context).size.width /
+                                        numberOfColumns) -
+                                    5,
+                                alignment: Alignment.center,
+                                colors: [
+                                  Colors.black,
+                                  Colors.black.withOpacity(0.05)
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                                child: Row(
+                                  children: [
+                                    QuickActions.avatarWidget(
+                                        liveStreaming.getAuthor!,
+                                        height: 30,
+                                        width: 30,
+                                        margin: EdgeInsets.only(
+                                            left: 5, bottom: 5)),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextWithTap(
+                                          liveStreaming.getAuthor!.getFullName!,
+                                          color: Colors.white,
+                                          overflow: TextOverflow.ellipsis,
+                                          marginLeft: 10,
+                                        ),
+                                        Visibility(
+                                          visible: liveStreaming
+                                              .getStreamingTags!.isNotEmpty,
+                                          child: TextWithTap(
+                                            liveStreaming.getStreamingTags!,
+                                            color: Colors.white,
+                                            overflow: TextOverflow.ellipsis,
+                                            marginLeft: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ]),
+                        );
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                       },
                     ),
                   ),
@@ -1100,6 +1537,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     }*/
   }
 
+<<<<<<< HEAD
   // Future<List> getAllLive() async {
   //   final snap = ParseObject('Streamings');
   //   final res = await snap.getAll();
@@ -1115,6 +1553,8 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   //   return [];
   // }
 
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   String distanceValue(double distance) {
     //QuickHelp.distanceInKilometersTo(liveStreaming.getStreamingGeoPoint!, widget.currentUser!.getGeoPoint!)
     if (distance >= 1.0) {
@@ -1452,9 +1892,15 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                 textColor: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
+<<<<<<< HEAD
                 // onTap: () {
                 //   _terminateLive(live);
                 // },
+=======
+                onTap: () {
+                  _terminateLive(live);
+                },
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               ),
             ),
             Visibility(visible: widget.currentUser!.isAdmin!, child: Divider()),
@@ -1644,6 +2090,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     }
   }
 
+<<<<<<< HEAD
   // _terminateLive(LiveStreamingModel live) {
   //   QuickHelp.goBackToPreviousPage(context);
   //
@@ -1656,6 +2103,20 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   //     onPressed: () => _confirmTerminateLive(live),
   //   );
   // }
+=======
+  _terminateLive(LiveStreamingModel live) {
+    QuickHelp.goBackToPreviousPage(context);
+
+    QuickHelp.showDialogWithButtonCustom(
+      context: context,
+      title: "live_streaming.live_option_terminate".tr(),
+      message: "live_streaming.live_option_terminate_ask".tr(),
+      cancelButtonText: "no".tr(),
+      confirmButtonText: "live_streaming.live_option_terminate_ask_yes".tr(),
+      onPressed: () => _confirmTerminateLive(live),
+    );
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   _suspendUser(LiveStreamingModel live) {
     QuickHelp.goBackToPreviousPage(context);
@@ -1704,6 +2165,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     }
   }
 
+<<<<<<< HEAD
   // _confirmTerminateLive(LiveStreamingModel live) async {
   //   QuickHelp.goBackToPreviousPage(context);
   //
@@ -1734,6 +2196,38 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   //     );
   //   }
   // }
+=======
+  _confirmTerminateLive(LiveStreamingModel live) async {
+    QuickHelp.goBackToPreviousPage(context);
+
+    QuickHelp.showLoadingDialog(context);
+
+    live.setTerminatedByAdmin = true;
+    ParseResponse parseResponse = await live.save();
+
+    if (parseResponse.success) {
+      QuickHelp.goBackToPreviousPage(context);
+
+      QuickHelp.showAppNotificationAdvanced(
+        context: context,
+        title: "live_streaming.live_option_terminate".tr(),
+        message: "live_streaming.live_option_terminated".tr(),
+        user: live.getAuthor,
+        isError: null,
+      );
+    } else {
+      QuickHelp.goBackToPreviousPage(context);
+
+      QuickHelp.showAppNotificationAdvanced(
+        context: context,
+        title: "error".tr(),
+        message: "live_streaming.live_option_not_terminated".tr(),
+        user: live.getAuthor,
+        isError: true,
+      );
+    }
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   _gotToChat(UserModel currentUser, UserModel mUser) {
     QuickHelp.goToNavigator(context, MessageScreen.route, arguments: {

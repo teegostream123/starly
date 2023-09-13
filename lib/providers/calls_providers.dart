@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:agora_rtm/agora_rtm.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +23,10 @@ import '../home/live/live_streaming_screen.dart';
 import '../utils/shared_manager.dart';
 
 class CallsProvider extends ChangeNotifier {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   int connectionStateDisconnected = 1;
   int connectionStateConnecting = 2;
   int connectionStateConnected = 3;
@@ -27,7 +34,11 @@ class CallsProvider extends ChangeNotifier {
   int connectionStateAborted = 5;
 
   AgoraRtmClient? _client;
+<<<<<<< HEAD
   LocalInvitation? invitation;
+=======
+  AgoraRtmLocalInvitation? invitation;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   bool _isLogin = false;
 
   //BuildContext? _context;
@@ -83,11 +94,17 @@ class CallsProvider extends ChangeNotifier {
   void _createClient() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
+<<<<<<< HEAD
     _client = await AgoraRtmClient.createInstance(
         SharedManager().getStreamProviderKey(preferences));
     _client!.onMessageReceived = (RtmMessage message, String peerId) {
       _log("Peer msg: " + peerId + ", msg: " + (message.text));
       print('message in Agora RTM:::::$message\n peer id in Agora RTM:::::::$peerId');
+=======
+    _client = await AgoraRtmClient.createInstance(SharedManager().getStreamProviderKey(preferences));
+    _client!.onMessageReceived = (AgoraRtmMessage message, String peerId) {
+      _log("Peer msg: " + peerId + ", msg: " + (message.text));
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     };
 
     _client!.onConnectionStateChanged = (int state, int reason) {
@@ -126,20 +143,34 @@ class CallsProvider extends ChangeNotifier {
       notifyListeners();
     };
 
+<<<<<<< HEAD
     _client!.onLocalInvitationAccepted = (LocalInvitation invite, _) {
+=======
+    _client!.onLocalInvitationAccepted = (AgoraRtmLocalInvitation invite) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       _log(
           'Local invitation received by peer: ${invite.calleeId}, content: ${invite.content}');
       isCallRinging = true;
       //notifyListeners();
     };
 
+<<<<<<< HEAD
     _client!.onLocalInvitationRefused = (AgoraRtmLocalInvitation invite, _) {
+=======
+    _client!.onLocalInvitationRefused = (AgoraRtmLocalInvitation invite) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       _log(
           'Local invitation Refused by peer: ${invite.calleeId}, content: ${invite.content}');
       isCallRefused = true;
 
+<<<<<<< HEAD
       if (invite.response != null && invite.response == "busy") {
         /* QuickHelp.showAppNotificationAdvanced(
+=======
+
+      if (invite.response != null && invite.response == "busy") {
+       /* QuickHelp.showAppNotificationAdvanced(
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             title: "sorry".tr(),
             message: "Busy",
             context: NavigationService.navigatorKey.currentContext!);*/
@@ -201,8 +232,11 @@ class CallsProvider extends ChangeNotifier {
     };
   }
 
+<<<<<<< HEAD
   // is mn sy agora remove krna
 
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   void _toggleLogin(UserModel? userModel) async {
     if (_isLogin) {
       try {
@@ -240,12 +274,17 @@ class CallsProvider extends ChangeNotifier {
     _log('callUserInvitation clicked');
 
     try {
+<<<<<<< HEAD
       // invitation = LocalInvitation(
       //   calleeId: calleeId,
       //   content: isVideo ? "video" : "voice",
       //   channelId: channel,
       // );
 
+=======
+      invitation = AgoraRtmLocalInvitation(calleeId,
+          content: isVideo ? "video" : "voice", channelId: channel);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       _log(invitation!.content ?? '');
       await _client!.sendLocalInvitation(invitation!.toJson());
       _log('Send local invitation success.');
@@ -275,7 +314,11 @@ class CallsProvider extends ChangeNotifier {
   }
 
   // Refuse a call invitation.
+<<<<<<< HEAD
   void refuseRemoteInvitation(RemoteInvitation invitation) {
+=======
+  void refuseRemoteInvitation(AgoraRtmRemoteInvitation invitation) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     if (_client != null) {
       invitation.response = "busy";
       //invitation.state = 1;
@@ -290,8 +333,12 @@ class CallsProvider extends ChangeNotifier {
     getRoute = route.getString("currentRoute")!;
   }
 
+<<<<<<< HEAD
   initCallScreen(AgoraRtmRemoteInvitation agoraRtmRemoteInvitation,
       SharedPreferences preferences) async {
+=======
+  initCallScreen(AgoraRtmRemoteInvitation agoraRtmRemoteInvitation, SharedPreferences preferences) async {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     getRoutes();
 
     isCallCanceled = false;
@@ -305,6 +352,7 @@ class CallsProvider extends ChangeNotifier {
     if (parseResponse.success && parseResponse.results != null) {
       UserModel mUser = parseResponse.results!.first! as UserModel;
 
+<<<<<<< HEAD
       if (getRoute == VideoCallScreen.route) {
         //invitation.content = "busy";
         refuseRemoteInvitation(agoraRtmRemoteInvitation);
@@ -312,6 +360,20 @@ class CallsProvider extends ChangeNotifier {
         //invitation.content = "busy";
         refuseRemoteInvitation(agoraRtmRemoteInvitation);
       } else if (getRoute == LiveStreamingScreen.route) {
+=======
+      if(getRoute == VideoCallScreen.route) {
+
+        //invitation.content = "busy";
+        refuseRemoteInvitation(agoraRtmRemoteInvitation);
+
+      } else if(getRoute == VoiceCallScreen.route) {
+
+        //invitation.content = "busy";
+        refuseRemoteInvitation(agoraRtmRemoteInvitation);
+
+      } else if(getRoute == LiveStreamingScreen.route) {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         //invitation.content = "live";
 
         refuseRemoteInvitation(agoraRtmRemoteInvitation);
@@ -346,6 +408,7 @@ class CallsProvider extends ChangeNotifier {
         );*/
 
         //showInComingCallBackground(_currentUser!, mUser, agoraRtmRemoteInvitation);
+<<<<<<< HEAD
       } else if (getRoute == "background") {
         _log("AgoraCall received $getRoute");
 
@@ -356,6 +419,20 @@ class CallsProvider extends ChangeNotifier {
 
         showInComingCallBackground(
             _currentUser!, mUser, agoraRtmRemoteInvitation, preferences);
+=======
+
+
+      } else if(getRoute == "background"){
+        _log("AgoraCall received $getRoute");
+
+        showInComingCallBackground(_currentUser!, mUser, agoraRtmRemoteInvitation, preferences);
+
+      } else {
+
+        _log("AgoraCall received $getRoute");
+
+        showInComingCallBackground(_currentUser!, mUser, agoraRtmRemoteInvitation, preferences);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         /* QuickHelp.goToNavigatorScreen(
           NavigationService.navigatorKey.currentContext!,
           IncomingCallScreen(
@@ -369,7 +446,11 @@ class CallsProvider extends ChangeNotifier {
           route: IncomingCallScreen.route,
         );*/
       }
+<<<<<<< HEAD
     } else {
+=======
+    } else{
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       _log("parseResponse error");
     }
   }
@@ -379,6 +460,7 @@ class CallsProvider extends ChangeNotifier {
     required UserModel currentUser,
     required UserModel mUser,
     required String channel,
+<<<<<<< HEAD
     required RemoteInvitation agoraRtmRemoteInvitation,
     required SharedPreferences preferences,
   }) {
@@ -408,36 +490,86 @@ class CallsProvider extends ChangeNotifier {
         ),
         finish: false,
         back: true,
+=======
+    required AgoraRtmRemoteInvitation agoraRtmRemoteInvitation,
+    required SharedPreferences preferences,
+  }){
+
+    if (isVideo) {
+      QuickHelp.goToNavigatorScreen(
+          NavigationService.navigatorKey.currentContext!,
+          VideoCallScreen(
+              currentUser: currentUser,
+              mUser: mUser,
+              channel: channel,
+              isCaller: false,
+              preferences: preferences,
+          ),
+          finish: false,
+          back: true,
+      );
+    } else {
+      QuickHelp.goToNavigatorScreen(
+          NavigationService.navigatorKey.currentContext!,
+          VoiceCallScreen(
+            mUser: mUser,
+            currentUser: currentUser,
+            channel: channel,
+            isCaller: false,
+            preferences: preferences,
+          ),
+          finish: false,
+          back: true,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       );
     }
   }
 
+<<<<<<< HEAD
   showInComingCallBackground(
       UserModel currentUser,
       UserModel callerUser,
       AgoraRtmRemoteInvitation invitation,
       SharedPreferences preferences) async {
+=======
+  showInComingCallBackground(UserModel currentUser, UserModel callerUser, AgoraRtmRemoteInvitation invitation, SharedPreferences preferences) async {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final params = CallKitParams(
       id: currentUser.objectId,
       nameCaller: callerUser.getFullName,
       appName: Setup.appName,
       avatar: callerUser.getAvatar!.url,
+<<<<<<< HEAD
       handle: invitation.content! == "video"
           ? "calls_screen.text_video_call".tr()
+=======
+      handle: invitation.content! == "video" ? "calls_screen.text_video_call".tr()
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           : "calls_screen.text_voice_call".tr(),
       type: invitation.content! == "video" ? 1 : 0,
       duration: 30000,
       textAccept: "calls_screen.text_accept".tr(),
       textDecline: "calls_screen.text_decline".tr(),
+<<<<<<< HEAD
       // textMissedCall: "calls_screen.text_missed_call".tr(),
       // textCallback: "calls_screen.text_callback".tr(),
+=======
+      textMissedCall: "calls_screen.text_missed_call".tr(),
+      textCallback: "calls_screen.text_callback".tr(),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       //extra: <String, dynamic>{'userId': '1a2b3c4d'},
       //headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
       android: AndroidParams(
         isCustomNotification: false,
         isShowLogo: false,
+<<<<<<< HEAD
         // isShowCallback: false,
         // isShowMissedCallNotification: true,
+=======
+        isShowCallback: false,
+        isShowMissedCallNotification: true,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         ringtonePath: 'system_ringtone_default',
         backgroundColor: '#27E150',
         //backgroundUrl: 'assets/test.png',
@@ -461,6 +593,7 @@ class CallsProvider extends ChangeNotifier {
       ),
     );
     await FlutterCallkitIncoming.showCallkitIncoming(params);
+<<<<<<< HEAD
     await listenerEvent(
         invitation: invitation,
         callerUser: callerUser,
@@ -476,10 +609,21 @@ class CallsProvider extends ChangeNotifier {
       UserModel? callerUser,
       AgoraRtmRemoteInvitation? invitation,
       required SharedPreferences preferences}) async {
+=======
+    await listenerEvent(invitation: invitation, callerUser: callerUser, preferences: preferences);
+  }
+
+  endInComingCall() async{
+    await FlutterCallkitIncoming.endAllCalls();
+  }
+
+  Future<void> listenerEvent({Function? callback, UserModel? callerUser, AgoraRtmRemoteInvitation? invitation, required SharedPreferences preferences}) async {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     try {
       FlutterCallkitIncoming.onEvent.listen((event) async {
         print('HOME CallKit: ${event!.event}');
         switch (event.event) {
+<<<<<<< HEAD
           case Event.actionCallIncoming:
             // TODO: received an incoming call
             break;
@@ -494,6 +638,24 @@ class CallsProvider extends ChangeNotifier {
 
             _acceptCall(
               isVideo: invitation.content! == "video" ? true : false,
+=======
+          case Event.ACTION_CALL_INCOMING:
+          // TODO: received an incoming call
+            break;
+          case Event.ACTION_CALL_START:
+          // TODO: started an outgoing call
+          // TODO: show screen calling in Flutter
+            break;
+          case Event.ACTION_CALL_ACCEPT:
+          // TODO: accepted an incoming call
+          // TODO: show screen calling in Flutter
+            answerCall(invitation!);
+
+            _acceptCall(
+              isVideo: invitation.content! == "video"
+                  ? true
+                  : false,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               currentUser: _currentUser!,
               mUser: callerUser!,
               channel: invitation.channelId!,
@@ -502,24 +664,40 @@ class CallsProvider extends ChangeNotifier {
             );
 
             break;
+<<<<<<< HEAD
           case Event.actionCallDecline:
             // TODO: declined an incoming call
+=======
+          case Event.ACTION_CALL_DECLINE:
+          // TODO: declined an incoming call
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
             refuseRemoteInvitation(invitation!);
             endInComingCall();
             break;
+<<<<<<< HEAD
           case Event.actionCallEnded:
             // TODO: ended an incoming/outgoing call
+=======
+          case Event.ACTION_CALL_ENDED:
+          // TODO: ended an incoming/outgoing call
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
             refuseRemoteInvitation(invitation!);
             endInComingCall();
             break;
+<<<<<<< HEAD
           case Event.actionCallTimeout:
             // TODO: missed an incoming call
+=======
+          case Event.ACTION_CALL_TIMEOUT:
+          // TODO: missed an incoming call
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
             refuseRemoteInvitation(invitation!);
             //endInComingCall();
             break;
+<<<<<<< HEAD
           case Event.actionCallCallback:
             // TODO: only Android - click action `Call back` from missed call notification
             break;
@@ -540,6 +718,28 @@ class CallsProvider extends ChangeNotifier {
             break;
           case Event.actionDidUpdateDevicePushTokenVoip:
             // TODO: only iOS
+=======
+          case Event.ACTION_CALL_CALLBACK:
+          // TODO: only Android - click action `Call back` from missed call notification
+            break;
+          case Event.ACTION_CALL_TOGGLE_HOLD:
+          // TODO: only iOS
+            break;
+          case Event.ACTION_CALL_TOGGLE_MUTE:
+          // TODO: only iOS
+            break;
+          case Event.ACTION_CALL_TOGGLE_DMTF:
+          // TODO: only iOS
+            break;
+          case Event.ACTION_CALL_TOGGLE_GROUP:
+          // TODO: only iOS
+            break;
+          case Event.ACTION_CALL_TOGGLE_AUDIO_SESSION:
+          // TODO: only iOS
+            break;
+          case Event.ACTION_DID_UPDATE_DEVICE_PUSH_TOKEN_VOIP:
+          // TODO: only iOS
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             break;
         }
         /*if (callback != null) {

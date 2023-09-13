@@ -2,13 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
+=======
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:image_cropper/image_cropper.dart';
 import 'package:mime/mime.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+<<<<<<< HEAD
 // import 'package:teego/app/constants.dart';
+=======
+import 'package:teego/app/constants.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/app/setup.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_cloud.dart';
@@ -689,12 +697,21 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
+<<<<<<< HEAD
                   // if (index % _kAdIndex == 0) {
                   //   // return getAdsFuture();
                   // } else {
                     return Container();
                   }
                 //},
+=======
+                  if (index % _kAdIndex == 0) {
+                    return getAdsFuture();
+                  } else {
+                    return Container();
+                  }
+                },
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               );
             } else {
               return Center(
@@ -715,6 +732,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
         });
   }
 
+<<<<<<< HEAD
   // Widget getAdsFuture() {
   //   return FutureBuilder(
   //       // future: QuickHelp.isIOSPlatform(), ? loadAds() : loadNativeAds(),
@@ -798,6 +816,91 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
   //
   //   return bannerAd..load();
   // }
+=======
+  Widget getAdsFuture() {
+    return FutureBuilder(
+        future: QuickHelp.isIOSPlatform() ? loadAds() : loadNativeAds(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: QuickHelp.showLoadingAnimation(),
+            );
+          } else if (snapshot.hasData) {
+            AdWithView ad = snapshot.data as AdWithView;
+
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              color: QuickHelp.isDarkMode(context)
+                  ? kContentColorLightTheme
+                  : Colors.white,
+              margin: EdgeInsets.only(top: 7),
+              child: AdWidget(
+                ad: ad,
+                key: Key(
+                  ad.hashCode.toString(),
+                ),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        });
+  }
+
+  Future<dynamic> loadNativeAds() async {
+    NativeAd _listAd = NativeAd(
+      adUnitId: Constants.getAdmobFeedNativeUnit(),
+      factoryId: "listTile",
+      request: const AdRequest(),
+      listener: NativeAdListener(onAdLoaded: (ad) {
+        if (kDebugMode) {
+          print("Ad Got onAdLoaded");
+        }
+      }, onAdFailedToLoad: (ad, error) {
+        debugPrint("Ad Got onAdFailedToLoad ${error.message}");
+        ad.dispose();
+      }, onAdClosed: (ad) {
+        debugPrint("Ad Got onAdClosed");
+        ad.dispose();
+      }, onAdWillDismissScreen: (ad) {
+        debugPrint("Ad Got onAdWillDismissScreen");
+        ad.dispose();
+      }),
+    );
+    return _listAd..load();
+  }
+
+  Future<dynamic> loadAds() async {
+    BannerAdListener bannerAdListener = BannerAdListener(
+      onAdWillDismissScreen: (ad) {
+        debugPrint("Ad Got onAdWillDismissScreen");
+        ad.dispose();
+      },
+      onAdClosed: (ad) {
+        debugPrint("Ad Got Closed");
+        ad.dispose();
+      },
+      onAdFailedToLoad: (ad, error) {
+        debugPrint("Ad Got onAdFailedToLoad");
+        ad.dispose();
+      },
+      onAdLoaded: (ad) {
+        debugPrint("Ad Got onAdLoaded");
+      },
+    );
+
+    BannerAd bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: Constants.getAdmobFeedNativeUnit(),
+      listener: bannerAdListener,
+      request: const AdRequest(),
+    );
+
+    return bannerAd..load();
+  }
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   void openVideo(PostsModel post) async {
     showModalBottomSheet(

@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+<<<<<<< HEAD
 
+=======
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
@@ -63,11 +66,19 @@ class Bucket extends Client {
             xml.XmlElement ele = node;
             switch ('${ele.name}') {
               case "NextMarker":
+<<<<<<< HEAD
                 marker = ele.innerText;
                 break;
               case "IsTruncated":
                 isTruncated = ele.innerText.toLowerCase() != "false" &&
                     ele.innerText != "0";
+=======
+                marker = ele.text;
+                break;
+              case "IsTruncated":
+                isTruncated =
+                    ele.text.toLowerCase() != "false" && ele.text != "0";
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                 break;
               case "Contents":
                 String? key;
@@ -79,6 +90,7 @@ class Bucket extends Client {
                     xml.XmlElement ele = node;
                     switch ('${ele.name}') {
                       case "Key":
+<<<<<<< HEAD
                         key = ele.innerText;
                         break;
                       case "LastModified":
@@ -89,6 +101,18 @@ class Bucket extends Client {
                         break;
                       case "Size":
                         size = int.parse(ele.innerText);
+=======
+                        key = ele.text;
+                        break;
+                      case "LastModified":
+                        lastModifiedUtc = DateTime.parse(ele.text);
+                        break;
+                      case "ETag":
+                        eTag = ele.text;
+                        break;
+                      case "Size":
+                        size = int.parse(ele.text);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                         break;
                     }
                   }

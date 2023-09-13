@@ -20,7 +20,11 @@ import 'package:teego/app/navigation_service.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/helpers/send_notifications.dart';
+<<<<<<< HEAD
 import 'package:teego/home/select_screen.dart';
+=======
+import 'package:teego/home/home_screen.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/ui/container_with_corner.dart';

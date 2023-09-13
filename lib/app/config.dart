@@ -10,6 +10,7 @@ class Config {
   static final String appOrCompanyUrl = "https://tiganlab.com";
   static final String initialCountry = 'PK'; // United States
 
+<<<<<<< HEAD
   static const String agoraAppId = '11537fc74b1d400dbfcda527011169c8';
 
   static final String serverUrl = "https://parseapi.back4app.com/";
@@ -17,6 +18,15 @@ class Config {
   static final String appId = "HSnoUGSH5VrAik7tnZ9QrLi2TX5VugKptx8WHHh8";
   static final String clientKey = "x1fpB32UIrc91d1ztznVQuEC2olPEBAymcWqOBk2";
 
+=======
+  static final String serverUrl = "https://parseapi.back4app.com/";
+  static final String liveQueryUrl = "wss://teego.b4a.io";
+  static final String appId = "HSnoUGSH5VrAik7tnZ9QrLi2TX5VugKptx8WHHh8";
+  static final String clientKey = "x1fpB32UIrc91d1ztznVQuEC2olPEBAymcWqOBk2";
+
+  static final String agoraAppId = "11537fc74b1d400dbfcda527011169c8";
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   static final String pushGcm = "188663119667";
   static final String webPushCertificate =
       "BE5yAwjkDdQrXOUO534543543543543n0XEJl6Xf5zEJYIuIH08eC9IL4OQfsuLoaIwYM";

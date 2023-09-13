@@ -16,11 +16,17 @@ import '../../ui/container_with_corner.dart';
 import '../../ui/text_with_tap.dart';
 
 // ignore: must_be_immutable
+<<<<<<< HEAD
 class CoinsRcScreen extends StatefulWidget {
+=======
+class CoinsScreen extends StatefulWidget {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   static String route = "/home/coins/purchase";
 
   UserModel? currentUser;
 
+<<<<<<< HEAD
   CoinsRcScreen({this.currentUser});
 
   @override
@@ -29,6 +35,17 @@ class CoinsRcScreen extends StatefulWidget {
 
 class _CoinsRcScreenState extends State<CoinsRcScreen> {
   void getUser() async {
+=======
+  CoinsScreen({this.currentUser});
+
+  @override
+  _CoinsScreenState createState() => _CoinsScreenState();
+}
+
+class _CoinsScreenState extends State<CoinsScreen> {
+
+  void getUser() async{
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     widget.currentUser = await ParseUser.currentUser();
   }
 
@@ -39,12 +56,21 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
 
   @override
   void dispose() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     super.dispose();
   }
 
   @override
   void initState() {
+<<<<<<< HEAD
     QuickHelp.saveCurrentRoute(route: CoinsRcScreen.route);
+=======
+
+    QuickHelp.saveCurrentRoute(route: CoinsScreen.route);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     initProducts();
 
     super.initState();
@@ -55,6 +81,10 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
       offerings = await Purchases.getOfferings();
 
       if (offerings.current!.availablePackages.length > 0) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         setState(() {
           _isAvailable = true;
           _loading = false;
@@ -72,11 +102,19 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
   }
 
   List<InAppPurchaseModel> getInAppList() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     List<Package> myProductList = offerings.current!.availablePackages;
 
     List<InAppPurchaseModel> inAppPurchaseList = [];
 
     for (Package package in myProductList) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       if (package.identifier == Config.credit200) {
         InAppPurchaseModel credits200 = InAppPurchaseModel(
             id: Config.credit200,
@@ -100,7 +138,11 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
             coins: 1000,
             price: package.storeProduct.priceString,
             image: "assets/images/ic_coins_1.png",
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.1).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
             package: package,
@@ -137,7 +179,11 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
             image: "assets/images/ic_coins_6.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.1).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             package: package,
             currency: package.storeProduct.currencyCode,
             currencySymbol: package.storeProduct.currencyCode);
@@ -152,7 +198,11 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
             id: Config.credit2100,
             coins: 2100,
             price: package.storeProduct.priceString,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.2).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.2).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             image: "assets/images/ic_coins_5.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
@@ -170,7 +220,11 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
             id: Config.credit5250,
             coins: 5250,
             price: package.storeProduct.priceString,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.3).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.3).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             image: "assets/images/ic_coins_7.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
@@ -188,7 +242,11 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
             id: Config.credit10500,
             coins: 10500,
             price: package.storeProduct.priceString,
+<<<<<<< HEAD
             discount: (package.storeProduct.price * 1.4).toStringAsFixed(2),
+=======
+            discount: (package.storeProduct.price*1.4).toStringAsFixed(2),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             image: "assets/images/ic_coins_2.png",
             type: InAppPurchaseModel.typeNormal,
             storeProduct: package.storeProduct,
@@ -209,13 +267,18 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
+<<<<<<< HEAD
           QuickHelp.isDarkMode(context) ? kContentColorLightTheme : kGreyColor0,
+=======
+      QuickHelp.isDarkMode(context) ? kContentColorLightTheme : kGreyColor0,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       body: Column(
         children: [
           Row(
             children: [
               Expanded(
                   child: Container(
+<<<<<<< HEAD
                 //color: Colors.white,
                 height: 40,
                 child: Padding(
@@ -250,6 +313,42 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
                       ])),
                 ),
               )),
+=======
+                    //color: Colors.white,
+                    height: 40,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: RichText(
+                          textAlign: TextAlign.start,
+                          text: TextSpan(children: [
+                            TextSpan(
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: QuickHelp.isDarkMode(context)
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              text: "coins.get_coins".tr(),
+                            ),
+                            TextSpan(
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                              text: "  ",
+                            ),
+                            TextSpan(
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: kGrayColor,
+                              ),
+                              text: "coins.to_support".tr(),
+                            )
+                          ])),
+                    ),
+                  )),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             ],
           ),
           Expanded(child: getBody()),
@@ -258,11 +357,23 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
     );
   }
 
+<<<<<<< HEAD
   Widget getBody() {
     if (_loading) {
       return QuickHelp.appLoading();
     } else if (_isAvailable) {
       return getProductList();
+=======
+
+  Widget getBody() {
+
+    if (_loading) {
+      return QuickHelp.appLoading();
+    } else if (_isAvailable) {
+
+      return getProductList();
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     } else {
       return QuickActions.noContentFound(
           "in_app_purchases.no_product_found_title".tr(),
@@ -320,21 +431,33 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
                           child: Stack(
                               alignment: AlignmentDirectional.bottomEnd,
                               children: [
+<<<<<<< HEAD
                                 if (inApp.type ==
                                     InAppPurchaseModel.typePopular)
+=======
+                                if (inApp.type == InAppPurchaseModel.typePopular)
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                   Image.asset(
                                       "assets/images/cashier_popular.png"),
                                 if (inApp.type == InAppPurchaseModel.typeHot)
                                   Image.asset("assets/images/cashier_hot.png"),
                                 Positioned(
                                   child: Column(
+<<<<<<< HEAD
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
+=======
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                     children: [
                                       ContainerCorner(
                                         child: Row(
                                           mainAxisAlignment:
+<<<<<<< HEAD
                                               MainAxisAlignment.center,
+=======
+                                          MainAxisAlignment.center,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                           children: [
                                             SvgPicture.asset(
                                               "assets/svg/ic_coin_with_star.svg",
@@ -362,11 +485,15 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
                                       ),
                                       TextWithTap(
                                         inApp.price!,
+<<<<<<< HEAD
                                         marginTop: inApp.type ==
                                                     InAppPurchaseModel
                                                         .typePopular ||
                                                 inApp.type ==
                                                     InAppPurchaseModel.typeHot
+=======
+                                        marginTop: inApp.type == InAppPurchaseModel.typePopular || inApp.type == InAppPurchaseModel.typeHot
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                             ? 2
                                             : 20,
                                         fontWeight: FontWeight.bold,
@@ -374,6 +501,7 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
                                       ),
                                       inApp.discount != null
                                           ? TextWithTap(
+<<<<<<< HEAD
                                               "${inApp.currencySymbol} ${inApp.discount}",
                                               marginTop: 2,
                                               color: kGrayColor,
@@ -384,6 +512,17 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
                                           : Container(),
                                       if (inApp.type ==
                                           InAppPurchaseModel.typePopular)
+=======
+                                        "${inApp.currencySymbol} ${inApp.discount}",
+                                        marginTop: 2,
+                                        color: kGrayColor,
+                                        fontSize: 16,
+                                        decoration:
+                                        TextDecoration.lineThrough,
+                                      )
+                                          : Container(),
+                                      if (inApp.type == InAppPurchaseModel.typePopular)
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                         TextWithTap(
                                           'coins.popular_'.tr(),
                                           color: Colors.white,
@@ -391,8 +530,12 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
                                           fontWeight: FontWeight.bold,
                                           marginTop: 30,
                                         ),
+<<<<<<< HEAD
                                       if (inApp.type ==
                                           InAppPurchaseModel.typeHot)
+=======
+                                      if (inApp.type == InAppPurchaseModel.typeHot)
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                         TextWithTap(
                                           'coins.hot_'.tr(),
                                           color: Colors.white,
@@ -415,11 +558,17 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
     );
   }
 
+<<<<<<< HEAD
   _purchaseProduct(InAppPurchaseModel inAppPurchaseModel) async {
+=======
+  _purchaseProduct(InAppPurchaseModel inAppPurchaseModel) async{
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     QuickHelp.showLoadingDialog(context);
 
     try {
       QuickHelp.hideLoadingDialog(context);
+<<<<<<< HEAD
       QuickHelp.showAppNotificationAdvanced(
         context: context,
         user: widget.currentUser,
@@ -436,12 +585,39 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
 
         QuickHelp.showAppNotificationAdvanced(
           context: context,
+=======
+      QuickHelp.showAppNotificationAdvanced(context:context,
+        user: widget.currentUser,
+        title: "in_app_purchases.coins_purchased".tr(namedArgs: {"coins" : _inAppPurchaseModel!.coins!.toString()}),
+        message: "in_app_purchases.coins_added_to_account".tr(),
+        isError: false,
+      );
+
+    } on PlatformException catch (e) {
+
+      var errorCode = PurchasesErrorHelper.getErrorCode(e);
+
+      if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+
+        QuickHelp.hideLoadingDialog(context);
+
+        QuickHelp.showAppNotificationAdvanced(
+          context:context,
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           user: widget.currentUser,
           title: "in_app_purchases.purchase_cancelled_title".tr(),
           message: "in_app_purchases.purchase_cancelled".tr(),
         );
+<<<<<<< HEAD
       } else if (errorCode != PurchasesErrorCode.invalidReceiptError) {
         _handleInvalidPurchase();
+=======
+
+      } else if (errorCode != PurchasesErrorCode.invalidReceiptError) {
+
+       _handleInvalidPurchase();
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       } else {
         handleError(e);
       }
@@ -449,6 +625,7 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
   }
 
   void _handleInvalidPurchase() {
+<<<<<<< HEAD
     QuickHelp.showAppNotification(
         context: context, title: "in_app_purchases.invalid_purchase".tr());
     QuickHelp.hideLoadingDialog(context);
@@ -456,6 +633,15 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
 
   void registerPayment(
       CustomerInfo customerInfo, InAppPurchaseModel productDetails) async {
+=======
+
+    QuickHelp.showAppNotification(context:context, title: "in_app_purchases.invalid_purchase".tr());
+    QuickHelp.hideLoadingDialog(context);
+  }
+
+  void registerPayment(CustomerInfo customerInfo, InAppPurchaseModel productDetails) async {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     // Save all payment information
     PaymentsModel paymentsModel = PaymentsModel();
     paymentsModel.setAuthor = widget.currentUser!;
@@ -467,18 +653,28 @@ class _CoinsRcScreenState extends State<CoinsRcScreen> {
     paymentsModel.setTransactionId = customerInfo.originalPurchaseDate!;
     paymentsModel.setCurrency = productDetails.currency!.toUpperCase();
     paymentsModel.setPrice = productDetails.price.toString();
+<<<<<<< HEAD
     paymentsModel.setMethod = QuickHelp.isAndroidPlatform()
         ? "Google Play"
         : QuickHelp.isIOSPlatform()
             ? "App Store"
             : "";
+=======
+    paymentsModel.setMethod = QuickHelp.isAndroidPlatform()? "Google Play" : QuickHelp.isIOSPlatform() ? "App Store" : "";
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     paymentsModel.setStatus = PaymentsModel.paymentStatusCompleted;
 
     await paymentsModel.save();
   }
 
   void handleError(PlatformException error) {
+<<<<<<< HEAD
     QuickHelp.hideLoadingDialog(context);
     QuickHelp.showAppNotification(context: context, title: error.message);
+=======
+
+    QuickHelp.hideLoadingDialog(context);
+    QuickHelp.showAppNotification(context:context, title: error.message);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 }

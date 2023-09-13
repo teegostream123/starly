@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+=======
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/home/feed/comment_post_screen.dart';
 import 'package:teego/models/LiveStreamingModel.dart';
@@ -31,6 +35,10 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   @override
   void initState() {
     super.initState();
@@ -42,8 +50,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
     QueryBuilder<NotificationsModel> queryBuilder =
         QueryBuilder<NotificationsModel>(NotificationsModel());
+<<<<<<< HEAD
     queryBuilder.whereEqualTo(
         NotificationsModel.keyReceiver, widget.currentUser!);
+=======
+    queryBuilder.whereEqualTo(NotificationsModel.keyReceiver, widget.currentUser!);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     queryBuilder.orderByDescending(NotificationsModel.keyCreatedAt);
 
     queryBuilder.includeObject([
@@ -55,8 +67,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       NotificationsModel.keyPostAuthor,
     ]);
 
+<<<<<<< HEAD
     queryBuilder.whereNotEqualTo(
         NotificationsModel.keyAuthor, widget.currentUser!);
+=======
+    queryBuilder.whereNotEqualTo(NotificationsModel.keyAuthor, widget.currentUser!);
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     return ToolBar(
         title: "page_title.notifications_title".tr(),
@@ -79,8 +95,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 if (snapshot.failed) {
                   return Text('not_connected'.tr());
                 } else if (snapshot.hasData) {
+<<<<<<< HEAD
                   NotificationsModel notifications =
                       snapshot.loadedData! as NotificationsModel;
+=======
+                  NotificationsModel notifications = snapshot.loadedData! as NotificationsModel;
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
                   return Column(
                     children: [
@@ -132,9 +152,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget buidNotify(UserModel user, String type,
+<<<<<<< HEAD
       {PostsModel? post,
       LiveStreamingModel? live,
       NotificationsModel? notification}) {
+=======
+      {PostsModel? post, LiveStreamingModel? live, NotificationsModel? notification}) {
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     String description = "";
 
     if (type == NotificationsModel.notificationTypeFollowers) {
@@ -156,10 +180,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       marginLeft: 10,
       fontWeight: notification!.isRead! ? FontWeight.normal : FontWeight.bold,
       onTap: () {
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         _saveRead(notification);
 
         if (type == NotificationsModel.notificationTypeFollowers) {
           QuickActions.showUserProfile(context, widget.currentUser!, user);
+<<<<<<< HEAD
         } else if (type == NotificationsModel.notificationTypeCommentPost) {
           if (post == null) {
             return;
@@ -172,16 +201,35 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   currentUser: widget.currentUser,
                   post: post,
                 ));
+=======
+
+        } else if (type == NotificationsModel.notificationTypeCommentPost) {
+
+          if(post == null){
+            return;
+          }
+
+          if(post.isVideo!){
+            QuickHelp.goToNavigatorScreen(context, ReelsSingleScreen(currentUser: widget.currentUser, post: post,));
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           } else {
             QuickHelp.goToNavigator(context, CommentPostScreen.route,
                 arguments: {"currentUser": widget.currentUser, "post": post});
           }
+<<<<<<< HEAD
         } else if (type == NotificationsModel.notificationTypeLikedReels ||
             type == NotificationsModel.notificationTypeCommentReels) {
+=======
+
+        } else if (type == NotificationsModel.notificationTypeLikedReels ||
+            type == NotificationsModel.notificationTypeCommentReels) {
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           if (post == null) {
             return;
           }
 
+<<<<<<< HEAD
           QuickHelp.goToNavigatorScreen(
               context,
               ReelsSingleScreen(
@@ -200,10 +248,23 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   currentUser: widget.currentUser,
                   post: post,
                 ));
+=======
+          QuickHelp.goToNavigatorScreen(context, ReelsSingleScreen(currentUser: widget.currentUser, post: post,));
+
+        } else if (type == NotificationsModel.notificationTypeLikedPost) {
+
+          if(post == null){
+            return;
+          }
+
+          if(post.isVideo!){
+            QuickHelp.goToNavigatorScreen(context, ReelsSingleScreen(currentUser: widget.currentUser, post: post,));
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           } else {
             QuickHelp.goToNavigator(context, CommentPostScreen.route,
                 arguments: {"currentUser": widget.currentUser, "post": post});
           }
+<<<<<<< HEAD
         } else if (type == NotificationsModel.notificationTypeLiveInvite) {
           QuickHelp.goToNavigatorScreen(
             context,
@@ -215,6 +276,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               preferences: widget.preferences,
               mLiveStreamingModel: live,
             ),
+=======
+
+        } else if (type == NotificationsModel.notificationTypeLiveInvite) {
+          QuickHelp.goToNavigatorScreen(context,
+              LiveStreamingScreen(
+                channelName: live!.getStreamingChannel!,
+                isBroadcaster: false,
+                currentUser: widget.currentUser!,
+                mUser: live.getAuthor!,
+                preferences: widget.preferences,
+                mLiveStreamingModel: live,
+              ),
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           );
         }
       },
@@ -224,5 +298,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   _saveRead(NotificationsModel notifications) async {
     notifications.setRead = true;
     await notifications.save();
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 }
