@@ -1,11 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-<<<<<<< HEAD
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-=======
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/config.dart';

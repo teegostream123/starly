@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-<<<<<<< HEAD
 import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,39 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-=======
-import 'package:faker/faker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/config.dart';
 import 'package:teego/app/setup.dart';
 import 'package:teego/auth/signup_screen.dart';
 import 'package:teego/auth/social_login.dart';
-<<<<<<< HEAD
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/ui/button_with_icon.dart';
-=======
-import 'package:teego/models/UserModel.dart';
-import 'package:teego/ui/button_with_icon.dart';
-import 'package:teego/helpers/quick_help.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/ui/button_with_image.dart';
 import 'package:teego/ui/button_with_svg.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-<<<<<<< HEAD
-=======
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/utils/datoo_exeption.dart';
 import 'package:teego/widgets/CountDownTimer.dart';
 
@@ -381,11 +361,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       if (response.success) {
         UserModel? user = await ParseUser.currentUser();
 
-<<<<<<< HEAD
         print("GOOGLE User $user");
-=======
-        print("GOOGLE User ${user}");
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
         if (user != null) {
           if (user.getUid == null) {

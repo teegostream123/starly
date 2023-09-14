@@ -1,51 +1,28 @@
 import 'dart:async';
 import 'dart:developer';
 
-<<<<<<< HEAD
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-=======
-import 'package:agora_rtc_engine/rtc_engine.dart';
-import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:teego/home/coins/coins_payment_widget.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-<<<<<<< HEAD
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-=======
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:permission_handler/permission_handler.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/app/navigation_service.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/helpers/send_notifications.dart';
-<<<<<<< HEAD
 import 'package:teego/home/coins/coins_payment_widget.dart';
-=======
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/home/home_screen.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-<<<<<<< HEAD
-=======
-import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:teego/utils/shared_manager.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:wakelock/wakelock.dart';
 
 import '../../app/setup.dart';
@@ -56,10 +33,6 @@ import '../../models/MessageModel.dart';
 
 // ignore: must_be_immutable
 class VideoCallScreen extends StatefulWidget {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   static const String route = '/call/video';
   UserModel? currentUser, mUser;
   bool? isCaller;
@@ -67,7 +40,6 @@ class VideoCallScreen extends StatefulWidget {
 
   String? channel;
 
-<<<<<<< HEAD
   RtcConnection connection;
 
   VideoCallScreen(
@@ -79,20 +51,13 @@ class VideoCallScreen extends StatefulWidget {
       this.isCaller,
       required this.preferences})
       : super(key: key);
-=======
-  VideoCallScreen({Key? key, this.currentUser, this.mUser, this.channel, this.isCaller, required this.preferences}): super(key: key);
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   @override
   State<StatefulWidget> createState() => _State();
 }
 
 class _State extends State<VideoCallScreen> {
-<<<<<<< HEAD
   late RtcEngine _engine;
-=======
-  RtcEngine? _engine;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   Timer? callPaymentTimer;
   int coinsUsed = 0;
   String callDuration = "00:00";
@@ -138,22 +103,14 @@ class _State extends State<VideoCallScreen> {
 
   @override
   void dispose() async {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     //context.read<CallsProvider>().setUserBusy(false);
 
     Wakelock.disable();
 
     _secureScreen(false);
 
-<<<<<<< HEAD
 //TODO: Destory engine
     // _engine!.destr();
-=======
-    _engine!.destroy();
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     if (subscription != null) {
       liveQuery.client.unSubscribe(subscription!);
     }
@@ -165,11 +122,7 @@ class _State extends State<VideoCallScreen> {
   }
 
   @override
-<<<<<<< HEAD
   didChangeDependencies() {
-=======
-  didChangeDependencies(){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     //context.dependOnInheritedWidgetOfExactType<ProviderInheritedWidget>();
     super.didChangeDependencies();
   }
@@ -187,7 +140,6 @@ class _State extends State<VideoCallScreen> {
   }
 
   _initEngine() async {
-<<<<<<< HEAD
     _engine = createAgoraRtcEngine();
 
     this._addListeners();
@@ -198,16 +150,6 @@ class _State extends State<VideoCallScreen> {
       ChannelProfileType.channelProfileLiveBroadcasting,
     );
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-=======
-
-    _engine = await RtcEngine.createWithContext(RtcEngineContext(SharedManager().getStreamProviderKey(widget.preferences)));
-    this._addListeners();
-
-    await _engine!.enableVideo();
-    await _engine!.startPreview();
-    await _engine!.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine!.setClientRole(ClientRole.Broadcaster);
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     this._joinChannel();
 
@@ -215,25 +157,15 @@ class _State extends State<VideoCallScreen> {
   }
 
   _addListeners() {
-<<<<<<< HEAD
     _engine.registerEventHandler(RtcEngineEventHandler(
       onJoinChannelSuccess: (connection, uid) {
-=======
-    _engine!.setEventHandler(RtcEngineEventHandler(
-      joinChannelSuccess: (channel, uid, elapsed) {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         context.read<CallsProvider>().setUserBusy(true);
 
         setState(() {
           isJoined = true;
         });
       },
-<<<<<<< HEAD
       onUserJoined: (conntection, uid, elapsed) {
-=======
-      userJoined: (uid, elapsed) {
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         context.read<CallsProvider>().setUserBusy(true);
 
         setState(() {
@@ -241,12 +173,7 @@ class _State extends State<VideoCallScreen> {
           remoteUser = true;
         });
       },
-<<<<<<< HEAD
       onUserOffline: (connection, uid, reason) {
-=======
-      userOffline: (uid, reason) {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         context.read<CallsProvider>().setUserBusy(false);
 
         endCallOffline(CallsModel.CALL_END_REASON_OFFLINE);
@@ -258,18 +185,9 @@ class _State extends State<VideoCallScreen> {
           _stopWatchTimer.onStartTimer();
           remoteUid.removeWhere((element) => element == uid);
         });
-<<<<<<< HEAD
       },
       onLeaveChannel: (connection, stats) {
         if (mounted) {
-=======
-
-      },
-      leaveChannel: (stats) {
-
-        if(mounted){
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           context.read<CallsProvider>().setUserBusy(false);
 
           log('AgoraCall leaveChannel ${stats.toJson()}');
@@ -279,14 +197,8 @@ class _State extends State<VideoCallScreen> {
             remoteUser = false;
           });
         }
-<<<<<<< HEAD
       },
       onFirstLocalVideoFrame: (type, width, height, elapsed) {
-=======
-
-      },
-      firstLocalVideoFrame: (width, height, elapsed) {
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         print('AgoraCall firstLocalVideoFrame');
 
         context.read<CallsProvider>().setUserBusy(true);
@@ -296,33 +208,20 @@ class _State extends State<VideoCallScreen> {
         });
 
         if (widget.isCaller == true) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           context.read<CallsProvider>().callUserInvitation(
               calleeId: widget.mUser!.objectId!,
               isVideo: true,
               channel: widget.channel!);
         }
       },
-<<<<<<< HEAD
       onFirstRemoteVideoFrame: (connection, uId, width, height, elapsed) {
-=======
-      firstRemoteVideoFrame: (uId, width, height, elapsed) {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         context.read<CallsProvider>().setUserBusy(true);
 
         print('AgoraCall firstRemoteVideoFrame');
         //_stopWatchTimer.onExecute.add(StopWatchExecute.start);
         _stopWatchTimer.onStartTimer();
 
-<<<<<<< HEAD
         if (widget.isCaller!) {
-=======
-        if(widget.isCaller!){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           initPaidTimer();
         }
 
@@ -334,7 +233,6 @@ class _State extends State<VideoCallScreen> {
     ));
   }
 
-<<<<<<< HEAD
   startTimerToEnd() {
     Future.delayed(Duration(seconds: Setup.callWaitingDuration), () {
       if (mounted) {
@@ -343,16 +241,6 @@ class _State extends State<VideoCallScreen> {
               ? endCallBtnCaller(CallsModel.CALL_END_REASON_OFFLINE)
               : endCallBtnReceiver();
       }
-=======
-  startTimerToEnd(){
-
-    Future.delayed(Duration(seconds: Setup.callWaitingDuration), () {
-
-      if(mounted){
-        if(!isConnected) widget.isCaller == true ? endCallBtnCaller(CallsModel.CALL_END_REASON_OFFLINE) : endCallBtnReceiver();
-      }
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     });
   }
 
@@ -367,7 +255,6 @@ class _State extends State<VideoCallScreen> {
     if (defaultTargetPlatform == TargetPlatform.android) {
       await [Permission.microphone, Permission.camera].request();
     }
-<<<<<<< HEAD
 
     //TODO:
     // await _engine!.joinChannel(token: , channelId: channelId, uid: uid, options: options)
@@ -383,22 +270,6 @@ class _State extends State<VideoCallScreen> {
     setState(() {
       _engine.switchCamera();
     });
-=======
-    await _engine!.joinChannel(
-        null, widget.channel!, null, widget.currentUser!.getUid!);
-  }
-
-  _leaveChannel() async {
-    await _engine!.leaveChannel();
-  }
-
-  _switchCamera() {
-
-    setState(() {
-      _engine!.switchCamera();
-    });
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   _switchRender() {
@@ -413,15 +284,9 @@ class _State extends State<VideoCallScreen> {
       switchAudio = !switchAudio;
     });
     if (switchAudio) {
-<<<<<<< HEAD
       _engine.disableAudio();
     } else {
       _engine.enableAudio();
-=======
-      _engine!.disableAudio();
-    } else {
-      _engine!.enableAudio();
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -430,7 +295,6 @@ class _State extends State<VideoCallScreen> {
       switchVideo = !switchVideo;
     });
     if (switchVideo) {
-<<<<<<< HEAD
       _engine.disableVideo();
     } else {
       _engine.enableVideo();
@@ -438,15 +302,6 @@ class _State extends State<VideoCallScreen> {
   }
 
   setupCallObserver() {
-=======
-      _engine!.disableVideo();
-    } else {
-      _engine!.enableVideo();
-    }
-  }
-
-  setupCallObserver(){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     print("AgoraCall setupCallObserver called");
     bool callRefused = context.watch<CallsProvider>().isCallRefused;
 
@@ -454,7 +309,6 @@ class _State extends State<VideoCallScreen> {
       print("AgoraCall isCallRefused == true");
 
       //endCallRefused();
-<<<<<<< HEAD
       if (mounted) {
         endCallOffline(CallsModel.CALL_END_REASON_REFUSED);
       }
@@ -477,43 +331,12 @@ class _State extends State<VideoCallScreen> {
       widget.currentUser!.removeCredit = Setup.coinsNeededForVideoCallPerMinute;
       widget.currentUser!.save().then((value) {
         coinsUsed = coinsUsed + Setup.coinsNeededForVideoCallPerMinute;
-=======
-      if(mounted){
-        endCallOffline(CallsModel.CALL_END_REASON_REFUSED);
-      }
-    }
-
-  }
-
-  initPaidTimer(){
-
-    checkCredits(firstCheck: true);
-
-    callPaymentTimer = Timer.periodic(Duration(seconds: 60), (timer) {
-
-      checkCredits(firstCheck: false);
-    });
-
-  }
-
-  checkCredits({bool? firstCheck}){
-
-    print("callPaymentTimer checked $firstCheck");
-
-    if(widget.currentUser!.getCredits! >= Setup.coinsNeededForVideoCallPerMinute){
-
-      widget.currentUser!.removeCredit = Setup.coinsNeededForVideoCallPerMinute;
-      widget.currentUser!.save().then((value) {
-
-        coinsUsed = coinsUsed+Setup.coinsNeededForVideoCallPerMinute;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         widget.currentUser = value.results!.first! as UserModel;
 
         screenState!(() {
           credits = widget.currentUser!.getCredits.toString();
         });
 
-<<<<<<< HEAD
         QuickCloudCode.sendGift(
             author: widget.mUser!,
             credits: Setup.coinsNeededForVideoCallPerMinute,
@@ -525,48 +348,24 @@ class _State extends State<VideoCallScreen> {
             title: "video_call.coins_run_out".tr(namedArgs: {
               "coins": widget.currentUser!.getCredits!.toString()
             }),
-=======
-        QuickCloudCode.sendGift(author: widget.mUser!, credits:  Setup.coinsNeededForVideoCallPerMinute, preferences: widget.preferences);
-
-        if(widget.currentUser!.getCredits! <= Setup.coinsNeededForVideoCallPerMinute /2){
-
-          QuickHelp.showAppNotificationAdvanced(
-            title: "video_call.coins_run_out".tr(namedArgs: {"coins" : widget.currentUser!.getCredits!.toString()}),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             message: "video_call.coins_run_out_explain".tr(),
             context: context,
             isError: true,
           );
         }
       });
-<<<<<<< HEAD
     } else {
-=======
-
-
-    } else {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       QuickHelp.showAppNotificationAdvanced(
           title: "video_call.no_coins".tr(),
           message: "video_call.coins_out_explain".tr(),
           context: context,
-<<<<<<< HEAD
           isError: true);
-=======
-          isError: true
-      );
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
       endCallBtnCaller(CallsModel.CALL_END_REASON_CREDITS);
     }
   }
 
   saveCallHistory({String? endReason}) async {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     CallsModel callsModel = CallsModel();
 
     callsModel.setAuthor = widget.currentUser!;
@@ -584,17 +383,9 @@ class _State extends State<VideoCallScreen> {
 
     await callsModel.save();
     saveMessage(callsModel);
-<<<<<<< HEAD
   }
 
   saveMessage(CallsModel callsModel) async {
-=======
-
-  }
-
-  saveMessage(CallsModel callsModel) async {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     MessageModel message = MessageModel();
 
     message.setAuthor = widget.currentUser!;
@@ -614,32 +405,19 @@ class _State extends State<VideoCallScreen> {
     await message.save();
     _saveList(message, callsModel);
 
-<<<<<<< HEAD
     if (!isCallAccepted) {
-=======
-    if(!isCallAccepted){
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       SendNotifications.sendPush(
         widget.currentUser!,
         widget.mUser!,
         SendNotifications.typeMissedCall,
-<<<<<<< HEAD
         message: "push_notifications.missed_call"
             .tr(namedArgs: {"name": widget.currentUser!.getFullName!}),
       );
     }
-=======
-        message: "push_notifications.missed_call".tr(namedArgs: {"name":  widget.currentUser!.getFullName!}),
-      );
-    }
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   _saveList(MessageModel messageModel, CallsModel call) async {
     QueryBuilder<MessageListModel> queryFrom =
-<<<<<<< HEAD
         QueryBuilder<MessageListModel>(MessageListModel());
     queryFrom.whereEqualTo(MessageListModel.keyListId,
         widget.currentUser!.objectId! + widget.mUser!.objectId!);
@@ -651,19 +429,6 @@ class _State extends State<VideoCallScreen> {
 
     QueryBuilder<MessageListModel> queryBuilder =
         QueryBuilder.or(MessageListModel(), [queryFrom, queryTo]);
-=======
-    QueryBuilder<MessageListModel>(MessageListModel());
-    queryFrom.whereEqualTo(
-        MessageListModel.keyListId, widget.currentUser!.objectId! + widget.mUser!.objectId!);
-
-    QueryBuilder<MessageListModel> queryTo =
-    QueryBuilder<MessageListModel>(MessageListModel());
-    queryTo.whereEqualTo(
-        MessageListModel.keyListId, widget.mUser!.objectId! + widget.currentUser!.objectId!);
-
-    QueryBuilder<MessageListModel> queryBuilder =
-    QueryBuilder.or(MessageListModel(), [queryFrom, queryTo]);
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     ParseResponse parseResponse = await queryBuilder.query();
 
@@ -676,11 +441,7 @@ class _State extends State<VideoCallScreen> {
 
         messageListModel.setReceiver = widget.mUser!;
         messageListModel.setReceiverId = widget.mUser!.objectId!;
-<<<<<<< HEAD
         messageListModel.setCall = call;
-=======
-        messageListModel.setCall= call;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
         messageListModel.setMessage = messageModel;
         messageListModel.setMessageId = messageModel.objectId!;
@@ -690,12 +451,8 @@ class _State extends State<VideoCallScreen> {
         messageListModel.setMessageType = messageModel.getMessageType!;
 
         messageListModel.setIsRead = false;
-<<<<<<< HEAD
         messageListModel.setListId =
             widget.currentUser!.objectId! + widget.mUser!.objectId!;
-=======
-        messageListModel.setListId = widget.currentUser!.objectId! + widget.mUser!.objectId!;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
         messageListModel.incrementCounter = 1;
         await messageListModel.save();
@@ -721,12 +478,8 @@ class _State extends State<VideoCallScreen> {
 
         messageListModel.setMessageType = messageModel.getMessageType!;
 
-<<<<<<< HEAD
         messageListModel.setListId =
             widget.currentUser!.objectId! + widget.mUser!.objectId!;
-=======
-        messageListModel.setListId = widget.currentUser!.objectId! + widget.mUser!.objectId!;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         messageListModel.setIsRead = false;
 
         messageListModel.incrementCounter = 1;
@@ -741,10 +494,6 @@ class _State extends State<VideoCallScreen> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     screenState = setState;
 
     setupCallObserver();
@@ -756,12 +505,7 @@ class _State extends State<VideoCallScreen> {
       body: Stack(
         children: [
           _renderVideo(),
-<<<<<<< HEAD
           if (widget.isCaller == true) _userInformation(),
-=======
-          if(widget.isCaller == true)
-            _userInformation(),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           _topButtons(),
           _timerOnStartConversation(),
           _andOrRefuseCallButton(),
@@ -806,7 +550,6 @@ class _State extends State<VideoCallScreen> {
   //NOT USED, FEEL FREE TO REMOVE
   videoCard() {
     return Row(
-<<<<<<< HEAD
       children: List.of(
         remoteUid.map(
           (e) => GestureDetector(
@@ -825,20 +568,6 @@ class _State extends State<VideoCallScreen> {
           ),
         ),
       ),
-=======
-      children: List.of(remoteUid.map(
-            (e) => GestureDetector(
-          onTap: this._switchRender,
-          child: Container(
-              width: 150,
-              height: 200,
-              child: RtcRemoteView.SurfaceView(
-                channelId: widget.channel!,
-                uid: e,
-              )),
-        ),
-      )),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     );
   }
 
@@ -857,10 +586,6 @@ class _State extends State<VideoCallScreen> {
   }
 
   _topButtons() {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     return Padding(
       padding: EdgeInsets.only(top: 60),
       child: Row(
@@ -874,15 +599,8 @@ class _State extends State<VideoCallScreen> {
                   marginLeft: 5,
                   borderRadius: 50,
                   color: Colors.black.withOpacity(0.3),
-<<<<<<< HEAD
                   child: Icon(Icons.switch_camera_sharp, color: Colors.white),
                   onTap: this._switchCamera),
-=======
-                  child: Icon(Icons.switch_camera_sharp,
-                      color: Colors.white),
-                  onTap:this._switchCamera
-              ),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
               ContainerCorner(
                 width: 40,
                 height: 40,
@@ -909,7 +627,6 @@ class _State extends State<VideoCallScreen> {
             child: Row(
               children: [
                 Padding(
-<<<<<<< HEAD
                   padding: const EdgeInsets.only(
                       left: 10, top: 10, bottom: 10, right: 10),
                   child: SvgPicture.asset(
@@ -937,17 +654,6 @@ class _State extends State<VideoCallScreen> {
                       height: 24,
                       width: 24,
                     ),
-=======
-                  padding: const EdgeInsets.only(left: 10, top: 10,bottom: 10, right: 10),
-                  child: SvgPicture.asset(widget.isCaller! ? "assets/svg/coin.svg" : "assets/svg/dolar_diamond.svg" , height: 20, width: 20,),
-                ),
-                SizedBox(child: TextWithTap(widget.isCaller! ? credits! : diamonds!, color: Colors.white, marginRight: 15, fontSize: 17,)),
-                Visibility(
-                  visible: widget.isCaller!,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10,bottom: 10, right: 10),
-                    child: SvgPicture.asset("assets/svg/ic_coin_with_star.svg", height: 24, width: 24,),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                   ),
                 ),
               ],
@@ -981,24 +687,14 @@ class _State extends State<VideoCallScreen> {
     );
   }
 
-<<<<<<< HEAD
   _buyCredits() {
-=======
-  _buyCredits(){
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     CoinsFlowPayment(
       context: context,
       currentUser: widget.currentUser!,
       showOnlyCoinsPurchase: true,
-<<<<<<< HEAD
       onCoinsPurchased: (tickets) {
         print(
             "onCoinsPurchased: $tickets new: ${widget.currentUser!.getCredits}");
-=======
-      onCoinsPurchased: (tickets){
-        print("onCoinsPurchased: $tickets new: ${widget.currentUser!.getCredits}");
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
         setState(() {
           credits = widget.currentUser!.getCredits.toString();
@@ -1008,10 +704,6 @@ class _State extends State<VideoCallScreen> {
   }
 
   _andOrRefuseCallButton() {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     return Align(
       child: ContainerCorner(
         width: 60,
@@ -1025,14 +717,9 @@ class _State extends State<VideoCallScreen> {
           size: 45,
           color: Colors.white,
         ),
-<<<<<<< HEAD
         onTap: () => widget.isCaller == true
             ? endCallBtnCaller(CallsModel.CALL_END_REASON_END)
             : endCallBtnReceiver(),
-=======
-        onTap: () =>
-        widget.isCaller == true ? endCallBtnCaller(CallsModel.CALL_END_REASON_END) : endCallBtnReceiver(),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       ),
       alignment: Alignment.bottomCenter,
     );
@@ -1113,7 +800,6 @@ class _State extends State<VideoCallScreen> {
               visible: remoteUser,
               child: Flexible(
                 flex: 1,
-<<<<<<< HEAD
                 child: AgoraVideoView(
                   controller: VideoViewController.remote(
                     connection: widget.connection,
@@ -1132,18 +818,6 @@ class _State extends State<VideoCallScreen> {
             //   flex: 1,
             //   child: RtcLocalView.SurfaceView(),
             // ),
-=======
-                child: RtcRemoteView.SurfaceView(
-                  uid: widget.mUser!.getUid!,
-                  channelId: widget.channel!,
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 1,
-              child: RtcLocalView.SurfaceView(),
-            ),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           ],
         ),
       ],
@@ -1151,23 +825,13 @@ class _State extends State<VideoCallScreen> {
   }
 
   endCallBtnCaller(String endReason) {
-<<<<<<< HEAD
     if (mounted) {
-=======
-
-    if(mounted){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       setState(() {
         isCallEnded = true;
       });
     }
 
-<<<<<<< HEAD
     if (widget.isCaller!) {
-=======
-
-    if(widget.isCaller!){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       saveCallHistory(endReason: endReason);
     }
 
@@ -1209,11 +873,7 @@ class _State extends State<VideoCallScreen> {
       isCallEnded = true;
     });
 
-<<<<<<< HEAD
     if (widget.isCaller!) {
-=======
-    if(widget.isCaller!){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       saveCallHistory(endReason: reason);
     }
 
@@ -1243,20 +903,12 @@ class _State extends State<VideoCallScreen> {
 
     this._leaveChannel();
     if (isCallEnded) {
-<<<<<<< HEAD
       QuickHelp.goBackToPreviousPage(
           NavigationService.navigatorKey.currentState!.context);
-=======
-      QuickHelp.goBackToPreviousPage(NavigationService.navigatorKey.currentState!.context);
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
   setupCounterLive() async {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     QueryBuilder<UserModel> query = QueryBuilder(UserModel.forQuery());
     query.whereEqualTo(UserModel.keyObjectId, widget.currentUser!.objectId);
 
@@ -1271,10 +923,6 @@ class _State extends State<VideoCallScreen> {
         credits = widget.currentUser!.getCredits!.toString();
         diamonds = widget.currentUser!.getDiamonds!.toString();
       });
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     });
 
     subscription!.on(LiveQueryEvent.enter, (user) {
@@ -1287,11 +935,5 @@ class _State extends State<VideoCallScreen> {
         diamonds = widget.currentUser!.getDiamonds!.toString();
       });
     });
-<<<<<<< HEAD
   }
 }
-=======
-
-  }
-}
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081

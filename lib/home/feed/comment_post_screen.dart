@@ -1,10 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-=======
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/profile/profile_screen.dart';
@@ -35,31 +31,20 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
 
   TextEditingController commentController = TextEditingController();
 
-<<<<<<< HEAD
   _deleteLike(PostsModel postsModel) async {
     QueryBuilder<NotificationsModel> queryBuilder =
         QueryBuilder<NotificationsModel>(NotificationsModel());
-=======
-  _deleteLike(PostsModel postsModel) async{
-
-    QueryBuilder<NotificationsModel> queryBuilder = QueryBuilder<NotificationsModel>(NotificationsModel());
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     queryBuilder.whereEqualTo(NotificationsModel.keyAuthor, currentUser);
     queryBuilder.whereEqualTo(NotificationsModel.keyPost, postsModel);
 
     ParseResponse parseResponse = await queryBuilder.query();
 
-<<<<<<< HEAD
     if (parseResponse.success && parseResponse.results != null) {
-=======
-    if(parseResponse.success && parseResponse.results != null){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       NotificationsModel notification = parseResponse.results!.first;
       await notification.delete();
     }
   }
 
-<<<<<<< HEAD
   _likePost(PostsModel post) {
     QuickActions.createOrDeleteNotification(currentUser!, post.getAuthor!,
         NotificationsModel.notificationTypeLikedPost,
@@ -67,15 +52,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
   }
 
   _createComment(PostsModel post, String text) async {
-=======
-  _likePost(PostsModel post){
-
-    QuickActions.createOrDeleteNotification(currentUser!, post.getAuthor!, NotificationsModel.notificationTypeLikedPost, post: post);
-  }
-
-  _createComment(PostsModel post, String text) async {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     CommentsModel comment = CommentsModel();
     comment.setAuthor = currentUser!;
     comment.setText = text;
@@ -88,13 +64,9 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     post.setComments = comment.objectId!;
     await post.save();
 
-<<<<<<< HEAD
     QuickActions.createOrDeleteNotification(currentUser!, post.getAuthor!,
         NotificationsModel.notificationTypeCommentPost,
         post: post);
-=======
-    QuickActions.createOrDeleteNotification(currentUser!, post.getAuthor!, NotificationsModel.notificationTypeCommentPost, post: post);
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   @override
@@ -106,26 +78,15 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final users = ModalRoute.of(context)!.settings.arguments as Map;
     currentUser = users['currentUser'];
     post = users['post'];
 
-<<<<<<< HEAD
     var liked = post!.getLikes!.length > 0 &&
         post!.getLikes!.contains(currentUser!.objectId!);
 
     return GestureDetector(
       onTap: () {
-=======
-    var liked = post!.getLikes!.length > 0 && post!.getLikes!.contains(currentUser!.objectId!);
-
-    return GestureDetector(
-      onTap: (){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         FocusScopeNode focusScopeNode = FocusScope.of(context);
         if (!focusScopeNode.hasPrimaryFocus &&
             focusScopeNode.focusedChild != null) {
@@ -143,7 +104,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                 elevation: 2,
                 automaticallyImplyLeading: false,
                 leading: BackButton(
-<<<<<<< HEAD
                   color: QuickHelp.isDarkMode(context)
                       ? kContentColorDarkTheme
                       : kContentColorLightTheme,
@@ -157,14 +117,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                   color: QuickHelp.isDarkMode(context)
                       ? kContentColorDarkTheme
                       : kContentColorLightTheme,
-=======
-                  color: QuickHelp.isDarkMode(context) ? kContentColorDarkTheme : kContentColorLightTheme,
-                ),
-                backgroundColor:  QuickHelp.isDarkMode(context) ? kContentColorLightTheme : kContentColorDarkTheme,
-                title: TextWithTap("comment_post.post_comments".tr(),
-                  fontSize: 20,
-                  color:  QuickHelp.isDarkMode(context) ? kContentColorDarkTheme : kContentColorLightTheme,
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                 ),
                 centerTitle: true,
               ),
@@ -174,7 +126,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
             children: [
               Expanded(
                   child: SingleChildScrollView(
-<<<<<<< HEAD
                 child: Column(
                   children: [
                     ContainerCorner(
@@ -376,194 +327,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                                     : Colors.white,
                               ),
                               /*ButtonWithIcon(
-=======
-                    child: Column(
-                      children: [
-                        ContainerCorner(
-                          shadowColor: kGrayColor,
-                          shadowColorOpacity: 0.3,
-                          marginRight: 10,
-                          marginLeft: 10,
-                          marginTop: 5,
-                          color: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : Colors.white,
-                          marginBottom: 5,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ContainerCorner(
-                                      marginTop: 7,
-                                        child: Row(
-                                          children: [
-                                            QuickActions.avatarWidget(post!.getAuthor!,
-                                                width: 50, height: 50),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                TextWithTap(
-                                                  post!.getAuthor!.getFullName!,
-                                                  marginLeft: 10,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                                TextWithTap(
-                                                  QuickHelp.getTimeAgoForFeed(post!.createdAt!),
-                                                  marginLeft: 10,
-                                                  marginTop: 8,
-                                                  color: kGrayColor,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        marginLeft: 15,
-                                        color: kTransparentColor,
-                                        onTap: (){
-                                          if(post!.getAuthorId == currentUser!.objectId!){
-                                            QuickHelp.goToNavigatorScreen(context, ProfileScreen(currentUser: currentUser,));
-                                          } else {
-                                            QuickActions.showUserProfile(context, currentUser!, post!.getAuthor!);
-                                          }
-                                        }
-                                    ),
-                                  ),
-                                  ButtonWithIcon(
-                                    text: "",
-                                    iconURL: "assets/svg/ic_post_config.svg",
-                                    iconColor: kGrayColor,
-                                    backgroundColor: QuickHelp.isDarkMode(context)
-                                        ? kContentColorLightTheme
-                                        : Colors.white,
-                                    onTap: () => openSheet(post!.getAuthor!, post!),
-                                    borderRadius: 50,
-                                    width: 50,
-                                    height: 50,
-                                    urlIconColor: kGrayColor,
-                                  ),
-                                ],
-                              ),
-                              Visibility(
-                                visible: post!.getText!.isNotEmpty,
-                                child: TextWithTap(
-                                  post!.getText!,
-                                  textAlign: TextAlign.start,
-                                  marginTop: 10,
-                                  marginBottom: 5,
-                                  marginLeft: 10,
-                                ),
-                              ),
-                              Container(
-                                height: 300,
-                                margin: EdgeInsets.only(top: 5),
-                                child: QuickActions.photosWidget(
-                                    post!.getImage!.url!,
-                                    borderRadius: 0,
-                                    fit: BoxFit.contain
-                                ),
-                              ),
-                              Visibility(
-                                visible: post!.getLikes!.length > 0 ||
-                                    post!.getLastDiamondAuthor != null,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ContainerCorner(
-                                      marginLeft: 10,
-                                      marginTop: 15,
-                                      color: kTransparentColor,
-                                      child: Row(
-                                        children: [
-                                          post!.getLastLikeAuthor != null
-                                              ? QuickActions.avatarWidget(
-                                              post!.getLastLikeAuthor!,
-                                              width: 24,
-                                              height: 24)
-                                              : Container(),
-                                          TextWithTap(
-                                            post!.getLikes!.length.toString() +
-                                                " " +
-                                                "feed.people_like_this".tr(),
-                                            color: kTabIconDefaultColor,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            marginLeft: 10,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    ContainerCorner(
-                                      color: kTransparentColor,
-                                      marginRight: 10,
-                                      marginTop: 15,
-                                      child: Row(
-                                        children: [
-                                          post!.getLastDiamondAuthor != null
-                                              ? QuickActions.avatarWidget(
-                                              post!.getLastDiamondAuthor!,
-                                              width: 24,
-                                              height: 24)
-                                              : Container(),
-                                          TextWithTap(""),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              ContainerCorner(
-                                marginTop: 20,
-                                height: 1,
-                                marginLeft: 15,
-                                marginRight: 15,
-                                color: kTabIconDefaultColor.withOpacity(0.4),
-                              ),
-                              Row(
-                                children: [
-                                  ButtonWithIcon(
-                                    marginLeft: 10,
-                                    text: post!.getLikes!.length.toString(),
-                                    textColor: kTabIconDefaultColor,
-                                    iconURL:
-                                    liked ? null : "assets/svg/ic_post_like.svg",
-                                    urlIconColor:
-                                    liked ? kTabIconSelectedColor : kTabIconDefaultColor,
-                                    icon: liked ? Icons.favorite : null,
-                                    iconColor:
-                                    liked ? kTabIconSelectedColor : kTabIconDefaultColor,
-                                    backgroundColor: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : Colors.white,
-                                    onTap: () {
-                                      if (liked) {
-                                        post!.removeLike = currentUser!.objectId!;
-                                        //post.unset(PostsModel.keyLastLikeAuthor);
-
-                                        _deleteLike(post!);
-                                        post!.save();
-
-                                      } else {
-
-                                        post!.setLikes = currentUser!.objectId!;
-                                        post!.setLastLikeAuthor = currentUser!;
-
-                                        post!.save();
-                                        _likePost(post!);
-                                      }
-
-                                    },
-                                  ),
-                                  ButtonWithIcon(
-                                    text: post!.getComments!.length.toString(),
-                                    textColor: kTabIconDefaultColor,
-                                    urlIconColor: kTabIconDefaultColor,
-                                    iconURL: "assets/svg/ic_post_comment.svg",
-                                    onTap: () => commentTextFieldFocusNode!.requestFocus(),
-                                    backgroundColor: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : Colors.white,
-                                  ),
-                                  /*ButtonWithIcon(
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                                     text: "",
                                     textColor: kTabIconDefaultColor,
                                     urlIconColor: null,
@@ -571,7 +334,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                                     ontap: () {},
                                     backgroundColor: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : Colors.white,
                                   ),*/
-<<<<<<< HEAD
                             ],
                           )
                         ],
@@ -592,28 +354,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
   Widget initQuery() {
     QueryBuilder<CommentsModel> queryBuilder =
         QueryBuilder<CommentsModel>(CommentsModel());
-=======
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        initQuery(),
-                      ],
-                    ),
-                  )
-              ),
-              commentInputField(),
-            ],
-          ),
-          ),
-      ),
-    );
-  }
-  Widget initQuery() {
-
-    QueryBuilder<CommentsModel> queryBuilder = QueryBuilder<CommentsModel>(CommentsModel());
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     queryBuilder.whereEqualTo(CommentsModel.keyPost, post);
 
     queryBuilder.includeObject([
@@ -629,21 +369,11 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
       duration: Duration(seconds: 0),
       childBuilder: (BuildContext context,
           ParseLiveListElementSnapshot<ParseObject> snapshot) {
-<<<<<<< HEAD
         if (snapshot.hasData) {
           CommentsModel commentsModel = snapshot.loadedData as CommentsModel;
 
           return Padding(
             padding: const EdgeInsets.only(left: 15, top: 10),
-=======
-
-        if (snapshot.hasData) {
-
-          CommentsModel commentsModel = snapshot.loadedData as CommentsModel;
-
-          return Padding(
-            padding: const EdgeInsets.only(left: 15,top: 10),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
             child: Column(
               children: [
                 Row(
@@ -651,45 +381,28 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     QuickActions.avatarWidget(commentsModel.getAuthor!,
-<<<<<<< HEAD
                         width: 60, height: 60),
-=======
-                        width: 60, height: 60
-                    ),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                     Flexible(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-<<<<<<< HEAD
                           TextWithTap(
                             commentsModel.getAuthor!.getFullName!,
-=======
-                          TextWithTap(commentsModel.getAuthor!.getFullName!,
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                             marginLeft: 10,
                             marginBottom: 5,
                             fontWeight: FontWeight.bold,
                             color: kGrayColor,
                             fontSize: 16,
                           ),
-<<<<<<< HEAD
                           TextWithTap(
                             commentsModel.getText!,
-=======
-                          TextWithTap(commentsModel.getText!,
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                             marginLeft: 10,
                             marginRight: 10,
                             color: kGrayColor,
                           ),
-<<<<<<< HEAD
                           TextWithTap(
                             QuickHelp.getTimeAgoForFeed(
                                 commentsModel.createdAt!),
-=======
-                          TextWithTap(QuickHelp.getTimeAgoForFeed(commentsModel.createdAt!),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                             marginLeft: 10,
                             color: kGrayColor,
                             marginTop: 10,
@@ -895,13 +608,9 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                 visible: currentUser!.objectId == post.getAuthorId ||
                     currentUser!.isAdmin!,
                 child: ButtonWithIcon(
-<<<<<<< HEAD
                   text: post.getExclusive!
                       ? "feed.move_exclusive_post_pub".tr()
                       : "feed.move_exclusive_post".tr(),
-=======
-                  text: post.getExclusive! ? "feed.move_exclusive_post_pub".tr() : "feed.move_exclusive_post".tr(),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                   iconURL: "assets/svg/config.svg",
                   height: 60,
                   radiusTopLeft: 25.0,
@@ -1048,7 +757,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                         Column(
                           children: List.generate(
                               QuickHelp.getReportCodeMessageList().length,
-<<<<<<< HEAD
                               (index) {
                             String code =
                                 QuickHelp.getReportCodeMessageList()[index];
@@ -1088,47 +796,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                               ),
                             );
                           }),
-=======
-                                  (index) {
-                                String code =
-                                QuickHelp.getReportCodeMessageList()[index];
-
-                                return TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    print("Message: " +
-                                        QuickHelp.getReportMessage(code));
-                                    Navigator.of(context).pop();
-                                    _saveReport(
-                                        QuickHelp.getReportMessage(code), post);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextWithTap(
-                                            QuickHelp.getReportMessage(code),
-                                            color: kGrayColor,
-                                            fontSize: 15,
-                                            marginBottom: 5,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 18,
-                                            color: kGrayColor,
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(
-                                        height: 1.0,
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                         ),
                         ContainerCorner(
                           marginTop: 30,
@@ -1212,11 +879,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
 
     userModel.setActivationStatus = true;
     ParseResponse parseResponse =
-<<<<<<< HEAD
         await QuickCloudCode.suspendUSer(objectId: userModel.objectId!);
-=======
-    await QuickCloudCode.suspendUSer(objectId: userModel.objectId!);
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     if (parseResponse.success) {
       QuickHelp.goBackToPreviousPage(context);
 
@@ -1288,13 +951,9 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     QuickHelp.showDialogWithButtonCustom(
       context: context,
       title: "feed.move_post_alert".tr(),
-<<<<<<< HEAD
       message: post.getExclusive!
           ? "feed.move_post_message_pub".tr()
           : "feed.move_post_message".tr(),
-=======
-      message: post.getExclusive! ? "feed.move_post_message_pub".tr()  : "feed.move_post_message".tr(),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       cancelButtonText: "no".tr(),
       confirmButtonText: "feed.move_post_yes_move".tr(),
       onPressed: () => _confirmMoveExclusivePost(post),
@@ -1314,20 +973,12 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
       QuickHelp.showAppNotificationAdvanced(
         context: context,
         title: "moved".tr(),
-<<<<<<< HEAD
         message: !postsModel.getExclusive!
             ? "feed.move_post_moved_pub".tr()
             : "feed.move_post_moved".tr(),
         user: postsModel.getAuthor,
         isError: null,
       );
-=======
-        message: !postsModel.getExclusive! ? "feed.move_post_moved_pub".tr() : "feed.move_post_moved".tr(),
-        user: postsModel.getAuthor,
-        isError: null,
-      );
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     } else {
       QuickHelp.goBackToPreviousPage(context);
 
@@ -1341,8 +992,3 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     }
   }
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081

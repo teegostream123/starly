@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
-=======
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/ui/text_with_tap.dart';
 

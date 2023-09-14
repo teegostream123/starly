@@ -20,7 +20,6 @@ class ForgotScreen extends StatefulWidget {
 }
 
 class _ForgotScreenState extends State<ForgotScreen> {
-
   Future<void> _launchInWebViewWithJavaScript(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(
@@ -33,7 +32,8 @@ class _ForgotScreenState extends State<ForgotScreen> {
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController emailOrAccountEditingController = TextEditingController();
+  TextEditingController emailOrAccountEditingController =
+      TextEditingController();
 
   String _emailOrAccountText = '';
 
@@ -48,63 +48,47 @@ class _ForgotScreenState extends State<ForgotScreen> {
     super.dispose();
   }
 
-  String? _validateEmail(String value){
-
-    if(value.isEmpty){
-
+  String? _validateEmail(String value) {
+    if (value.isEmpty) {
       return "auth.no_email_account".tr();
-
-    } else if(!value.contains("@")){
-
-      if(value.length < 4){
+    } else if (!value.contains("@")) {
+      if (value.length < 4) {
         return "auth.short_username".tr();
-      } else{
+      } else {
         return null;
       }
-
-    } else if(!QuickHelp.isValidEmail(value)){
-
+    } else if (!QuickHelp.isValidEmail(value)) {
       return "auth.invalid_email".tr();
-
     } else {
       return null;
     }
-
   }
 
   // Login button clicked
   Future<void> _doLogin() async {
-
     _emailOrAccountText = emailOrAccountEditingController.text;
 
     QuickHelp.showLoadingDialog(context);
 
-    if(!_emailOrAccountText.contains('@')){
-
-      QueryBuilder<UserModel> queryBuilder = QueryBuilder<UserModel>(UserModel.forQuery());
+    if (!_emailOrAccountText.contains('@')) {
+      QueryBuilder<UserModel> queryBuilder =
+          QueryBuilder<UserModel>(UserModel.forQuery());
       queryBuilder.whereEqualTo(UserModel.keyUsername, _emailOrAccountText);
       ParseResponse apiResponse = await queryBuilder.query();
 
       if (apiResponse.success && apiResponse.results != null) {
-
         UserModel userModel = apiResponse.results!.first;
         _processLogin(userModel.getEmailPublic);
-
       } else {
-
         showError(apiResponse.error!.code);
       }
-
     } else {
-
       _processLogin(_emailOrAccountText);
     }
   }
 
   Future<void> _processLogin(String? email) async {
-
     final user = ParseUser(null, null, email);
-
 
     var response = await user.requestPasswordReset();
 
@@ -116,31 +100,41 @@ class _ForgotScreenState extends State<ForgotScreen> {
   }
 
   Future<void> showSuccess() async {
-
     QuickHelp.hideLoadingDialog(context);
 
-    QuickHelp.showAppNotificationAdvanced(context: context, title: "auth.forgot_sent".tr(), message: "auth.email_explain".tr(), isError: false);
+    QuickHelp.showAppNotificationAdvanced(
+        context: context,
+        title: "auth.forgot_sent".tr(),
+        message: "auth.email_explain".tr(),
+        isError: false);
   }
 
   void showError(int error) {
     QuickHelp.hideLoadingDialog(context);
 
-    if(error == DatooException.connectionFailed){
+    if (error == DatooException.connectionFailed) {
       // Internet problem
-      QuickHelp.showAppNotificationAdvanced(context: context, title: "error".tr(), message: "not_connected".tr(), isError: true);
+      QuickHelp.showAppNotificationAdvanced(
+          context: context,
+          title: "error".tr(),
+          message: "not_connected".tr(),
+          isError: true);
     } /*else if(error == DatooException.accountBlocked){
       // Internet problem
       QuickHelp.showAlertError(context: context, title: "error".tr(), message: "auth.account_blocked".tr());
-    }*/ else {
+    }*/
+    else {
       // Invalid credentials
-      QuickHelp.showAppNotificationAdvanced(context: context, title: "error".tr(), message: "auth.invalid_credentials".tr(), isError: true);
+      QuickHelp.showAppNotificationAdvanced(
+          context: context,
+          title: "error".tr(),
+          message: "auth.invalid_credentials".tr(),
+          isError: true);
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     QuickHelp.setWebPageTitle(context, "page_title.forgot_title".tr());
 
     return ToolBarCenterLogo(
@@ -164,7 +158,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                 isNodeNext: true,
                 textInputAction: TextInputAction.next,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value){
+                validator: (value) {
                   return _validateEmail(value!);
                 },
               ),
@@ -179,8 +173,8 @@ class _ForgotScreenState extends State<ForgotScreen> {
                 marginRight: 20,
                 marginBottom: 20,
                 textAlign: TextAlign.center,
-                onTap: (){
-                  if(_formKey.currentState!.validate()) {
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
                     _doLogin();
                   }
                 },
@@ -192,21 +186,27 @@ class _ForgotScreenState extends State<ForgotScreen> {
                     "auth.privacy_policy".tr(),
                     marginRight: 5,
                     fontSize: 12,
-                    onTap: (){
-                      if(QuickHelp.isMobile()){
-                        QuickHelp.goToWebPage(context, pageType: QuickHelp.pageTypePrivacy);
+                    onTap: () {
+                      if (QuickHelp.isMobile()) {
+                        QuickHelp.goToWebPage(context,
+                            pageType: QuickHelp.pageTypePrivacy);
                       } else {
                         _launchInWebViewWithJavaScript(Config.privacyPolicyUrl);
                       }
                     },
                   ),
-                  TextWithTap("•", fontSize: 16,),
-                  TextWithTap("auth.terms_of_use".tr(),
+                  TextWithTap(
+                    "•",
+                    fontSize: 16,
+                  ),
+                  TextWithTap(
+                    "auth.terms_of_use".tr(),
                     marginLeft: 5,
                     fontSize: 12,
-                    onTap: (){
-                      if(QuickHelp.isMobile()){
-                        QuickHelp.goToWebPage(context, pageType: QuickHelp.pageTypeTerms);
+                    onTap: () {
+                      if (QuickHelp.isMobile()) {
+                        QuickHelp.goToWebPage(context,
+                            pageType: QuickHelp.pageTypeTerms);
                       } else {
                         _launchInWebViewWithJavaScript(Config.termsOfUseUrl);
                       }
@@ -216,7 +216,6 @@ class _ForgotScreenState extends State<ForgotScreen> {
               )
             ],
           ),
-        )
-    );
+        ));
   }
 }

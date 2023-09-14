@@ -2,21 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
-=======
-import 'package:google_mobile_ads/google_mobile_ads.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:image_cropper/image_cropper.dart';
 import 'package:mime/mime.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-<<<<<<< HEAD
 // import 'package:teego/app/constants.dart';
-=======
-import 'package:teego/app/constants.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/app/setup.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_cloud.dart';
@@ -420,299 +412,298 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
 
             if (postsResults.isNotEmpty) {
               return ListView.separated(
-                itemCount: postsResults.length,
-                itemBuilder: (context, index) {
-                  final PostsModel post = postsResults[index] as PostsModel;
+                  itemCount: postsResults.length,
+                  itemBuilder: (context, index) {
+                    final PostsModel post = postsResults[index] as PostsModel;
 
-                  var liked = post.getLikes!.length > 0 &&
-                      post.getLikes!.contains(widget.currentUser!.objectId!);
+                    var liked = post.getLikes!.length > 0 &&
+                        post.getLikes!.contains(widget.currentUser!.objectId!);
 
-                  return ContainerCorner(
-                    //height: 450,
-                    color: QuickHelp.isDarkMode(context)
-                        ? kContentColorLightTheme
-                        : Colors.white,
-                    marginTop: 7,
-                    marginBottom: 0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ContainerCorner(
-                                  marginTop: 10,
-                                  color: QuickHelp.isDarkMode(context)
-                                      ? kContentColorLightTheme
-                                      : Colors.white,
-                                  child: Row(
-                                    children: [
-                                      QuickActions.avatarWidget(post.getAuthor!,
-                                          width: 50, height: 50),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          TextWithTap(
-                                            post.getAuthor!.getFullName!,
-                                            marginLeft: 10,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          TextWithTap(
-                                            QuickHelp.getTimeAgoForFeed(
-                                                post.createdAt!),
-                                            marginLeft: 10,
-                                            marginTop: 8,
-                                            color: kGrayColor,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  marginLeft: 15,
-                                  onTap: () {
-                                    if (post.getAuthorId ==
-                                        widget.currentUser!.objectId!) {
-                                      QuickHelp.goToNavigatorScreen(
-                                          context,
-                                          ProfileScreen(
-                                            currentUser: widget.currentUser,
-                                          ));
-                                    } else {
-                                      QuickActions.showUserProfile(context,
-                                          widget.currentUser!, post.getAuthor!);
-                                    }
-                                  }),
-                            ),
-                            ButtonWithIcon(
-                              text: "",
-                              iconURL: "assets/svg/ic_post_config.svg",
-                              iconColor: kGrayColor,
-                              backgroundColor: QuickHelp.isDarkMode(context)
-                                  ? kContentColorLightTheme
-                                  : Colors.white,
-                              onTap: () => openSheet(post.getAuthor!, post),
-                              borderRadius: 50,
-                              width: 50,
-                              height: 50,
-                              urlIconColor: kGrayColor,
-                            ),
-                          ],
-                        ),
-                        Visibility(
-                          visible: post.getText!.isNotEmpty,
-                          child: TextWithTap(
-                            post.getText!,
-                            textAlign: TextAlign.start,
-                            marginTop: 10,
-                            marginBottom: 5,
-                            marginLeft: 10,
+                    return ContainerCorner(
+                      //height: 450,
+                      color: QuickHelp.isDarkMode(context)
+                          ? kContentColorLightTheme
+                          : Colors.white,
+                      marginTop: 7,
+                      marginBottom: 0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ContainerCorner(
+                                    marginTop: 10,
+                                    color: QuickHelp.isDarkMode(context)
+                                        ? kContentColorLightTheme
+                                        : Colors.white,
+                                    child: Row(
+                                      children: [
+                                        QuickActions.avatarWidget(
+                                            post.getAuthor!,
+                                            width: 50,
+                                            height: 50),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            TextWithTap(
+                                              post.getAuthor!.getFullName!,
+                                              marginLeft: 10,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            TextWithTap(
+                                              QuickHelp.getTimeAgoForFeed(
+                                                  post.createdAt!),
+                                              marginLeft: 10,
+                                              marginTop: 8,
+                                              color: kGrayColor,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    marginLeft: 15,
+                                    onTap: () {
+                                      if (post.getAuthorId ==
+                                          widget.currentUser!.objectId!) {
+                                        QuickHelp.goToNavigatorScreen(
+                                            context,
+                                            ProfileScreen(
+                                              currentUser: widget.currentUser,
+                                            ));
+                                      } else {
+                                        QuickActions.showUserProfile(
+                                            context,
+                                            widget.currentUser!,
+                                            post.getAuthor!);
+                                      }
+                                    }),
+                              ),
+                              ButtonWithIcon(
+                                text: "",
+                                iconURL: "assets/svg/ic_post_config.svg",
+                                iconColor: kGrayColor,
+                                backgroundColor: QuickHelp.isDarkMode(context)
+                                    ? kContentColorLightTheme
+                                    : Colors.white,
+                                onTap: () => openSheet(post.getAuthor!, post),
+                                borderRadius: 50,
+                                width: 50,
+                                height: 50,
+                                urlIconColor: kGrayColor,
+                              ),
+                            ],
                           ),
-                        ),
-                        Divider(
-                          height: 5,
-                          color: kTransparentColor,
-                        ),
-                        showPost(post)
-                            ? QuickActions.getImageFeed(context, post)
-                            : GestureDetector(
-                                onTap: () => chargeUserAndShowImage(post),
-                                //onTap: () => getPremiumSubs(),
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    /*Blur(
+                          Visibility(
+                            visible: post.getText!.isNotEmpty,
+                            child: TextWithTap(
+                              post.getText!,
+                              textAlign: TextAlign.start,
+                              marginTop: 10,
+                              marginBottom: 5,
+                              marginLeft: 10,
+                            ),
+                          ),
+                          Divider(
+                            height: 5,
+                            color: kTransparentColor,
+                          ),
+                          showPost(post)
+                              ? QuickActions.getImageFeed(context, post)
+                              : GestureDetector(
+                                  onTap: () => chargeUserAndShowImage(post),
+                                  //onTap: () => getPremiumSubs(),
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      /*Blur(
                                       blurColor: Colors.transparent,
                                       blur: 25,
                                       child: QuickActions.getImageFeed(
                                           context, post),
                                     ),*/
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: MediaQuery.of(context).size.width,
-                                      child: Image.asset(
-                                          "assets/images/blurred_image.jpg"),
-                                    ),
-                                    ContainerCorner(
-                                      color: Colors.white.withOpacity(0.5),
-                                      borderRadius: 20,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            QuickActions.showSVGAsset(
-                                              "assets/svg/ic_coin_with_star.svg",
-                                              width: 24,
-                                              height: 24,
-                                            ),
-                                            TextWithTap(
-                                              "feed.post_cost_exclusive".tr(
-                                                  namedArgs: {
-                                                    "coins": post.getPaidAmount!
-                                                        .toString()
-                                                  }),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              marginLeft: 6,
-                                              color: Colors.white,
-                                            ),
-                                          ],
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.width,
+                                        child: Image.asset(
+                                            "assets/images/blurred_image.jpg"),
+                                      ),
+                                      ContainerCorner(
+                                        color: Colors.white.withOpacity(0.5),
+                                        borderRadius: 20,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              QuickActions.showSVGAsset(
+                                                "assets/svg/ic_coin_with_star.svg",
+                                                width: 24,
+                                                height: 24,
+                                              ),
+                                              TextWithTap(
+                                                "feed.post_cost_exclusive"
+                                                    .tr(namedArgs: {
+                                                  "coins": post.getPaidAmount!
+                                                      .toString()
+                                                }),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                marginLeft: 6,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                        Visibility(
-                          visible: post.getLikes!.length > 0 ||
-                              post.getLastDiamondAuthor != null,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ContainerCorner(
-                                marginLeft: 10,
-                                marginTop: 15,
-                                color: kTransparentColor,
-                                child: Row(
-                                  children: [
-                                    post.getLastLikeAuthor != null
-                                        ? QuickActions.avatarWidget(
-                                            post.getLastLikeAuthor!,
-                                            width: 24,
-                                            height: 24)
-                                        : Container(),
-                                    TextWithTap(
-                                      post.getLikes!.length.toString() +
-                                          " " +
-                                          "feed.people_like_this".tr(),
-                                      color: kTabIconDefaultColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12,
-                                      marginLeft: 10,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              ContainerCorner(
-                                color: kTransparentColor,
-                                marginRight: 10,
-                                marginTop: 15,
-                                child: Row(
-                                  children: [
-                                    post.getLastDiamondAuthor != null
-                                        ? QuickActions.avatarWidget(
-                                            post.getLastDiamondAuthor!,
-                                            width: 24,
-                                            height: 24)
-                                        : Container(),
-                                    TextWithTap(""),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        ContainerCorner(
-                          marginTop: 20,
-                          height: 1,
-                          marginLeft: 15,
-                          marginRight: 15,
-                          color: QuickHelp.isDarkMode(context)
-                              ? kTabIconDefaultColor.withOpacity(0.4)
-                              : kTabIconDefaultColor.withOpacity(0.4),
-                        ),
-                        Visibility(
-                          visible: showPost(post),
-                          child: ContainerCorner(
-                            color: QuickHelp.isDarkMode(context)
-                                ? kContentColorLightTheme
-                                : Colors.white,
+                          Visibility(
+                            visible: post.getLikes!.length > 0 ||
+                                post.getLastDiamondAuthor != null,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                ButtonWithIcon(
+                                ContainerCorner(
                                   marginLeft: 10,
-                                  text: post.getLikes!.length.toString(),
-                                  textColor: kTabIconDefaultColor,
-                                  iconURL: liked
-                                      ? null
-                                      : "assets/svg/ic_post_like.svg",
-                                  urlIconColor: liked
-                                      ? kTabIconSelectedColor
-                                      : kTabIconDefaultColor,
-                                  icon: liked ? Icons.favorite : null,
-                                  iconColor: liked
-                                      ? kTabIconSelectedColor
-                                      : kTabIconDefaultColor,
-                                  backgroundColor: QuickHelp.isDarkMode(context)
-                                      ? kContentColorLightTheme
-                                      : Colors.white,
-                                  onTap: () {
-                                    if (liked) {
-                                      post.removeLike =
-                                          widget.currentUser!.objectId!;
-                                      //post.unset(PostsModel.keyLastLikeAuthor);
-
-                                      _deleteLike(post);
-                                      post.save();
-                                    } else {
-                                      post.setLikes =
-                                          widget.currentUser!.objectId!;
-                                      post.setLastLikeAuthor =
-                                          widget.currentUser!;
-
-                                      post.save();
-                                      _likePost(post);
-                                    }
-                                  },
+                                  marginTop: 15,
+                                  color: kTransparentColor,
+                                  child: Row(
+                                    children: [
+                                      post.getLastLikeAuthor != null
+                                          ? QuickActions.avatarWidget(
+                                              post.getLastLikeAuthor!,
+                                              width: 24,
+                                              height: 24)
+                                          : Container(),
+                                      TextWithTap(
+                                        post.getLikes!.length.toString() +
+                                            " " +
+                                            "feed.people_like_this".tr(),
+                                        color: kTabIconDefaultColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                        marginLeft: 10,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                ButtonWithIcon(
-                                  text: post.getComments!.length.toString(),
-                                  textColor: kTabIconDefaultColor,
-                                  urlIconColor: kTabIconDefaultColor,
-                                  iconURL: "assets/svg/ic_post_comment.svg",
-                                  onTap: () => QuickHelp.goToNavigator(
-                                      context, CommentPostScreen.route,
-                                      arguments: {
-                                        "currentUser": widget.currentUser,
-                                        "post": post
-                                      }),
-                                  backgroundColor: QuickHelp.isDarkMode(context)
-                                      ? kContentColorLightTheme
-                                      : Colors.white,
+                                ContainerCorner(
+                                  color: kTransparentColor,
+                                  marginRight: 10,
+                                  marginTop: 15,
+                                  child: Row(
+                                    children: [
+                                      post.getLastDiamondAuthor != null
+                                          ? QuickActions.avatarWidget(
+                                              post.getLastDiamondAuthor!,
+                                              width: 24,
+                                              height: 24)
+                                          : Container(),
+                                      TextWithTap(""),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                          ContainerCorner(
+                            marginTop: 20,
+                            height: 1,
+                            marginLeft: 15,
+                            marginRight: 15,
+                            color: QuickHelp.isDarkMode(context)
+                                ? kTabIconDefaultColor.withOpacity(0.4)
+                                : kTabIconDefaultColor.withOpacity(0.4),
+                          ),
+                          Visibility(
+                            visible: showPost(post),
+                            child: ContainerCorner(
+                              color: QuickHelp.isDarkMode(context)
+                                  ? kContentColorLightTheme
+                                  : Colors.white,
+                              child: Row(
+                                children: [
+                                  ButtonWithIcon(
+                                    marginLeft: 10,
+                                    text: post.getLikes!.length.toString(),
+                                    textColor: kTabIconDefaultColor,
+                                    iconURL: liked
+                                        ? null
+                                        : "assets/svg/ic_post_like.svg",
+                                    urlIconColor: liked
+                                        ? kTabIconSelectedColor
+                                        : kTabIconDefaultColor,
+                                    icon: liked ? Icons.favorite : null,
+                                    iconColor: liked
+                                        ? kTabIconSelectedColor
+                                        : kTabIconDefaultColor,
+                                    backgroundColor:
+                                        QuickHelp.isDarkMode(context)
+                                            ? kContentColorLightTheme
+                                            : Colors.white,
+                                    onTap: () {
+                                      if (liked) {
+                                        post.removeLike =
+                                            widget.currentUser!.objectId!;
+                                        //post.unset(PostsModel.keyLastLikeAuthor);
+
+                                        _deleteLike(post);
+                                        post.save();
+                                      } else {
+                                        post.setLikes =
+                                            widget.currentUser!.objectId!;
+                                        post.setLastLikeAuthor =
+                                            widget.currentUser!;
+
+                                        post.save();
+                                        _likePost(post);
+                                      }
+                                    },
+                                  ),
+                                  ButtonWithIcon(
+                                    text: post.getComments!.length.toString(),
+                                    textColor: kTabIconDefaultColor,
+                                    urlIconColor: kTabIconDefaultColor,
+                                    iconURL: "assets/svg/ic_post_comment.svg",
+                                    onTap: () => QuickHelp.goToNavigator(
+                                        context, CommentPostScreen.route,
+                                        arguments: {
+                                          "currentUser": widget.currentUser,
+                                          "post": post
+                                        }),
+                                    backgroundColor:
+                                        QuickHelp.isDarkMode(context)
+                                            ? kContentColorLightTheme
+                                            : Colors.white,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    // if (index % _kAdIndex == 0) {
+                    //   // return getAdsFuture();
+                    // } else {
+                    return Container();
+                  }
+                  //},
                   );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-<<<<<<< HEAD
-                  // if (index % _kAdIndex == 0) {
-                  //   // return getAdsFuture();
-                  // } else {
-                    return Container();
-                  }
-                //},
-=======
-                  if (index % _kAdIndex == 0) {
-                    return getAdsFuture();
-                  } else {
-                    return Container();
-                  }
-                },
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
-              );
             } else {
               return Center(
                 child: QuickActions.noContentFound(
@@ -732,7 +723,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
         });
   }
 
-<<<<<<< HEAD
   // Widget getAdsFuture() {
   //   return FutureBuilder(
   //       // future: QuickHelp.isIOSPlatform(), ? loadAds() : loadNativeAds(),
@@ -816,91 +806,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
   //
   //   return bannerAd..load();
   // }
-=======
-  Widget getAdsFuture() {
-    return FutureBuilder(
-        future: QuickHelp.isIOSPlatform() ? loadAds() : loadNativeAds(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: QuickHelp.showLoadingAnimation(),
-            );
-          } else if (snapshot.hasData) {
-            AdWithView ad = snapshot.data as AdWithView;
-
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              color: QuickHelp.isDarkMode(context)
-                  ? kContentColorLightTheme
-                  : Colors.white,
-              margin: EdgeInsets.only(top: 7),
-              child: AdWidget(
-                ad: ad,
-                key: Key(
-                  ad.hashCode.toString(),
-                ),
-              ),
-            );
-          } else {
-            return Container();
-          }
-        });
-  }
-
-  Future<dynamic> loadNativeAds() async {
-    NativeAd _listAd = NativeAd(
-      adUnitId: Constants.getAdmobFeedNativeUnit(),
-      factoryId: "listTile",
-      request: const AdRequest(),
-      listener: NativeAdListener(onAdLoaded: (ad) {
-        if (kDebugMode) {
-          print("Ad Got onAdLoaded");
-        }
-      }, onAdFailedToLoad: (ad, error) {
-        debugPrint("Ad Got onAdFailedToLoad ${error.message}");
-        ad.dispose();
-      }, onAdClosed: (ad) {
-        debugPrint("Ad Got onAdClosed");
-        ad.dispose();
-      }, onAdWillDismissScreen: (ad) {
-        debugPrint("Ad Got onAdWillDismissScreen");
-        ad.dispose();
-      }),
-    );
-    return _listAd..load();
-  }
-
-  Future<dynamic> loadAds() async {
-    BannerAdListener bannerAdListener = BannerAdListener(
-      onAdWillDismissScreen: (ad) {
-        debugPrint("Ad Got onAdWillDismissScreen");
-        ad.dispose();
-      },
-      onAdClosed: (ad) {
-        debugPrint("Ad Got Closed");
-        ad.dispose();
-      },
-      onAdFailedToLoad: (ad, error) {
-        debugPrint("Ad Got onAdFailedToLoad");
-        ad.dispose();
-      },
-      onAdLoaded: (ad) {
-        debugPrint("Ad Got onAdLoaded");
-      },
-    );
-
-    BannerAd bannerAd = BannerAd(
-      size: AdSize.banner,
-      adUnitId: Constants.getAdmobFeedNativeUnit(),
-      listener: bannerAdListener,
-      request: const AdRequest(),
-    );
-
-    return bannerAd..load();
-  }
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   void openVideo(PostsModel post) async {
     showModalBottomSheet(

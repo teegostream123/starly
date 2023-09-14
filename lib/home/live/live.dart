@@ -1,25 +1,13 @@
 import 'dart:ffi';
-<<<<<<< HEAD
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
-=======
-
-import 'package:fade_shimmer/fade_shimmer.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:lottie/lottie.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-<<<<<<< HEAD
 // import 'package:teego/app/constants.dart';
-=======
-import 'package:teego/app/constants.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/app/setup.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_cloud.dart';
@@ -314,8 +302,11 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
           labelPadding: EdgeInsets.only(right: 14),
           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
           tabs: [
-            tabsRows("live_streaming.menu_for_you", tabTypeForYou,
-                QuickActions.showSVGAsset("assets/svg/ic_followers_active.svg")),
+            tabsRows(
+                "live_streaming.menu_for_you",
+                tabTypeForYou,
+                QuickActions.showSVGAsset(
+                    "assets/svg/ic_followers_active.svg")),
             tabsRows(
                 "live_streaming.menu_nearby",
                 tabTypeNearby,
@@ -447,7 +438,6 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     });
   }*/
 
-<<<<<<< HEAD
   // dynamic getAds() {
   //   if (QuickHelp.isIOSPlatform()) {
   //     BannerAd bannerAd = BannerAd(
@@ -523,83 +513,6 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   //     key: Key(_listAd.hashCode.toString()),
   //   );
   // }
-=======
-  dynamic getAds() {
-    if (QuickHelp.isIOSPlatform()) {
-      BannerAd bannerAd = BannerAd(
-        adUnitId: Constants.getAdmobLiveBannerUnit(),
-        size: AdSize.banner,
-        request: AdRequest(),
-        listener: BannerAdListener(
-          onAdLoaded: (ad) {},
-          onAdFailedToLoad: (ad, error) {
-            // Releases an ad resource when it fails to load
-            ad.dispose();
-            print(
-                'Ad load failed (code=${error.code} message=${error.message})');
-          },
-        ),
-      );
-
-      return bannerAd;
-    } else {
-      NativeAd nativeAd = NativeAd.fromAdManagerRequest(
-        adUnitId: Constants.getAdmobFeedNativeUnit(),
-        factoryId: 'gridTile',
-        //request: AdRequest(),
-        listener: NativeAdListener(
-          onAdClosed: (ad) {
-            print('Ad onAdClosed');
-          },
-          onAdImpression: (ad) {
-            print('Ad onAdImpression');
-          },
-          onAdOpened: (ad) {
-            print('Ad onAdOpened');
-          },
-          onAdLoaded: (ad) {
-            print('Ad onAdLoaded');
-          },
-          onAdWillDismissScreen: (ad) {
-            print('Ad onAdWillDismissScreen');
-            ad.dispose();
-          },
-          onAdFailedToLoad: (ad, error) {
-            // Releases an ad resource when it fails to load
-            ad.dispose();
-            print(
-                'Ad load failed (code=${error.code} message=${error.message})');
-          },
-        ),
-        adManagerRequest: AdManagerAdRequest(),
-      );
-
-      return nativeAd;
-    }
-  }
-
-  static Future<Widget> getNativeAdTest({
-    required BuildContext context,
-  }) async {
-   // bool isAdLoaded = false;
-    NativeAd _listAd = NativeAd(
-      adUnitId: Constants.getAdmobFeedNativeUnit(),
-      factoryId: "gridTile",
-      request: const AdRequest(),
-      listener: NativeAdListener(onAdLoaded: (ad) {
-        //isAdLoaded = true;
-      }, onAdFailedToLoad: (ad, error) {
-        // _listAd.dispose();
-      }),
-    );
-    await _listAd.load();
-    await Future.delayed(const Duration(seconds: 1));
-    return AdWidget(
-      ad: _listAd,
-      key: Key(_listAd.hashCode.toString()),
-    );
-  }
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   Widget initQuery(int category) {
     return Container(
@@ -688,40 +601,29 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                     itemBuilder: (BuildContext context, int index) {
                       if (index % _kAdIndex == 0) {
                         return FutureBuilder(
-<<<<<<< HEAD
                             // future: getNativeAdTest(context: context),
                             builder: (BuildContext context, snapshot) {
-                              if (snapshot.hasData) {
-                                // AdWidget ad = snapshot.data as AdWidget;
-=======
-                            future: getNativeAdTest(context: context),
-                            builder: (BuildContext context, snapshot) {
-                              if (snapshot.hasData) {
-                                AdWidget ad = snapshot.data as AdWidget;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
+                          if (snapshot.hasData) {
+                            // AdWidget ad = snapshot.data as AdWidget;
 
-                                final Container adContainer = Container(
-                                  //width: MediaQuery.of(context).size.width,
-                                  //height: MediaQuery.of(context).size.width /2,
-                                  alignment: Alignment.center,
-                                  color: Colors.white,
-<<<<<<< HEAD
-                                  // child: ad,
-=======
-                                  child: ad,
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
-                                );
+                            final Container adContainer = Container(
+                              //width: MediaQuery.of(context).size.width,
+                              //height: MediaQuery.of(context).size.width /2,
+                              alignment: Alignment.center,
+                              color: Colors.white,
+                              // child: ad,
+                            );
 
-                                return adContainer;
-                              } else {
-                                return Container(
-                                    alignment: Alignment.topCenter,
-                                    margin: const EdgeInsets.only(top: 20),
-                                    child: const CircularProgressIndicator(
-                                      value: 0.8,
-                                    ));
-                              }
-                            });
+                            return adContainer;
+                          } else {
+                            return Container(
+                                alignment: Alignment.topCenter,
+                                margin: const EdgeInsets.only(top: 20),
+                                child: const CircularProgressIndicator(
+                                  value: 0.8,
+                                ));
+                          }
+                        });
                       } else {
                         final LiveStreamingModel liveStreaming =
                             liveResults[index] as LiveStreamingModel;

@@ -5,17 +5,9 @@ import 'package:teego/models/MessageModel.dart';
 import 'package:teego/models/PostsModel.dart';
 
 class UtilsConstant {
-<<<<<<< HEAD
   static bool? after(MessageModel object1, MessageModel object2) {
     List<String> fields = <String>[];
 
-=======
-
-  static bool? after(MessageModel object1, MessageModel object2) {
-    List<String> fields = <String>[];
-
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     fields.add(keyVarCreatedAt);
     for (String key in fields) {
       bool reverse = false;
@@ -65,10 +57,6 @@ class UtilsConstant {
   static bool? afterPosts(PostsModel object1, PostsModel object2) {
     List<String> fields = <String>[];
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     fields.add(keyVarCreatedAt);
     for (String key in fields) {
       bool reverse = false;
@@ -115,17 +103,10 @@ class UtilsConstant {
     return null;
   }
 
-<<<<<<< HEAD
   static bool? afterMessages(
       MessageListModel object1, MessageListModel object2) {
     List<String> fields = <String>[];
 
-=======
-  static bool? afterMessages(MessageListModel object1, MessageListModel object2) {
-    List<String> fields = <String>[];
-
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     fields.add(keyVarCreatedAt);
     for (String key in fields) {
       bool reverse = false;
@@ -172,17 +153,10 @@ class UtilsConstant {
     return null;
   }
 
-<<<<<<< HEAD
   static bool? afterLives(
       LiveStreamingModel object1, LiveStreamingModel object2) {
     List<String> fields = <String>[];
 
-=======
-  static bool? afterLives(LiveStreamingModel object1, LiveStreamingModel object2) {
-    List<String> fields = <String>[];
-
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     fields.add(keyVarCreatedAt);
     for (String key in fields) {
       bool reverse = false;
@@ -228,8 +202,4 @@ class UtilsConstant {
     }
     return null;
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081

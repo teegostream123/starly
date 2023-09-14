@@ -1,5 +1,4 @@
 import 'dart:async';
-<<<<<<< HEAD
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -19,15 +18,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/cloud_params.dart';
 import 'package:teego/app/config.dart';
-=======
-import 'dart:io';
-import 'dart:math';
-import 'dart:math' as math;
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:teego/app/cloud_params.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/app/setup.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/home/message/message_screen.dart';
@@ -38,31 +28,12 @@ import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:teego/utils/shared_manager.dart';
 import 'package:teego/widgets/need_resume.dart';
-<<<<<<< HEAD
-=======
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:teego/app/config.dart';
-import 'package:flutter/material.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:easy_localization/easy_localization.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/widgets/snackbar_pro/snack_bar_pro.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../app/navigation_service.dart';
 import '../utils/datoo_exeption.dart';
-<<<<<<< HEAD
-=======
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart'
-    show consolidateHttpClientResponseBytes, kIsWeb;
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import '../widgets/snackbar_pro/top_snack_bar.dart';
 
 typedef EmailSendingCallback = void Function(bool sent, ParseError? error);
@@ -100,7 +71,6 @@ class QuickHelp {
   static int timeToSoon = 300 * 1000;
   static int timeToOffline = 2 * 60 * 1000;
 
-<<<<<<< HEAD
   static final String admobBannerAdTest = isAndroidPlatform()
       ? "ca-app-pub-3940256099942544/6300978111"
       : "ca-app-pub-3940256099942544/2934735716";
@@ -112,16 +82,6 @@ class QuickHelp {
   static final String admobOpenAppAdTest = isAndroidPlatform()
       ? "ca-app-pub-3940256099942544/3419835294"
       : "ca-app-pub-3940256099942544/5662855259";
-=======
-  static final String admobBannerAdTest = isAndroidPlatform()?
-  "ca-app-pub-3940256099942544/6300978111" : "ca-app-pub-3940256099942544/2934735716";
-
-  static final String admobNativeAdTest = isAndroidPlatform()?
-  "ca-app-pub-3940256099942544/2247696110" : "ca-app-pub-3940256099942544/3986624511";
-
-  static final String admobOpenAppAdTest = isAndroidPlatform()?
-  "ca-app-pub-3940256099942544/3419835294" : "ca-app-pub-3940256099942544/5662855259";
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   static Color getColorStandard({bool? inverse}) {
     if (isDarkModeNoContext()) {
@@ -239,12 +199,8 @@ class QuickHelp {
   }
 
   static bool isDarkModeNoContext() {
-<<<<<<< HEAD
     final brightness =
         SchedulerBinding.instance.platformDispatcher.platformBrightness;
-=======
-    var brightness = SchedulerBinding.instance.window.platformBrightness;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     return brightness == Brightness.dark;
   }
 
@@ -293,12 +249,8 @@ class QuickHelp {
     DateTime dateTime = DateTime.now().toLocal();
 
     ParseInstallation installation = ParseInstallation.forQuery();
-<<<<<<< HEAD
     ParseInstallation installationCurrent =
         await ParseInstallation.currentInstallation();
-=======
-    ParseInstallation installationCurrent = await ParseInstallation.currentInstallation();
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
     if (token != null) {
       installation.set('deviceToken', token);
@@ -392,24 +344,12 @@ class QuickHelp {
   }
 
   static Future<UserModel?> getUser(UserModel? currentUser) async {
-<<<<<<< HEAD
     currentUser = await ParseUser.currentUser();
 
     if (currentUser != null) {
       ParseResponse response = await currentUser.getUpdatedUser();
 
       if (response.success) {
-=======
-
-    currentUser = await ParseUser.currentUser();
-
-    if (currentUser != null) {
-
-      ParseResponse response = await currentUser.getUpdatedUser();
-
-      if (response.success) {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         UserModel userModel = response.results!.first!;
 
         return userModel;
@@ -433,10 +373,6 @@ class QuickHelp {
         return currentUser;
       }
     } else {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       return null;
     }
   }
@@ -571,11 +507,7 @@ class QuickHelp {
   }
 
   static void hideLoadingDialog(BuildContext context, {dynamic result}) {
-<<<<<<< HEAD
     Navigator.pop(context, result);
-=======
-    Navigator.pop(context, result );
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   static goToNavigator(BuildContext context, String route,
@@ -585,17 +517,12 @@ class QuickHelp {
         resumeState.pushNamed(context, route, arguments: arguments);
       } else {
         //Navigator.of(context).pushNamed(route, arguments: arguments);
-<<<<<<< HEAD
         NavigationService.navigatorKey.currentState
             ?.pushNamed(route, arguments: arguments);
-=======
-        NavigationService.navigatorKey.currentState?.pushNamed(route, arguments: arguments);
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       }
     });
   }
 
-<<<<<<< HEAD
   static gotoChat(BuildContext context,
       {UserModel? currentUser,
       UserModel? mUser,
@@ -604,10 +531,6 @@ class QuickHelp {
         context,
         MessageScreen(
             currentUser: currentUser, mUser: mUser, preferences: preferences));
-=======
-  static gotoChat(BuildContext context, {UserModel? currentUser, UserModel? mUser, required SharedPreferences preferences}){
-    QuickHelp.goToNavigatorScreen(context, MessageScreen(currentUser: currentUser, mUser: mUser, preferences: preferences));
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   }
 
   static goToNavigatorScreen(BuildContext context, Widget widget,
@@ -623,30 +546,18 @@ class QuickHelp {
         context,
         MaterialPageRoute<dynamic>(
           builder: (BuildContext context) => widget,
-<<<<<<< HEAD
         ),
         (route) => back!, //if you want to disable back feature set to false
-=======
-        ), (route) => back!, //if you want to disable back feature set to false
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       );
     }
   }
 
-<<<<<<< HEAD
   static Future<dynamic> goToNavigatorScreenForResult(
       BuildContext context, Widget widget) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
           //settings: RouteSettings(name: route),
-=======
-  static Future<dynamic> goToNavigatorScreenForResult(BuildContext context, Widget widget) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        //settings: RouteSettings(name: route),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           builder: (context) => widget),
     );
 
@@ -669,12 +580,8 @@ class QuickHelp {
 
   static void goBackToPreviousPage(BuildContext context,
       {bool? useCustomAnimation,
-<<<<<<< HEAD
       PageTransitionsBuilder? pageTransitionsBuilder,
       dynamic result}) {
-=======
-      PageTransitionsBuilder? pageTransitionsBuilder, dynamic result}) {
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     Navigator.of(context).pop(result);
   }
 
@@ -850,12 +757,8 @@ class QuickHelp {
       String? message,
       String? title,
       required String? confirmButtonText,
-<<<<<<< HEAD
       VoidCallback? onPressed,
       bool? dismissible = true}) {
-=======
-      VoidCallback? onPressed, bool? dismissible = true}) {
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     showDialog(
       context: context,
       barrierDismissible: dismissible!,
@@ -998,20 +901,10 @@ class QuickHelp {
   }
 
   static bool isAccountDisabled(UserModel? user) {
-<<<<<<< HEAD
     if (user!.getActivationStatus == true) {
       return true;
     } else if (user.getAccountDeleted == true) {
       return true;
-=======
-
-    if(user!.getActivationStatus == true){
-      return true;
-
-    } else if(user.getAccountDeleted == true){
-      return true;
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     } else {
       return false;
     }
@@ -1087,20 +980,14 @@ class QuickHelp {
     if (error == DatooException.connectionFailed) {
       // Internet problem
       QuickHelp.showAppNotificationAdvanced(
-<<<<<<< HEAD
         context: context,
         title: "error".tr(),
         message: "not_connected".tr(),
         isError: true,
-=======
-          context: context, title: "error".tr(),
-          message: "not_connected".tr(),  isError: true,
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       );
     } else if (error == DatooException.otherCause) {
       // Internet problem
       QuickHelp.showAppNotificationAdvanced(
-<<<<<<< HEAD
         context: context,
         title: "error".tr(),
         message: "not_connected".tr(),
@@ -1112,15 +999,6 @@ class QuickHelp {
         context: context,
         title: "error".tr(),
         message: "auth.email_taken".tr(),
-=======
-          context: context, title: "error".tr(), message: "not_connected".tr(), isError: true,);
-    } else if (error == DatooException.emailTaken) {
-      // Internet problem
-      QuickHelp.showAppNotificationAdvanced(
-          context: context,
-          title: "error".tr(),
-          message: "auth.email_taken".tr(),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         isError: true,
       );
     }
@@ -1132,17 +1010,10 @@ class QuickHelp {
     else {
       // Invalid credentials
       QuickHelp.showAppNotificationAdvanced(
-<<<<<<< HEAD
         context: context,
         title: "error".tr(),
         message: "auth.invalid_credentials".tr(),
         isError: true,
-=======
-          context: context,
-          title: "error".tr(),
-          message: "auth.invalid_credentials".tr(),
-          isError: true,
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       );
     }
   }
@@ -1329,20 +1200,12 @@ class QuickHelp {
   }
 
   static String getStringFromDate(DateTime utcTime) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final dateTime = utcTime.toLocal();
 
     return DateFormat(dateFormatDmy).format(dateTime);
   }
 
   static String getTimeAgoForFeed(DateTime utcTime) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     // Get local time based on UTC time
     final dateTime = utcTime.toLocal();
 
@@ -1537,18 +1400,10 @@ class QuickHelp {
     }
 
     if (DateTime.now().millisecondsSinceEpoch -
-<<<<<<< HEAD
             dateTime!.millisecondsSinceEpoch >
         timeToOffline) {
       // offline
       return "offline_".tr();
-=======
-        dateTime!.millisecondsSinceEpoch >
-        timeToOffline) {
-      // offline
-      return "offline_".tr();
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     } else {
       // online
       return "online_".tr();
@@ -1589,7 +1444,6 @@ class QuickHelp {
     return new DateTime(birthYear, birthday.month, birthday.day);
   }
 
-<<<<<<< HEAD
   static String getDiamondsLeftToRedeem(
       int diamonds, SharedPreferences preferences) {
     if (diamonds >= SharedManager().getDiamondsNeededToRedeem(preferences)) {
@@ -1597,13 +1451,6 @@ class QuickHelp {
     } else {
       return (SharedManager().getDiamondsNeededToRedeem(preferences) - diamonds)
           .toString();
-=======
-  static String getDiamondsLeftToRedeem(int diamonds, SharedPreferences preferences) {
-    if (diamonds >= SharedManager().getDiamondsNeededToRedeem(preferences)) {
-      return 0.toString();
-    } else {
-      return (SharedManager().getDiamondsNeededToRedeem(preferences) - diamonds).toString();
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
   }
 
@@ -1615,10 +1462,6 @@ class QuickHelp {
   }
 
   static String getMessageListTime(DateTime utcTime) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final dateTime = utcTime.toLocal();
 
     Duration diff = DateTime.now().difference(dateTime);
@@ -1642,10 +1485,6 @@ class QuickHelp {
   }
 
   static String getMessageTime(DateTime utcTime, {bool? time}) {
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final dateTime = utcTime.toLocal();
 
     if (time != null && time == true) {
@@ -1672,13 +1511,7 @@ class QuickHelp {
     }
   }
 
-<<<<<<< HEAD
   static String getTimeAndDate(DateTime utcTime, {bool? time}) {
-=======
-
-  static String getTimeAndDate(DateTime utcTime, {bool? time}) {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final dateTime = utcTime.toLocal();
 
     DateTime date1 = DateTime.now();
@@ -1707,13 +1540,7 @@ class QuickHelp {
     return "";
   }
 
-<<<<<<< HEAD
   static String timeAgoSinceDate(DateTime utcTime, {bool numericDates = true}) {
-=======
-  static String timeAgoSinceDate(DateTime utcTime,
-      {bool numericDates = true}) {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final dateTime = utcTime.toLocal();
 
     final date2 = DateTime.now();
@@ -1743,13 +1570,7 @@ class QuickHelp {
   }
 
   static void showAppNotification(
-<<<<<<< HEAD
       {required BuildContext context, String? title, bool isError = true}) {
-=======
-      {required BuildContext context,
-      String? title,
-        bool isError = true}) {
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     showTopSnackBar(
       context,
       isError
@@ -1764,7 +1585,6 @@ class QuickHelp {
 
   static void showAppNotificationAdvanced(
       {required String title,
-<<<<<<< HEAD
       required BuildContext context,
       Widget? avatar,
       String? message,
@@ -1772,15 +1592,6 @@ class QuickHelp {
       VoidCallback? onTap,
       UserModel? user,
       String? avatarUrl}) {
-=======
-        required BuildContext context,
-      Widget? avatar,
-      String? message,
-      bool? isError = true,
-        VoidCallback? onTap,
-      UserModel? user,
-        String? avatarUrl}) {
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     showTopSnackBar(
       context,
       SnackBarPro.custom(
@@ -1795,17 +1606,10 @@ class QuickHelp {
               )
             : avatar,
         textStyleTitle: TextStyle(
-<<<<<<< HEAD
           fontWeight: FontWeight.w600,
           fontSize: 16,
           color: isError != null ? Colors.white : Colors.black,
         ),
-=======
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                color: isError != null ? Colors.white : Colors.black,
-              ),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
         textStyleMessage: TextStyle(
           fontWeight: FontWeight.normal,
           fontSize: 15,
@@ -1818,7 +1622,6 @@ class QuickHelp {
     );
   }
 
-<<<<<<< HEAD
   static double convertDiamondsToMoney(
       int diamonds, SharedPreferences preferences) {
     double totalMoney = (diamonds.toDouble() / 10000) *
@@ -1855,33 +1658,6 @@ class QuickHelp {
       bool? useLogo = false,
       required String description,
       Color? backgroundColor}) {
-=======
-  static double convertDiamondsToMoney(int diamonds, SharedPreferences preferences){
-    double totalMoney = (diamonds.toDouble() / 10000) * SharedManager().getWithDrawPercent(preferences);
-    return totalMoney;
-  }
-
-  static double convertMoneyToDiamonds(double amount, SharedPreferences preferences){
-    double diamonds = (amount.toDouble() * 10000) / SharedManager().getWithDrawPercent(preferences);
-    return diamonds;
-  }
-
-  static int getDiamondsForReceiver(int diamonds, SharedPreferences preferences){
-    double finalDiamonds = (diamonds /100) * SharedManager().getDiamondsEarnPercent(preferences);
-    return int.parse(finalDiamonds.toStringAsFixed(0));
-  }
-
-  static int getDiamondsForAgency(int diamonds, SharedPreferences preferences){
-    double finalDiamonds = (diamonds /100) * SharedManager().getAgencyPercent(preferences);
-    return int.parse(finalDiamonds.toStringAsFixed(0));
-  }
-
-  static DateTime getUntilDateFromDays(int days){
-    return DateTime.now().add(Duration(days: days));
-  }
-
-  static void showLoadingDialogWithText(BuildContext context, {bool? isDismissible, bool? useLogo = false, required String description, Color? backgroundColor}) {
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     showDialog(
         context: context,
         barrierDismissible: isDismissible != null ? isDismissible : false,
@@ -1896,16 +1672,12 @@ class QuickHelp {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     useLogo! ? appLoadingLogo() : appLoading(),
-<<<<<<< HEAD
                     TextWithTap(
                       description,
                       marginTop: !useLogo ? 10 : 0,
                       marginLeft: 10,
                       marginRight: 10,
                     ),
-=======
-                    TextWithTap(description, marginTop: !useLogo ? 10 : 0, marginLeft: 10, marginRight: 10,),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
                   ],
                 ),
               ),
@@ -1914,22 +1686,13 @@ class QuickHelp {
         });
   }
 
-<<<<<<< HEAD
   static Future<XFile?> compressImage(String path, {int quality = 40}) async {
-=======
-  static Future<File?> compressImage(String path, {int quality = 40}) async {
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     final dir = await getTemporaryDirectory();
     final targetPath = dir.absolute.path + '/file.jpg';
 
     var result = await FlutterImageCompress.compressAndGetFile(
-<<<<<<< HEAD
       path,
       targetPath,
-=======
-      path, targetPath,
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       quality: quality,
       rotate: 0,
     );
@@ -1937,7 +1700,6 @@ class QuickHelp {
     return result;
   }
 
-<<<<<<< HEAD
   static File bytesToFile(Uint8List uint8List) {
     return File.fromRawPath(uint8List);
   }
@@ -1954,17 +1716,6 @@ class QuickHelp {
   }
 
   static String convertNumberToK(int number) {
-=======
-  static File bytesToFile(Uint8List uint8List){
-    return File.fromRawPath(uint8List);
-  }
-
-  static Widget showLoadingAnimation({Color leftDotColor = kPrimaryColor, Color rightDotColor = kSecondaryColor, double size = 35}){
-    return Center(child: LoadingAnimationWidget.twistingDots(leftDotColor: leftDotColor, rightDotColor: rightDotColor, size: size));
-  }
-
-  static String convertNumberToK(int number){
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     return NumberFormat.compact().format(number);
   }
 

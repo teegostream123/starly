@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-=======
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:agora_rtm/agora_rtm.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/setup.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
-<<<<<<< HEAD
 import 'package:teego/home/calls/video_call_screen.dart';
 import 'package:teego/home/calls/voice_call_screen.dart';
-=======
-import 'package:teego/home/calls/voice_call_screen.dart';
-import 'package:teego/home/calls/video_call_screen.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/ui/container_with_corner.dart';
@@ -30,16 +22,11 @@ import '../../providers/provider_inherited_widget.dart';
 class IncomingCallScreen extends StatefulWidget {
   UserModel? mUser, currentUser;
   bool? isVideoCall;
-<<<<<<< HEAD
   String channel;
-=======
-  String? channel;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
   static String route = "call/call/incoming";
 
   SharedPreferences? preferences;
 
-<<<<<<< HEAD
   RemoteInvitation agoraRtmRemoteInvitation;
   RtcConnection connection;
 
@@ -52,17 +39,6 @@ class IncomingCallScreen extends StatefulWidget {
     required this.connection,
     required this.preferences,
   });
-=======
-  AgoraRtmRemoteInvitation agoraRtmRemoteInvitation;
-
-  IncomingCallScreen(
-      {this.mUser,
-      this.isVideoCall,
-      this.channel,
-      this.currentUser,
-      required this.agoraRtmRemoteInvitation,
-      required this.preferences});
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
   @override
   _IncomingCallScreenState createState() => _IncomingCallScreenState();
@@ -84,7 +60,6 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
       QuickHelp.goToNavigatorScreen(
           context,
           VideoCallScreen(
-<<<<<<< HEAD
             key: Key(QuickHelp.generateUId().toString()),
             currentUser: widget.currentUser,
             mUser: widget.mUser,
@@ -93,14 +68,6 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
             isCaller: false,
             connection: widget.connection,
           ),
-=======
-              key: Key(QuickHelp.generateUId().toString()),
-              currentUser: widget.currentUser,
-              mUser: widget.mUser,
-              channel: widget.channel,
-              preferences: widget.preferences,
-              isCaller: false),
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
           finish: true,
           back: false);
     } else {

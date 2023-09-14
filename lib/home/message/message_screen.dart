@@ -1,6 +1,5 @@
 import 'dart:io';
 
-<<<<<<< HEAD
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -11,15 +10,6 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
-=======
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:lottie/lottie.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_cloud.dart';
 import 'package:teego/helpers/quick_help.dart';
@@ -36,10 +26,6 @@ import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:teego/utils/utilsConstants.dart';
-<<<<<<< HEAD
-=======
-import 'package:sticky_grouped_list/sticky_grouped_list.dart';
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../app/setup.dart';
@@ -169,37 +155,23 @@ class _MessageScreenState extends State<MessageScreen> {
     });
   }
 
-<<<<<<< HEAD
   uploadFile(XFile imageFile, StateSetter setState) async {
     if (imageFile.path.isNotEmpty) {
       parseFile = ParseFile(File(imageFile.path), name: "avatar.jpg");
-=======
-  uploadFile(File imageFile, StateSetter setState) async {
-    if (imageFile.absolute.path.isNotEmpty) {
-      parseFile = ParseFile(File(imageFile.absolute.path), name: "avatar.jpg");
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 
       //print("Image path ${imageFile.absolute.path}");
 
       setState(() {
-<<<<<<< HEAD
         uploadPhoto = imageFile.path;
-=======
-        uploadPhoto = imageFile.absolute.path;
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       });
     } else {
       setState(() {
         uploadPhoto = imageFile.readAsBytes();
       });
 
-<<<<<<< HEAD
       final bytes = await imageFile.readAsBytes();
 
       parseFile = ParseWebFile(bytes, name: "avatar.jpg");
-=======
-      parseFile = ParseWebFile(imageFile.readAsBytesSync(), name: "avatar.jpg");
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
     }
 
     QuickHelp.showLoadingDialog(context);
@@ -388,7 +360,6 @@ class _MessageScreenState extends State<MessageScreen> {
     if (isVideoCall) {
       if (currentUser!.getCredits! >= Setup.coinsNeededForVideoCallPerMinute) {
         QuickHelp.showDialogWithButtonCustom(
-<<<<<<< HEAD
           context: context,
           title: "video_call.video_call_price".tr(),
           message: "video_call.video_explain".tr(namedArgs: {
@@ -417,32 +388,6 @@ class _MessageScreenState extends State<MessageScreen> {
             currentUser = userModel;
           },
         );
-=======
-            context: context,
-            title: "video_call.video_call_price".tr(),
-            message: "video_call.video_explain".tr(namedArgs: {
-              "coins": Setup.coinsNeededForVideoCallPerMinute.toString(),
-              "name": mUser!.getFirstName!
-            }),
-            cancelButtonText: "cancel".tr(),
-            confirmButtonText: "continue".tr(),
-            onPressed: () async {
-              QuickHelp.hideLoadingDialog(context);
-              UserModel? userModel =
-                  await QuickHelp.goToNavigatorScreenForResult(
-                      context,
-                      VideoCallScreen(
-                        key: Key(QuickHelp.generateUId().toString()),
-                        currentUser: currentUser,
-                        mUser: mUser,
-                        preferences: widget.preferences,
-                        channel: currentUser!.objectId,
-                        isCaller: true,
-                      ));
-
-              currentUser = userModel;
-            });
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
       } else {
         QuickHelp.showAppNotificationAdvanced(
             title: "video_call.no_coins".tr(),

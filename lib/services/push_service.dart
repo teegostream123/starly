@@ -8,10 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-<<<<<<< HEAD
-=======
-
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 import '../app/Config.dart';
 import '../app/navigation_service.dart';
 import '../helpers/quick_actions.dart';
@@ -30,7 +26,10 @@ class PushService {
   BuildContext? context;
   SharedPreferences? preferences;
 
-  PushService({required this.currentUser, required this.context, required this.preferences});
+  PushService(
+      {required this.currentUser,
+      required this.context,
+      required this.preferences});
 
   Future initialise() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -63,7 +62,7 @@ class PushService {
     });
 
     final RemoteMessage? message = await messaging.getInitialMessage();
-    if(message != null){
+    if (message != null) {
       _decodePushMessage(message.data);
     }
   }
@@ -147,15 +146,13 @@ class PushService {
   }
 
   _showNotifications(RemoteMessage notification) {
-
     var avatar;
 
-    if(notification.data["data"] != null){
+    if (notification.data["data"] != null) {
       String data = notification.data["data"];
       Map messageData = json.decode(data);
       avatar = messageData[SendNotifications.pushNotificationSenderAvatar];
     }
-
 
     Flushbar(
       title: notification.notification!.title!,
@@ -184,7 +181,7 @@ class PushService {
         height: 70,
         margin: EdgeInsets.only(left: 5, right: 5),
       ),
-      onTap: (_){
+      onTap: (_) {
         _decodePushMessage(notification.data);
       },
     ).show(context!);
@@ -245,13 +242,12 @@ class PushService {
       }
 
       if (currentUser != null && mPost != null) {
-       if(mPost.isVideo!){
-         _goToReels(currentUser!, mPost);
-       } else {
-         _goToPost(currentUser!, mPost);
-       }
+        if (mPost.isVideo!) {
+          _goToReels(currentUser!, mPost);
+        } else {
+          _goToPost(currentUser!, mPost);
+        }
       }
-
     } else if (type == SendNotifications.typeFollow ||
         type == SendNotifications.typeMissedCall) {
       QueryBuilder<UserModel> queryUser =
@@ -290,7 +286,12 @@ class PushService {
   }
 
   _goToReels(UserModel currentUser, PostsModel mPost) {
-    QuickHelp.goToNavigatorScreen(NavigationService.navigatorKey.currentContext!, ReelsSingleScreen(currentUser: currentUser, post: mPost,));
+    QuickHelp.goToNavigatorScreen(
+        NavigationService.navigatorKey.currentContext!,
+        ReelsSingleScreen(
+          currentUser: currentUser,
+          post: mPost,
+        ));
   }
 
   _goToLive(UserModel currentUser, LiveStreamingModel mLive) {
