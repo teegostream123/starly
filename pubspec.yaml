@@ -122,6 +122,7 @@ dependencies:
   marquee: ^2.2.3
   # hashtagable: ^2.1.0
   http:
+  google_mobile_ads: ^2.0.0
 
 dev_dependencies:
   flutter_test:

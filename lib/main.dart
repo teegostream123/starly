@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
@@ -76,7 +77,6 @@ import 'models/LiveMessagesModel.dart';
 import 'models/LiveStreamingModel.dart';
 import 'models/MessageListModel.dart';
 import 'models/PaymentsModel.dart';
-
 import 'services/dynamic_link_service.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
@@ -90,9 +90,9 @@ void main() async {
   ]);
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  // if (QuickHelp.isMobile()) {
-  //   MobileAds.instance.initialize();
-  // }
+  if (QuickHelp.isMobile()) {
+    MobileAds.instance.initialize();
+  }
 
   initPlatformState();
 
