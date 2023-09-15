@@ -4,8 +4,11 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:teego/app/Config.dart';
 import 'package:teego/helpers/quick_help.dart';
+import 'package:teego/home/coins/purchase_api.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/models/others/in_app_model.dart';
+
+/////goog_VNeFGMeMYTOdcfvlwIybIlYpoGC
 
 class CoinsScreen extends StatefulWidget {
   static String route = "/home/coins/purchase";
@@ -194,6 +197,23 @@ class _CoinsScreenState extends State<CoinsScreen> {
     }
 
     return inAppPurchaseList;
+  }
+
+  Future fetchOffers() async {
+    final offerings = await PurchaseApi.fetchOffers();
+
+    if (offerings.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('No Plans Found')));
+    } else {
+      final offer = offerings.first;
+      print('Offer: $offer');
+
+      final packages = offerings
+          .map((offer) => offer.availablePackages)
+          .expand((pair) => pair)
+          .toList();
+    }
   }
 
   @override

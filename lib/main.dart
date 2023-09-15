@@ -19,6 +19,7 @@ import 'package:teego/auth/dispache_screen.dart';
 import 'package:teego/auth/forgot_screen.dart';
 import 'package:teego/auth/welcome_screen.dart';
 import 'package:teego/helpers/quick_help.dart';
+import 'package:teego/home/coins/purchase_api.dart';
 import 'package:teego/home/coins/refill_coins_screen.dart';
 import 'package:teego/home/following/following_screen.dart';
 import 'package:teego/home/home_screen.dart';
@@ -83,6 +84,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PurchaseApi.init();
 
   await Future.wait([
     EasyLocalization.ensureInitialized(),

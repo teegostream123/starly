@@ -600,30 +600,31 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                     itemCount: liveResults.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (index % _kAdIndex == 0) {
-                        return FutureBuilder(
-                            // future: getNativeAdTest(context: context),
-                            builder: (BuildContext context, snapshot) {
-                          if (snapshot.hasData) {
-                            // AdWidget ad = snapshot.data as AdWidget;
+                        return const SizedBox();
+                        // return FutureBuilder(
+                        //     // future: getNativeAdTest(context: context),
+                        //     builder: (BuildContext context, snapshot) {
+                        //   if (snapshot.hasData) {
+                        //     // AdWidget ad = snapshot.data as AdWidget;
 
-                            final Container adContainer = Container(
-                              //width: MediaQuery.of(context).size.width,
-                              //height: MediaQuery.of(context).size.width /2,
-                              alignment: Alignment.center,
-                              color: Colors.white,
-                              // child: ad,
-                            );
+                        //     final Container adContainer = Container(
+                        //       //width: MediaQuery.of(context).size.width,
+                        //       //height: MediaQuery.of(context).size.width /2,
+                        //       alignment: Alignment.center,
+                        //       color: Colors.white,
+                        //       // child: ad,
+                        //     );
 
-                            return adContainer;
-                          } else {
-                            return Container(
-                                alignment: Alignment.topCenter,
-                                margin: const EdgeInsets.only(top: 20),
-                                child: const CircularProgressIndicator(
-                                  value: 0.8,
-                                ));
-                          }
-                        });
+                        //     return adContainer;
+                        //   } else {
+                        //     return Container(
+                        //         alignment: Alignment.topCenter,
+                        //         margin: const EdgeInsets.only(top: 20),
+                        //         child: const CircularProgressIndicator(
+                        //           value: 0.8,
+                        //         ));
+                        //   }
+                        // });
                       } else {
                         final LiveStreamingModel liveStreaming =
                             liveResults[index] as LiveStreamingModel;
