@@ -6,11 +6,17 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def  keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('keystore.properties')
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
+
+//def  keystoreProperties = new Properties()
+//def keystorePropertiesFile = rootProject.file('keystore.properties')
+//if (keystorePropertiesFile.exists()) {
+//    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+//}
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
@@ -31,11 +37,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-//def keystoreProperties = new Properties()
-//def keystorePropertiesFile = rootProject.file('key.properties')
-//if (keystorePropertiesFile.exists()) {
-//    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-//}
+
 android {
     compileSdkVersion 33
 
@@ -57,8 +59,8 @@ android {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null // original code
-            //storeFile file("key.jks") ? file("key.jks") : null //new solution for some customers
+//            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null // original code
+            storeFile file("key.jks") ? file("key.jks") : null //new solution for some customers
             storePassword keystoreProperties['storePassword']
         }
     }
@@ -87,6 +89,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.play:integrity:1.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
