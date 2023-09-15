@@ -59,14 +59,14 @@ android {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-//            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null // original code
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null // original code
             storeFile file("key.jks") ? file("key.jks") : null //new solution for some customers
             storePassword keystoreProperties['storePassword']
         }
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }

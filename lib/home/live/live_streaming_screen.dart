@@ -33,7 +33,7 @@ import 'package:teego/ui/button_with_gradient.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-import 'package:wakelock/wakelock.dart';
+
 import '../../app/setup.dart';
 import '../../models/ReportModel.dart';
 
@@ -198,7 +198,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
 
   @override
   void dispose() {
-    Wakelock.disable();
+    // Wakelock.disable();
     // clear users
     _users.clear();
     //TODO: destroy sdk and leave channel
@@ -273,7 +273,7 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
 
     _animationController = AnimationController.unbounded(vsync: this);
 
-    Wakelock.enable();
+    // Wakelock.enable();
     _secureScreen(true);
 
     player = AudioPlayer();

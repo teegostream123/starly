@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +20,6 @@ import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-import 'package:wakelock/wakelock.dart';
 
 import '../../app/setup.dart';
 import '../../helpers/send_notifications.dart';
@@ -75,7 +75,7 @@ class _State extends State<VoiceCallScreen> {
 
   @override
   void initState() {
-    Wakelock.enable();
+    // Wakelock.enable();
 
     QuickHelp.saveCurrentRoute(route: VoiceCallScreen.route);
 
@@ -93,7 +93,7 @@ class _State extends State<VoiceCallScreen> {
 
   @override
   void dispose() async {
-    Wakelock.disable();
+    // Wakelock.disable();
 
     //context.read<CallsProvider>().setUserBusy(false);
 

@@ -23,7 +23,6 @@ import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-import 'package:wakelock/wakelock.dart';
 
 import '../../app/setup.dart';
 import '../../helpers/quick_cloud.dart';
@@ -83,7 +82,7 @@ class _State extends State<VideoCallScreen> {
 
   @override
   void initState() {
-    Wakelock.enable();
+    // Wakelock.enable();
 
     QuickHelp.saveCurrentRoute(route: VideoCallScreen.route);
     _secureScreen(true);
@@ -105,7 +104,7 @@ class _State extends State<VideoCallScreen> {
   void dispose() async {
     //context.read<CallsProvider>().setUserBusy(false);
 
-    Wakelock.disable();
+    // Wakelock.disable();
 
     _secureScreen(false);
 

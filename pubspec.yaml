@@ -49,16 +49,15 @@ dependencies:
   shared_preferences: ^2.0.18
   url_strategy: ^0.2.0
   permission_handler: ^10.2.0
-  share_plus: ^6.3.1
+  share_plus: ^7.1.0
   stop_watch_timer: ^3.0.1
   flutter_windowmanager: ^0.2.0
   fade_shimmer: ^2.2.0
   sticky_grouped_list: ^3.1.0
   visibility_detector: ^0.4.0+2
- 
 
   iban: ^1.0.1
-  wakelock: ^0.6.2
+  # wakelock: ^0.6.2
   whatsapp_unilink: ^2.1.0
   keyboard_attachable: ^2.1.0
   just_audio: ^0.9.31
@@ -72,12 +71,10 @@ dependencies:
   agora_rtm: ^1.5.0
   flutter_ringtone_player: ^3.2.0
   flutter_callkit_incoming: ^2.0.0+1
-  flutter_screenutil: ">=5.5.3+2 <5.6.1"
-  zego_uikit: ^2.9.2
-  zego_uikit_prebuilt_live_streaming: ^2.15.3
-  zego_uikit_signaling_plugin: ^2.3.2
-
-
+  flutter_screenutil: '>=5.5.3+2 <5.6.1'
+  zego_uikit: ^2.12.0
+  zego_uikit_prebuilt_live_streaming: ^2.18.1
+  zego_uikit_signaling_plugin: ^2.5.0
 
   #Geo data and phone helper
   #  country_provider: ^1.0.2
