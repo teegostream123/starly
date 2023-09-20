@@ -71,7 +71,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                 return Center(
                   child: Text("Error...: ${snapshot.error.toString()}"),
                 );
-              } else if (snapshot.data!.isEmpty) {
+              } else if (snapshot.data == null) {
                 return Center(
                     child: Padding(
                   padding: EdgeInsets.all(8.0),
@@ -99,9 +99,9 @@ class _ArtistScreenState extends State<ArtistScreen> {
                       mainAxisSpacing: 2,
                     ),
                     childrenDelegate: SliverChildBuilderDelegate(
-                      childCount: snapshot.data!.length,
+                      childCount: snapshot.data != null? snapshot.data!.length:0,
                       (BuildContext context, int index) {
-                        final user = snapshot.data![index] as UserModel;
+                        final user = snapshot.data?[index] as UserModel;
 
                         return GestureDetector(
                           onTap: () {
@@ -127,7 +127,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                               child: QuickActions.photosWidget(
                                   user.getAvatar == null
                                       ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuk4zd55uaQfv6DaY9RpS8a4lVNnVcyKf2YVHO5z3IAzZypmoFzSG4wSSuimSvjc_L-fk&usqp=CAU'
-                                      : user.getAvatar!.url,
+                                      : user.getAvatar?.url,
                                   borderRadius: 5),
                             ),
                             // Positioned(
@@ -208,7 +208,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           TextWithTap(
-                                            user.getFullName!,
+                                            user.getFullName??'',
                                             color: Colors.white,
                                             overflow: TextOverflow.ellipsis,
                                             marginLeft: 10,

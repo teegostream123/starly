@@ -8,10 +8,8 @@ import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-
 import '../../helpers/quick_actions.dart';
 import '../../helpers/quick_help.dart';
-import '../../models/LiveStreamingModel.dart';
 import '../../utils/colors.dart';
 import '../search/search_creen.dart';
 import 'artist_screen.dart';

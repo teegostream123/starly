@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:teego/app/Config.dart';
 import 'package:teego/helpers/quick_help.dart';
+import 'package:teego/home/coins/paywall_widget.dart';
 import 'package:teego/home/coins/purchase_api.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/models/others/in_app_model.dart';
+import 'package:teego/providers/revenuecat.dart';
 
 /////goog_VNeFGMeMYTOdcfvlwIybIlYpoGC
 
@@ -199,20 +202,28 @@ class _CoinsScreenState extends State<CoinsScreen> {
     return inAppPurchaseList;
   }
 
-  Future fetchOffers() async {
-    final offerings = await PurchaseApi.fetchOffers();
+  Future<List<Package>> fetchOffers() async {
+    final offerings = await PurchaseApi.fetchOffersByIds(Coins.allIds);
 
     if (offerings.isEmpty) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('No Plans Found')));
+
+      return [];
     } else {
       final offer = offerings.first;
-      print('Offer: $offer');
 
       final packages = offerings
           .map((offer) => offer.availablePackages)
           .expand((pair) => pair)
           .toList();
+
+      print('Offerrrrrrrrrr: $packages');
+
+      final _d = packages.map((e) => e.storeProduct.title);
+
+      print(['titles are => $_d']);
+      return packages;
     }
   }
 
@@ -224,101 +235,155 @@ class _CoinsScreenState extends State<CoinsScreen> {
     return Scaffold(
       backgroundColor: Colors.orange,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Image.asset(
-                'assets/images/ic_coins_6.png',
-                height: 150,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Image.asset(
+                  'assets/images/ic_coins_6.png',
+                  height: 150,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "You have \$ Coins",
-              style: TextStyle(fontSize: 23, color: Colors.white),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                          color: Colors.amber,
-                          width: width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: height * .1,
-                                  width: width,
-                                  color: Colors.deepOrange,
-                                  child: Center(
-                                    child: Text(
-                                      'This is a bottom sheet.',
-                                      style: TextStyle(
-                                          fontSize: 23, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Container(
-                                  height: height * .2,
-                                  width: width,
-                                  color: Colors.deepOrange,
-                                  child: Center(
-                                    child: Text(
-                                      'This is a bottom sheet.',
-                                      style: TextStyle(
-                                          fontSize: 23, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ));
-                    });
-              },
-              child: Container(
-                height: height * .1,
-                width: width,
-                color: Colors.red,
-                child: Center(
-                    child: Text(
-                  'Get More Coins',
-                  style: TextStyle(fontSize: 23, color: Colors.white),
-                )),
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                height: height * .1,
-                width: width,
-                color: Colors.red,
-                child: Center(
-                    child: Text(
-                  'Spend 10 Coins',
-                  style: TextStyle(fontSize: 23, color: Colors.white),
-                )),
+              Text(
+                "You have \$ Coins",
+                style: TextStyle(fontSize: 23, color: Colors.white),
               ),
-            )
-          ],
-        ),
-      ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                onTap: () async {
+                  final packages = await fetchOffers();
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) => PaywallWidget(
+                          packages: packages,
+                          title: 'Upgrade to a new plan ',
+                          // description: 'to enjoy more benefits',
+                          onClickedPackege: (package) async {
+                            final isSuccess =
+                                await PurchaseApi.purchasePackage(package);
+
+                            if (isSuccess) {
+                              final provider = Provider.of<RevenueCatProvider>(
+                                  context,
+                                  listen: false);
+                              provider.addCoinsPackage(package);
+                            }
+                            Navigator.pop(context);
+                          }));
+                },
+                child: Container(
+                  height: height * .1,
+                  width: width,
+                  color: Colors.red,
+                  child: Center(
+                      child: Text(
+                    'Get More Coins',
+                    style: TextStyle(fontSize: 23, color: Colors.white),
+                  )),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  final provider =
+                      Provider.of<RevenueCatProvider>(context, listen: false);
+                  provider.spend50Coins();
+                },
+                child: Container(
+                  height: height * .1,
+                  width: width,
+                  color: Colors.red,
+                  child: Center(
+                      child: Text(
+                    'Spend 50 Coins',
+                    style: TextStyle(fontSize: 23, color: Colors.white),
+                  )),
+                ),
+              )
+            ],
+          )),
     );
   }
 }
+
+
+  // showModalBottomSheet(
+                //     context: context,
+                //     builder: (BuildContext context) {
+                //       return Container(
+                //           color: Colors.amber,
+                //           width: width,
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(15),
+                //             child: Column(
+                //               mainAxisAlignment: MainAxisAlignment.center,
+                //               children: [
+                //                 Container(
+                //                   height: height * .1,
+                //                   width: width,
+                //                   color: Colors.deepOrange,
+                //                   child: Center(
+                //                     child: Text(
+                //                       'Buy \$ Coins.',
+                //                       style: TextStyle(
+                //                           fontSize: 23, color: Colors.white),
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 SizedBox(
+                //                   height: 20,
+                //                 ),
+                //                 Container(
+                //                   height: height * .1,
+                //                   width: width,
+                //                   color: Colors.deepOrange,
+                //                   child: Center(
+                //                     child: Text(
+                //                       'Buy \$ Coins.',
+                //                       style: TextStyle(
+                //                           fontSize: 23, color: Colors.white),
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 SizedBox(
+                //                   height: 20,
+                //                 ),
+                //                 Container(
+                //                   height: height * .1,
+                //                   width: width,
+                //                   color: Colors.deepOrange,
+                //                   child: Center(
+                //                     child: Text(
+                //                       'Buy \$ Coins.',
+                //                       style: TextStyle(
+                //                           fontSize: 23, color: Colors.white),
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 SizedBox(
+                //                   height: 20,
+                //                 ),
+                //                 Container(
+                //                   height: height * .1,
+                //                   width: width,
+                //                   color: Colors.deepOrange,
+                //                   child: Center(
+                //                     child: Text(
+                //                       'Buy \$ Coins.',
+                //                       style: TextStyle(
+                //                           fontSize: 23, color: Colors.white),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ],
+                //             ),
+                //           ));
+                //     });

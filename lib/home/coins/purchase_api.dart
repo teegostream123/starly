@@ -18,12 +18,23 @@ class PurchaseApi {
     await Purchases.setup(_apiKey);
   }
 
-  static Future<List<Offering>> fetchOffers() async {
+  static Future<List<Offering>> fetchOffersByIds(List<String> ids) async {
+    final offers = await fetchOffers();
+
+    return offers.where((offer) => ids.contains(offer.identifier)).toList();
+  }
+
+  static Future<List<Offering>> fetchOffers({bool all = true}) async {
     try {
       final offerings = await Purchases.getOfferings();
-      final current = offerings.current;
 
-      return current == null ? [] : [current];
+      if (!all) {
+        final current = offerings.current;
+
+        return current == null ? [] : [current];
+      } else {
+        return offerings.all.values.toList();
+      }
     } on PlatformException catch (e) {
       return [];
     }

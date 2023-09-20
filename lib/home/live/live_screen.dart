@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:faker/faker.dart';
@@ -26,7 +25,6 @@ import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
-
 import '../../models/LiveMessagesModel.dart';
 import '../../models/ReportModel.dart';
 import '../../ui/button_with_icon.dart';
@@ -72,7 +70,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     checkUserRole();
-
+  // baki null waghera da tan koi issue nhi aa na nazer tey nai aya filhal
     QuickHelp.saveCurrentRoute(route: LiveScreen.route);
 
     _tabController = TabController(
@@ -177,7 +175,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
 
   _gotoLiveScreen(bool isBroadcaster,
       {String? channel, LiveStreamingModel? liveStreamingModel}) async {
-    if (widget.currentUser!.getAvatar == null) {
+    if (widget.currentUser?.getAvatar == null) {
       QuickHelp.showDialogLivEend(
         context: context,
         dismiss: true,
@@ -193,7 +191,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
               ));
         },
       );
-    } else if (widget.currentUser!.getGeoPoint == null) {
+    } else if (widget.currentUser?.getGeoPoint == null) {
       QuickHelp.showDialogLivEend(
         context: context,
         dismiss: true,
@@ -217,7 +215,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
     } else {
       if (isBroadcaster) {
         QuickHelp.goToNavigatorScreen(
-            context, LivePreviewScreen(currentUser: widget.currentUser!));
+            context, LivePreviewScreen(currentUser: widget.currentUser));
       } else {
         if (liveStreamingModel!.getPrivate! && !widget.currentUser!.isAdmin!) {
           if (!liveStreamingModel.getPrivateViewersId!
@@ -227,9 +225,9 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
             QuickHelp.goToNavigatorScreen(
                 context,
                 LiveStreamingScreen(
-                  channelName: channel!,
+                  channelName: channel ?? '',
                   isBroadcaster: false,
-                  currentUser: widget.currentUser!,
+                  currentUser: widget.currentUser ?? '' as UserModel,
                   preferences: widget.preferences,
                   mUser: liveStreamingModel.getAuthor,
                   isUserInvited: liveStreamingModel.getInvitedPartyUid!
@@ -258,8 +256,8 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   String? userRole;
 
   checkUserRole() async {
-    UserModel? user = await ParseUser.currentUser();
-    print("HERE USER ROLE ${user!.getUserRole}");
+    UserModel user = await ParseUser.currentUser();
+    print("HERE USER ROLE ${user.getUserRole}");
     setState(() {
       userRole = user.getUserRole;
     });
@@ -269,81 +267,87 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButton: userRole == "artist"
-          ? FloatingActionButton(
-              onPressed: () => checkPermission(true),
-              child: ContainerCorner(
-                onTap: () => checkPermission(true),
-                height: 60,
-                width: 60,
-                colors: [kPrimaryColor, kSecondaryColor],
-                borderRadius: 10,
-                shadowColor: kPrimaryColor,
-                shadowColorOpacity: 0.3,
-                setShadowToBottom: true,
-                blurRadius: 10,
-                spreadRadius: 3,
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  margin: EdgeInsets.all(12),
-                  child: QuickActions.showSVGAsset(
-                    "assets/svg/ic_tab_live_selected.svg",
-                    color: Colors.white,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+        floatingActionButton: userRole == "artist"
+            ? FloatingActionButton(
+                onPressed: () => checkPermission(true),
+                child: ContainerCorner(
+                  onTap: () => checkPermission(true),
+                  height: 60,
+                  width: 60,
+                  colors: [kPrimaryColor, kSecondaryColor],
+                  borderRadius: 10,
+                  shadowColor: kPrimaryColor,
+                  shadowColorOpacity: 0.3,
+                  setShadowToBottom: true,
+                  blurRadius: 10,
+                  spreadRadius: 3,
+                  child: Container(
                     width: 20,
                     height: 20,
+                    margin: EdgeInsets.all(12),
+                    child: QuickActions.showSVGAsset(
+                      "assets/svg/ic_tab_live_selected.svg",
+                      color: Colors.white,
+                      width: 20,
+                      height: 20,
+                    ),
                   ),
                 ),
-              ),
-            )
-          : SizedBox(),
-      appBar: AppBar(
-        centerTitle: true,
-        title: TabBar(
-          isScrollable: true,
-          enableFeedback: false,
-          controller: _tabController,
-          indicatorColor: Colors.transparent,
-          unselectedLabelColor: kTabIconDefaultColor,
-          labelColor: kTabIconSelectedColor,
-          labelStyle: TextStyle(fontWeight: FontWeight.bold),
-          labelPadding: EdgeInsets.only(right: 14),
-          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
-          tabs: [
-            tabsRows(
-                "Artist",
-                tabTypeForYou,
-                Icon(
-                  Icons.people,
-                  size: 18,
-                  // color: Colors.red,
-                  color: kPrimaryColor,
-                )),
-            tabsRows(
-                "Live Party",
-                tabTypeNearby,
-                Icon(
-                  Icons.music_note,
-                  size: 18,
-                  color: kPrimaryColor,
-                )),
-          ],
+              )
+            : SizedBox.shrink(),
+        appBar: AppBar(
+          centerTitle: true,
+          title: TabBar(
+            isScrollable: true,
+            enableFeedback: false,
+            // controller: _tabController,
+            //chl sai aa okay kr ok
+            indicatorColor: Colors.transparent,
+            unselectedLabelColor: kTabIconDefaultColor,
+            labelColor: kTabIconSelectedColor,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            labelPadding: EdgeInsets.only(right: 14),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
+            tabs: [
+              //chal rehan dy battery v chalii aa hunrukk ik mint
+              tabsRows(
+                  "Artist",
+                  tabTypeForYou,
+                  Icon(
+                    Icons.people,
+                    size: 18,
+                    // color: Colors.red,
+                    color: kPrimaryColor,
+                  )),
+              tabsRows(
+                  "Live Party",
+                  tabTypeNearby,
+                  Icon(
+                    Icons.music_note,
+                    size: 18,
+                    color: kPrimaryColor,
+                  )),
+            ],
+          ),
+          backgroundColor: kTransparentColor,
+          //bottom:
         ),
-        backgroundColor: kTransparentColor,
-        //bottom:
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          // artistWidget(),
-          ArtistScreen(),
-          LivePartyScreen(),
-          // initQuery(tabTypeForYou),
-        ],
-        //children: List.generate(tabsLength, (index) => initQuery(index)),
+        body: TabBarView(
+          // controller: _tabController,
+          children: [
+            // artistWidget(),
+            ArtistScreen(),
+            LivePartyScreen(),
+            // controller da panga ay
+            // initQuery(tabTypeForYou),
+          ],
+          //children: List.generate(tabsLength, (index) => initQuery(index)),
+        ),
       ),
     );
   }

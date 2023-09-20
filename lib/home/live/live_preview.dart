@@ -1302,10 +1302,15 @@ Widget hostAudioVideoViewForegroundBuilder(
   const toolbarMicNormal = 'assets/icons/toolbar_mic_normal.png';
   const toolbarMicOff = 'assets/icons/toolbar_mic_off.png';
   return Positioned(
-    top: 15,
-    right: 0,
+    top: 100,
+    right: 20,
     child: Row(
       children: [
+        Image.asset(
+          'assets/images/ic_coins_3.png',
+          height: 30,
+          width: 30,
+        )
         // ValueListenableBuilder<bool>(
         //   valueListenable: ZegoUIKit().getCameraStateNotifier(user.id),
         //   builder: (context, isCameraEnabled, _) {

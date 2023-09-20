@@ -22,7 +22,7 @@ class VideoEditorScreen extends StatefulWidget {
 }
 
 class _VideoEditorScreenState extends State<VideoEditorScreen> {
-  final _exportingProgress = ValueNotifier<double>(0.0);
+  final ValueNotifier<double> _exportingProgress = ValueNotifier<double>(0.0);
   final _isExporting = ValueNotifier<bool>(false);
   final double height = 60;
 
@@ -75,7 +75,6 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
     _exportingProgress.value = 0;
     _isExporting.value = true;
     // NOTE: To use `-crf 1` and [VideoExportPreset] you need `ffmpeg_kit_flutter_min_gpl` package (with `ffmpeg_kit` only it won't work)
-
     //TODO: Export video;
     // await _controller.exportVideo(
     //   //preset: VideoExportPreset.medium,
@@ -84,25 +83,19 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
     //   onError: (e, s) => _exportText = "Error on export video :(",
     //   onCompleted: (file) async {
     //     _isExporting.value = false;
-
     //     await _controller.extractCover(
     //       onError: (e, s) => _exportText = "Error on cover exportation :(",
     //       onCompleted: (cover) {
     //         if (!mounted) return;
-
     //         //_exportText = "Cover exported! ${cover.path}";
-
     //         print("Exported cover ${cover.path}");
     //         print("Exported Video ${file.path}");
-
     //         VideoEditorModel videoEditorModel = VideoEditorModel();
     //         videoEditorModel.setCoverPath(cover.path);
     //         videoEditorModel.setVideoFile(file);
-
     //         QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
     //       },
     //     );
-
     //     _exportText = "Video success export!";
     //     setState(() => _exported = true);
     //   },
@@ -151,6 +144,8 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
                                       visible: !_controller.isPlaying,
                                       child: GestureDetector(
                                         onTap: _controller.video.play,
+                                        onDoubleTap: _controller.video.pause,
+                                        onLongPress: _controller.video.pause,
                                         child: Container(
                                           width: 40,
                                           height: 40,
@@ -220,31 +215,41 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
                             _customSnackBar(),
                             ValueListenableBuilder(
                               valueListenable: _isExporting,
-                              builder: (_, bool export, __) =>
-                                  OpacityTransition(
-                                visible: export,
-                                child: AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  title: ValueListenableBuilder(
-                                    valueListenable: _exportingProgress,
-                                    builder: (_, double value, __) => Text(
-                                      "video_editor.video_editor_rendering",
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
+                              builder: (_, bool export, __) {
+                                if (export) {
+                                  return OpacityTransition(
+                                    visible: export,
+                                    child: AlertDialog(
+                                      backgroundColor: Colors.white,
+                                      title: ValueListenableBuilder(
+                                        valueListenable: _exportingProgress,
+                                        builder: (_, double value, __) => Text(
+                                          "video_editor.video_editor_rendering",
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ).tr(namedArgs: {
+                                          "percent": "${(value * 100).ceil()}"
+                                        }),
                                       ),
-                                    ).tr(namedArgs: {
-                                      "percent": "${(value * 100).ceil()}"
-                                    }),
-                                  ),
-                                ),
-                              ),
+                                    ),
+                                  );
+                                } else {
+                                  // Return an empty container when not exporting.
+                                  return Container();
+                                }
+                              },
                             )
                           ])))
                 ])
               ]),
             )
+          // : Container(
+          //     height: 100,
+          //     color: Colors.deepPurple,
+          //   )
           : Center(child: QuickHelp.showLoadingAnimation()),
     );
   }
@@ -291,6 +296,7 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
         },
       ),
       Container(
+        // color: Colors.green,
         //color: kTransparentColor,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(vertical: height / 4),
