@@ -4,17 +4,14 @@
 	<dict>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
-<<<<<<< HEAD
 		<key>NSCameraUsageDescription</key>
         <string>We require camera access to connect to a live</string>
         <key>NSMicrophoneUsageDescription</key>
         <string>We require microphone access to connect to a live</string>
-=======
->>>>>>> c9f3eb7d525e0c1c8d131cfd46809dc908299081
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Ustad Jee</string>
+		<string>Starlee</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>

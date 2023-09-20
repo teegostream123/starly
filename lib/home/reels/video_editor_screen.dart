@@ -9,6 +9,7 @@ import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:video_editor/video_editor.dart';
 
+import '../../models/others/video_editor_model.dart';
 import '../../ui/app_bar.dart';
 import '../../ui/text_with_tap.dart';
 
@@ -77,24 +78,24 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
     // NOTE: To use `-crf 1` and [VideoExportPreset] you need `ffmpeg_kit_flutter_min_gpl` package (with `ffmpeg_kit` only it won't work)
     //TODO: Export video;
     // await _controller.exportVideo(
-    //   //preset: VideoExportPreset.medium,
-    //   // customInstruction: "-crf 17",
+    //   preset: VideoExportPreset.medium,
+    //   customInstruction: "-crf 17",
     //   onProgress: (stats, value) => _exportingProgress.value = value,
     //   onError: (e, s) => _exportText = "Error on export video :(",
     //   onCompleted: (file) async {
     //     _isExporting.value = false;
-    //     await _controller.extractCover(
-    //       onError: (e, s) => _exportText = "Error on cover exportation :(",
-    //       onCompleted: (cover) {
-    //         if (!mounted) return;
-    //         //_exportText = "Cover exported! ${cover.path}";
-    //         print("Exported cover ${cover.path}");
-    //         print("Exported Video ${file.path}");
-    //         VideoEditorModel videoEditorModel = VideoEditorModel();
-    //         videoEditorModel.setCoverPath(cover.path);
-    //         videoEditorModel.setVideoFile(file);
-    //         QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
-    //       },
+    //      await _controller.extractCover(
+    //        onError: (e, s) => _exportText = "Error on cover exportation :(",
+    //        onCompleted: (cover) {
+    //       if (!mounted) return;
+    //          _exportText = "Cover exported! ${cover.path}";
+    //          print("Exported cover ${cover.path}");
+    //          print("Exported Video ${file.path}");
+    //          VideoEditorModel videoEditorModel = VideoEditorModel();
+    //          videoEditorModel.setCoverPath(cover.path);
+    //          videoEditorModel.setVideoFile(file);
+    //          QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
+    //        },
     //     );
     //     _exportText = "Video success export!";
     //     setState(() => _exported = true);
@@ -331,6 +332,7 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
         child: Container(
           height: height,
           width: double.infinity,
+          // color: Colors.deepOrange,
           color: Colors.black.withOpacity(0.8),
           child: Center(
             child: Text(_exportText,

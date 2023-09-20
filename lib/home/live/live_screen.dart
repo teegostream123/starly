@@ -306,7 +306,6 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
             isScrollable: true,
             enableFeedback: false,
             // controller: _tabController,
-            //chl sai aa okay kr ok
             indicatorColor: Colors.transparent,
             unselectedLabelColor: kTabIconDefaultColor,
             labelColor: kTabIconSelectedColor,
@@ -314,7 +313,6 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
             labelPadding: EdgeInsets.only(right: 14),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
             tabs: [
-              //chal rehan dy battery v chalii aa hunrukk ik mint
               tabsRows(
                   "Artist",
                   tabTypeForYou,

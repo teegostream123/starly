@@ -50,7 +50,7 @@
 
     <application
         android:usesCleartextTraffic="true"
-        android:label="Ustad Jee"
+        android:label="Starlee"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
