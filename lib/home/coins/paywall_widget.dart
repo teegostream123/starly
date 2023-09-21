@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:teego/utils/colors.dart';
 
 class PaywallWidget extends StatefulWidget {
   final String title;
@@ -64,7 +65,7 @@ class _PaywallWidgetState extends State<PaywallWidget> {
   Widget buildPackage(BuildContext context, Package package) {
     final product = package.storeProduct;
     return Card(
-      color: Colors.orangeAccent,
+      color: kWarninngColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Theme(
           data: ThemeData.light(),

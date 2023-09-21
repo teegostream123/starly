@@ -614,10 +614,10 @@ class _LivePartyScreenState extends State<LivePartyScreen> {
     return [];
   }
 }
+
 final hostConfig = ZegoUIKitPrebuiltLiveStreamingConfig.host(
   plugins: [ZegoUIKitSignalingPlugin()],
-)..audioVideoViewConfig.foregroundBuilder =
-    hostAudioVideoViewForegroundBuilder;
+)..audioVideoViewConfig.foregroundBuilder = hostAudioVideoViewForegroundBuilder;
 
 final audienceConfig = ZegoUIKitPrebuiltLiveStreamingConfig.audience(
   plugins: [ZegoUIKitSignalingPlugin()],
@@ -633,12 +633,18 @@ final audienceConfig = ZegoUIKitPrebuiltLiveStreamingConfig.audience(
       context,
       isCameraOrMicrophone: false,
     );
-  };
+  }
+  ..background = Badge(
+    child: Image.asset(
+      'assets/images/ic_coins_2.png',
+      height: 30,
+    ),
+  );
 
 Future<bool> onTurnOnAudienceDeviceConfirmation(
-    BuildContext context, {
-      required bool isCameraOrMicrophone,
-    }) async {
+  BuildContext context, {
+  required bool isCameraOrMicrophone,
+}) async {
   const textStyle = TextStyle(
     fontSize: 10,
     color: Colors.white70,
@@ -647,24 +653,40 @@ Future<bool> onTurnOnAudienceDeviceConfirmation(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.blue[900]!.withOpacity(0.9),
-        title: Text(
-            "You have a request to turn on your ${isCameraOrMicrophone ? "camera" : "microphone"}",
-            style: textStyle),
-        content: Text(
-            "Do you agree to turn on the ${isCameraOrMicrophone ? "camera" : "microphone"}?",
-            style: textStyle),
-        actions: [
-          ElevatedButton(
-            child: const Text('Cancel', style: textStyle),
-            onPressed: () => Navigator.of(context).pop(false),
+      return Stack(
+        alignment: Alignment.topRight, // Adjust the alignment as needed
+        children: [
+          AlertDialog(
+            backgroundColor: Colors.blue[900]!.withOpacity(0.9),
+            title: Text(
+              "You have a request to turn on your ${isCameraOrMicrophone ? "camera" : "microphone"}",
+              style: textStyle,
+            ),
+            content: Text(
+              "Do you agree to turn on the ${isCameraOrMicrophone ? "camera" : "microphone"}?",
+              style: textStyle,
+            ),
+            actions: [
+              ElevatedButton(
+                child: const Text('Cancel', style: textStyle),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+              ElevatedButton(
+                child: const Text('OK', style: textStyle),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
           ),
-          ElevatedButton(
-            child: const Text('OK', style: textStyle),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
+          Positioned(
+            top: 100, // Adjust the position as needed
+            right: 20, // Adjust the position as needed
+            child: Image.asset(
+              'assets/images/ic_coins_3.png', // Replace with the image for the audience
+              height: 30,
+              width: 30,
+            ),
           ),
         ],
       );
@@ -677,11 +699,11 @@ Image prebuiltImage(String name) {
 }
 
 Widget hostAudioVideoViewForegroundBuilder(
-    BuildContext context,
-    Size size,
-    ZegoUIKitUser? user,
-    Map<String, dynamic> extraInfo,
-    ) {
+  BuildContext context,
+  Size size,
+  ZegoUIKitUser? user,
+  Map<String, dynamic> extraInfo,
+) {
   if (user == null || user.id == localUserID) {
     return Container();
   }

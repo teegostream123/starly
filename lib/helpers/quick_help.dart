@@ -724,7 +724,7 @@ class QuickHelp {
                   borderRadius: 60,
                   textColor: Colors.white,
                   borderRadiusBottomLeft: 15,
-                  colors: [kPrimaryColor, kSecondaryColor],
+                  colors: [kPrimaryColor, kPrimaryColor],
                   marginTop: 0,
                   fontSize: 16,
                   onTap: () {
@@ -796,7 +796,7 @@ class QuickHelp {
                   borderRadius: 60,
                   textColor: Colors.white,
                   borderRadiusBottomLeft: 15,
-                  colors: [kPrimaryColor, kSecondaryColor],
+                  colors: [kPrimaryColor, kPrimaryColor],
                   marginTop: 0,
                   fontSize: 15,
                   onTap: () {
@@ -857,7 +857,7 @@ class QuickHelp {
                   borderRadius: 60,
                   textColor: Colors.white,
                   borderRadiusBottomLeft: 15,
-                  colors: [kPrimaryColor, kSecondaryColor],
+                  colors: [kPrimaryColor, kPrimaryColor],
                   marginTop: 0,
                   fontSize: 15,
                   onTap: () {

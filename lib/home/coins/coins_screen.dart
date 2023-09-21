@@ -10,6 +10,8 @@ import 'package:teego/home/coins/purchase_api.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/models/others/in_app_model.dart';
 import 'package:teego/providers/revenuecat.dart';
+import 'package:teego/utils/colors.dart';
+import 'package:teego/utils/colors.dart';
 
 /////goog_VNeFGMeMYTOdcfvlwIybIlYpoGC
 
@@ -68,139 +70,139 @@ class _CoinsScreenState extends State<CoinsScreen> {
     }
   }
 
-  List<InAppPurchaseModel> getInAppList() {
-    List<Package> myProductList = offerings.current!.availablePackages;
+  // List<InAppPurchaseModel> getInAppList() {
+  //   List<Package> myProductList = offerings.current!.availablePackages;
 
-    List<InAppPurchaseModel> inAppPurchaseList = [];
+  //   List<InAppPurchaseModel> inAppPurchaseList = [];
 
-    for (Package package in myProductList) {
-      if (package.identifier == Config.credit200) {
-        InAppPurchaseModel credits200 = InAppPurchaseModel(
-            id: Config.credit200,
-            coins: 200,
-            price: package.storeProduct.priceString,
-            image: "assets/images/ic_coins_4.png",
-            type: InAppPurchaseModel.typeNormal,
-            storeProduct: package.storeProduct,
-            package: package,
-            currency: package.storeProduct.currencyCode,
-            currencySymbol: package.storeProduct.currencyCode);
+  //   for (Package package in myProductList) {
+  //     if (package.identifier == Config.credit200) {
+  //       InAppPurchaseModel credits200 = InAppPurchaseModel(
+  //           id: Config.credit200,
+  //           coins: 200,
+  //           price: package.storeProduct.priceString,
+  //           image: "assets/images/ic_coins_4.png",
+  //           type: InAppPurchaseModel.typeNormal,
+  //           storeProduct: package.storeProduct,
+  //           package: package,
+  //           currency: package.storeProduct.currencyCode,
+  //           currencySymbol: package.storeProduct.currencyCode);
 
-        if (!inAppPurchaseList.contains(Config.credit200)) {
-          inAppPurchaseList.add(credits200);
-        }
-      }
+  //       if (!inAppPurchaseList.contains(Config.credit200)) {
+  //         inAppPurchaseList.add(credits200);
+  //       }
+  //     }
 
-      if (package.identifier == Config.credit1000) {
-        InAppPurchaseModel credits1000 = InAppPurchaseModel(
-            id: Config.credit1000,
-            coins: 1000,
-            price: package.storeProduct.priceString,
-            image: "assets/images/ic_coins_1.png",
-            discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
-            type: InAppPurchaseModel.typeNormal,
-            storeProduct: package.storeProduct,
-            package: package,
-            currency: package.storeProduct.currencyCode,
-            currencySymbol: package.storeProduct.currencyCode);
+  //     if (package.identifier == Config.credit1000) {
+  //       InAppPurchaseModel credits1000 = InAppPurchaseModel(
+  //           id: Config.credit1000,
+  //           coins: 1000,
+  //           price: package.storeProduct.priceString,
+  //           image: "assets/images/ic_coins_1.png",
+  //           discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
+  //           type: InAppPurchaseModel.typeNormal,
+  //           storeProduct: package.storeProduct,
+  //           package: package,
+  //           currency: package.storeProduct.currencyCode,
+  //           currencySymbol: package.storeProduct.currencyCode);
 
-        if (!inAppPurchaseList.contains(Config.credit1000)) {
-          inAppPurchaseList.add(credits1000);
-        }
-      }
+  //       if (!inAppPurchaseList.contains(Config.credit1000)) {
+  //         inAppPurchaseList.add(credits1000);
+  //       }
+  //     }
 
-      if (package.identifier == Config.credit100) {
-        InAppPurchaseModel credits100 = InAppPurchaseModel(
-            id: Config.credit100,
-            coins: 100,
-            price: package.storeProduct.priceString,
-            image: "assets/images/ic_coins_3.png",
-            type: InAppPurchaseModel.typeNormal,
-            storeProduct: package.storeProduct,
-            package: package,
-            currency: package.storeProduct.currencyCode,
-            currencySymbol: package.storeProduct.currencyCode);
+  //     if (package.identifier == Config.credit100) {
+  //       InAppPurchaseModel credits100 = InAppPurchaseModel(
+  //           id: Config.credit100,
+  //           coins: 100,
+  //           price: package.storeProduct.priceString,
+  //           image: "assets/images/ic_coins_3.png",
+  //           type: InAppPurchaseModel.typeNormal,
+  //           storeProduct: package.storeProduct,
+  //           package: package,
+  //           currency: package.storeProduct.currencyCode,
+  //           currencySymbol: package.storeProduct.currencyCode);
 
-        if (!inAppPurchaseList.contains(Config.credit100)) {
-          inAppPurchaseList.add(credits100);
-        }
-      }
+  //       if (!inAppPurchaseList.contains(Config.credit100)) {
+  //         inAppPurchaseList.add(credits100);
+  //       }
+  //     }
 
-      if (package.identifier == Config.credit500) {
-        InAppPurchaseModel credits500 = InAppPurchaseModel(
-            id: Config.credit500,
-            coins: 500,
-            price: package.storeProduct.priceString,
-            image: "assets/images/ic_coins_6.png",
-            type: InAppPurchaseModel.typeNormal,
-            storeProduct: package.storeProduct,
-            discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
-            package: package,
-            currency: package.storeProduct.currencyCode,
-            currencySymbol: package.storeProduct.currencyCode);
+  //     if (package.identifier == Config.credit500) {
+  //       InAppPurchaseModel credits500 = InAppPurchaseModel(
+  //           id: Config.credit500,
+  //           coins: 500,
+  //           price: package.storeProduct.priceString,
+  //           image: "assets/images/ic_coins_6.png",
+  //           type: InAppPurchaseModel.typeNormal,
+  //           storeProduct: package.storeProduct,
+  //           discount: (package.storeProduct.price * 1.1).toStringAsFixed(2),
+  //           package: package,
+  //           currency: package.storeProduct.currencyCode,
+  //           currencySymbol: package.storeProduct.currencyCode);
 
-        if (!inAppPurchaseList.contains(Config.credit500)) {
-          inAppPurchaseList.add(credits500);
-        }
-      }
+  //       if (!inAppPurchaseList.contains(Config.credit500)) {
+  //         inAppPurchaseList.add(credits500);
+  //       }
+  //     }
 
-      if (package.identifier == Config.credit2100) {
-        InAppPurchaseModel credits2100 = InAppPurchaseModel(
-            id: Config.credit2100,
-            coins: 2100,
-            price: package.storeProduct.priceString,
-            discount: (package.storeProduct.price * 1.2).toStringAsFixed(2),
-            image: "assets/images/ic_coins_5.png",
-            type: InAppPurchaseModel.typeNormal,
-            storeProduct: package.storeProduct,
-            package: package,
-            currency: package.storeProduct.currencyCode,
-            currencySymbol: package.storeProduct.currencyCode);
+  //     if (package.identifier == Config.credit2100) {
+  //       InAppPurchaseModel credits2100 = InAppPurchaseModel(
+  //           id: Config.credit2100,
+  //           coins: 2100,
+  //           price: package.storeProduct.priceString,
+  //           discount: (package.storeProduct.price * 1.2).toStringAsFixed(2),
+  //           image: "assets/images/ic_coins_5.png",
+  //           type: InAppPurchaseModel.typeNormal,
+  //           storeProduct: package.storeProduct,
+  //           package: package,
+  //           currency: package.storeProduct.currencyCode,
+  //           currencySymbol: package.storeProduct.currencyCode);
 
-        if (!inAppPurchaseList.contains(Config.credit2100)) {
-          inAppPurchaseList.add(credits2100);
-        }
-      }
+  //       if (!inAppPurchaseList.contains(Config.credit2100)) {
+  //         inAppPurchaseList.add(credits2100);
+  //       }
+  //     }
 
-      if (package.identifier == Config.credit5250) {
-        InAppPurchaseModel credits5250 = InAppPurchaseModel(
-            id: Config.credit5250,
-            coins: 5250,
-            price: package.storeProduct.priceString,
-            discount: (package.storeProduct.price * 1.3).toStringAsFixed(2),
-            image: "assets/images/ic_coins_7.png",
-            type: InAppPurchaseModel.typeNormal,
-            storeProduct: package.storeProduct,
-            package: package,
-            currency: package.storeProduct.currencyCode,
-            currencySymbol: package.storeProduct.currencyCode);
+  //     if (package.identifier == Config.credit5250) {
+  //       InAppPurchaseModel credits5250 = InAppPurchaseModel(
+  //           id: Config.credit5250,
+  //           coins: 5250,
+  //           price: package.storeProduct.priceString,
+  //           discount: (package.storeProduct.price * 1.3).toStringAsFixed(2),
+  //           image: "assets/images/ic_coins_7.png",
+  //           type: InAppPurchaseModel.typeNormal,
+  //           storeProduct: package.storeProduct,
+  //           package: package,
+  //           currency: package.storeProduct.currencyCode,
+  //           currencySymbol: package.storeProduct.currencyCode);
 
-        if (!inAppPurchaseList.contains(Config.credit5250)) {
-          inAppPurchaseList.add(credits5250);
-        }
-      }
+  //       if (!inAppPurchaseList.contains(Config.credit5250)) {
+  //         inAppPurchaseList.add(credits5250);
+  //       }
+  //     }
 
-      if (package.identifier == Config.credit10500) {
-        InAppPurchaseModel credits10500 = InAppPurchaseModel(
-            id: Config.credit10500,
-            coins: 10500,
-            price: package.storeProduct.priceString,
-            discount: (package.storeProduct.price * 1.4).toStringAsFixed(2),
-            image: "assets/images/ic_coins_2.png",
-            type: InAppPurchaseModel.typeNormal,
-            storeProduct: package.storeProduct,
-            package: package,
-            currency: package.storeProduct.currencyCode,
-            currencySymbol: package.storeProduct.currencyCode);
+  //     if (package.identifier == Config.credit10500) {
+  //       InAppPurchaseModel credits10500 = InAppPurchaseModel(
+  //           id: Config.credit10500,
+  //           coins: 10500,
+  //           price: package.storeProduct.priceString,
+  //           discount: (package.storeProduct.price * 1.4).toStringAsFixed(2),
+  //           image: "assets/images/ic_coins_2.png",
+  //           type: InAppPurchaseModel.typeNormal,
+  //           storeProduct: package.storeProduct,
+  //           package: package,
+  //           currency: package.storeProduct.currencyCode,
+  //           currencySymbol: package.storeProduct.currencyCode);
 
-        if (!inAppPurchaseList.contains(Config.credit10500)) {
-          inAppPurchaseList.add(credits10500);
-        }
-      }
-    }
+  //       if (!inAppPurchaseList.contains(Config.credit10500)) {
+  //         inAppPurchaseList.add(credits10500);
+  //       }
+  //     }
+  //   }
 
-    return inAppPurchaseList;
-  }
+  //   return inAppPurchaseList;
+  // }
 
   Future<List<Package>> fetchOffers() async {
     final offerings = await PurchaseApi.fetchOffersByIds(Coins.allIds);
@@ -233,7 +235,8 @@ class _CoinsScreenState extends State<CoinsScreen> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.orange,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: kPrimaryColor,
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -278,13 +281,15 @@ class _CoinsScreenState extends State<CoinsScreen> {
                           }));
                 },
                 child: Container(
-                  height: height * .1,
+                  height: height * .08,
                   width: width,
-                  color: Colors.red,
+                  decoration: BoxDecoration(
+                      color: kWarninngColor,
+                      borderRadius: BorderRadius.circular(10)),
                   child: Center(
                       child: Text(
                     'Get More Coins',
-                    style: TextStyle(fontSize: 23, color: Colors.white),
+                    style: TextStyle(fontSize: 22, color: Colors.white),
                   )),
                 ),
               ),
@@ -298,13 +303,15 @@ class _CoinsScreenState extends State<CoinsScreen> {
                   provider.spend50Coins();
                 },
                 child: Container(
-                  height: height * .1,
+                  decoration: BoxDecoration(
+                      color: Color(0xffe94a05),
+                      borderRadius: BorderRadius.circular(10)),
+                  height: height * .08,
                   width: width,
-                  color: Colors.red,
                   child: Center(
                       child: Text(
                     'Spend 50 Coins',
-                    style: TextStyle(fontSize: 23, color: Colors.white),
+                    style: TextStyle(fontSize: 22, color: Colors.white),
                   )),
                 ),
               )

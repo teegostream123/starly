@@ -14,17 +14,16 @@ import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/coins/coins_payment_widget.dart';
 import 'package:teego/home/live/live_preview.dart';
 import 'package:teego/home/live/live_streaming_screen.dart';
-import 'package:teego/home/live/select_screen.dart';
-import 'package:teego/home/live/zego_live_stream.dart';
+// import 'package:teego/home/live/zego_live_stream.dart';
 import 'package:teego/home/profile/profile_edit.dart';
-import 'package:teego/home/profile/user_screen.dart';
+// import 'package:teego/home/profile/user_screen.dart';
 import 'package:teego/models/GiftsSentModel.dart';
 import 'package:teego/models/LiveStreamingModel.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
+// import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import '../../models/LiveMessagesModel.dart';
 import '../../models/ReportModel.dart';
 import '../../ui/button_with_icon.dart';
@@ -70,7 +69,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     checkUserRole();
-  // baki null waghera da tan koi issue nhi aa na nazer tey nai aya filhal
+    // baki null waghera da tan koi issue nhi aa na nazer tey nai aya filhal
     QuickHelp.saveCurrentRoute(route: LiveScreen.route);
 
     _tabController = TabController(
@@ -279,7 +278,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                   onTap: () => checkPermission(true),
                   height: 60,
                   width: 60,
-                  colors: [kPrimaryColor, kSecondaryColor],
+                  colors: [kPrimaryColor, kPrimaryColor],
                   borderRadius: 10,
                   shadowColor: kPrimaryColor,
                   shadowColorOpacity: 0.3,
@@ -293,6 +292,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                     child: QuickActions.showSVGAsset(
                       "assets/svg/ic_tab_live_selected.svg",
                       color: Colors.white,
+                      // color: kPrimaryColor,
                       width: 20,
                       height: 20,
                     ),

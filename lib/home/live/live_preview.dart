@@ -10,7 +10,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
-import 'package:teego/home/live/select_screen.dart';
 import 'package:teego/home/live/zego_live_stream.dart';
 import 'package:teego/models/HashTagsModel.dart';
 import 'package:teego/models/LiveStreamingModel.dart';
@@ -397,7 +396,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                     },
                     text: "live_streaming.btn_go_live".tr().toUpperCase(),
                     beginColor:
-                        goLiveBtnSelected ? kWarninngColor : kTransparentColor,
+                        goLiveBtnSelected ? kPrimaryColor : kTransparentColor,
                     endColor:
                         goLiveBtnSelected ? kPrimaryColor : kTransparentColor,
                     /*colors: [
@@ -1297,10 +1296,10 @@ Widget hostAudioVideoViewForegroundBuilder(
     return Container();
   }
 
-  const toolbarCameraNormal = 'assets/icons/toolbar_camera_normal.png';
-  const toolbarCameraOff = 'assets/icons/toolbar_camera_off.png';
-  const toolbarMicNormal = 'assets/icons/toolbar_mic_normal.png';
-  const toolbarMicOff = 'assets/icons/toolbar_mic_off.png';
+  // const toolbarCameraNormal = 'assets/icons/toolbar_camera_normal.png';
+  // const toolbarCameraOff = 'assets/icons/toolbar_camera_off.png';
+  // const toolbarMicNormal = 'assets/icons/toolbar_mic_normal.png';
+  // const toolbarMicOff = 'assets/icons/toolbar_mic_off.png';
   return Positioned(
     top: 100,
     right: 20,

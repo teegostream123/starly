@@ -50,8 +50,8 @@
 
     <application
         android:usesCleartextTraffic="true"
-        android:label="Starlee"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Starly"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

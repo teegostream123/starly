@@ -453,7 +453,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: ContainerCorner(
                         width: Responsive.isMobile(context) ? 250 : 380,
                         child: Image.asset(
-                          "assets/images/ic_logo.png",
+                          "assets/images/starly_welcome.png",
                           width: 100,
                           height: 100,
                         ),
@@ -496,7 +496,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 TextStyle(fontSize: 15.0, color: Colors.black),
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.person_2_outlined,
-                                  color: Color(0xFFDDB300)),
+                                  color: kPrimaryColor), //Color(0xFFDDB300)),
                               border: InputBorder.none,
                               alignLabelWithHint: true,
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -541,17 +541,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     passwordVisible == true
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: Color(0xFFDDB300)),
+                                    color: kPrimaryColor), //Color(0xFFDDB300)),
                                 onTap: () {
                                   setState(() {
                                     passwordVisible = !passwordVisible;
                                   });
                                 },
                               ),
-                              prefixIcon: Icon(
-                                Icons.lock_outline,
-                                color: Color(0xFFDDB300),
-                              ),
+                              prefixIcon: Icon(Icons.lock_outline,
+                                  color: kPrimaryColor //Color(0xFFDDB300),
+                                  ),
                               alignLabelWithHint: true,
                               floatingLabelBehavior: FloatingLabelBehavior.auto,
                               border: InputBorder.none,
@@ -589,8 +588,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       fontSize: 16,
                       imageName: "",
                       imageColor: kContentColorLightTheme,
-                      color: Color(0xFFDDB300),
-                      textColor: Colors.black,
+                      color: kPrimaryColor, //Color(0xFFDDB300),
+                      textColor: Colors.white.withOpacity(0.9),
                       text: "Sign in",
                       fontWeight: FontWeight.bold,
                       //matchParent: true,
@@ -610,7 +609,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         CircularProgressIndicator(
-                                          color: Color(0xFFDDB300),
+                                          color:
+                                              kPrimaryColor, //Color(0xFFDDB300),
                                         ),
                                         const SizedBox(
                                           height: 15,

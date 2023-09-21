@@ -124,6 +124,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
 
 flutter:
   uses-material-design: true
@@ -142,14 +148,14 @@ dependency_overrides:
 
 flutter_native_splash:
   color: '#ffffff'
-  image: assets/images/ic_logo.png
+  image: assets/images/splash.png
   #branding: assets/branding-production.png
   color_dark: '#000000'
   image_dark: assets/images/ic_logo_white.png
   #branding_dark: assets/branding-production.png
 
   android_12:
-    image: assets/images/ic_logo.png
+    image: assets/images/splash.png
     icon_background_color: '#ffffff'
     image_dark: assets/images/ic_logo_white.png
     icon_background_color_dark: '#000000'

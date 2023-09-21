@@ -32,7 +32,7 @@ class ButtonWithGradient extends StatelessWidget {
   final double? spreadRadius;
   final bool? setShadowToBottom;
 
-   ButtonWithGradient({
+  ButtonWithGradient({
     Key? key,
     required this.text,
     this.fontWeight,
@@ -56,12 +56,11 @@ class ButtonWithGradient extends StatelessWidget {
     this.bottomLeftBorder = 0,
     this.bottomRightBorder = 0,
     this.shadowColor = Colors.transparent,
-     this.blurRadius = 10,
-     this.spreadRadius = 1,
-     this.setShadowToBottom = false,
-     this.shadowColorOpacity = 1,
-     this.svgURL,
-
+    this.blurRadius = 10,
+    this.spreadRadius = 1,
+    this.setShadowToBottom = false,
+    this.shadowColorOpacity = 1,
+    this.svgURL,
   }) : super(key: key);
 
   @override
@@ -94,25 +93,42 @@ class ButtonWithGradient extends StatelessWidget {
                 bottomRight: Radius.circular(
                     bottomRightBorder! != 0 ? bottomRightBorder! : 0),
               ),
-        boxShadow: activeBoxShadow ?  [
-          BoxShadow(
-              color: shadowColor != null ? shadowColor!.withOpacity(shadowColorOpacity!) : Colors.transparent,
-              blurRadius: blurRadius!,
-              spreadRadius:spreadRadius!,
-              offset: setShadowToBottom! ? Offset(0,5) : Offset(0.0, 0.75) //offset: Offset(0,10),
-          )
-          /*BoxShadow(color: shadowColor! , offset: Offset(5, 5), blurRadius: 15.0, spreadRadius: 1)*/
-        ] : null,
+        boxShadow: activeBoxShadow
+            ? [
+                BoxShadow(
+                    color: shadowColor != null
+                        ? shadowColor!.withOpacity(shadowColorOpacity!)
+                        : Colors.transparent,
+                    blurRadius: blurRadius!,
+                    spreadRadius: spreadRadius!,
+                    offset: setShadowToBottom!
+                        ? Offset(0, 5)
+                        : Offset(0.0, 0.75) //offset: Offset(0,10),
+                    )
+                /*BoxShadow(color: shadowColor! , offset: Offset(5, 5), blurRadius: 15.0, spreadRadius: 1)*/
+              ]
+            : null,
       ),
       child: ElevatedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextWithTap(text, color: textColor, fontSize: fontSize, marginRight: 10,),
-            svgURL != null ? QuickActions.showSVGAsset(svgURL!, color: Colors.white, width: 20,) : Container()
+            TextWithTap(
+              text,
+              color: textColor,
+              fontSize: fontSize,
+              marginRight: 10,
+            ),
+            svgURL != null
+                ? QuickActions.showSVGAsset(
+                    svgURL!,
+                    color: Colors.white,
+                    width: 20,
+                  )
+                : Container()
           ],
         ),
-        onPressed: onTap!= null ? onTap as void Function()? : null,
+        onPressed: onTap != null ? onTap as void Function()? : null,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           shape: MaterialStateProperty.all(

@@ -1,0 +1,15 @@
+Commands for the project.
+
+For Splash Screen (and customize the data in pubspec.yaml in the same dependency)
+
+===> flutter pub run flutter_native_splash:create
+
+
+
+===> await Future.delayed(const Duration(seconds: 5));
+     FlutterNativeSplash.remove();
+
+For AppIcon (also customize it in pubspec.yaml)
+
+===> flutter pub get
+>> flutter pub run flutter_launcher_icons
