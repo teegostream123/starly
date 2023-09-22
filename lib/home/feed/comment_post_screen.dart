@@ -55,7 +55,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     CommentsModel comment = CommentsModel();
     comment.setAuthor = currentUser!;
     comment.setText = text;
-    comment.setAuthorId = currentUser!.objectId!;
+    comment.setAuthorId = currentUser!.objectId ?? '';
     comment.setPostId = post.objectId!;
     comment.setPost = post;
 
@@ -96,7 +96,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
       child: Scaffold(
         body: NestedScrollView(
           floatHeaderSlivers: true,
-          physics: ScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
@@ -126,6 +126,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
             children: [
               Expanded(
                   child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
                 child: Column(
                   children: [
                     ContainerCorner(
@@ -372,55 +373,57 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
         if (snapshot.hasData) {
           CommentsModel commentsModel = snapshot.loadedData as CommentsModel;
 
-          return Padding(
-            padding: const EdgeInsets.only(left: 15, top: 10),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    QuickActions.avatarWidget(commentsModel.getAuthor!,
-                        width: 60, height: 60),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextWithTap(
-                            commentsModel.getAuthor!.getFullName!,
-                            marginLeft: 10,
-                            marginBottom: 5,
-                            fontWeight: FontWeight.bold,
-                            color: kGrayColor,
-                            fontSize: 16,
-                          ),
-                          TextWithTap(
-                            commentsModel.getText!,
-                            marginLeft: 10,
-                            marginRight: 10,
-                            color: kGrayColor,
-                          ),
-                          TextWithTap(
-                            QuickHelp.getTimeAgoForFeed(
-                                commentsModel.createdAt!),
-                            marginLeft: 10,
-                            color: kGrayColor,
-                            marginTop: 10,
-                            fontSize: 12,
-                          ),
-                        ],
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, top: 10),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      QuickActions.avatarWidget(commentsModel.getAuthor!,
+                          width: 60, height: 60),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextWithTap(
+                              commentsModel.getAuthor!.getFullName!,
+                              marginLeft: 10,
+                              marginBottom: 5,
+                              fontWeight: FontWeight.bold,
+                              color: kGrayColor,
+                              fontSize: 16,
+                            ),
+                            TextWithTap(
+                              commentsModel.getText!,
+                              marginLeft: 10,
+                              marginRight: 10,
+                              color: kGrayColor,
+                            ),
+                            TextWithTap(
+                              QuickHelp.getTimeAgoForFeed(
+                                  commentsModel.createdAt!),
+                              marginLeft: 10,
+                              color: kGrayColor,
+                              marginTop: 10,
+                              fontSize: 12,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                ContainerCorner(
-                  color: kGrayColor.withOpacity(0.2),
-                  height: 1,
-                  marginLeft: 5,
-                  marginRight: 5,
-                  marginTop: 20,
-                ),
-              ],
+                    ],
+                  ),
+                  ContainerCorner(
+                    color: kGrayColor.withOpacity(0.2),
+                    height: 1,
+                    marginLeft: 5,
+                    marginRight: 5,
+                    marginTop: 20,
+                  ),
+                ],
+              ),
             ),
           );
         } else {
@@ -476,6 +479,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                       maxLines: null,
                       controller: commentController,
                       decoration: InputDecoration(
+                        // hintText: 'just checking whether its working or not',
                         hintText: "comment_post.leave_comment".tr(),
                         border: InputBorder.none,
                       ),
@@ -520,7 +524,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
   void openSheet(UserModel author, PostsModel post) async {
     showModalBottomSheet(
         context: (context),
-        //isScrollControlled: true,
+        isScrollControlled: true,
         backgroundColor: Colors.transparent,
         enableDrag: true,
         isDismissible: true,

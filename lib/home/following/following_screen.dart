@@ -78,7 +78,7 @@ class _FollowingScreenState extends State<FollowingScreen>
                 height: 60,
                 width: 60,
                 onTap: () => checkPermission(true),
-                colors: [kPrimaryColor, kSecondaryColor],
+                colors: [kPrimaryColor, kPrimaryColor],
                 borderRadius: 10,
                 shadowColor: kPrimaryColor,
                 shadowColorOpacity: 0.3,

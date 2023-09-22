@@ -4,9 +4,12 @@ import 'package:teego/models/entitlement.dart';
 import 'package:teego/home/coins/purchase_api.dart';
 
 class RevenueCatProvider extends ChangeNotifier {
-  RevenueCatProvider() {
+  factory RevenueCatProvider() => _instance;
+  RevenueCatProvider._() {
     init();
   }
+
+  static final RevenueCatProvider _instance = RevenueCatProvider._();
 
   int coins = 0;
 
@@ -52,5 +55,12 @@ class RevenueCatProvider extends ChangeNotifier {
     coins -= 50;
 
     notifyListeners();
+  }
+
+  void spend10Coins() {
+    if (coins >= 10) {
+      coins -= 10;
+      notifyListeners();
+    }
   }
 }

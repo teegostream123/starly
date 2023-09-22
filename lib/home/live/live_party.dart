@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:teego/home/live/zego_live_stream.dart';
 import 'package:teego/models/UserModel.dart';
+import 'package:teego/providers/revenuecat.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
@@ -634,10 +636,41 @@ final audienceConfig = ZegoUIKitPrebuiltLiveStreamingConfig.audience(
       isCameraOrMicrophone: false,
     );
   }
-  ..background = Badge(
-    child: Image.asset(
-      'assets/images/ic_coins_2.png',
-      height: 30,
+  ..background = Positioned(
+    top: 80,
+    left: 30,
+    child: Column(
+      children: [
+        InkWell(
+          onTap: () {
+            final provider = RevenueCatProvider();
+            if (provider.coins >= 10) {
+              // Audience can spend coins if they have at least 10 coins
+              provider.spend10Coins();
+            } else {
+              // Handle insufficient coins scenario (e.g., show a message)
+              // You can add your logic here
+            }
+          },
+          child: Badge(
+            child: Image.asset(
+              'assets/images/audience_coin.png',
+              height: 35,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 2,
+        ),
+        Container(
+            height: 20,
+            decoration: BoxDecoration(
+                color: Colors.black54, borderRadius: BorderRadius.circular(7)),
+            child: Text(
+              'Send Coins',
+              style: TextStyle(color: Colors.white),
+            ))
+      ],
     ),
   );
 

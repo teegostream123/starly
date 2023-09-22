@@ -62,6 +62,7 @@ import 'package:teego/models/ReportModel.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/models/WithdrawModel.dart';
 import 'package:teego/providers/calls_providers.dart';
+import 'package:teego/providers/revenuecat.dart';
 import 'package:teego/utils/theme.dart';
 import 'package:upgrader/upgrader.dart';
 import 'app/config.dart';
@@ -212,143 +213,150 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
     super.initState();
   }
+  // final revenueCatProvider = Provider.of<RevenueCatProvider>(context);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: Setup.appName,
-      debugShowCheckedModeBanner: false,
-      theme: lightThemeData(context),
-      darkTheme: darkThemeData(context),
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      navigatorKey: NavigationService.navigatorKey,
-      locale: context.locale,
-      routes: {
-        //Before Login
-        WelcomeScreen.route: (_) => WelcomeScreen(),
-        ForgotScreen.route: (_) => ForgotScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CallsProvider()),
+        ChangeNotifierProvider(create: (_) => RevenueCatProvider()),
+      ],
+      child: MaterialApp(
+        title: Setup.appName,
+        debugShowCheckedModeBanner: false,
+        theme: lightThemeData(context),
+        darkTheme: darkThemeData(context),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        navigatorKey: NavigationService.navigatorKey,
+        locale: context.locale,
+        routes: {
+          //Before Login
+          WelcomeScreen.route: (_) => WelcomeScreen(),
+          ForgotScreen.route: (_) => ForgotScreen(),
 
-        // Home and tabs
-        HomeScreen.route: (_) => HomeScreen(
-              preferences: preferences,
-            ),
-        FollowingScreen.route: (_) => FollowingScreen(
-              preferences: preferences,
-            ),
-        NotificationsScreen.route: (_) => NotificationsScreen(
-              preferences: preferences,
-            ),
-        LocationScreen.route: (_) => LocationScreen(),
-        SearchPage.route: (_) => SearchPage(
-              preferences: preferences,
-            ),
-        ReelsHomeScreen.route: (_) => ReelsHomeScreen(
-              preferences: preferences,
-            ),
+          // Home and tabs
+          HomeScreen.route: (_) => HomeScreen(
+                preferences: preferences,
+              ),
+          FollowingScreen.route: (_) => FollowingScreen(
+                preferences: preferences,
+              ),
+          NotificationsScreen.route: (_) => NotificationsScreen(
+                preferences: preferences,
+              ),
+          LocationScreen.route: (_) => LocationScreen(),
+          SearchPage.route: (_) => SearchPage(
+                preferences: preferences,
+              ),
+          ReelsHomeScreen.route: (_) => ReelsHomeScreen(
+                preferences: preferences,
+              ),
 
-        //Profile
-        ProfileMenuScreen.route: (_) => ProfileMenuScreen(
-              preferences: preferences,
-            ),
-        ProfileScreen.route: (_) => ProfileScreen(),
-        ProfileEdit.route: (_) => ProfileEdit(),
-        UserProfileScreen.route: (_) => UserProfileScreen(),
+          //Profile
+          ProfileMenuScreen.route: (_) => ProfileMenuScreen(
+                preferences: preferences,
+              ),
+          ProfileScreen.route: (_) => ProfileScreen(),
+          ProfileEdit.route: (_) => ProfileEdit(),
+          UserProfileScreen.route: (_) => UserProfileScreen(),
 
-        //Chat
-        MessagesListScreen.route: (_) => MessagesListScreen(
-              preferences: preferences,
-            ),
-        MessageScreen.route: (_) => MessageScreen(
-              preferences: preferences,
-            ),
+          //Chat
+          MessagesListScreen.route: (_) => MessagesListScreen(
+                preferences: preferences,
+              ),
+          MessageScreen.route: (_) => MessageScreen(
+                preferences: preferences,
+              ),
 
-        //Feed
-        CommentPostScreen.route: (_) => CommentPostScreen(),
+          //Feed
+          CommentPostScreen.route: (_) => CommentPostScreen(),
 
-        //LiveStreaming
-        LivePreviewScreen.route: (_) => LivePreviewScreen(),
-        LivePreviewScreen.route: (_) => LivePreviewScreen(),
+          //LiveStreaming
+          LivePreviewScreen.route: (_) => LivePreviewScreen(),
+          LivePreviewScreen.route: (_) => LivePreviewScreen(),
 
-        //Leaders
-        LeadersPage.route: (_) => LeadersPage(),
+          //Leaders
+          LeadersPage.route: (_) => LeadersPage(),
 
-        //Settings
-        MyAppCodeScreen.route: (_) => MyAppCodeScreen(),
-        AccountSettingsScreen.route: (_) => AccountSettingsScreen(),
-        ConnectedAccountsScreen.route: (_) => ConnectedAccountsScreen(),
-        PrivacySettingsScreen.route: (_) => PrivacySettingsScreen(),
-        AppSettingsScreen.route: (_) => AppSettingsScreen(),
-        NotificationsSoundsScreen.route: (_) => NotificationsSoundsScreen(),
-        CustomerSupportScreen.route: (_) => CustomerSupportScreen(),
-        DeleteAccountPage.route: (_) => DeleteAccountPage(),
-        QRViewScanner.route: (_) => QRViewScanner(),
-        SelectCountryScreen.route: (_) => SelectCountryScreen(),
+          //Settings
+          MyAppCodeScreen.route: (_) => MyAppCodeScreen(),
+          AccountSettingsScreen.route: (_) => AccountSettingsScreen(),
+          ConnectedAccountsScreen.route: (_) => ConnectedAccountsScreen(),
+          PrivacySettingsScreen.route: (_) => PrivacySettingsScreen(),
+          AppSettingsScreen.route: (_) => AppSettingsScreen(),
+          NotificationsSoundsScreen.route: (_) => NotificationsSoundsScreen(),
+          CustomerSupportScreen.route: (_) => CustomerSupportScreen(),
+          DeleteAccountPage.route: (_) => DeleteAccountPage(),
+          QRViewScanner.route: (_) => QRViewScanner(),
+          SelectCountryScreen.route: (_) => SelectCountryScreen(),
 
-        // Menu
-        GiftersScreen.route: (_) => GiftersScreen(),
-        StatisticsScreen.route: (_) => StatisticsScreen(),
-        ReferralScreen.route: (_) => ReferralScreen(),
-        BlockedUsersScreen.route: (_) => BlockedUsersScreen(),
-        RefillCoinsScreen.route: (_) => RefillCoinsScreen(),
-        GetMoneyScreen.route: (_) => GetMoneyScreen(
-              preferences: preferences,
-            ),
-        SettingsScreen.route: (_) => SettingsScreen(),
-        WithdrawHistoryScreen.route: (_) => WithdrawHistoryScreen(),
+          // Menu
+          GiftersScreen.route: (_) => GiftersScreen(),
+          StatisticsScreen.route: (_) => StatisticsScreen(),
+          ReferralScreen.route: (_) => ReferralScreen(),
+          BlockedUsersScreen.route: (_) => BlockedUsersScreen(),
+          RefillCoinsScreen.route: (_) => RefillCoinsScreen(),
+          GetMoneyScreen.route: (_) => GetMoneyScreen(
+                preferences: preferences,
+              ),
+          SettingsScreen.route: (_) => SettingsScreen(),
+          WithdrawHistoryScreen.route: (_) => WithdrawHistoryScreen(),
 
-        // Logged user or not
-        QuickHelp.pageTypeTerms: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeTerms),
-        QuickHelp.pageTypePrivacy: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypePrivacy),
-        QuickHelp.pageTypeHelpCenter: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeHelpCenter),
-        QuickHelp.pageTypeOpenSource: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeOpenSource),
-        QuickHelp.pageTypeSafety: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeSafety),
-        QuickHelp.pageTypeCommunity: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeCommunity),
-        QuickHelp.pageTypeInstructions: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeInstructions),
-        QuickHelp.pageTypeSupport: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeSupport),
-        QuickHelp.pageTypeCashOut: (_) =>
-            WebViewScreen(pageType: QuickHelp.pageTypeCashOut),
-      },
-      home: UpgradeAlert(
-        upgrader: Upgrader(
-          debugDisplayAlways: false,
-          debugLogging: Setup.isDebug,
-          showIgnore: false,
-          showLater: false,
-          canDismissDialog: false,
-          shouldPopScope: () => false,
-          durationUntilAlertAgain: Duration(seconds: 10),
-          minAppVersion: Setup.appVersion,
-        ),
-        child: FutureBuilder<UserModel?>(
-            future: QuickHelp.getUserAwait(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Scaffold(
-                    body: QuickHelp.appLoadingLogo(),
-                  );
-                default:
-                  if (snapshot.hasData) {
-                    return DispacheScreen(
-                      preferences: preferences,
-                      currentUser: snapshot.data,
+          // Logged user or not
+          QuickHelp.pageTypeTerms: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeTerms),
+          QuickHelp.pageTypePrivacy: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypePrivacy),
+          QuickHelp.pageTypeHelpCenter: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeHelpCenter),
+          QuickHelp.pageTypeOpenSource: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeOpenSource),
+          QuickHelp.pageTypeSafety: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeSafety),
+          QuickHelp.pageTypeCommunity: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeCommunity),
+          QuickHelp.pageTypeInstructions: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeInstructions),
+          QuickHelp.pageTypeSupport: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeSupport),
+          QuickHelp.pageTypeCashOut: (_) =>
+              WebViewScreen(pageType: QuickHelp.pageTypeCashOut),
+        },
+        home: UpgradeAlert(
+          upgrader: Upgrader(
+            debugDisplayAlways: false,
+            debugLogging: Setup.isDebug,
+            showIgnore: false,
+            showLater: false,
+            canDismissDialog: false,
+            shouldPopScope: () => false,
+            durationUntilAlertAgain: Duration(seconds: 10),
+            minAppVersion: Setup.appVersion,
+          ),
+          child: FutureBuilder<UserModel?>(
+              future: QuickHelp.getUserAwait(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Scaffold(
+                      body: QuickHelp.appLoadingLogo(),
                     );
-                  } else {
-                    logoutUserPurchase();
+                  default:
+                    if (snapshot.hasData) {
+                      return DispacheScreen(
+                        preferences: preferences,
+                        currentUser: snapshot.data,
+                      );
+                    } else {
+                      logoutUserPurchase();
 
-                    return WelcomeScreen();
-                  }
-              }
-            }),
+                      return WelcomeScreen();
+                    }
+                }
+              }),
+        ),
       ),
     );
   }

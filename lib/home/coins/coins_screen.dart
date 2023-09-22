@@ -252,7 +252,7 @@ class _CoinsScreenState extends State<CoinsScreen> {
                 height: 20,
               ),
               Text(
-                "You have \$ Coins",
+                "You have ${Provider.of<RevenueCatProvider>(context).coins} Coins",
                 style: TextStyle(fontSize: 23, color: Colors.white),
               ),
               SizedBox(
@@ -296,25 +296,25 @@ class _CoinsScreenState extends State<CoinsScreen> {
               SizedBox(
                 height: 20,
               ),
-              InkWell(
-                onTap: () {
-                  final provider =
-                      Provider.of<RevenueCatProvider>(context, listen: false);
-                  provider.spend50Coins();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xffe94a05),
-                      borderRadius: BorderRadius.circular(10)),
-                  height: height * .08,
-                  width: width,
-                  child: Center(
-                      child: Text(
-                    'Spend 50 Coins',
-                    style: TextStyle(fontSize: 22, color: Colors.white),
-                  )),
-                ),
-              )
+              // InkWell(
+              //   onTap: () {
+              //     final provider =
+              //         Provider.of<RevenueCatProvider>(context, listen: false);
+              //     provider.spend10Coins();
+              //   },
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //         color: Color(0xffe94a05),
+              //         borderRadius: BorderRadius.circular(10)),
+              //     height: height * .08,
+              //     width: width,
+              //     child: Center(
+              //         child: Text(
+              //       'Spend 10 Coins',
+              //       style: TextStyle(fontSize: 22, color: Colors.white),
+              //     )),
+              //   ),
+              // )
             ],
           )),
     );
