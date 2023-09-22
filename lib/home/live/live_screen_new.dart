@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import 'package:lottie/lottie.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:teego/app/constants.dart';
 import 'package:teego/app/setup.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_cloud.dart';
@@ -26,7 +26,6 @@ import 'package:teego/models/UserModel.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import '../../models/LiveMessagesModel.dart';
 import '../../models/ReportModel.dart';

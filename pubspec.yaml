@@ -3,7 +3,7 @@ description: Live Streaming app
 
 publish_to: 'none'
 
-version: 1.0.0+2
+version: 1.0.1+2
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
@@ -127,9 +127,9 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
-  android: "launcher_icon"
+  android: 'launcher_icon'
   ios: true
-  image_path: "assets/images/logo.png"
+  image_path: 'assets/images/logo.png'
 
 flutter:
   uses-material-design: true
