@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
+import 'package:teego/home/coins/coins_screen.dart';
 import 'package:teego/home/coins/refill_coins_screen.dart';
 import 'package:teego/home/menu/blocked_users_screen.dart';
 import 'package:teego/home/menu/get_money_screen.dart';
@@ -88,18 +89,18 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    SvgPicture.asset(
-                                      "assets/svg/ic_diamond.svg",
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    TextWithTap(
-                                      widget.userModel!.getDiamonds.toString(),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17,
-                                      marginRight: 20,
-                                      color: kGrayColor,
-                                    ),
+                                    // SvgPicture.asset(
+                                    //   "assets/svg/ic_diamond.svg",
+                                    //   height: 30,
+                                    //   width: 30,
+                                    // ),
+                                    // TextWithTap(
+                                    //   widget.userModel!.getDiamonds.toString(),
+                                    //   fontWeight: FontWeight.bold,
+                                    //   fontSize: 17,
+                                    //   marginRight: 20,
+                                    //   color: kGrayColor,
+                                    // ),
                                     SvgPicture.asset(
                                       "assets/svg/ic_menu_followers.svg",
                                       width: 20,
@@ -121,7 +122,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(10),
                       child: Icon(
                         Icons.arrow_forward_ios,
                         size: 18,
@@ -186,16 +187,17 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
               coinBalanceOption(
                 "profile_screen.op_refill_coin_balance".tr(),
                 "assets/svg/ic_refill_menu.svg",
-                route: RefillCoinsScreen.route,
+                route: CoinsScreen.route,
               ),
-              getMoneyOption(
-                "profile_screen.op_get_money".tr(),
-                "assets/svg/ic_redeem_menu.svg",
-                GetMoneyScreen(
-                  currentUser: widget.userModel,
-                  preferences: widget.preferences,
-                ),
-              ),
+              // getMoneyOption(
+              //   "profile_screen.op_get_money".tr(),
+              //   "assets/svg/ic_redeem_menu.svg",
+              //   GetMoneyScreen(
+              //     currentUser: widget.userModel,
+              //     preferences: widget.preferences,
+              //   ),
+              // ),
+
               /*instagramOption(
                 "profile_screen.op_connect_instagram".tr(),
                 "profile_screen.insta_description".tr(),

@@ -61,6 +61,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white // Set text color for dark theme
+        : kPrimaryColor;
     return ToolBar(
       centerTitle: true,
       extendBodyBehindAppBar: true,
@@ -123,7 +126,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: ContainerCorner(
                                   height: 60,
                                   width: 60,
-                                  colors: [kSecondaryColor, kSecondaryColor],
+                                  colors: [
+                                    Colors.amberAccent,
+                                    Colors.amberAccent
+                                  ],
                                   borderRadius: 10,
                                   shadowColor: kPrimaryColor,
                                   shadowColorOpacity: 0.3,
@@ -333,7 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_followers_active.svg",
                                 color: tabIndex == 0
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
@@ -341,7 +347,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "feed.for_all".tr(),
                                 fontSize: 16,
                                 color: tabIndex == 0
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -357,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_gold_star_small.svg",
                                 color: tabIndex == 1
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
@@ -365,7 +371,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "feed.exclusive_".tr(),
                                 fontSize: 16,
                                 color: tabIndex == 1
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),

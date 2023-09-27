@@ -329,7 +329,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                                     commentTextFieldFocusNode!.requestFocus(),
                                 backgroundColor: QuickHelp.isDarkMode(context)
                                     ? kContentColorLightTheme
-                                    : Colors.pink,
+                                    : Colors.white,
                               ),
                               /*ButtonWithIcon(
                                       text: "",
@@ -470,7 +470,9 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                 horizontal: 20 * 0.75,
               ),
               decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.05),
+                color: QuickHelp.isDarkMode(context)
+                    ? Colors.grey[500]
+                    : kPrimaryColor,
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Row(
@@ -482,9 +484,20 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                       focusNode: commentTextFieldFocusNode,
                       maxLines: null,
                       controller: commentController,
+                      style: TextStyle(
+                        color: QuickHelp.isDarkMode(context)
+                            ? kPrimaryColor
+                            : Colors.grey[
+                                500], // Change this to your desired text color
+                      ),
                       decoration: InputDecoration(
                         // hintText: 'just checking whether its working or not',
                         hintText: "comment_post.leave_comment".tr(),
+                        hintStyle: TextStyle(
+                          color: QuickHelp.isDarkMode(context)
+                              ? kPrimaryColor
+                              : Colors.grey[500],
+                        ),
                         border: InputBorder.none,
                       ),
                     ),

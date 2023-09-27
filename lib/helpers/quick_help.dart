@@ -1705,7 +1705,7 @@ class QuickHelp {
   }
 
   static Widget showLoadingAnimation(
-      {Color leftDotColor = kPrimaryColor,
+      {Color leftDotColor = Colors.amberAccent,
       Color rightDotColor = kSecondaryColor,
       double size = 35}) {
     return Center(

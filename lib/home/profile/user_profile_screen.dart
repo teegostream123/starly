@@ -61,6 +61,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white // Set text color for dark theme
+        : kPrimaryColor;
     return ToolBar(
       centerTitle: true,
       extendBodyBehindAppBar: true,
@@ -165,7 +168,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         },
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [kPrimaryColor, kSecondaryColor],
+                        colors: [textColor, kSecondaryColor],
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -339,7 +342,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_followers_active.svg",
                                 color: tabIndex == 0
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
@@ -347,7 +350,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 "feed.for_all".tr(),
                                 fontSize: 16,
                                 color: tabIndex == 0
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -363,7 +366,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               QuickActions.showSVGAsset(
                                 "assets/svg/ic_gold_star_small.svg",
                                 color: tabIndex == 1
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                               ),
                               SizedBox(width: 5),
@@ -371,7 +374,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 "feed.exclusive_".tr(),
                                 fontSize: 16,
                                 color: tabIndex == 1
-                                    ? kPrimaryColor
+                                    ? textColor
                                     : kDisabledGrayColor,
                                 fontWeight: FontWeight.bold,
                               ),

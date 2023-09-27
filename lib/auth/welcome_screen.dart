@@ -531,7 +531,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             FloatingLabelBehavior.auto,
                                         hintText: 'Username',
                                         labelText: 'Username',
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical:
+                                              20.0, // Adjust the vertical padding to move label down
+                                        ),
                                         labelStyle: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
                                             color:
                                                 inputFieldLabelColor), // Label color
                                         filled: true,
@@ -576,6 +582,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       decoration: InputDecoration(
                                         labelText: 'Password',
                                         labelStyle: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
                                             color: inputFieldLabelColor),
                                         suffixIcon: GestureDetector(
                                           child: Icon(

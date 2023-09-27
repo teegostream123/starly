@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/Config.dart';
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/coins/paywall_widget.dart';
@@ -19,8 +20,9 @@ class CoinsScreen extends StatefulWidget {
   static String route = "/home/coins/purchase";
 
   UserModel? currentUser;
+  SharedPreferences? preferences;
 
-  CoinsScreen({this.currentUser});
+  CoinsScreen({this.currentUser, this.preferences});
 
   @override
   State<CoinsScreen> createState() => _CoinsScreenState();
