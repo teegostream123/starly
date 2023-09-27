@@ -427,7 +427,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  Widget welcomePage() {
+  Widget welcomePage(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final imageAsset = brightness == Brightness.dark
+        ? "assets/images/starly_welcome_dark.png"
+        : "assets/images/ic_logo.png";
+    final inputFieldFillColor = brightness == Brightness.dark
+        ? Colors.grey.shade600
+        : Colors.grey.shade200;
+    final inputFieldLabelColor = brightness == Brightness.dark
+        ? Colors.grey[400] // Customize label color for dark mode
+        : kPrimaryColor;
     return GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: ContainerCorner(
@@ -448,7 +458,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: ContainerCorner(
                           width: Responsive.isMobile(context) ? 250 : 380,
                           child: Image.asset(
-                            "assets/images/ic_logo.png",
+                            imageAsset,
                             width: 100,
                             height: 100,
                           ),
@@ -489,7 +499,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   return null;
                                 },
                                 style: TextStyle(
-                                    fontSize: 15.0, color: Colors.black),
+                                    fontSize: 15.0,
+                                    color: inputFieldLabelColor),
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.person_2_outlined,
                                       color: Color(0xFFDDB300)),
@@ -499,8 +510,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       FloatingLabelBehavior.auto,
                                   hintText: 'Username',
                                   label: Text('Username'),
+                                  labelStyle: TextStyle(
+                                    fontSize: 15,
+                                    color: inputFieldLabelColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                   filled: true,
-                                  fillColor: Colors.grey.shade200,
+                                  fillColor: inputFieldFillColor,
                                   errorBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(60),
                                       borderSide: BorderSide.none),
@@ -528,7 +544,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   return null;
                                 },
                                 style: TextStyle(
-                                    fontSize: 15.0, color: Colors.black),
+                                    fontSize: 15.0,
+                                    color: inputFieldLabelColor),
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.email_outlined,
                                       color: Color(0xFFDDB300)),
@@ -538,8 +555,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       FloatingLabelBehavior.auto,
                                   hintText: 'Email',
                                   label: Text('Email'),
+                                  labelStyle: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: inputFieldLabelColor),
                                   filled: true,
-                                  fillColor: Colors.grey.shade200,
+                                  fillColor: inputFieldFillColor,
                                   errorBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(60),
                                       borderSide: BorderSide.none),
@@ -568,7 +589,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   return null;
                                 },
                                 style: TextStyle(
-                                    fontSize: 15.0, color: Colors.black),
+                                    fontSize: 15.0,
+                                    color: inputFieldLabelColor),
                                 decoration: InputDecoration(
                                   label: Text('Password'),
                                   prefixIcon: Icon(Icons.lock_outline,
@@ -578,6 +600,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.auto,
                                   hintText: 'Password',
+                                  labelStyle: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: inputFieldLabelColor),
                                   suffixIcon: GestureDetector(
                                     child: Icon(
                                         // Based on passwordVisible state choose the icon
@@ -592,7 +618,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     },
                                   ),
                                   filled: true,
-                                  fillColor: Colors.grey.shade200,
+                                  fillColor: inputFieldFillColor,
                                   errorBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(60),
                                       borderSide: BorderSide.none),
@@ -999,7 +1025,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     QuickHelp.setWebPageTitle(context,
         "page_title.welcome_title".tr(namedArgs: {"app_name": Config.appName}));
 
-    return welcomePage();
+    return welcomePage(context);
   }
 
   // Widget phoneNumberInput() {
