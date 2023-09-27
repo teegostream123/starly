@@ -123,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: ContainerCorner(
                                   height: 60,
                                   width: 60,
-                                  colors: [kPrimaryColor, kSecondaryColor],
+                                  colors: [kSecondaryColor, kSecondaryColor],
                                   borderRadius: 10,
                                   shadowColor: kPrimaryColor,
                                   shadowColorOpacity: 0.3,

@@ -3,15 +3,14 @@ import 'package:teego/models/UserModel.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 class CommentsModel extends ParseObject implements ParseCloneable {
-
   static final String keyTableName = "Comments";
 
   CommentsModel() : super(keyTableName);
   CommentsModel.clone() : this();
 
   @override
-  CommentsModel clone(Map<String, dynamic> map) => CommentsModel.clone()..fromJson(map);
-
+  CommentsModel clone(Map<String, dynamic> map) =>
+      CommentsModel.clone()..fromJson(map);
 
   static String keyCreatedAt = "createdAt";
   static String keyObjectId = "objectId";
@@ -19,11 +18,9 @@ class CommentsModel extends ParseObject implements ParseCloneable {
   static String keyAuthor = "author";
   static String keyAuthorId = "authorId";
 
-
   static String keyText = "text";
   static String keyPost = "post";
   static String keyPostId = "postId";
-
 
   UserModel? get getAuthor => get<UserModel>(keyAuthor);
   set setAuthor(UserModel author) => set<UserModel>(keyAuthor, author);
@@ -39,6 +36,4 @@ class CommentsModel extends ParseObject implements ParseCloneable {
 
   PostsModel? get getPost => get<PostsModel>(keyPost);
   set setPost(PostsModel post) => set<PostsModel>(keyPost, post);
-
-
 }

@@ -27,7 +27,7 @@ const kFacebookColor = Color(0xFF0081FF);
 const kGoogleColor = Color(0xFFEA4435);
 
 const kTabIconDefaultColor = Color(0xFF8B93B1);
-const kTabIconSelectedColor = kPrimaryColor;
+const kTabIconSelectedColor = kColorsAmber800;
 
 const Color kGreyColor0 = Color(0xFFF3F5F9);
 const Color kGreyColor1 = Color(0xFFB5B9C5);

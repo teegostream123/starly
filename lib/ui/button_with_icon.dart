@@ -30,36 +30,38 @@ class ButtonWithIcon extends StatelessWidget {
   final String? iconURL;
   final Color? urlIconColor;
   final double? iconSize;
+  final TextOverflow? overFlow;
 
-  const ButtonWithIcon({
-    Key? key,
-    required this.text,
-    this.fontWeight,
-    this.fontSize,
-    this.marginTop = 0,
-    this.marginLeft = 0,
-    this.marginRight = 0,
-    this.marginBottom = 0,
-    this.icon,
-    this.width,
-    this.height,
-    this.borderRadius,
-    this.textColor,
-    this.backgroundColor,
-    this.onTap,
-    this.mainAxisAlignment = MainAxisAlignment.center,
-    this.crossAxisAlignment = CrossAxisAlignment.center,
-    this.iconColor = Colors.black,
-    this.iconURL,
-    this.urlIconColor = kPrimaryColor,
-    this.radiusTopRight = 0,
-    this.radiusBottomRight = 0,
-    this.radiusTopLeft = 0,
-    this.radiusBottomLeft = 0,
-    this.iconSize = 24.0,
-    this.borderColor = Colors.transparent,
-    this.borderWidth = 0,
-  }) : super(key: key);
+  const ButtonWithIcon(
+      {Key? key,
+      required this.text,
+      this.fontWeight,
+      this.fontSize,
+      this.marginTop = 0,
+      this.marginLeft = 0,
+      this.marginRight = 0,
+      this.marginBottom = 0,
+      this.icon,
+      this.width,
+      this.height,
+      this.borderRadius,
+      this.textColor,
+      this.backgroundColor,
+      this.onTap,
+      this.mainAxisAlignment = MainAxisAlignment.center,
+      this.crossAxisAlignment = CrossAxisAlignment.center,
+      this.iconColor = Colors.black,
+      this.iconURL,
+      this.urlIconColor = kPrimaryColor,
+      this.radiusTopRight = 0,
+      this.radiusBottomRight = 0,
+      this.radiusTopLeft = 0,
+      this.radiusBottomLeft = 0,
+      this.iconSize = 24.0,
+      this.borderColor = Colors.transparent,
+      this.borderWidth = 0,
+      this.overFlow})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,17 +117,25 @@ class ButtonWithIcon extends StatelessWidget {
                     size: iconSize,
                   )
                 : Container(),
-            text != null ? Container(
-              width: 10,
-            ) : Container(),
-            text != null ? Text(
-              text!,
-              style: TextStyle(
-                fontSize: fontSize,
-                color: textColor,
-                fontWeight: fontWeight,
-              ),
-            ) : Container(),
+            text != null
+                ? Container(
+                    width: 10,
+                  )
+                : Container(),
+            text != null
+                ? Text(
+                    text!,
+                    overflow: TextOverflow.ellipsis,
+                    // maxLines: 1,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      color: textColor,
+                      // color: Colors.pink,
+                      fontWeight: fontWeight,
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

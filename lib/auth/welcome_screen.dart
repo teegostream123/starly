@@ -450,13 +450,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
-                      child: ContainerCorner(
-                        width: Responsive.isMobile(context) ? 250 : 380,
-                        child: Image.asset(
-                          "assets/images/starly_welcome.png",
-                          width: 100,
-                          height: 100,
-                        ),
+                      child: Builder(
+                        builder: (context) {
+                          final brightness = Theme.of(context).brightness;
+                          final imageAsset = brightness == Brightness.dark
+                              ? "assets/images/starly_welcome_dark.png"
+                              : "assets/images/ic_logo.png";
+
+                          return ContainerCorner(
+                            width: Responsive.isMobile(context) ? 250 : 380,
+                            child: Image.asset(
+                              imageAsset,
+                              width: 100,
+                              height: 100,
+                            ),
+                          );
+                        },
                       ),
                     ),
                     SizedBox(
@@ -483,94 +492,199 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          TextFormField(
-                            autofocus: false,
-                            controller: userName,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter a username";
-                              }
-                              return null;
-                            },
-                            style:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.person_2_outlined,
-                                  color: kPrimaryColor), //Color(0xFFDDB300)),
-                              border: InputBorder.none,
-                              alignLabelWithHint: true,
-                              floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              hintText: 'Username',
-                              labelText: 'Username',
-                              filled: true,
-                              fillColor: Colors.grey.shade200,
-                              errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
+                          Center(
+                            child: Builder(
+                              builder: (context) {
+                                final brightness = Theme.of(context).brightness;
+                                final inputFieldFillColor =
+                                    brightness == Brightness.dark
+                                        ? Colors.grey.shade600
+                                        : Colors.grey.shade200;
+                                final inputFieldLabelColor = brightness ==
+                                        Brightness.dark
+                                    ? Colors.grey[
+                                        400] // Customize label color for dark mode
+                                    : kPrimaryColor; // Customize label color for light mode
+
+                                return Column(
+                                  children: [
+                                    TextFormField(
+                                      autofocus: false,
+                                      controller: userName,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Please enter a username";
+                                        }
+                                        return null;
+                                      },
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: inputFieldLabelColor),
+                                      decoration: InputDecoration(
+                                        prefixIcon: Icon(
+                                            Icons.person_2_outlined,
+                                            color:
+                                                inputFieldLabelColor), // Customize icon color
+                                        border: InputBorder.none,
+                                        alignLabelWithHint: true,
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                        hintText: 'Username',
+                                        labelText: 'Username',
+                                        labelStyle: TextStyle(
+                                            color:
+                                                inputFieldLabelColor), // Label color
+                                        filled: true,
+                                        fillColor:
+                                            inputFieldFillColor, // Fill color
+                                        errorBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 20),
+                                    TextFormField(
+                                      obscureText: passwordVisible,
+                                      autofocus: false,
+                                      controller: password,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Please enter password";
+                                        }
+                                        return null;
+                                      },
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: inputFieldLabelColor),
+                                      decoration: InputDecoration(
+                                        labelText: 'Password',
+                                        labelStyle: TextStyle(
+                                            color: inputFieldLabelColor),
+                                        suffixIcon: GestureDetector(
+                                          child: Icon(
+                                            // Based on passwordVisible state choose the icon
+                                            passwordVisible == true
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color:
+                                                inputFieldLabelColor, // Customize icon color
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              passwordVisible =
+                                                  !passwordVisible;
+                                            });
+                                          },
+                                        ),
+                                        prefixIcon: Icon(Icons.lock_outline,
+                                            color:
+                                                inputFieldLabelColor // Customize icon color
+                                            ),
+                                        alignLabelWithHint: true,
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                        border: InputBorder.none,
+                                        hintText: 'Password',
+                                        filled: true,
+                                        fillColor:
+                                            inputFieldFillColor, // Fill color
+                                        errorBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            obscureText: passwordVisible,
-                            autofocus: false,
-                            controller: password,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter password";
-                              }
-                              return null;
-                            },
-                            style:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              suffixIcon: GestureDetector(
-                                child: Icon(
-                                    // Based on passwordVisible state choose the icon
-                                    passwordVisible == true
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: kPrimaryColor), //Color(0xFFDDB300)),
-                                onTap: () {
-                                  setState(() {
-                                    passwordVisible = !passwordVisible;
-                                  });
-                                },
-                              ),
-                              prefixIcon: Icon(Icons.lock_outline,
-                                  color: kPrimaryColor //Color(0xFFDDB300),
-                                  ),
-                              alignLabelWithHint: true,
-                              floatingLabelBehavior: FloatingLabelBehavior.auto,
-                              border: InputBorder.none,
-                              hintText: 'Password',
-                              filled: true,
-                              fillColor: Colors.grey.shade200,
-                              errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(60),
-                                  borderSide: BorderSide.none),
-                            ),
-                          ),
+                          // SizedBox(
+                          //   height: 20,
+                          // ),
+                          // TextFormField(
+                          //   obscureText: passwordVisible,
+                          //   autofocus: false,
+                          //   controller: password,
+                          //   validator: (value) {
+                          //     if (value!.isEmpty) {
+                          //       return "Please enter password";
+                          //     }
+                          //     return null;
+                          //   },
+                          //   style:
+                          //       TextStyle(fontSize: 15.0, color: Colors.black),
+                          //   decoration: InputDecoration(
+                          //     labelText: 'Password',
+                          //     suffixIcon: GestureDetector(
+                          //       child: Icon(
+                          //           // Based on passwordVisible state choose the icon
+                          //           passwordVisible == true
+                          //               ? Icons.visibility
+                          //               : Icons.visibility_off,
+                          //           color: kPrimaryColor), //Color(0xFFDDB300)),
+                          //       onTap: () {
+                          //         setState(() {
+                          //           passwordVisible = !passwordVisible;
+                          //         });
+                          //       },
+                          //     ),
+                          //     prefixIcon: Icon(Icons.lock_outline,
+                          //         color: kPrimaryColor //Color(0xFFDDB300),
+                          //         ),
+                          //     alignLabelWithHint: true,
+                          //     floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          //     border: InputBorder.none,
+                          //     hintText: 'Password',
+                          //     filled: true,
+                          //     fillColor: Colors.grey.shade200,
+                          //     errorBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(60),
+                          //         borderSide: BorderSide.none),
+                          //     focusedErrorBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(60),
+                          //         borderSide: BorderSide.none),
+                          //     focusedBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(60),
+                          //         borderSide: BorderSide.none),
+                          //     enabledBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(60),
+                          //         borderSide: BorderSide.none),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

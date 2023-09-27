@@ -266,6 +266,9 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.grey.shade500 // Set text color for dark theme
+        : kPrimaryColor;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -308,7 +311,9 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
             // controller: _tabController,
             indicatorColor: Colors.transparent,
             unselectedLabelColor: kTabIconDefaultColor,
-            labelColor: kTabIconSelectedColor,
+            labelColor: QuickHelp.isDarkMode(context)
+                ? Colors.yellow[800]
+                : Colors.black,
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             labelPadding: EdgeInsets.only(right: 14),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
@@ -320,7 +325,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                     Icons.people,
                     size: 18,
                     // color: Colors.red,
-                    color: kPrimaryColor,
+                    color: textColor,
                   )),
               tabsRows(
                   "Live Party",
@@ -328,7 +333,7 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                   Icon(
                     Icons.music_note,
                     size: 18,
-                    color: kPrimaryColor,
+                    color: textColor,
                   )),
             ],
           ),

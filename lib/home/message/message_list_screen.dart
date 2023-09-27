@@ -362,15 +362,16 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                                     ),
                                     Row(
                                       children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.only(left: 10, top: 5),
-                                          child: getTextIcon(chatMessage),
+                                        Flexible(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 5),
+                                            child: getTextIcon(chatMessage),
+                                          ),
                                         ),
                                         if (chatMessage.getMessageType ==
                                             MessageModel.messageTypeText)
                                           ContainerCorner(
-                                            width: 230,
+                                            // width: 200,
                                             child: TextWithTap(
                                               chatMessage.getText!,
                                               marginTop: 5,

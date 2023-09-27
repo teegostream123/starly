@@ -14,6 +14,9 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white // Set text color for dark theme
+        : Colors.black;
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -22,13 +25,13 @@ class _UserScreenState extends State<UserScreen> {
           },
           child: Icon(
             Icons.navigate_before,
-            color: Colors.black,
+            color: textColor,
             size: 30,
           ),
         ),
         title: TextWithTap(
           'Artist Profile',
-          color: Colors.black,
+          color: textColor,
           overflow: TextOverflow.ellipsis,
           marginLeft: 10,
         ),
@@ -47,7 +50,7 @@ class _UserScreenState extends State<UserScreen> {
           SizedBox(height: 30),
           TextWithTap(
             'First Name',
-            color: Colors.black,
+            color: textColor, // Set text color for light theme
             overflow: TextOverflow.ellipsis,
             fontSize: 18,
             marginLeft: 10,
@@ -63,8 +66,10 @@ class _UserScreenState extends State<UserScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextWithTap(
-                widget.userModel.getFirstName.toString(),
-                color: Colors.black87,
+                widget.userModel.getFirstName.toString().isEmpty
+                    ? ''
+                    : widget.userModel.getFirstName.toString(),
+                color: textColor,
                 overflow: TextOverflow.ellipsis,
                 fontWeight: FontWeight.w300,
                 fontSize: 18,
@@ -75,7 +80,7 @@ class _UserScreenState extends State<UserScreen> {
           SizedBox(height: 10),
           TextWithTap(
             'Last Name',
-            color: Colors.black,
+            color: textColor,
             overflow: TextOverflow.ellipsis,
             fontSize: 18,
             marginLeft: 10,
@@ -91,8 +96,10 @@ class _UserScreenState extends State<UserScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextWithTap(
-                widget.userModel.getLastName.toString(),
-                color: Colors.black87,
+                widget.userModel.getLastName.toString().isEmpty
+                    ? ""
+                    : widget.userModel.getLastName.toString(),
+                color: textColor,
                 overflow: TextOverflow.ellipsis,
                 fontWeight: FontWeight.w300,
                 fontSize: 18,
@@ -103,7 +110,7 @@ class _UserScreenState extends State<UserScreen> {
           SizedBox(height: 10),
           TextWithTap(
             'User Name',
-            color: Colors.black,
+            color: textColor,
             overflow: TextOverflow.ellipsis,
             fontSize: 18,
             marginLeft: 10,
@@ -119,8 +126,10 @@ class _UserScreenState extends State<UserScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextWithTap(
-                widget.userModel.getFirstName.toString(),
-                color: Colors.black87,
+                widget.userModel.getFirstName.toString().isEmpty
+                    ? ''
+                    : widget.userModel.getFirstName.toString(),
+                color: textColor,
                 overflow: TextOverflow.ellipsis,
                 fontWeight: FontWeight.w300,
                 fontSize: 18,
@@ -133,7 +142,7 @@ class _UserScreenState extends State<UserScreen> {
           ),
           TextWithTap(
             'Role',
-            color: Colors.black,
+            color: textColor,
             overflow: TextOverflow.ellipsis,
             fontSize: 18,
             marginLeft: 10,
@@ -149,8 +158,10 @@ class _UserScreenState extends State<UserScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextWithTap(
-                widget.userModel.getUserRole.toString(),
-                color: Colors.black87,
+                widget.userModel.getUserRole.toString().isEmpty
+                    ? ""
+                    : widget.userModel.getUserRole.toString(),
+                color: textColor,
                 overflow: TextOverflow.ellipsis,
                 fontWeight: FontWeight.w300,
                 fontSize: 18,
@@ -163,7 +174,7 @@ class _UserScreenState extends State<UserScreen> {
           ),
           TextWithTap(
             'Gender',
-            color: Colors.black,
+            color: textColor,
             overflow: TextOverflow.ellipsis,
             fontSize: 18,
             marginLeft: 10,
@@ -179,8 +190,10 @@ class _UserScreenState extends State<UserScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextWithTap(
-                widget.userModel.getGender.toString(),
-                color: Colors.black87,
+                widget.userModel.getGender.toString().isEmpty
+                    ? ''
+                    : widget.userModel.getGender.toString(),
+                color: textColor,
                 overflow: TextOverflow.ellipsis,
                 fontWeight: FontWeight.w300,
                 fontSize: 18,
@@ -193,7 +206,7 @@ class _UserScreenState extends State<UserScreen> {
           ),
           TextWithTap(
             'Date of Birth',
-            color: Colors.black,
+            color: textColor,
             overflow: TextOverflow.ellipsis,
             fontSize: 18,
             marginLeft: 10,
@@ -209,8 +222,13 @@ class _UserScreenState extends State<UserScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextWithTap(
-                (widget.userModel.getBirthday.toString().substring(0, 10)),
-                color: Colors.black87,
+                (widget.userModel.getBirthday.toString().substring(0, 10))
+                        .isEmpty
+                    ? ''
+                    : (widget.userModel.getBirthday
+                        .toString()
+                        .substring(0, 10)),
+                color: textColor,
                 overflow: TextOverflow.ellipsis,
                 fontWeight: FontWeight.w300,
                 fontSize: 18,

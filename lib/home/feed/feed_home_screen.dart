@@ -223,7 +223,9 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
               if (tabIndex == 0)
                 QuickActions.showSVGAsset(
                   "assets/svg/ic_followers_active.svg",
-                  color: kPrimaryColor,
+                  color: QuickHelp.isDarkMode(context)
+                      ? Colors.yellow[800]
+                      : kPrimaryColor,
                 ),
               SizedBox(width: 8),
               Text("feed.for_all".tr()),
@@ -235,7 +237,9 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
               if (tabIndex == 1)
                 QuickActions.showSVGAsset(
                   "assets/svg/ic_gold_star_small.svg",
-                  color: kPrimaryColor,
+                  color: QuickHelp.isDarkMode(context)
+                      ? Colors.yellow[800]
+                      : kPrimaryColor,
                 ),
               SizedBox(width: 8),
               Text("feed.exclusive_".tr()),
@@ -409,12 +413,14 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
             );
           } else if (snapshot.hasData) {
             postsResults = snapshot.data! as List<dynamic>;
+            print(postsResults);
 
             if (postsResults.isNotEmpty) {
               return ListView.separated(
                   itemCount: postsResults.length,
                   itemBuilder: (context, index) {
                     final PostsModel post = postsResults[index] as PostsModel;
+                    final int indexx = index;
 
                     var liked = post.getLikes!.length > 0 &&
                         post.getLikes!.contains(widget.currentUser!.objectId!);
@@ -430,6 +436,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          /// aa wa
                           Row(
                             children: [
                               Expanded(
@@ -681,7 +688,8 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                         context, CommentPostScreen.route,
                                         arguments: {
                                           "currentUser": widget.currentUser,
-                                          "post": post
+                                          "post": post,
+                                          "index": indexx
                                         }),
                                     backgroundColor:
                                         QuickHelp.isDarkMode(context)
@@ -1176,6 +1184,8 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                   text: "feed.report_post"
                       .tr(namedArgs: {"name": author.getFullName!}),
                   //iconURL: "assets/svg/ic_blocked_menu.svg",
+                  overFlow: TextOverflow.ellipsis,
+
                   icon: Icons.report_problem_outlined,
                   iconColor: kPrimaryColor,
                   iconSize: 26,

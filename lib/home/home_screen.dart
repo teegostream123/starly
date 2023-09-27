@@ -193,7 +193,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: iconSize,
                   width: iconSize,
                   color: _selectedIndex == 0
-                      ? kTabIconSelectedColor
+                      ? QuickHelp.isDarkMode(context)
+                          ? Colors.yellow[800]
+                          : kPrimaryColor
                       : _selectedIndex == 4
                           ? Colors.white
                           : QuickHelp.isDarkMode(context)
@@ -214,7 +216,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: iconSize,
                   width: iconSize,
                   color: _selectedIndex == 1
-                      ? kTabIconSelectedColor
+                      ? QuickHelp.isDarkMode(context)
+                          ? Colors.yellow[800]
+                          : kPrimaryColor
                       : _selectedIndex == 4
                           ? Colors.white
                           : QuickHelp.isDarkMode(context)
@@ -236,7 +240,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: iconSize,
                   width: iconSize,
                   color: _selectedIndex == 2
-                      ? kTabIconSelectedColor
+                      ? QuickHelp.isDarkMode(context)
+                          ? Colors.yellow[800]
+                          : kPrimaryColor
                       : _selectedIndex == 4
                           ? Colors.white
                           : QuickHelp.isDarkMode(context)
@@ -259,7 +265,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: iconSize,
                 width: iconSize,
                 color: _selectedIndex == 3
-                    ? kTabIconSelectedColor
+                    ? QuickHelp.isDarkMode(context)
+                        ? Colors.yellow[800]
+                        : kPrimaryColor
                     : _selectedIndex == 4
                         ? Colors.white
                         : QuickHelp.isDarkMode(context)
@@ -282,7 +290,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: iconSize,
                 width: iconSize,
                 color: _selectedIndex == 4
-                    ? kTabIconSelectedColor
+                    ? QuickHelp.isDarkMode(context)
+                        ? Colors.white
+                        : kPrimaryColor
                     : QuickHelp.isDarkMode(context)
                         ? Colors.white
                         : Colors.black,
@@ -295,7 +305,8 @@ class _HomeScreenState extends State<HomeScreen> {
       type: BottomNavigationBarType.fixed,
       elevation: _getElevation(),
       currentIndex: _selectedIndex,
-      selectedItemColor: kPrimaryColor,
+      selectedItemColor:
+          QuickHelp.isDarkMode(context) ? Colors.yellow[800] : kPrimaryColor,
       backgroundColor: _selectedIndex == 4 ? kContentColorLightTheme : bgColor,
       unselectedItemColor: _selectedIndex == 4
           ? Colors.white
@@ -303,7 +314,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ? Colors.white
               : Colors.black,
       selectedLabelStyle: TextStyle(
-          color: kPrimaryColor, fontSize: 12, fontWeight: FontWeight.bold),
+          color: QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
+          fontSize: 12,
+          fontWeight: FontWeight.bold),
       unselectedLabelStyle: TextStyle(
           color: _selectedIndex == 4
               ? Colors.white
@@ -387,6 +400,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white // Set text color for dark theme
+        : kPrimaryColor;
     if (widget.currentUser != null) {
       widget.currentUser = widget.currentUser;
 
@@ -441,7 +457,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 22,
                 height: 22,
                 // color: Colors.red,
-                color: kPrimaryColor,
+                color: textColor,
               )
       ],
       onTapActions: [
@@ -477,7 +493,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       actionsIconsSize: 30,
       coinIconSize: 20,
-      actionsColor: kPrimaryColor,
+      actionsColor: textColor,
       coinsIcon: "assets/svg/ic_coin_with_star.svg",
       coins: GestureDetector(
         onTap: () => QuickHelp.goToNavigatorScreen(

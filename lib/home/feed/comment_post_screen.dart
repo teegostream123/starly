@@ -67,6 +67,9 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     QuickActions.createOrDeleteNotification(currentUser!, post.getAuthor!,
         NotificationsModel.notificationTypeCommentPost,
         post: post);
+    setState(() {
+      initQuery();
+    });
   }
 
   @override
@@ -81,6 +84,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     final users = ModalRoute.of(context)!.settings.arguments as Map;
     currentUser = users['currentUser'];
     post = users['post'];
+    var index = users['index'];
 
     var liked = post!.getLikes!.length > 0 &&
         post!.getLikes!.contains(currentUser!.objectId!);
@@ -325,16 +329,16 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                                     commentTextFieldFocusNode!.requestFocus(),
                                 backgroundColor: QuickHelp.isDarkMode(context)
                                     ? kContentColorLightTheme
-                                    : Colors.white,
+                                    : Colors.pink,
                               ),
                               /*ButtonWithIcon(
-                                    text: "",
-                                    textColor: kTabIconDefaultColor,
-                                    urlIconColor: null,
-                                    iconURL: "assets/svg/ic_tips_gift.svg",
-                                    ontap: () {},
-                                    backgroundColor: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : Colors.white,
-                                  ),*/
+                                      text: "",
+                                      textColor: kTabIconDefaultColor,
+                                      urlIconColor: null,
+                                      iconURL: "assets/svg/ic_tips_gift.svg",
+                                      ontap: () {},
+                                      backgroundColor: QuickHelp.isDarkMode(context) ? kContentColorLightTheme : Colors.white,
+                                    ),*/
                             ],
                           )
                         ],
@@ -513,6 +517,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                 setState(() {
                   commentController.text = "";
                 });
+                print('commenttttt sentt');
               }
             },
           ),

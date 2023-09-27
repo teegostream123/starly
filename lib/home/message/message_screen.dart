@@ -663,7 +663,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                             radiusTopRight: 10,
                                             colors: [
                                               kPrimaryColor,
-                                              kSecondaryColor
+                                              // kSecondaryColor
+                                              kPrimaryColor
                                             ],
                                             child: Column(
                                               crossAxisAlignment:

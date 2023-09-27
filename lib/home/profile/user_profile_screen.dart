@@ -157,6 +157,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ContainerCorner(
                         width: MediaQuery.of(context).size.width - 100,
                         height: 60,
+                        color: Colors.amberAccent,
                         borderRadius: 50,
                         marginRight: 10,
                         onTap: () {
