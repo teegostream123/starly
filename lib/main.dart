@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:devicelocale/devicelocale.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -66,6 +67,7 @@ import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/providers/revenuecat.dart';
 import 'package:teego/utils/theme.dart';
 import 'package:upgrader/upgrader.dart';
+
 import 'app/config.dart';
 import 'home/feed/comment_post_screen.dart';
 import 'home/leaders/select_country.dart';
@@ -131,6 +133,7 @@ void main() async {
     Config.serverUrl,
     clientKey: Config.clientKey,
     liveQueryUrl: Config.liveQueryUrl,
+
     autoSendSessionId: true,
 
     //TODO: check core store;

@@ -63,8 +63,6 @@ class _MessageScreenState extends State<MessageScreen> {
   int currentView = 0;
   List<Widget>? pages;
 
-  var initialLoad;
-
   //Live query stuff
   late QueryBuilder<MessageModel> queryBuilder;
   final LiveQuery liveQuery = LiveQuery();
@@ -212,9 +210,9 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
     Future.delayed(Duration(microseconds: 100), () {
-      setState(() {
-        initialLoad = _loadMessages();
-      });
+      // setState(() {
+      //   initialLoad = _loadMessages();
+      // });
     });
 
     if (widget.currentUser != null && widget.mUser != null) {
@@ -499,6 +497,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   Future<List<dynamic>?> _loadMessages() async {
+    print('querying message again');
     QueryBuilder<MessageModel> queryFrom =
         QueryBuilder<MessageModel>(MessageModel());
 
@@ -560,7 +559,7 @@ class _MessageScreenState extends State<MessageScreen> {
           child: Padding(
             padding: EdgeInsets.only(left: 10, right: 10),
             child: FutureBuilder<List<dynamic>?>(
-                future: initialLoad,
+                future: _loadMessages(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     results = snapshot.data as List<dynamic>;
@@ -1117,8 +1116,10 @@ class _MessageScreenState extends State<MessageScreen> {
             width: 45,
             onTap: () {
               if (messageController.text.isNotEmpty) {
-                _saveMessage(messageController.text,
-                    messageType: MessageModel.messageTypeText);
+                _saveMessage(
+                  messageController.text,
+                  messageType: MessageModel.messageTypeText,
+                );
                 setState(() {
                   messageController.text = "";
                   changeButtonIcon("");
@@ -1192,16 +1193,22 @@ class _MessageScreenState extends State<MessageScreen> {
       }
 
       setState(() {
-        this.results.insert(0, message as dynamic);
+        this.results.insert(0, message);
       });
 
       await message.save();
       _saveList(message);
 
       SendNotifications.sendPush(
-          currentUser!, mUser!, SendNotifications.typeChat,
-          message: getMessageType(messageType, currentUser!.getFullName!,
-              message: messageText));
+        currentUser!,
+        mUser!,
+        SendNotifications.typeChat,
+        message: getMessageType(
+          messageType,
+          currentUser!.getFullName!,
+          message: messageText,
+        ),
+      );
     }
   }
 
@@ -1217,16 +1224,22 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   // Update or Create message list
-  _saveList(MessageModel messageModel) async {
+  Future _saveList(MessageModel messageModel) async {
     QueryBuilder<MessageListModel> queryFrom =
         QueryBuilder<MessageListModel>(MessageListModel());
+
     queryFrom.whereEqualTo(
-        MessageListModel.keyListId, currentUser!.objectId! + mUser!.objectId!);
+      MessageListModel.keyListId,
+      currentUser!.objectId! + mUser!.objectId!,
+    );
 
     QueryBuilder<MessageListModel> queryTo =
         QueryBuilder<MessageListModel>(MessageListModel());
+
     queryTo.whereEqualTo(
-        MessageListModel.keyListId, mUser!.objectId! + currentUser!.objectId!);
+      MessageListModel.keyListId,
+      mUser!.objectId! + currentUser!.objectId!,
+    );
 
     QueryBuilder<MessageListModel> queryBuilder =
         QueryBuilder.or(MessageListModel(), [queryFrom, queryTo]);
@@ -1260,6 +1273,8 @@ class _MessageScreenState extends State<MessageScreen> {
         messageModel.setMessageListId = messageListModel.objectId!;
 
         await messageModel.save();
+
+        setState(() {});
       } else {
         MessageListModel messageListModel = MessageListModel();
 
@@ -1285,6 +1300,8 @@ class _MessageScreenState extends State<MessageScreen> {
         messageModel.setMessageList = messageListModel;
         messageModel.setMessageListId = messageListModel.objectId!;
         await messageModel.save();
+
+        setState(() {});
       }
     }
   }

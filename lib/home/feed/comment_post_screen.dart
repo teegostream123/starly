@@ -29,6 +29,8 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
 
   late FocusNode? commentTextFieldFocusNode;
 
+  Key _listKey = UniqueKey();
+
   TextEditingController commentController = TextEditingController();
 
   _deleteLike(PostsModel postsModel) async {
@@ -68,7 +70,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
         NotificationsModel.notificationTypeCommentPost,
         post: post);
     setState(() {
-      initQuery();
+      _listKey = UniqueKey();
     });
   }
 
@@ -367,8 +369,9 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     ]);
 
     return ParseLiveListWidget<CommentsModel>(
+      key: _listKey,
       query: queryBuilder,
-      reverse: false,
+      reverse: true,
       lazyLoading: false,
       shrinkWrap: true,
       duration: Duration(seconds: 0),
