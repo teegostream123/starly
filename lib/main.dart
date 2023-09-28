@@ -160,6 +160,7 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (_) => CallsProvider()),
+            ChangeNotifierProvider(create: (_) => RevenueCatProvider()),
           ],
           child: EasyLocalization(
             supportedLocales: Config.languages,

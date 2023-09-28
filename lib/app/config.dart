@@ -13,9 +13,9 @@ class Config {
   static const String agoraAppId = '11537fc74b1d400dbfcda527011169c8';
 
   static final String serverUrl = "https://parseapi.back4app.com/";
-  static final String liveQueryUrl = "https://teego.b4a.app/";
-  static final String appId = "HSnoUGSH5VrAik7tnZ9QrLi2TX5VugKptx8WHHh8";
-  static final String clientKey = "x1fpB32UIrc91d1ztznVQuEC2olPEBAymcWqOBk2";
+  static final String liveQueryUrl = "https://starlee.b4a.app/";
+  static final String appId = "YKosHIj4tOA3KWT5zX6n9pNqUkUxGT4QPZDih6M4";
+  static final String clientKey = "Mi0gIRB4zDQVe7XEVLDWcACBTezEdgryToxoSOBb";
 
   static final String pushGcm = "188663119667";
   static final String webPushCertificate =
