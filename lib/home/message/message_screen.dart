@@ -209,11 +209,11 @@ class _MessageScreenState extends State<MessageScreen> {
 
   @override
   void initState() {
-    Future.delayed(Duration(microseconds: 100), () {
-      // setState(() {
-      //   initialLoad = _loadMessages();
-      // });
-    });
+    // Future.delayed(Duration(microseconds: 100), () {
+    //   // setState(() {
+    //   //   initialLoad = _loadMessages();
+    //   // });
+    // });
 
     if (widget.currentUser != null && widget.mUser != null) {
       currentUser = widget.currentUser;
@@ -225,6 +225,9 @@ class _MessageScreenState extends State<MessageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white // Set text color for dark theme
+        : kPrimaryColor;
     if (ModalRoute.of(context)!.settings.arguments != null) {
       final users = ModalRoute.of(context)!.settings.arguments as Map;
 
@@ -286,7 +289,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 color: kTransparentColor,
                 child: Icon(
                   Icons.add_call,
-                  color: kPrimaryColor,
+                  color: textColor,
                 ),
                 marginRight: 20,
                 onTap: () {
@@ -297,7 +300,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 color: kTransparentColor,
                 child: Icon(
                   Icons.videocam,
-                  color: kPrimaryColor,
+                  color: textColor,
                   size: 35,
                 ),
                 width: 35,
@@ -476,23 +479,28 @@ class _MessageScreenState extends State<MessageScreen> {
     }
   }
 
-  setupLiveQuery() async {
+  void setupLiveQuery() async {
     if (subscription == null) {
       subscription = await liveQuery.client.subscribe(queryBuilder);
     }
 
     subscription!.on(LiveQueryEvent.create, (MessageModel message) {
+      print('message received, $message');
       if (message.getAuthorId == mUser!.objectId) {
         setState(() {
           results.add(message);
         });
-      } else {
-        setState(() {});
       }
     });
 
     subscription!.on(LiveQueryEvent.update, (MessageModel message) {
-      _objectUpdated(message);
+      print('messageeeee update');
+      int index = results.indexWhere((msg) => msg.objectId == message.objectId);
+      if (index != -1) {
+        setState(() {
+          results[index] = message;
+        });
+      }
     });
   }
 
@@ -1025,13 +1033,16 @@ class _MessageScreenState extends State<MessageScreen> {
         ),
         Padding(
           padding: EdgeInsets.only(top: 10),
-          child: chatInputField(),
+          child: chatInputField(context),
         ),
       ],
     );
   }
 
-  Widget chatInputField() {
+  Widget chatInputField(BuildContext context) {
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white // Set text color for dark theme
+        : kPrimaryColor;
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: 20,
@@ -1039,6 +1050,7 @@ class _MessageScreenState extends State<MessageScreen> {
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
+        // color: Colors.pinkAccent,
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 4),
@@ -1070,13 +1082,19 @@ class _MessageScreenState extends State<MessageScreen> {
                 horizontal: 20 * 0.75,
               ),
               decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.05),
+                color: textColor,
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Row(
                 children: [
                   Expanded(
                     child: TextField(
+                      style: TextStyle(
+                        color: QuickHelp.isDarkMode(context)
+                            ? kPrimaryColor
+                            : Colors.grey[
+                                500], // Change this to your desired text color
+                      ),
                       autocorrect: false,
                       keyboardType: TextInputType.multiline,
                       onChanged: (text) {
@@ -1087,6 +1105,10 @@ class _MessageScreenState extends State<MessageScreen> {
                       maxLines: null,
                       controller: messageController,
                       decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                            color: QuickHelp.isDarkMode(context)
+                                ? kPrimaryColor
+                                : Colors.grey[500]),
                         hintText: "message_screen.type_message".tr(),
                         border: InputBorder.none,
                       ),
@@ -1173,6 +1195,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
       message.setAuthor = currentUser!;
       message.setAuthorId = currentUser!.objectId!;
+// Set the author ID to the objectId of the currentUser
 
       if (pictureFile != null) {
         message.setPictureMessage = pictureFile;

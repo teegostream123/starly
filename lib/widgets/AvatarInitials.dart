@@ -31,11 +31,15 @@ class AvatarInitials extends StatelessWidget {
 
   CircleAvatar _makeInitialsAvatar() {
     return CircleAvatar(
-      backgroundColor: backgroundColor != null ? backgroundColor : kPrimaryColor,
-      radius: avatarRadius != null ? avatarRadius : 10,
+      backgroundColor:
+          backgroundColor != null ? backgroundColor : kPrimaryColor,
+      radius: avatarRadius != null ? avatarRadius : 30,
       child: Text(
         _getInitials(),
-        style: TextStyle(color: textColor != null ? textColor : Colors.white, fontSize: textSize, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: textColor != null ? textColor : Colors.white,
+            fontSize: textSize,
+            fontWeight: FontWeight.bold),
       ),
     );
   }
