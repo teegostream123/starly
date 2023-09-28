@@ -12,7 +12,7 @@ import 'package:teego/ui/button_widget.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
-import 'dart:async';
+
 import '../../app/constants.dart';
 import '../../utils/utilsConstants.dart';
 
@@ -33,7 +33,6 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
   final LiveQuery liveQuery = LiveQuery();
   Subscription? subscription;
   List<dynamic> messagesResults = <dynamic>[];
-  StreamController<List<dynamic>> streamController = StreamController();
 
   var _future;
 
@@ -197,101 +196,102 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
   Widget loadMessages() {
     Size size = MediaQuery.of(context).size;
 
-    return StreamBuilder<List<dynamic>>(
-      stream: streamController.stream,
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              final delay = (index * 300);
+    return FutureBuilder(
+        future: _future,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  final delay = (index * 300);
 
-              return Container(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    FadeShimmer.round(
-                      size: 60,
-                      fadeTheme: QuickHelp.isDarkMode(context)
-                          ? FadeTheme.dark
-                          : FadeTheme.light,
-                      millisecondsDelay: delay,
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  return Container(
+                    padding: EdgeInsets.all(8),
+                    child: Row(
                       children: [
-                        FadeShimmer(
-                          height: 8,
-                          width: size.width / 2,
-                          radius: 4,
-                          millisecondsDelay: delay,
+                        FadeShimmer.round(
+                          size: 60,
                           fadeTheme: QuickHelp.isDarkMode(context)
                               ? FadeTheme.dark
                               : FadeTheme.light,
+                          millisecondsDelay: delay,
                         ),
                         SizedBox(
-                          height: 6,
+                          width: 8,
                         ),
-                        FadeShimmer(
-                          height: 8,
-                          millisecondsDelay: delay,
-                          width: size.width / 1.5,
-                          radius: 4,
-                          fadeTheme: QuickHelp.isDarkMode(context)
-                              ? FadeTheme.dark
-                              : FadeTheme.light,
-                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FadeShimmer(
+                              height: 8,
+                              width: size.width / 2,
+                              radius: 4,
+                              millisecondsDelay: delay,
+                              fadeTheme: QuickHelp.isDarkMode(context)
+                                  ? FadeTheme.dark
+                                  : FadeTheme.light,
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            FadeShimmer(
+                              height: 8,
+                              millisecondsDelay: delay,
+                              width: size.width / 1.5,
+                              radius: 4,
+                              fadeTheme: QuickHelp.isDarkMode(context)
+                                  ? FadeTheme.dark
+                                  : FadeTheme.light,
+                            ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
-              );
-            },
-          );
-        } else if (snapshot.hasData) {
-          messagesResults = snapshot.data! as List<dynamic>;
+                    ),
+                  );
+                });
+          } else if (snapshot.hasData) {
+            messagesResults = snapshot.data! as List<dynamic>;
 
-          if (messagesResults.isNotEmpty) {
-            return ListView.separated(
-              itemCount: messagesResults.length,
-              itemBuilder: (context, index) {
-                MessageListModel chatMessage = messagesResults[index];
+            if (messagesResults.isNotEmpty) {
+              return ListView.separated(
+                itemCount: messagesResults.length,
+                itemBuilder: (context, index) {
+                  MessageListModel chatMessage = messagesResults[index];
 
-                UserModel chatUser =
-                    chatMessage.getAuthorId! == widget.currentUser!.objectId!
-                        ? chatMessage.getReceiver!
-                        : chatMessage.getAuthor!;
-                bool isMe =
-                    chatMessage.getAuthorId! == widget.currentUser!.objectId!
-                        ? true
-                        : false;
+                  UserModel chatUser =
+                      chatMessage.getAuthorId! == widget.currentUser!.objectId!
+                          ? chatMessage.getReceiver!
+                          : chatMessage.getAuthor!;
+                  bool isMe =
+                      chatMessage.getAuthorId! == widget.currentUser!.objectId!
+                          ? true
+                          : false;
 
-                return ButtonWidget(
-                  height: 50,
-                  onTap: () => QuickHelp.gotoChat(context,
-                      currentUser: widget.currentUser,
-                      mUser: chatUser,
-                      preferences: widget.preferences!),
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        QuickActions.avatarWidget(
-                          chatUser,
-                          width: 50,
-                          height: 50,
-                        ),
-                        Expanded(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
+                  //print("CHAT MESSAGE: ${chatUser.objectId} and ${widget.currentUser!.objectId}");
+
+                  return ButtonWidget(
+                    height: 50,
+                    onTap: () => QuickHelp.gotoChat(context,
+                        currentUser: widget.currentUser,
+                        mUser: chatUser,
+                        preferences: widget.preferences!),
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          QuickActions.avatarWidget(
+                            chatUser,
+                            width: 50,
+                            height: 50,
+                          ),
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                    child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextWithTap(
@@ -316,6 +316,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                                         if (chatMessage.getMessageType ==
                                             MessageModel.messageTypeText)
                                           ContainerCorner(
+                                            // width: 200,
                                             child: TextWithTap(
                                               chatMessage.getText!,
                                               marginTop: 5,
@@ -332,79 +333,189 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                                                       : FontWeight.normal,
                                             ),
                                           ),
-                                        // ... (other message types)
+                                        if (chatMessage.getMessageType ==
+                                            MessageModel.messageTypeGif)
+                                          ContainerCorner(
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(left: 5),
+                                                  child: Icon(
+                                                    Icons.wallet_giftcard_sharp,
+                                                    size: 20,
+                                                    color: kGrayColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        if (chatMessage.getMessageType ==
+                                            MessageModel.messageTypePicture)
+                                          ContainerCorner(
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 8, left: 5),
+                                                  child: Icon(
+                                                    Icons.photo_camera,
+                                                    size: 20,
+                                                    color: kGrayColor,
+                                                  ),
+                                                ),
+                                                TextWithTap(
+                                                  MessageModel
+                                                      .messageTypePicture,
+                                                  marginTop: 5,
+                                                  marginLeft: 5,
+                                                  color: !chatMessage.isRead! &&
+                                                          !isMe
+                                                      ? Colors.redAccent
+                                                      : kGrayColor,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontSize: 17,
+                                                  fontWeight:
+                                                      !chatMessage.isRead! &&
+                                                              !isMe
+                                                          ? FontWeight.bold
+                                                          : FontWeight.normal,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        if (chatMessage.getMessageType ==
+                                            MessageModel.messageTypeCall)
+                                          ContainerCorner(
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 8, left: 5),
+                                                  child: Icon(
+                                                    chatMessage.getCall!
+                                                                .getAuthorId ==
+                                                            widget.currentUser!
+                                                                .objectId!
+                                                        ? Icons.call_made
+                                                        : Icons.call_received,
+                                                    size: 20,
+                                                    color: kGrayColor,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 8, left: 5),
+                                                  child: Icon(
+                                                    chatMessage.getCall!
+                                                            .getIsVoiceCall!
+                                                        ? Icons.call
+                                                        : Icons.videocam,
+                                                    size: 24,
+                                                    color: kGrayColor,
+                                                  ),
+                                                ),
+                                                TextWithTap(
+                                                  chatMessage
+                                                          .getCall!.getAccepted!
+                                                      ? chatMessage
+                                                          .getCall!.getDuration!
+                                                      : "push_notifications.missed_call_title"
+                                                          .tr(),
+                                                  marginTop: 5,
+                                                  marginLeft: 5,
+                                                  color: !chatMessage.isRead! &&
+                                                          !isMe
+                                                      ? Colors.redAccent
+                                                      : kGrayColor,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontSize: 17,
+                                                  fontWeight:
+                                                      !chatMessage.isRead! &&
+                                                              !isMe
+                                                          ? FontWeight.bold
+                                                          : FontWeight.normal,
+                                                ),
+                                              ],
+                                            ),
+                                          )
                                       ],
                                     ),
                                   ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextWithTap(
-                                  QuickHelp.getMessageListTime(
-                                      chatMessage.updatedAt!),
-                                  marginLeft: 5,
-                                  marginRight: 5,
-                                  marginBottom: 5,
-                                  color: kGrayColor,
-                                ),
+                                )),
                               ],
                             ),
-                            !chatMessage.isRead! && !isMe
-                                ? ContainerCorner(
-                                    borderRadius: 100,
-                                    color: kRedColor1,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextWithTap(
+                                    QuickHelp.getMessageListTime(
+                                        chatMessage.updatedAt!),
+                                    marginLeft: 5,
                                     marginRight: 5,
-                                    child: TextWithTap(
-                                      chatMessage.getCounter.toString(),
-                                      color: Colors.white,
+                                    marginBottom: 5,
+                                    color: kGrayColor,
+                                  ),
+                                ],
+                              ),
+                              !chatMessage.isRead! && !isMe
+                                  ? ContainerCorner(
+                                      borderRadius: 100,
+                                      color: kRedColor1,
                                       marginRight: 5,
-                                      marginTop: 2,
-                                      marginLeft: 5,
-                                      marginBottom: 2,
-                                      fontSize: 11,
-                                    ),
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ],
+                                      child: TextWithTap(
+                                        chatMessage.getCounter.toString(),
+                                        color: Colors.white,
+                                        marginRight: 5,
+                                        marginTop: 2,
+                                        marginLeft: 5,
+                                        marginBottom: 2,
+                                        fontSize: 11,
+                                      ),
+                                    )
+                                  : Container(),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Container();
-              },
-            );
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  // if (index % _kAdIndex == 0) {
+                  //   if (_size != null) {
+                  //     return getAd();
+                  //   } else {
+                  //     return Container();
+                  //   }
+                  // }
+                  return Container();
+                },
+              );
+            } else {
+              return Center(
+                child: QuickActions.noContentFound(
+                    "message_screen.no_message_title".tr(),
+                    "message_screen.no_message_explain".tr(),
+                    "assets/svg/ic_tab_chat_default.svg"),
+              );
+            }
           } else {
             return Center(
               child: QuickActions.noContentFound(
-                "message_screen.no_message_title".tr(),
-                "message_screen.no_message_explain".tr(),
-                "assets/svg/ic_tab_chat_default.svg",
-              ),
+                  "message_screen.no_message_title".tr(),
+                  "message_screen.no_message_explain".tr(),
+                  "assets/svg/ic_tab_chat_default.svg"),
             );
           }
-        } else {
-          return Center(
-            child: QuickActions.noContentFound(
-              "message_screen.no_message_title".tr(),
-              "message_screen.no_message_explain".tr(),
-              "assets/svg/ic_tab_chat_default.svg",
-            ),
-          );
-        }
-      },
-    );
+        });
   }
 
   Widget getTextIcon(MessageListModel chatMessage) {
