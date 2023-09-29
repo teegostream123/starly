@@ -371,7 +371,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                                                   marginLeft: 5,
                                                   color: !chatMessage.isRead! &&
                                                           !isMe
-                                                      ? Colors.redAccent
+                                                      ? Colors.blue
                                                       : kGrayColor,
                                                   overflow:
                                                       TextOverflow.ellipsis,

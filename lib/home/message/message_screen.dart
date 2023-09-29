@@ -480,8 +480,10 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   void setupLiveQuery() async {
+    print('message receivedddd');
     if (subscription == null) {
       subscription = await liveQuery.client.subscribe(queryBuilder);
+      print('message not receivedddd');
     }
 
     subscription!.on(LiveQueryEvent.create, (MessageModel message) {
@@ -1092,8 +1094,8 @@ class _MessageScreenState extends State<MessageScreen> {
                       style: TextStyle(
                         color: QuickHelp.isDarkMode(context)
                             ? kPrimaryColor
-                            : Colors.grey[
-                                500], // Change this to your desired text color
+                            : Colors
+                                .white, // Change this to your desired text color
                       ),
                       autocorrect: false,
                       keyboardType: TextInputType.multiline,
@@ -1108,7 +1110,7 @@ class _MessageScreenState extends State<MessageScreen> {
                         hintStyle: TextStyle(
                             color: QuickHelp.isDarkMode(context)
                                 ? kPrimaryColor
-                                : Colors.grey[500]),
+                                : Colors.white),
                         hintText: "message_screen.type_message".tr(),
                         border: InputBorder.none,
                       ),
@@ -1217,6 +1219,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
       setState(() {
         this.results.insert(0, message);
+        print('messageeeeeeeeeeee');
       });
 
       await message.save();
