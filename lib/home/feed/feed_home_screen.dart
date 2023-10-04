@@ -208,44 +208,50 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
           initQuery(true),
         ],
       ),
-      titleChild: TabBar(
-        isScrollable: true,
-        enableFeedback: false,
-        controller: _tabController,
-        indicatorColor: Colors.transparent,
-        unselectedLabelColor: kTabIconDefaultColor,
-        labelColor: kTabIconSelectedColor,
-        labelStyle: TextStyle(fontWeight: FontWeight.bold),
-        tabs: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (tabIndex == 0)
-                QuickActions.showSVGAsset(
-                  "assets/svg/ic_followers_active.svg",
-                  color: QuickHelp.isDarkMode(context)
-                      ? Colors.yellow[800]
-                      : kPrimaryColor,
-                ),
-              SizedBox(width: 8),
-              Text("feed.for_all".tr()),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (tabIndex == 1)
-                QuickActions.showSVGAsset(
-                  "assets/svg/ic_gold_star_small.svg",
-                  color: QuickHelp.isDarkMode(context)
-                      ? Colors.yellow[800]
-                      : kPrimaryColor,
-                ),
-              SizedBox(width: 8),
-              Text("feed.exclusive_".tr()),
-            ],
-          ),
-        ],
+      titleChild:
+          // TabBar(
+          //   isScrollable: true,
+          //   enableFeedback: false,
+          //   controller: _tabController,
+          //   indicatorColor: Colors.transparent,
+          //   unselectedLabelColor: kTabIconDefaultColor,
+          //   // labelColor: kTabIconSelectedColor,
+          //   labelStyle: TextStyle(fontWeight: FontWeight.bold),
+          //   tabs: [
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Center(child: Text('Feeds')),
+          //         //     if (tabIndex == 0)
+          //         //       QuickActions.showSVGAsset(
+          //         //         "assets/svg/ic_followers_active.svg",
+          //         //         color: QuickHelp.isDarkMode(context)
+          //         //             ? Colors.yellow[800]
+          //         //             : kPrimaryColor,
+          //         //       ),
+          //         //     SizedBox(width: 8),
+          //         //     Text("feed.for_all".tr()),
+          //         //   ],
+          //         // ),
+          //         // Row(
+          //         //   mainAxisSize: MainAxisSize.min,
+          //         //   children: [
+          //         // if (tabIndex == 1)
+          //         //   QuickActions.showSVGAsset(
+          //         //     "assets/svg/ic_gold_star_small.svg",
+          //         //     color: QuickHelp.isDarkMode(context)
+          //         //         ? Colors.yellow[800]
+          //         //         : kPrimaryColor,
+          //         //   ),
+          //         // SizedBox(width: 8),
+          //         // Text("feed.exclusive_".tr()),
+          //       ],
+          //     ),
+          //   ],
+          // ),
+          Padding(
+        padding: const EdgeInsets.only(left: 90),
+        child: Text('Feeds'),
       ),
       floatingActionButton: userRole == "artist"
           ? GestureDetector(
@@ -1178,33 +1184,33 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Visibility(
-                visible: widget.currentUser!.objectId != post.getAuthorId,
-                child: ButtonWithIcon(
-                  text: "feed.report_post"
-                      .tr(namedArgs: {"name": author.getFullName!}),
-                  //iconURL: "assets/svg/ic_blocked_menu.svg",
-                  overFlow: TextOverflow.ellipsis,
+              // Visibility(
+              //   visible: widget.currentUser!.objectId != post.getAuthorId,
+              //   child: ButtonWithIcon(
+              //     text: "feed.report_post"
+              //         .tr(namedArgs: {"name": author.getFullName!}),
+              //     //iconURL: "assets/svg/ic_blocked_menu.svg",
+              //     overFlow: TextOverflow.ellipsis,
 
-                  icon: Icons.report_problem_outlined,
-                  iconColor: kPrimaryColor,
-                  iconSize: 26,
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    openReportMessage(author, post);
-                  },
-                ),
-              ),
-              Visibility(
-                  visible: widget.currentUser!.objectId != post.getAuthorId,
-                  child: Divider()),
+              //     icon: Icons.report_problem_outlined,
+              //     iconColor: kPrimaryColor,
+              //     iconSize: 26,
+              //     height: 60,
+              //     radiusTopLeft: 25.0,
+              //     radiusTopRight: 25.0,
+              //     backgroundColor: Colors.white,
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     textColor: Colors.black,
+              //     fontSize: 16,
+              //     fontWeight: FontWeight.w500,
+              //     onTap: () {
+              //       openReportMessage(author, post);
+              //     },
+              //   ),
+              // ),
+              // Visibility(
+              //     visible: widget.currentUser!.objectId != post.getAuthorId,
+              //     child: Divider()),
               Visibility(
                 visible: widget.currentUser!.objectId != post.getAuthorId,
                 child: ButtonWithIcon(
@@ -1229,7 +1235,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                       onPressed: () => _blockUser(author),
                     );
                   },
-                  height: 60,
+                  height: 55,
                   backgroundColor: Colors.white,
                   mainAxisAlignment: MainAxisAlignment.start,
                 ),
@@ -1237,27 +1243,27 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
               Visibility(
                   visible: widget.currentUser!.objectId != post.getAuthorId,
                   child: Divider()),
-              Visibility(
-                visible: widget.currentUser!.objectId == post.getAuthorId ||
-                    widget.currentUser!.isAdmin!,
-                child: ButtonWithIcon(
-                  text: post.getExclusive!
-                      ? "feed.move_exclusive_post_pub".tr()
-                      : "feed.move_exclusive_post".tr(),
-                  iconURL: "assets/svg/config.svg",
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    _moveExclusivePost(post);
-                  },
-                ),
-              ),
+              // Visibility(
+              //   visible: widget.currentUser!.objectId == post.getAuthorId ||
+              //       widget.currentUser!.isAdmin!,
+              //   child: ButtonWithIcon(
+              //     text: post.getExclusive!
+              //         ? "feed.move_exclusive_post_pub".tr()
+              //         : "feed.move_exclusive_post".tr(),
+              //     iconURL: "assets/svg/config.svg",
+              //     height: 60,
+              //     radiusTopLeft: 25.0,
+              //     radiusTopRight: 25.0,
+              //     backgroundColor: Colors.white,
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     textColor: Colors.black,
+              //     fontSize: 18,
+              //     fontWeight: FontWeight.w500,
+              //     onTap: () {
+              //       _moveExclusivePost(post);
+              //     },
+              //   ),
+              // ),
               Visibility(
                   visible: widget.currentUser!.isAdmin!, child: Divider()),
               Visibility(
@@ -1265,7 +1271,8 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                     widget.currentUser!.isAdmin!,
                 child: ButtonWithIcon(
                   text: "feed.delete_post".tr(),
-                  iconURL: "assets/svg/config.svg",
+                  // iconURL: "assets/svg/config.svg",
+                  icon: Icon(Icons.delete_outlined).icon,
                   height: 60,
                   radiusTopLeft: 25.0,
                   radiusTopRight: 25.0,
@@ -1331,6 +1338,11 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
         message: "feed.post_block_success_message".tr(),
         isError: false,
       );
+
+      print('user has been blocked');
+      setState(() {
+        _future = _loadFeeds(isExclusive: false);
+      });
     } else {
       QuickHelp.hideLoadingDialog(context);
     }

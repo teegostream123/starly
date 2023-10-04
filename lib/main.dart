@@ -47,7 +47,7 @@ import 'package:teego/home/profile/profile_menu_screen.dart';
 import 'package:teego/home/profile/profile_screen.dart';
 import 'package:teego/home/profile/user_profile_screen.dart';
 import 'package:teego/home/reels/reels_home_screen.dart';
-import 'package:teego/home/search/search_creen.dart';
+import 'package:teego/home/search/search_screen.dart';
 import 'package:teego/home/web/web_url_screen.dart';
 import 'package:teego/models/CallsModel.dart';
 import 'package:teego/models/CommentsModel.dart';
@@ -305,7 +305,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
           StatisticsScreen.route: (_) => StatisticsScreen(),
           ReferralScreen.route: (_) => ReferralScreen(),
           BlockedUsersScreen.route: (_) => BlockedUsersScreen(),
-          RefillCoinsScreen.route: (_) => RefillCoinsScreen(),
+          // RefillCoinsScreen.route: (_) => RefillCoinsScreen(),
           GetMoneyScreen.route: (_) => GetMoneyScreen(
                 preferences: preferences,
               ),

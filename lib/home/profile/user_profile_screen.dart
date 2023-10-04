@@ -64,6 +64,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     Color textColor = Theme.of(context).brightness == Brightness.dark
         ? Colors.white // Set text color for dark theme
         : kPrimaryColor;
+    Color aboutColor =
+        QuickHelp.isDarkMode(context) ? kDisabledGrayColor : kGreyColor0;
     return ToolBar(
       centerTitle: true,
       extendBodyBehindAppBar: true,
@@ -158,9 +160,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ContainerCorner(
-                        width: MediaQuery.of(context).size.width - 100,
-                        height: 60,
-                        color: Colors.amberAccent,
+                        width: MediaQuery.of(context).size.width * .35,
+                        height: 50,
+                        color: widget.isFollowing!
+                            ? Colors.blueAccent
+                            : Colors.pink,
                         borderRadius: 50,
                         marginRight: 10,
                         onTap: () {
@@ -260,17 +264,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             child: Column(
                               children: [
                                 //TextWithTap(""),
-                                QuickActions.showSVGAsset(
-                                  "assets/svg/ic_diamond.svg",
-                                  height: 30,
-                                  width: 30,
-                                ),
-                                TextWithTap(
-                                  widget.mUser!.getDiamonds.toString(),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
-                                  //marginRight: 20,
-                                )
+                                // QuickActions.showSVGAsset(
+                                //   "assets/svg/ic_diamond.svg",
+                                //   height: 30,
+                                //   width: 30,
+                                // ),
+                                // TextWithTap(
+                                //   widget.mUser!.getDiamonds.toString(),
+                                //   fontWeight: FontWeight.bold,
+                                //   fontSize: 17,
+                                //   //marginRight: 20,
+                                // )
                               ],
                             ),
                           ),
@@ -306,19 +310,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     GestureDetector(
                       child: ContainerCorner(
                         marginLeft: 40,
-                        marginRight: 40,
-                        marginBottom: 20,
+                        marginRight: 20,
+                        // marginBottom: 20,
                         width: MediaQuery.of(context).size.width - 20,
                         borderRadius: 10,
-                        color: QuickHelp.isDarkMode(context)
-                            ? kDisabledGrayColor
-                            : kGreyColor0,
+                        color: widget.mUser!.getAboutYou!.isNotEmpty
+                            ? aboutColor
+                            : Colors.white,
+                        // color: QuickHelp.isDarkMode(context)
+                        //     ? kDisabledGrayColor
+                        //     : kGreyColor0,
                         child: TextWithTap(
                           widget.mUser!.getAboutYou!.isNotEmpty
                               ? widget.mUser!.getAboutYou!
-                              : "profile_screen.profile_desc_hint".tr(),
+                              : "".tr(),
                           marginRight: 10,
-                          marginBottom: 10,
+                          // marginBottom: 10,
                           marginTop: 10,
                           marginLeft: 10,
                         ),
@@ -339,21 +346,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              QuickActions.showSVGAsset(
-                                "assets/svg/ic_followers_active.svg",
-                                color: tabIndex == 0
-                                    ? textColor
-                                    : kDisabledGrayColor,
-                              ),
-                              SizedBox(width: 5),
-                              TextWithTap(
-                                "feed.for_all".tr(),
-                                fontSize: 16,
-                                color: tabIndex == 0
-                                    ? textColor
-                                    : kDisabledGrayColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              // QuickActions.showSVGAsset(
+                              //   "assets/svg/ic_followers_active.svg",
+                              //   color: tabIndex == 0
+                              //       ? textColor
+                              //       : kDisabledGrayColor,
+                              // ),
+                              // SizedBox(width: 5),
+                              // TextWithTap(
+                              //   "feed.for_all".tr(),
+                              //   fontSize: 16,
+                              //   color: tabIndex == 0
+                              //       ? textColor
+                              //       : kDisabledGrayColor,
+                              //   fontWeight: FontWeight.bold,
+                              // ),
                             ],
                           ),
                         ),
@@ -363,21 +370,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              QuickActions.showSVGAsset(
-                                "assets/svg/ic_gold_star_small.svg",
-                                color: tabIndex == 1
-                                    ? textColor
-                                    : kDisabledGrayColor,
-                              ),
-                              SizedBox(width: 5),
-                              TextWithTap(
-                                "feed.exclusive_".tr(),
-                                fontSize: 16,
-                                color: tabIndex == 1
-                                    ? textColor
-                                    : kDisabledGrayColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              // QuickActions.showSVGAsset(
+                              //   "assets/svg/ic_gold_star_small.svg",
+                              //   color: tabIndex == 1
+                              //       ? textColor
+                              //       : kDisabledGrayColor,
+                              // ),
+                              // SizedBox(width: 5),
+                              // TextWithTap(
+                              //   "feed.exclusive_".tr(),
+                              //   fontSize: 16,
+                              //   color: tabIndex == 1
+                              //       ? textColor
+                              //       : kDisabledGrayColor,
+                              //   fontWeight: FontWeight.bold,
+                              // ),
                             ],
                           ),
                         ),
@@ -889,23 +896,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ContainerCorner(
-                                    marginRight: 10,
-                                    child: Row(
-                                      children: [
-                                        QuickActions.showSVGAsset(
-                                          "assets/svg/ic_diamond.svg",
-                                          height: 24,
-                                        ),
-                                        TextWithTap(
-                                          user.getDiamonds.toString(),
-                                          fontSize: 14,
-                                          marginLeft: 3,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  // ContainerCorner(
+                                  //   marginRight: 10,
+                                  //   child: Row(
+                                  //     children: [
+                                  //       QuickActions.showSVGAsset(
+                                  //         "assets/svg/ic_diamond.svg",
+                                  //         height: 24,
+                                  //       ),
+                                  //       TextWithTap(
+                                  //         user.getDiamonds.toString(),
+                                  //         fontSize: 14,
+                                  //         marginLeft: 3,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+
                                   ContainerCorner(
                                     marginLeft: 10,
                                     child: Row(

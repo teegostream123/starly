@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
@@ -350,7 +351,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     try {
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       GoogleSignInAuthentication authentication = await account!.authentication;
-
+      print('gooooooooooooo');
       QuickHelp.showLoadingDialog(context);
 
       final ParseResponse response = await ParseUser.loginWith(
@@ -392,6 +393,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         QuickHelp.showAppNotificationAdvanced(
             context: context, title: "auth.gg_login_error".tr());
       }
+      print(['Errorrrrrrr', error]);
 
       await _googleSignIn.signOut();
     }
@@ -511,6 +513,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     TextFormField(
                                       autofocus: false,
                                       controller: userName,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.deny(
+                                            RegExp(r"\s|\b"))
+                                      ],
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return "Please enter a username";
@@ -710,8 +716,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       fontSize: 16,
                       imageName: "",
                       imageColor: kContentColorLightTheme,
-                      color: kPrimaryColor, //Color(0xFFDDB300),
-                      textColor: Colors.white.withOpacity(0.9),
+                      color: QuickHelp.isDarkMode(context)
+                          ? Colors.white
+                          : kPrimaryColor, //Color(0xFFDDB300),
+                      textColor: QuickHelp.isDarkMode(context)
+                          ? kPrimaryColor
+                          : Colors.white,
                       text: "Sign in",
                       fontWeight: FontWeight.bold,
                       //matchParent: true,
@@ -980,7 +990,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   Widget showMobileLogin() {
     return ContainerCorner(
-      height: 250,
+      height: 200,
       marginTop: 20,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1017,7 +1027,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               height: 48,
               marginLeft: 30,
               marginRight: 30,
-              marginBottom: 10,
+              // marginBottom: 10,
               borderRadius: 60,
               svgHeight: 25,
               svgWidth: 25,
@@ -1061,29 +1071,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               },
             ),
           ),
-          Visibility(
-            visible: SharedManager().isFacebookLoginEnabled(preferences),
-            child: ButtonWithSvg(
-              height: 48,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              marginLeft: 30,
-              marginRight: 30,
-              marginBottom: 20,
-              borderRadius: 60,
-              svgHeight: 25,
-              svgWidth: 25,
-              fontSize: 16,
-              svgName: "ic_facebook_logo",
-              color: Colors.white,
-              textColor: Colors.black,
-              text: "auth.facebook_login".tr(),
-              fontWeight: FontWeight.normal,
-              press: () {
-                QuickHelp.goBack(context);
-                SocialLogin.loginFacebook(context, preferences);
-              },
-            ),
-          ),
+          // Visibility(
+          //   visible: SharedManager().isFacebookLoginEnabled(preferences),
+          //   child: ButtonWithSvg(
+          //     height: 48,
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     marginLeft: 30,
+          //     marginRight: 30,
+          //     marginBottom: 20,
+          //     borderRadius: 60,
+          //     svgHeight: 25,
+          //     svgWidth: 25,
+          //     fontSize: 16,
+          //     svgName: "ic_facebook_logo",
+          //     color: Colors.white,
+          //     textColor: Colors.black,
+          //     text: "auth.facebook_login".tr(),
+          //     fontWeight: FontWeight.normal,
+          //     press: () {
+          //       QuickHelp.goBack(context);
+          //       SocialLogin.loginFacebook(context, preferences);
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

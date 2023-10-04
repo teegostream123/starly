@@ -92,11 +92,11 @@ class _ReferralScreenState extends State<ReferralScreen> {
                   fontSize: 16,
                   color: Colors.black,
                 ),
-                SvgPicture.asset(
-                  "assets/svg/ic_diamond.svg",
-                  width: 20,
-                  height: 20,
-                ),
+                // SvgPicture.asset(
+                //   "assets/svg/ic_diamond.svg",
+                //   width: 20,
+                //   height: 20,
+                // ),
                 TextWithTap(
                   "invite_friends.ten_percent".tr(),
                   color: Colors.black,
@@ -131,14 +131,18 @@ class _ReferralScreenState extends State<ReferralScreen> {
             height: 40,
             marginTop: 60,
             text: "invite_friends.share_link".tr(),
-            beginColor: kWarninngColor,
+            beginColor: kPrimaryColor,
             endColor: kPrimaryColor,
             marginRight: 40,
             svgURL: "assets/svg/ic_tips_share.svg",
             marginLeft: 40,
             onTap: () {
-              createLink();
+              // createLink();
               //QuickHelp.goToNavigatorScreen(context, InvitedUsers(currentUser: widget.currentUser,));
+              Share.share("settings_screen.share_app_url".tr(namedArgs: {
+                "app_name": Config.appName,
+                "url": Config.appOrCompanyUrl
+              }));
             },
             borderRadius: 50,
           ),
@@ -155,7 +159,8 @@ class _ReferralScreenState extends State<ReferralScreen> {
 
     if (uri != null) {
       QuickHelp.hideLoadingDialog(context);
-      Share.share("settings_screen.share_app_url".tr(namedArgs: {"app_name": Config.appName, "url": uri.toString()}));
+      Share.share("settings_screen.share_app_url"
+          .tr(namedArgs: {"app_name": Config.appName, "url": uri.toString()}));
     } else {
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.showAppNotificationAdvanced(

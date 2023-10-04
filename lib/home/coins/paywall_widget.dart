@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/utils/colors.dart';
 
 class PaywallWidget extends StatefulWidget {
@@ -22,6 +23,8 @@ class PaywallWidget extends StatefulWidget {
 class _PaywallWidgetState extends State<PaywallWidget> {
   @override
   Widget build(BuildContext context) {
+    final textColor =
+        QuickHelp.isDarkMode(context) ? Colors.white : kPrimaryColor;
     return Container(
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.75,
@@ -32,7 +35,10 @@ class _PaywallWidgetState extends State<PaywallWidget> {
           children: [
             Text(
               widget.title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(
               height: 16,
@@ -64,8 +70,10 @@ class _PaywallWidgetState extends State<PaywallWidget> {
       });
   Widget buildPackage(BuildContext context, Package package) {
     final product = package.storeProduct;
+    final textColor =
+        QuickHelp.isDarkMode(context) ? kPrimaryColor : Colors.white;
     return Card(
-      color: kWarninngColor,
+      color: QuickHelp.isDarkMode(context) ? Colors.white : kPrimaryColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Theme(
           data: ThemeData.light(),
@@ -73,12 +81,16 @@ class _PaywallWidgetState extends State<PaywallWidget> {
             contentPadding: EdgeInsets.all(8),
             title: Text(
               product.title,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18, color: textColor),
             ),
-            subtitle: Text(product.description),
+            subtitle: Text(
+              product.description,
+              style: TextStyle(color: textColor),
+            ),
             trailing: Text(
               product.priceString,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
             ),
             onTap: () => widget.onClickedPackege(package),
           )),

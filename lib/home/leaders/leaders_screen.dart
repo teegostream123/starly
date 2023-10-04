@@ -160,24 +160,24 @@ class _LeadersPageState extends State<LeadersPage> {
                               color: kGrayColor,
                               fontSize: 16,
                             ),
-                            ContainerCorner(
-                              color: kTransparentColor,
-                              marginLeft: 7,
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/svg/ic_diamond.svg",
-                                    width: 25,
-                                    height: 25,
-                                  ),
-                                  TextWithTap(
-                                    user.getDiamondsTotal.toString(),
-                                    marginLeft: 2,
-                                    color: kGrayColor,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // ContainerCorner(
+                            //   color: kTransparentColor,
+                            //   marginLeft: 7,
+                            //   child: Row(
+                            //       // children: [
+                            //       //   SvgPicture.asset(
+                            //       //     "assets/svg/ic_diamond.svg",
+                            //       //     width: 25,
+                            //       //     height: 25,
+                            //       //   ),
+                            //       //   TextWithTap(
+                            //       //     user.getDiamondsTotal.toString(),
+                            //       //     marginLeft: 2,
+                            //       //     color: kGrayColor,
+                            //       //   ),
+                            //       // ],
+                            //       ),
+                            // ),
                           ],
                         ),
                       ],

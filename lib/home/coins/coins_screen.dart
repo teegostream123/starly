@@ -238,7 +238,9 @@ class _CoinsScreenState extends State<CoinsScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: kPrimaryColor,
+      backgroundColor: QuickHelp.isDarkMode(context)
+          ? kContentColorLightTheme
+          : Colors.white,
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -246,7 +248,7 @@ class _CoinsScreenState extends State<CoinsScreen> {
             children: [
               Center(
                 child: Image.asset(
-                  'assets/images/ic_coins_6.png',
+                  'assets/images/money-bag.png',
                   height: 150,
                 ),
               ),
@@ -255,10 +257,14 @@ class _CoinsScreenState extends State<CoinsScreen> {
               ),
               Text(
                 "You have ${Provider.of<RevenueCatProvider>(context).coins} Coins",
-                style: TextStyle(fontSize: 23, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 23,
+                  color:
+                      QuickHelp.isDarkMode(context) ? coinColor : kPrimaryColor,
+                ),
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
               InkWell(
                 onTap: () async {
@@ -284,9 +290,11 @@ class _CoinsScreenState extends State<CoinsScreen> {
                 },
                 child: Container(
                   height: height * .08,
-                  width: width,
+                  width: width * .6,
                   decoration: BoxDecoration(
-                      color: kWarninngColor,
+                      color: QuickHelp.isDarkMode(context)
+                          ? coinColor
+                          : kPrimaryColor,
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                       child: Text(

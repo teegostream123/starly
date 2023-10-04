@@ -132,7 +132,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
             children: [
               Expanded(
                   child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
                     ContainerCorner(
@@ -158,8 +158,8 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                                       children: [
                                         QuickActions.avatarWidget(
                                             post!.getAuthor!,
-                                            width: 50,
-                                            height: 50),
+                                            width: 40,
+                                            height: 40),
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -390,7 +390,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       QuickActions.avatarWidget(commentsModel.getAuthor!,
-                          width: 60, height: 60),
+                          width: 50, height: 50),
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -409,16 +409,18 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                               marginRight: 10,
                               color: kGrayColor,
                             ),
-                            TextWithTap(
-                              QuickHelp.getTimeAgoForFeed(
-                                  commentsModel.createdAt!),
-                              marginLeft: 10,
-                              color: kGrayColor,
-                              marginTop: 10,
-                              fontSize: 12,
-                            ),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 210,
+                      ),
+                      TextWithTap(
+                        QuickHelp.getTimeAgoForFeed(commentsModel.createdAt!),
+                        marginLeft: 10,
+                        color: kGrayColor,
+                        marginTop: 10,
+                        fontSize: 12,
                       ),
                     ],
                   ),
@@ -475,7 +477,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
               decoration: BoxDecoration(
                 color: QuickHelp.isDarkMode(context)
                     ? Colors.grey[500]
-                    : kPrimaryColor,
+                    : Colors.grey[200],
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Row(
@@ -488,11 +490,10 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                       maxLines: null,
                       controller: commentController,
                       style: TextStyle(
-                        color: QuickHelp.isDarkMode(context)
-                            ? kPrimaryColor
-                            : Colors.grey[
-                                500], // Change this to your desired text color
-                      ),
+                          color: QuickHelp.isDarkMode(context)
+                              ? kPrimaryColor
+                              : kPrimaryColor // Change this to your desired text color
+                          ),
                       decoration: InputDecoration(
                         // hintText: 'just checking whether its working or not',
                         hintText: "comment_post.leave_comment".tr(),
@@ -534,6 +535,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                   commentController.text = "";
                 });
                 print('commenttttt sentt');
+                FocusScope.of(context).unfocus();
               }
             },
           ),
@@ -572,28 +574,28 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Visibility(
-                visible: currentUser!.objectId != post.getAuthorId,
-                child: ButtonWithIcon(
-                  text: "feed.report_post"
-                      .tr(namedArgs: {"name": author.getFullName!}),
-                  //iconURL: "assets/svg/ic_blocked_menu.svg",
-                  icon: Icons.report_problem_outlined,
-                  iconColor: kPrimaryColor,
-                  iconSize: 26,
-                  height: 60,
-                  radiusTopLeft: 25.0,
-                  radiusTopRight: 25.0,
-                  backgroundColor: Colors.white,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textColor: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    openReportMessage(author, post);
-                  },
-                ),
-              ),
+              // Visibility(
+              //   visible: currentUser!.objectId != post.getAuthorId,
+              //   child: ButtonWithIcon(
+              //     text: "feed.report_post"
+              //         .tr(namedArgs: {"name": author.getFullName!}),
+              //     //iconURL: "assets/svg/ic_blocked_menu.svg",
+              //     icon: Icons.report_problem_outlined,
+              //     iconColor: kPrimaryColor,
+              //     iconSize: 26,
+              //     height: 60,
+              //     radiusTopLeft: 25.0,
+              //     radiusTopRight: 25.0,
+              //     backgroundColor: Colors.white,
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     textColor: Colors.black,
+              //     fontSize: 16,
+              //     fontWeight: FontWeight.w500,
+              //     onTap: () {
+              //       openReportMessage(author, post);
+              //     },
+              //   ),
+              // ),
               Visibility(
                   visible: currentUser!.objectId != post.getAuthorId,
                   child: Divider()),

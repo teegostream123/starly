@@ -39,48 +39,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ContainerCorner(
-                height: 50,
-                marginAll: 5,
-                borderRadius: 5,
-                colors: [earnCashColor, coinColor],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Image.asset(
-                              "assets/images/ic_agent_invite.png",
-                              width: 30,
-                              height: 30,
-                            )),
-                        TextWithTap(
-                          "settings_screen.be_agent".tr(),
-                          marginLeft: 10,
-                          fontSize: 16,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
-                    Expanded(
-                      child: ButtonWithIcon(
-                        text: "",
-                        icon: Icons.arrow_forward_ios,
-                        backgroundColor: kTransparentColor,
-                        iconSize: 17,
-                        iconColor: Colors.white,
-                      ),
-                    )
-                  ],
-                ),
-                onTap: () => QuickHelp.goToNavigatorScreen(
-                    context,
-                    ReferralScreen(
-                      currentUser: widget.currentUser,
-                    )),
-              ),
+              // ContainerCorner(
+              //   height: 50,
+              //   marginAll: 5,
+              //   borderRadius: 5,
+              //   colors: [earnCashColor, coinColor],
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       // Row(
+              //       //   children: [
+              //       //     Padding(
+              //       //         padding: EdgeInsets.only(left: 10),
+              //       //         child: Image.asset(
+              //       //           "assets/images/ic_agent_invite.png",
+              //       //           width: 30,
+              //       //           height: 30,
+              //       //         )),
+              //       //     TextWithTap(
+              //       //       "settings_screen.be_agent".tr(),
+              //       //       marginLeft: 10,
+              //       //       fontSize: 16,
+              //       //       color: Colors.white,
+              //       //     )
+              //       //   ],
+              //       // ),
+              //       // // Expanded(
+              //       // //   child: ButtonWithIcon(
+              //       // //     text: "",
+              //       // //     icon: Icons.arrow_forward_ios,
+              //       // //     backgroundColor: kTransparentColor,
+              //       // //     iconSize: 17,
+              //       // //     iconColor: Colors.white,
+              //       // //   ),
+              //       // // )
+              //     ],
+              //   ),
+              //   onTap: () => QuickHelp.goToNavigatorScreen(
+              //       context,
+              //       ReferralScreen(
+              //         currentUser: widget.currentUser,
+              //       )),
+              // ),
+
               ContainerCorner(
                 borderColor: QuickHelp.isDarkMode(context)
                     ? kGreyColor2
@@ -129,21 +130,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     route: PrivacySettingsScreen.route,
                       arguments: widget.currentUser,
                     ),*/
-                    getDivider(),
-                    settingsOptions("settings_screen.app_settings".tr(),
-                        "assets/images/ic_settings_menu.png",
-                        route: AppSettingsScreen.route,
-                        arguments: widget.currentUser),
-                    getDivider(),
-                    settingsOptions(
-                      "settings_screen.app_support".tr(),
-                      "assets/images/ic_logo.png",
-                      route: CustomerSupportScreen.route,
-                    ),
-                    getDivider(),
-                    settingsOptions("settings_screen.app_third_party".tr(),
-                        "assets/images/ic_settings_open_source.png",
-                        route: QuickHelp.pageTypeOpenSource),
+                    // getDivider(),
+                    // settingsOptions("settings_screen.app_settings".tr(),
+                    //     "assets/images/ic_settings_menu.png",
+                    //     route: AppSettingsScreen.route,
+                    //     arguments: widget.currentUser),
+                    // getDivider(),
+                    // settingsOptions(
+                    //   "settings_screen.app_support".tr(),
+                    //   "assets/images/ic_logo.png",
+                    //   route: CustomerSupportScreen.route,
+                    // ),
+                    // getDivider(),
+                    // settingsOptions("settings_screen.app_third_party".tr(),
+                    //     "assets/images/ic_settings_open_source.png",
+                    //     route: QuickHelp.pageTypeOpenSource),
                   ],
                 ),
               ),

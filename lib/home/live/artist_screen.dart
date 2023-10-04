@@ -9,7 +9,7 @@ import '../../ui/container_with_corner.dart';
 import '../../ui/text_with_tap.dart';
 import '../../utils/colors.dart';
 import '../profile/user_screen.dart';
-import '../search/search_creen.dart';
+import '../search/search_screen.dart';
 
 class ArtistScreen extends StatefulWidget {
   const ArtistScreen({super.key});
@@ -99,7 +99,8 @@ class _ArtistScreenState extends State<ArtistScreen> {
                       mainAxisSpacing: 2,
                     ),
                     childrenDelegate: SliverChildBuilderDelegate(
-                      childCount: snapshot.data != null? snapshot.data!.length:0,
+                      childCount:
+                          snapshot.data != null ? snapshot.data!.length : 0,
                       (BuildContext context, int index) {
                         final user = snapshot.data?[index] as UserModel;
 
@@ -208,7 +209,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           TextWithTap(
-                                            user.getFullName??'',
+                                            user.getFullName ?? '',
                                             color: Colors.white,
                                             overflow: TextOverflow.ellipsis,
                                             marginLeft: 10,

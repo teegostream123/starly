@@ -362,7 +362,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                       // }
                       // selectButton(LiveStreamingModel.liveTypeGoLive);
 
-                      print('errrrrrrrrrrrorrrrrrrr ::::::: ');
                       UserModel? user = await ParseUser.currentUser();
 
                       Navigator.of(context).push(MaterialPageRoute(
@@ -379,7 +378,8 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                           ..set('userName', user?.username ?? 'no user name')
                           ..set('liveID', (user?.getUid ?? '').toString())
                           ..set('Author', user)
-                          ..set('imageUrl', parseFileUrl);
+                          ..set('imageUrl', parseFileUrl)
+                          ..set('isLive', true);
 
                         final res = await streaming.save();
 

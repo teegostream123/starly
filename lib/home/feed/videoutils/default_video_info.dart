@@ -424,16 +424,16 @@ class DefaultVideoInfoWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                QuickActions.showSVGAsset(
-                  "assets/svg/ic_diamond.svg",
-                  height: 20,
-                ),
-                TextWithTap(
-                  "${postModel!.getAuthor!.getDiamondsTotal.toString()}",
-                  color: Colors.white,
-                  fontSize: 13,
-                ),
-                VerticalDivider(),
+                // QuickActions.showSVGAsset(
+                //   "assets/svg/ic_diamond.svg",
+                //   height: 20,
+                // ),
+                // TextWithTap(
+                //   "${postModel!.getAuthor!.getDiamondsTotal.toString()}",
+                //   color: Colors.white,
+                //   fontSize: 13,
+                // ),
+                // VerticalDivider(),
                 QuickActions.showSVGAsset(
                   "assets/svg/ic_followers_active.svg",
                   height: 19,

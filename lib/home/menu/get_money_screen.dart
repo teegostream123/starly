@@ -55,13 +55,15 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
   @override
   Widget build(BuildContext context) {
     numberOfDiamonds = widget.currentUser!.getDiamonds!.toDouble() *
-        (widthOfContainer / SharedManager().getDiamondsNeededToRedeem(widget.preferences));
+        (widthOfContainer /
+            SharedManager().getDiamondsNeededToRedeem(widget.preferences));
 
-    totalMoney =
-        QuickHelp.convertDiamondsToMoney(widget.currentUser!.getDiamonds!, widget.preferences!);
+    totalMoney = QuickHelp.convertDiamondsToMoney(
+        widget.currentUser!.getDiamonds!, widget.preferences!);
 
-    minQuantityToWithdraw =
-        QuickHelp.convertDiamondsToMoney(SharedManager().getDiamondsNeededToRedeem(widget.preferences), widget.preferences!);
+    minQuantityToWithdraw = QuickHelp.convertDiamondsToMoney(
+        SharedManager().getDiamondsNeededToRedeem(widget.preferences),
+        widget.preferences!);
 
     return ToolBar(
       title: "page_title.payout_title".tr(),
@@ -101,22 +103,22 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                     "get_money.only_".tr(),
                     fontSize: 18,
                   ),
-                  QuickActions.showSVGAsset(
-                    "assets/svg/ic_diamond.svg",
-                    height: 22,
-                  ),
-                  TextWithTap(
-                    "get_money.left_to_get".tr(namedArgs: {
-                      "diamondsNeededToRedeem": (SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
-                                  widget.currentUser!.getDiamonds!) >
-                              0
-                          ? (SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
-                                  widget.currentUser!.getDiamonds!)
-                              .toString()
-                          : "0"
-                    }),
-                    fontSize: 18,
-                  ),
+                  // QuickActions.showSVGAsset(
+                  //   "assets/svg/ic_diamond.svg",
+                  //   height: 22,
+                  // ),
+                  // TextWithTap(
+                  //   "get_money.left_to_get".tr(namedArgs: {
+                  //     "diamondsNeededToRedeem": (SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
+                  //                 widget.currentUser!.getDiamonds!) >
+                  //             0
+                  //         ? (SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
+                  //                 widget.currentUser!.getDiamonds!)
+                  //             .toString()
+                  //         : "0"
+                  //   }),
+                  //   fontSize: 18,
+                  // ),
                 ],
               ),
               TextWithTap(
@@ -167,30 +169,31 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                   ),
                 ),
               ]),
-              ContainerCorner(
-                color: kTransparentColor,
-                marginTop: 250,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextWithTap("get_money.get_remain".tr()),
-                    QuickActions.showSVGAsset(
-                      "assets/svg/ic_diamond.svg",
-                      height: 22,
-                    ),
-                    TextWithTap((SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
-                                widget.currentUser!.getDiamonds!) >
-                            0
-                        ? (SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
-                                widget.currentUser!.getDiamonds!)
-                            .toString()
-                        : "0"),
-                  ],
-                ),
-              ),
+              // ContainerCorner(
+              //   color: kTransparentColor,
+              //   marginTop: 250,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       // TextWithTap("get_money.get_remain".tr()),
+              //       // QuickActions.showSVGAsset(
+              //       //   "assets/svg/ic_diamond.svg",
+              //       //   height: 22,
+              //       // ),
+              //       // TextWithTap((SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
+              //       //             widget.currentUser!.getDiamonds!) >
+              //       //         0
+              //       //     ? (SharedManager().getDiamondsNeededToRedeem(widget.preferences) -
+              //       //             widget.currentUser!.getDiamonds!)
+              //       //         .toString()
+              //       //     : "0"),
+              //     ],
+              //   ),
+              // ),
               Visibility(
                 visible: widget.currentUser!.getDiamonds! <
-                    SharedManager().getDiamondsNeededToRedeem(widget.preferences),
+                    SharedManager()
+                        .getDiamondsNeededToRedeem(widget.preferences),
                 child: ContainerCorner(
                   marginTop: 20,
                   colors: [kWarninngColor, kPrimaryColor],
@@ -225,7 +228,8 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
               ),
               Visibility(
                 visible: widget.currentUser!.getDiamonds! >=
-                    SharedManager().getDiamondsNeededToRedeem(widget.preferences),
+                    SharedManager()
+                        .getDiamondsNeededToRedeem(widget.preferences),
                 child: ContainerCorner(
                   marginTop: 20,
                   //colors: [kWarninngColor, kPrimaryColor],
@@ -237,10 +241,15 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                   marginLeft: 40,
                   height: 45,
                   onTap: () {
-                    if ((widget.currentUser!.getPayoneerEmail != null && SharedManager().isWithdrawPayoneerEnabled(widget.preferences)) ||
-                        (widget.currentUser!.getIban != null && SharedManager().isWithdrawIbanEnabled(widget.preferences)) ||
-                        (widget.currentUser!.getPayPalEmail != null && SharedManager().isWithdrawPaypalEnabled(widget.preferences))
-                    ) {
+                    if ((widget.currentUser!.getPayoneerEmail != null &&
+                            SharedManager().isWithdrawPayoneerEnabled(
+                                widget.preferences)) ||
+                        (widget.currentUser!.getIban != null &&
+                            SharedManager()
+                                .isWithdrawIbanEnabled(widget.preferences)) ||
+                        (widget.currentUser!.getPayPalEmail != null &&
+                            SharedManager()
+                                .isWithdrawPaypalEnabled(widget.preferences))) {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -317,7 +326,8 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
-                                                          QuickActions.showSVGAsset(
+                                                          QuickActions
+                                                              .showSVGAsset(
                                                             "assets/svg/sad.svg",
                                                             height: 70,
                                                             width: 70,
@@ -420,7 +430,8 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
-                                                          QuickActions.showSVGAsset(
+                                                          QuickActions
+                                                              .showSVGAsset(
                                                             "assets/svg/sad.svg",
                                                             height: 70,
                                                             width: 70,
@@ -526,7 +537,8 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
-                                                          QuickActions.showSVGAsset(
+                                                          QuickActions
+                                                              .showSVGAsset(
                                                             "assets/svg/sad.svg",
                                                             height: 70,
                                                             width: 70,
@@ -743,7 +755,11 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                 backgroundColor: kSecondaryColor,
                 text: "get_money.withdraw_history".tr(),
                 fontWeight: FontWeight.normal,
-                onTap: () => QuickHelp.goToNavigatorScreen(context, WithdrawHistoryScreen(currentUser: widget.currentUser,)),
+                onTap: () => QuickHelp.goToNavigatorScreen(
+                    context,
+                    WithdrawHistoryScreen(
+                      currentUser: widget.currentUser,
+                    )),
               ),
               TextWithTap(
                 "get_money.edit_payment".tr().toUpperCase(),
@@ -767,7 +783,8 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
   withdrawMoney(double money, String email, String method) async {
     QuickHelp.showLoadingDialog(context);
 
-    int diamonds = QuickHelp.convertMoneyToDiamonds(money, widget.preferences!).toInt();
+    int diamonds =
+        QuickHelp.convertMoneyToDiamonds(money, widget.preferences!).toInt();
 
     WithdrawModel withdraw = WithdrawModel();
 
@@ -927,7 +944,10 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                             ),
                             body: Column(
                               children: [
-                                if (widget.currentUser!.getPayPalEmail != null && SharedManager().isWithdrawPaypalEnabled(widget.preferences))
+                                if (widget.currentUser!.getPayPalEmail !=
+                                        null &&
+                                    SharedManager().isWithdrawPaypalEnabled(
+                                        widget.preferences))
                                   ContainerCorner(
                                     child: TextButton(
                                       onPressed: () {
@@ -957,7 +977,10 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                                       ),
                                     ),
                                   ),
-                                if (widget.currentUser!.getPayoneerEmail != null && SharedManager().isWithdrawPayoneerEnabled(widget.preferences))
+                                if (widget.currentUser!.getPayoneerEmail !=
+                                        null &&
+                                    SharedManager().isWithdrawPayoneerEnabled(
+                                        widget.preferences))
                                   ContainerCorner(
                                     child: TextButton(
                                       onPressed: () {
@@ -965,7 +988,8 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                                         withdrawMoney(
                                             double.parse(
                                                 moneyToTransferController.text),
-                                            widget.currentUser!.getPayoneerEmail!,
+                                            widget
+                                                .currentUser!.getPayoneerEmail!,
                                             WithdrawModel.PAYONEER);
                                       },
                                       child: Row(
@@ -986,7 +1010,9 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                                       ),
                                     ),
                                   ),
-                                if (widget.currentUser!.getIban != null && SharedManager().isWithdrawIbanEnabled(widget.preferences))
+                                if (widget.currentUser!.getIban != null &&
+                                    SharedManager().isWithdrawIbanEnabled(
+                                        widget.preferences))
                                   ContainerCorner(
                                     child: TextButton(
                                       onPressed: () {
@@ -1018,7 +1044,6 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                                       ),
                                     ),
                                   ),
-
                                 Visibility(
                                   visible: getAccountsVisibility(),
                                   child: Column(
@@ -1054,15 +1079,15 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
         });
   }
 
-  bool getAccountsVisibility(){
-
-    if ((widget.currentUser!.getPayoneerEmail != null && SharedManager().isWithdrawPayoneerEnabled(widget.preferences)) ||
-        (widget.currentUser!.getIban != null && SharedManager().isWithdrawIbanEnabled(widget.preferences)) ||
+  bool getAccountsVisibility() {
+    if ((widget.currentUser!.getPayoneerEmail != null &&
+            SharedManager().isWithdrawPayoneerEnabled(widget.preferences)) ||
+        (widget.currentUser!.getIban != null &&
+            SharedManager().isWithdrawIbanEnabled(widget.preferences)) ||
         SharedManager().isWithdrawUSDTEnabled(widget.preferences) ||
-        (widget.currentUser!.getPayPalEmail != null && SharedManager().isWithdrawPaypalEnabled(widget.preferences))){
-
+        (widget.currentUser!.getPayPalEmail != null &&
+            SharedManager().isWithdrawPaypalEnabled(widget.preferences))) {
       return false;
-
     } else {
       return true;
     }
@@ -1101,791 +1126,805 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
                       ),
                       Center(
                           child: Column(
-                            children: [
-                              TextWithTap(
-                                "get_money.payment_account".tr(),
-                                color: QuickHelp.isDarkMode(context)
-                                    ? Colors.white
-                                    : Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                              Visibility(
-                                visible: SharedManager().isWithdrawPaypalEnabled(widget.preferences),
-                                child: ContainerCorner(
-                                  color: kTransparentColor,
-                                  borderColor: kPrimaryColor,
-                                  height: 60,
-                                  borderRadius: 10,
-                                  marginLeft: 20,
-                                  marginRight: 20,
-                                  marginTop: 40,
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content: Column(
-                                              mainAxisSize:
-                                              MainAxisSize.min,
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/ic_paypal.png",
-                                                  height: 100,
-                                                  width: 100,
-                                                ),
-                                                TextWithTap(
-                                                  "get_money.paypal_email"
-                                                      .tr(),
-                                                  textAlign:
-                                                  TextAlign.center,
-                                                  marginTop: 20,
-                                                ),
-                                                SizedBox(
-                                                  height: 25,
-                                                ),
-                                                TextField(
-                                                  autocorrect: false,
-                                                  keyboardType:
-                                                  TextInputType
-                                                      .multiline,
-                                                  maxLines: null,
-                                                  controller:
-                                                  paypalEmailController,
-                                                  decoration:
-                                                  InputDecoration(
-                                                    hintText: widget
-                                                        .currentUser!
-                                                        .getPayPalEmail !=
+                        children: [
+                          TextWithTap(
+                            "get_money.payment_account".tr(),
+                            color: QuickHelp.isDarkMode(context)
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          Visibility(
+                            visible: SharedManager()
+                                .isWithdrawPaypalEnabled(widget.preferences),
+                            child: ContainerCorner(
+                              color: kTransparentColor,
+                              borderColor: kPrimaryColor,
+                              height: 60,
+                              borderRadius: 10,
+                              marginLeft: 20,
+                              marginRight: 20,
+                              marginTop: 40,
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/ic_paypal.png",
+                                              height: 100,
+                                              width: 100,
+                                            ),
+                                            TextWithTap(
+                                              "get_money.paypal_email".tr(),
+                                              textAlign: TextAlign.center,
+                                              marginTop: 20,
+                                            ),
+                                            SizedBox(
+                                              height: 25,
+                                            ),
+                                            TextField(
+                                              autocorrect: false,
+                                              keyboardType:
+                                                  TextInputType.multiline,
+                                              maxLines: null,
+                                              controller: paypalEmailController,
+                                              decoration: InputDecoration(
+                                                hintText: widget.currentUser!
+                                                            .getPayPalEmail !=
                                                         null
-                                                        ? widget
-                                                        .currentUser!
+                                                    ? widget.currentUser!
                                                         .getPayPalEmail
-                                                        : "get_money.your_email"
+                                                    : "get_money.your_email"
                                                         .tr(),
-                                                    border:
-                                                    InputBorder.none,
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  color: kGrayColor,
-                                                ),
-                                                SizedBox(
-                                                  height: 35,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                                  children: [
-                                                    ContainerCorner(
-                                                      child: TextButton(
-                                                        child:
-                                                        TextWithTap(
-                                                          "cancel"
-                                                              .tr()
-                                                              .toUpperCase(),
-                                                          color: Colors
-                                                              .white,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          fontSize: 14,
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.of(
-                                                              context)
-                                                              .pop();
-                                                        },
-                                                      ),
-                                                      color: kRedColor1,
-                                                      borderRadius: 10,
-                                                      marginLeft: 5,
-                                                      width: 125,
-                                                    ),
-                                                    ContainerCorner(
-                                                      child: TextButton(
-                                                        child:
-                                                        TextWithTap(
-                                                          "get_money.connect_"
-                                                              .tr()
-                                                              .toUpperCase(),
-                                                          color: Colors
-                                                              .white,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          fontSize: 14,
-                                                        ),
-                                                        onPressed: () {
-                                                          if (paypalEmailController
-                                                              .text
-                                                              .isEmpty) {
-                                                            showDialog(
-                                                                context:
-                                                                context,
-                                                                builder:
-                                                                    (BuildContext
-                                                                context) {
-                                                                  return AlertDialog(
-                                                                    content:
-                                                                    Column(
-                                                                      mainAxisSize:
-                                                                      MainAxisSize.min,
-                                                                      children: [
-                                                                        QuickActions.showSVGAsset(
-                                                                          "assets/svg/sad.svg",
-                                                                          height: 70,
-                                                                          width: 70,
-                                                                        ),
-                                                                        TextWithTap(
-                                                                          "get_money.empty_email".tr(),
-                                                                          textAlign: TextAlign.center,
-                                                                          color: Colors.red,
-                                                                          marginTop: 20,
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height: 35,
-                                                                        ),
-                                                                        Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            ContainerCorner(
-                                                                              child: TextButton(
-                                                                                child: TextWithTap(
-                                                                                  "cancel".tr().toUpperCase(),
-                                                                                  color: Colors.white,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  fontSize: 14,
-                                                                                ),
-                                                                                onPressed: () {
-                                                                                  Navigator.of(context).pop();
-                                                                                  Navigator.of(context).pop();
-                                                                                },
-                                                                              ),
-                                                                              color: kRedColor1,
-                                                                              borderRadius: 10,
-                                                                              marginLeft: 5,
-                                                                              width: 125,
-                                                                            ),
-                                                                            ContainerCorner(
-                                                                              child: TextButton(
-                                                                                child: TextWithTap(
-                                                                                  "get_money.try_again".tr().toUpperCase(),
-                                                                                  color: Colors.white,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  fontSize: 14,
-                                                                                ),
-                                                                                onPressed: () => Navigator.of(context).pop(),
-                                                                              ),
-                                                                              color: kGreenColor,
-                                                                              borderRadius: 10,
-                                                                              marginRight: 5,
-                                                                              width: 125,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        SizedBox(height: 20),
-                                                                      ],
-                                                                    ),
-                                                                  );
-                                                                });
-                                                          } else {
-                                                            checkEmailAndSave(
-                                                                paypalEmailController
-                                                                    .text,
-                                                                typePayPal);
-                                                          }
-                                                        },
-                                                      ),
-                                                      color: kGreenColor,
-                                                      borderRadius: 10,
-                                                      marginRight: 5,
-                                                      width: 125,
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(height: 20),
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/ic_paypal.png",
-                                        height: 100,
-                                        width: 100,
-                                      ),
-                                      TextWithTap(
-                                        widget.currentUser!.getPayPalEmail !=
-                                            null
-                                            ? "get_money.connected_".tr()
-                                            : "get_money.off_".tr(),
-                                        color: kGrayColor,
-                                        marginRight: 10,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                visible: SharedManager().isWithdrawPayoneerEnabled(widget.preferences),
-                                child: ContainerCorner(
-                                  color: kTransparentColor,
-                                  borderColor: kPrimaryColor,
-                                  height: 60,
-                                  borderRadius: 10,
-                                  marginLeft: 20,
-                                  marginRight: 20,
-                                  marginTop: 40,
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content: Column(
-                                              mainAxisSize:
-                                              MainAxisSize.min,
-                                              children: [
-                                                QuickActions.showSVGAsset(
-                                                  "assets/svg/Payoneer-Logo.wine.svg",
-                                                  height: 70,
-                                                  width: 70,
-                                                ),
-                                                TextWithTap(
-                                                  "get_money.payoneer_email"
-                                                      .tr(),
-                                                  textAlign:
-                                                  TextAlign.center,
-                                                  marginTop: 20,
-                                                ),
-                                                SizedBox(
-                                                  height: 25,
-                                                ),
-                                                TextField(
-                                                  autocorrect: false,
-                                                  keyboardType:
-                                                  TextInputType
-                                                      .multiline,
-                                                  maxLines: null,
-                                                  controller:
-                                                  payoonerEmailController,
-                                                  decoration:
-                                                  InputDecoration(
-                                                    hintText: widget
-                                                        .currentUser!
-                                                        .getPayoneerEmail !=
-                                                        null
-                                                        ? widget
-                                                        .currentUser!
-                                                        .getPayoneerEmail
-                                                        : "get_money.your_email"
-                                                        .tr(),
-                                                    border:
-                                                    InputBorder.none,
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  color: kGrayColor,
-                                                ),
-                                                SizedBox(
-                                                  height: 35,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                                  children: [
-                                                    ContainerCorner(
-                                                      child: TextButton(
-                                                        child:
-                                                        TextWithTap(
-                                                          "cancel"
-                                                              .tr()
-                                                              .toUpperCase(),
-                                                          color: Colors
-                                                              .white,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          fontSize: 14,
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.of(
-                                                              context)
-                                                              .pop();
-                                                        },
-                                                      ),
-                                                      color: kRedColor1,
-                                                      borderRadius: 10,
-                                                      marginLeft: 5,
-                                                      width: 125,
-                                                    ),
-                                                    ContainerCorner(
-                                                      child: TextButton(
-                                                        child:
-                                                        TextWithTap(
-                                                          "get_money.connect_"
-                                                              .tr()
-                                                              .toUpperCase(),
-                                                          color: Colors
-                                                              .white,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          fontSize: 14,
-                                                        ),
-                                                        onPressed: () {
-                                                          if (payoonerEmailController
-                                                              .text
-                                                              .isEmpty) {
-                                                            showDialog(
-                                                                context:
-                                                                context,
-                                                                builder:
-                                                                    (BuildContext
-                                                                context) {
-                                                                  return AlertDialog(
-                                                                    content:
-                                                                    Column(
-                                                                      mainAxisSize:
-                                                                      MainAxisSize.min,
-                                                                      children: [
-                                                                        QuickActions.showSVGAsset(
-                                                                          "assets/svg/sad.svg",
-                                                                          height: 70,
-                                                                          width: 70,
-                                                                        ),
-                                                                        TextWithTap(
-                                                                          "get_money.empty_email".tr(),
-                                                                          textAlign: TextAlign.center,
-                                                                          color: Colors.red,
-                                                                          marginTop: 20,
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height: 35,
-                                                                        ),
-                                                                        Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            ContainerCorner(
-                                                                              child: TextButton(
-                                                                                child: TextWithTap(
-                                                                                  "cancel".tr().toUpperCase(),
-                                                                                  color: Colors.white,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  fontSize: 14,
-                                                                                ),
-                                                                                onPressed: () {
-                                                                                  Navigator.of(context).pop();
-                                                                                  Navigator.of(context).pop();
-                                                                                },
-                                                                              ),
-                                                                              color: kRedColor1,
-                                                                              borderRadius: 10,
-                                                                              marginLeft: 5,
-                                                                              width: 125,
-                                                                            ),
-                                                                            ContainerCorner(
-                                                                              child: TextButton(
-                                                                                child: TextWithTap(
-                                                                                  "get_money.try_again".tr().toUpperCase(),
-                                                                                  color: Colors.white,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  fontSize: 14,
-                                                                                ),
-                                                                                onPressed: () => Navigator.of(context).pop(),
-                                                                              ),
-                                                                              color: kGreenColor,
-                                                                              borderRadius: 10,
-                                                                              marginRight: 5,
-                                                                              width: 125,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        SizedBox(height: 20),
-                                                                      ],
-                                                                    ),
-                                                                  );
-                                                                });
-                                                          } else {
-                                                            checkEmailAndSave(
-                                                                payoonerEmailController
-                                                                    .text,
-                                                                typePayoneer);
-                                                          }
-                                                        },
-                                                      ),
-                                                      color: kGreenColor,
-                                                      borderRadius: 10,
-                                                      marginRight: 5,
-                                                      width: 125,
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(height: 20),
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      QuickActions.showSVGAsset(
-                                        "assets/svg/Payoneer-Logo.wine.svg",
-                                        height: 40,
-                                        width: 40,
-                                      ),
-                                      TextWithTap(
-                                        widget.currentUser!.getPayoneerEmail !=
-                                            null
-                                            ? "get_money.connected_".tr()
-                                            : "get_money.off_".tr(),
-                                        color: kGrayColor,
-                                        marginRight: 10,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                visible: SharedManager().isWithdrawIbanEnabled(widget.preferences),
-                                child: ContainerCorner(
-                                  color: kTransparentColor,
-                                  borderColor: kPrimaryColor,
-                                  height: 60,
-                                  borderRadius: 10,
-                                  marginLeft: 20,
-                                  marginRight: 20,
-                                  marginTop: 40,
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content:
-                                            SingleChildScrollView(
-                                              child: Column(
-                                                mainAxisSize:
-                                                MainAxisSize.min,
-                                                children: [
-                                                  Icon(
-                                                    Icons.money,
-                                                    color: Colors
-                                                        .greenAccent,
-                                                  ),
-                                                  TextWithTap(
-                                                    "get_money.insert_iban"
-                                                        .tr(),
-                                                    textAlign:
-                                                    TextAlign.center,
-                                                    marginTop: 20,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 25,
-                                                  ),
-                                                  TextField(
-                                                    autocorrect: false,
-                                                    keyboardType:
-                                                    TextInputType
-                                                        .multiline,
-                                                    maxLines: null,
-                                                    controller:
-                                                    accountNameTextEditingController,
-                                                    decoration:
-                                                    InputDecoration(
-                                                      hintText: widget.currentUser!
-                                                          .getAccountName !=
-                                                          null
-                                                          ? widget
-                                                          .currentUser!
-                                                          .getAccountName
-                                                          : "get_money.type_account_name"
-                                                          .tr(),
-                                                      border: InputBorder
-                                                          .none,
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    color: kGrayColor,
-                                                  ),
-                                                  TextField(
-                                                    autocorrect: false,
-                                                    keyboardType:
-                                                    TextInputType
-                                                        .multiline,
-                                                    maxLines: null,
-                                                    controller:
-                                                    bankNameTextEditingController,
-                                                    decoration:
-                                                    InputDecoration(
-                                                      hintText: widget.currentUser!
-                                                          .getBankName !=
-                                                          null
-                                                          ? widget
-                                                          .currentUser!
-                                                          .getBankName
-                                                          : "get_money.type_bank_name"
-                                                          .tr(),
-                                                      border: InputBorder
-                                                          .none,
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    color: kGrayColor,
-                                                  ),
-                                                  TextField(
-                                                    autocorrect: false,
-                                                    keyboardType:
-                                                    TextInputType
-                                                        .multiline,
-                                                    maxLines: null,
-                                                    controller:
-                                                    ibanTextEditingController,
-                                                    decoration:
-                                                    InputDecoration(
-                                                      hintText: widget.currentUser!.getIban !=
-                                                          null
-                                                          ? widget
-                                                          .currentUser!
-                                                          .getIban
-                                                          : "get_money.type_iban"
-                                                          .tr(),
-                                                      border: InputBorder
-                                                          .none,
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    color: kGrayColor,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 35,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: [
-                                                      ContainerCorner(
-                                                        child: TextButton(
-                                                          child:
-                                                          TextWithTap(
-                                                            "cancel"
-                                                                .tr()
-                                                                .toUpperCase(),
-                                                            color: Colors
-                                                                .white,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .bold,
-                                                            fontSize: 14,
-                                                          ),
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                context)
-                                                                .pop();
-                                                          },
-                                                        ),
-                                                        color: kRedColor1,
-                                                        borderRadius: 10,
-                                                        marginLeft: 5,
-                                                        width: 125,
-                                                      ),
-                                                      ContainerCorner(
-                                                        child: TextButton(
-                                                          child:
-                                                          TextWithTap(
-                                                            "get_money.connect_"
-                                                                .tr()
-                                                                .toUpperCase(),
-                                                            color: Colors
-                                                                .white,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .bold,
-                                                            fontSize: 14,
-                                                          ),
-                                                          onPressed: () {
-                                                            if (ibanTextEditingController.text.isEmpty ||
-                                                                bankNameTextEditingController
-                                                                    .text
-                                                                    .isEmpty ||
-                                                                accountNameTextEditingController
-                                                                    .text
-                                                                    .isEmpty) {
-                                                              showDialog(
-                                                                  context:
-                                                                  context,
-                                                                  builder:
-                                                                      (BuildContext
-                                                                  context) {
-                                                                    return AlertDialog(
-                                                                      content:
-                                                                      Column(
-                                                                        mainAxisSize: MainAxisSize.min,
-                                                                        children: [
-                                                                          QuickActions.showSVGAsset(
-                                                                            "assets/svg/sad.svg",
-                                                                            height: 70,
-                                                                            width: 70,
-                                                                          ),
-                                                                          TextWithTap(
-                                                                            "get_money.empty_iban".tr(),
-                                                                            textAlign: TextAlign.center,
-                                                                            color: Colors.red,
-                                                                            marginTop: 20,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height: 35,
-                                                                          ),
-                                                                          Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              ContainerCorner(
-                                                                                child: TextButton(
-                                                                                  child: TextWithTap(
-                                                                                    "cancel".tr().toUpperCase(),
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    fontSize: 14,
-                                                                                  ),
-                                                                                  onPressed: () {
-                                                                                    Navigator.of(context).pop();
-                                                                                    Navigator.of(context).pop();
-                                                                                  },
-                                                                                ),
-                                                                                color: kRedColor1,
-                                                                                borderRadius: 10,
-                                                                                marginLeft: 5,
-                                                                                width: 125,
-                                                                              ),
-                                                                              ContainerCorner(
-                                                                                child: TextButton(
-                                                                                  child: TextWithTap(
-                                                                                    "get_money.try_again".tr().toUpperCase(),
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    fontSize: 14,
-                                                                                  ),
-                                                                                  onPressed: () => Navigator.of(context).pop(),
-                                                                                ),
-                                                                                color: kGreenColor,
-                                                                                borderRadius: 10,
-                                                                                marginRight: 5,
-                                                                                width: 125,
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          SizedBox(height: 20),
-                                                                        ],
-                                                                      ),
-                                                                    );
-                                                                  });
-                                                            } else {
-                                                              checkIbanAndSave(
-                                                                  ibanTextEditingController
-                                                                      .text,
-                                                                  accountNameTextEditingController
-                                                                      .text,
-                                                                  bankNameTextEditingController
-                                                                      .text);
-                                                            }
-                                                          },
-                                                        ),
-                                                        color:
-                                                        kGreenColor,
-                                                        borderRadius: 10,
-                                                        marginRight: 5,
-                                                        width: 125,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(height: 20),
-                                                ],
+                                                border: InputBorder.none,
                                               ),
                                             ),
-                                          );
-                                        });
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
+                                            Divider(
+                                              color: kGrayColor,
+                                            ),
+                                            SizedBox(
+                                              height: 35,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                ContainerCorner(
+                                                  child: TextButton(
+                                                    child: TextWithTap(
+                                                      "cancel"
+                                                          .tr()
+                                                          .toUpperCase(),
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  color: kRedColor1,
+                                                  borderRadius: 10,
+                                                  marginLeft: 5,
+                                                  width: 125,
+                                                ),
+                                                ContainerCorner(
+                                                  child: TextButton(
+                                                    child: TextWithTap(
+                                                      "get_money.connect_"
+                                                          .tr()
+                                                          .toUpperCase(),
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
+                                                    onPressed: () {
+                                                      if (paypalEmailController
+                                                          .text.isEmpty) {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                content: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    QuickActions
+                                                                        .showSVGAsset(
+                                                                      "assets/svg/sad.svg",
+                                                                      height:
+                                                                          70,
+                                                                      width: 70,
+                                                                    ),
+                                                                    TextWithTap(
+                                                                      "get_money.empty_email"
+                                                                          .tr(),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      color: Colors
+                                                                          .red,
+                                                                      marginTop:
+                                                                          20,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          35,
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        ContainerCorner(
+                                                                          child:
+                                                                              TextButton(
+                                                                            child:
+                                                                                TextWithTap(
+                                                                              "cancel".tr().toUpperCase(),
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 14,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.of(context).pop();
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                          ),
+                                                                          color:
+                                                                              kRedColor1,
+                                                                          borderRadius:
+                                                                              10,
+                                                                          marginLeft:
+                                                                              5,
+                                                                          width:
+                                                                              125,
+                                                                        ),
+                                                                        ContainerCorner(
+                                                                          child:
+                                                                              TextButton(
+                                                                            child:
+                                                                                TextWithTap(
+                                                                              "get_money.try_again".tr().toUpperCase(),
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 14,
+                                                                            ),
+                                                                            onPressed: () =>
+                                                                                Navigator.of(context).pop(),
+                                                                          ),
+                                                                          color:
+                                                                              kGreenColor,
+                                                                          borderRadius:
+                                                                              10,
+                                                                          marginRight:
+                                                                              5,
+                                                                          width:
+                                                                              125,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            20),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            });
+                                                      } else {
+                                                        checkEmailAndSave(
+                                                            paypalEmailController
+                                                                .text,
+                                                            typePayPal);
+                                                      }
+                                                    },
+                                                  ),
+                                                  color: kGreenColor,
+                                                  borderRadius: 10,
+                                                  marginRight: 5,
+                                                  width: 125,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      TextWithTap(
-                                        "get_money.iban_"
-                                            .tr()
-                                            .toUpperCase(),
-                                        color:
-                                        QuickHelp.isDarkMode(context)
-                                            ? Colors.white
-                                            : Colors.black,
-                                        marginRight: 20,
-                                        fontWeight: FontWeight.w700,
-                                        marginLeft: 20,
-                                        fontSize: 20,
-                                      ),
-                                      TextWithTap(
-                                        widget.currentUser!.getIban !=
-                                            null
-                                            ? "get_money.connected_".tr()
-                                            : "get_money.off_".tr(),
-                                        color: kGrayColor,
-                                        marginRight: 10,
-                                      )
-                                    ],
+                                children: [
+                                  Image.asset(
+                                    "assets/images/ic_paypal.png",
+                                    height: 100,
+                                    width: 100,
                                   ),
-                                ),
+                                  TextWithTap(
+                                    widget.currentUser!.getPayPalEmail != null
+                                        ? "get_money.connected_".tr()
+                                        : "get_money.off_".tr(),
+                                    color: kGrayColor,
+                                    marginRight: 10,
+                                  )
+                                ],
                               ),
-                              Visibility(
-                                visible: false,
-                                //visible: SharedManager().isWithdrawUSDTEnabled(widget.preferences),
-                                child: ContainerCorner(
-                                  marginTop: 20,
-                                  colors: [
-                                    kWarninngColor,
-                                    kPrimaryColor
-                                  ],
-                                  setShadowToBottom: true,
-                                  shadowColor: kGrayColor,
-                                  borderRadius: 50,
-                                  marginRight: 40,
-                                  marginLeft: 40,
-                                  height: 50,
-                                  onTap: () => QuickHelp.goToNavigatorScreen(context, WithdrawCryptoScreen(currentUser: widget.currentUser, preferences: widget.preferences!,)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      QuickActions.showSVGAsset("assets/svg/dolar_diamond.svg",),
-                                      TextWithTap("get_money.widrawn_money".tr().toUpperCase(),
-                                        color: Colors.white,
-                                        marginLeft: 10,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ],
+                            ),
+                          ),
+                          Visibility(
+                            visible: SharedManager()
+                                .isWithdrawPayoneerEnabled(widget.preferences),
+                            child: ContainerCorner(
+                              color: kTransparentColor,
+                              borderColor: kPrimaryColor,
+                              height: 60,
+                              borderRadius: 10,
+                              marginLeft: 20,
+                              marginRight: 20,
+                              marginTop: 40,
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            QuickActions.showSVGAsset(
+                                              "assets/svg/Payoneer-Logo.wine.svg",
+                                              height: 70,
+                                              width: 70,
+                                            ),
+                                            TextWithTap(
+                                              "get_money.payoneer_email".tr(),
+                                              textAlign: TextAlign.center,
+                                              marginTop: 20,
+                                            ),
+                                            SizedBox(
+                                              height: 25,
+                                            ),
+                                            TextField(
+                                              autocorrect: false,
+                                              keyboardType:
+                                                  TextInputType.multiline,
+                                              maxLines: null,
+                                              controller:
+                                                  payoonerEmailController,
+                                              decoration: InputDecoration(
+                                                hintText: widget.currentUser!
+                                                            .getPayoneerEmail !=
+                                                        null
+                                                    ? widget.currentUser!
+                                                        .getPayoneerEmail
+                                                    : "get_money.your_email"
+                                                        .tr(),
+                                                border: InputBorder.none,
+                                              ),
+                                            ),
+                                            Divider(
+                                              color: kGrayColor,
+                                            ),
+                                            SizedBox(
+                                              height: 35,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                ContainerCorner(
+                                                  child: TextButton(
+                                                    child: TextWithTap(
+                                                      "cancel"
+                                                          .tr()
+                                                          .toUpperCase(),
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  color: kRedColor1,
+                                                  borderRadius: 10,
+                                                  marginLeft: 5,
+                                                  width: 125,
+                                                ),
+                                                ContainerCorner(
+                                                  child: TextButton(
+                                                    child: TextWithTap(
+                                                      "get_money.connect_"
+                                                          .tr()
+                                                          .toUpperCase(),
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
+                                                    onPressed: () {
+                                                      if (payoonerEmailController
+                                                          .text.isEmpty) {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                content: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    QuickActions
+                                                                        .showSVGAsset(
+                                                                      "assets/svg/sad.svg",
+                                                                      height:
+                                                                          70,
+                                                                      width: 70,
+                                                                    ),
+                                                                    TextWithTap(
+                                                                      "get_money.empty_email"
+                                                                          .tr(),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      color: Colors
+                                                                          .red,
+                                                                      marginTop:
+                                                                          20,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          35,
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        ContainerCorner(
+                                                                          child:
+                                                                              TextButton(
+                                                                            child:
+                                                                                TextWithTap(
+                                                                              "cancel".tr().toUpperCase(),
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 14,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.of(context).pop();
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                          ),
+                                                                          color:
+                                                                              kRedColor1,
+                                                                          borderRadius:
+                                                                              10,
+                                                                          marginLeft:
+                                                                              5,
+                                                                          width:
+                                                                              125,
+                                                                        ),
+                                                                        ContainerCorner(
+                                                                          child:
+                                                                              TextButton(
+                                                                            child:
+                                                                                TextWithTap(
+                                                                              "get_money.try_again".tr().toUpperCase(),
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 14,
+                                                                            ),
+                                                                            onPressed: () =>
+                                                                                Navigator.of(context).pop(),
+                                                                          ),
+                                                                          color:
+                                                                              kGreenColor,
+                                                                          borderRadius:
+                                                                              10,
+                                                                          marginRight:
+                                                                              5,
+                                                                          width:
+                                                                              125,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            20),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            });
+                                                      } else {
+                                                        checkEmailAndSave(
+                                                            payoonerEmailController
+                                                                .text,
+                                                            typePayoneer);
+                                                      }
+                                                    },
+                                                  ),
+                                                  color: kGreenColor,
+                                                  borderRadius: 10,
+                                                  marginRight: 5,
+                                                  width: 125,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  QuickActions.showSVGAsset(
+                                    "assets/svg/Payoneer-Logo.wine.svg",
+                                    height: 40,
+                                    width: 40,
                                   ),
-                                ),
+                                  TextWithTap(
+                                    widget.currentUser!.getPayoneerEmail != null
+                                        ? "get_money.connected_".tr()
+                                        : "get_money.off_".tr(),
+                                    color: kGrayColor,
+                                    marginRight: 10,
+                                  )
+                                ],
                               ),
-                              TextWithTap(
-                                "get_money.Instructions_"
-                                    .tr()
-                                    .toUpperCase(),
-                                color: kPrimaryColor,
-                                marginTop: 40,
-                                onTap: () {
-                                  QuickHelp.goToWebPage(context,
-                                      pageType: QuickHelp
-                                          .pageTypeInstructions);
-                                },
+                            ),
+                          ),
+                          Visibility(
+                            visible: SharedManager()
+                                .isWithdrawIbanEnabled(widget.preferences),
+                            child: ContainerCorner(
+                              color: kTransparentColor,
+                              borderColor: kPrimaryColor,
+                              height: 60,
+                              borderRadius: 10,
+                              marginLeft: 20,
+                              marginRight: 20,
+                              marginTop: 40,
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: SingleChildScrollView(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.money,
+                                                color: Colors.greenAccent,
+                                              ),
+                                              TextWithTap(
+                                                "get_money.insert_iban".tr(),
+                                                textAlign: TextAlign.center,
+                                                marginTop: 20,
+                                              ),
+                                              SizedBox(
+                                                height: 25,
+                                              ),
+                                              TextField(
+                                                autocorrect: false,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                maxLines: null,
+                                                controller:
+                                                    accountNameTextEditingController,
+                                                decoration: InputDecoration(
+                                                  hintText: widget.currentUser!
+                                                              .getAccountName !=
+                                                          null
+                                                      ? widget.currentUser!
+                                                          .getAccountName
+                                                      : "get_money.type_account_name"
+                                                          .tr(),
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                              Divider(
+                                                color: kGrayColor,
+                                              ),
+                                              TextField(
+                                                autocorrect: false,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                maxLines: null,
+                                                controller:
+                                                    bankNameTextEditingController,
+                                                decoration: InputDecoration(
+                                                  hintText: widget.currentUser!
+                                                              .getBankName !=
+                                                          null
+                                                      ? widget.currentUser!
+                                                          .getBankName
+                                                      : "get_money.type_bank_name"
+                                                          .tr(),
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                              Divider(
+                                                color: kGrayColor,
+                                              ),
+                                              TextField(
+                                                autocorrect: false,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                maxLines: null,
+                                                controller:
+                                                    ibanTextEditingController,
+                                                decoration: InputDecoration(
+                                                  hintText: widget.currentUser!
+                                                              .getIban !=
+                                                          null
+                                                      ? widget
+                                                          .currentUser!.getIban
+                                                      : "get_money.type_iban"
+                                                          .tr(),
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                              Divider(
+                                                color: kGrayColor,
+                                              ),
+                                              SizedBox(
+                                                height: 35,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  ContainerCorner(
+                                                    child: TextButton(
+                                                      child: TextWithTap(
+                                                        "cancel"
+                                                            .tr()
+                                                            .toUpperCase(),
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 14,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                    color: kRedColor1,
+                                                    borderRadius: 10,
+                                                    marginLeft: 5,
+                                                    width: 125,
+                                                  ),
+                                                  ContainerCorner(
+                                                    child: TextButton(
+                                                      child: TextWithTap(
+                                                        "get_money.connect_"
+                                                            .tr()
+                                                            .toUpperCase(),
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 14,
+                                                      ),
+                                                      onPressed: () {
+                                                        if (ibanTextEditingController.text.isEmpty ||
+                                                            bankNameTextEditingController
+                                                                .text.isEmpty ||
+                                                            accountNameTextEditingController
+                                                                .text.isEmpty) {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return AlertDialog(
+                                                                  content:
+                                                                      Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    children: [
+                                                                      QuickActions
+                                                                          .showSVGAsset(
+                                                                        "assets/svg/sad.svg",
+                                                                        height:
+                                                                            70,
+                                                                        width:
+                                                                            70,
+                                                                      ),
+                                                                      TextWithTap(
+                                                                        "get_money.empty_iban"
+                                                                            .tr(),
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        color: Colors
+                                                                            .red,
+                                                                        marginTop:
+                                                                            20,
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            35,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          ContainerCorner(
+                                                                            child:
+                                                                                TextButton(
+                                                                              child: TextWithTap(
+                                                                                "cancel".tr().toUpperCase(),
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 14,
+                                                                              ),
+                                                                              onPressed: () {
+                                                                                Navigator.of(context).pop();
+                                                                                Navigator.of(context).pop();
+                                                                              },
+                                                                            ),
+                                                                            color:
+                                                                                kRedColor1,
+                                                                            borderRadius:
+                                                                                10,
+                                                                            marginLeft:
+                                                                                5,
+                                                                            width:
+                                                                                125,
+                                                                          ),
+                                                                          ContainerCorner(
+                                                                            child:
+                                                                                TextButton(
+                                                                              child: TextWithTap(
+                                                                                "get_money.try_again".tr().toUpperCase(),
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 14,
+                                                                              ),
+                                                                              onPressed: () => Navigator.of(context).pop(),
+                                                                            ),
+                                                                            color:
+                                                                                kGreenColor,
+                                                                            borderRadius:
+                                                                                10,
+                                                                            marginRight:
+                                                                                5,
+                                                                            width:
+                                                                                125,
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      SizedBox(
+                                                                          height:
+                                                                              20),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              });
+                                                        } else {
+                                                          checkIbanAndSave(
+                                                              ibanTextEditingController
+                                                                  .text,
+                                                              accountNameTextEditingController
+                                                                  .text,
+                                                              bankNameTextEditingController
+                                                                  .text);
+                                                        }
+                                                      },
+                                                    ),
+                                                    color: kGreenColor,
+                                                    borderRadius: 10,
+                                                    marginRight: 5,
+                                                    width: 125,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 20),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextWithTap(
+                                    "get_money.iban_".tr().toUpperCase(),
+                                    color: QuickHelp.isDarkMode(context)
+                                        ? Colors.white
+                                        : Colors.black,
+                                    marginRight: 20,
+                                    fontWeight: FontWeight.w700,
+                                    marginLeft: 20,
+                                    fontSize: 20,
+                                  ),
+                                  TextWithTap(
+                                    widget.currentUser!.getIban != null
+                                        ? "get_money.connected_".tr()
+                                        : "get_money.off_".tr(),
+                                    color: kGrayColor,
+                                    marginRight: 10,
+                                  )
+                                ],
                               ),
-                            ],
-                          )),
+                            ),
+                          ),
+                          Visibility(
+                            visible: false,
+                            //visible: SharedManager().isWithdrawUSDTEnabled(widget.preferences),
+                            child: ContainerCorner(
+                              marginTop: 20,
+                              colors: [kWarninngColor, kPrimaryColor],
+                              setShadowToBottom: true,
+                              shadowColor: kGrayColor,
+                              borderRadius: 50,
+                              marginRight: 40,
+                              marginLeft: 40,
+                              height: 50,
+                              onTap: () => QuickHelp.goToNavigatorScreen(
+                                  context,
+                                  WithdrawCryptoScreen(
+                                    currentUser: widget.currentUser,
+                                    preferences: widget.preferences!,
+                                  )),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  QuickActions.showSVGAsset(
+                                    "assets/svg/dolar_diamond.svg",
+                                  ),
+                                  TextWithTap(
+                                    "get_money.widrawn_money"
+                                        .tr()
+                                        .toUpperCase(),
+                                    color: Colors.white,
+                                    marginLeft: 10,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          TextWithTap(
+                            "get_money.Instructions_".tr().toUpperCase(),
+                            color: kPrimaryColor,
+                            marginTop: 40,
+                            onTap: () {
+                              QuickHelp.goToWebPage(context,
+                                  pageType: QuickHelp.pageTypeInstructions);
+                            },
+                          ),
+                        ],
+                      )),
                     ],
                   )));
         });
@@ -1899,13 +1938,11 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
 
   checkEmailAndSave(String email, String type) {
     if (_validateEmail(email)) {
-
-      if(type == typePayPal){
+      if (type == typePayPal) {
         createPayPalEmail(email);
-      } else if(type == typePayoneer){
+      } else if (type == typePayoneer) {
         createPayoneerEmail(email);
       }
-
     } else {
       showDialog(
           context: context,
@@ -2097,10 +2134,9 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
       height: 60,
       child: TextButton(
           onPressed: () {
-
-            if(route == QuickHelp.pageTypeSupport){
+            if (route == QuickHelp.pageTypeSupport) {
               checkSupportUser(Config.supportId);
-            } else if(route == QuickHelp.pageTypeCashOut){
+            } else if (route == QuickHelp.pageTypeCashOut) {
               QuickHelp.goToWebPage(context, pageType: route);
             }
           },
@@ -2123,8 +2159,8 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
   checkSupportUser(String objectId) async {
     QuickHelp.showLoadingDialog(context);
 
-    QueryBuilder<UserModel>? queryUser = QueryBuilder<UserModel>(
-        UserModel.forQuery());
+    QueryBuilder<UserModel>? queryUser =
+        QueryBuilder<UserModel>(UserModel.forQuery());
     queryUser.whereEqualTo(keyVarObjectId, objectId);
 
     ParseResponse response = await queryUser.query();
@@ -2137,22 +2173,23 @@ class _GetMoneyScreenState extends State<GetMoneyScreen> {
 
         //QuickActions.showUserProfile(context, widget.currentUser!, user);
 
-         QuickHelp.goToNavigator(context, MessageScreen.route, arguments: {
+        QuickHelp.goToNavigator(context, MessageScreen.route, arguments: {
           "currentUser": widget.currentUser,
           "mUser": user,
         });
-
       } else {
         QuickHelp.hideLoadingDialog(context);
 
-        QuickHelp.showAppNotificationAdvanced(context: context,
+        QuickHelp.showAppNotificationAdvanced(
+          context: context,
           title: "error".tr(),
           message: "try_again_later".tr(),
         );
       }
     } else {
       QuickHelp.hideLoadingDialog(context);
-      QuickHelp.showAppNotificationAdvanced(context: context,
+      QuickHelp.showAppNotificationAdvanced(
+        context: context,
         title: "error".tr(),
         message: "try_again_later".tr(),
       );

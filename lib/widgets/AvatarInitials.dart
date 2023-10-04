@@ -21,25 +21,28 @@ class AvatarInitials extends StatelessWidget {
       return elem[0];
     });
 
-    if (nameParts.length == 0) {
+    if (nameParts.isEmpty) {
       return "";
     }
 
     int numberOfParts = min(2, nameParts.length);
-    return nameParts.join().substring(0, numberOfParts);
+    String initials = nameParts.join().substring(0, numberOfParts);
+
+    // Convert the initials to uppercase
+    return initials.toUpperCase();
   }
 
   CircleAvatar _makeInitialsAvatar() {
     return CircleAvatar(
-      backgroundColor:
-          backgroundColor != null ? backgroundColor : kPrimaryColor,
+      backgroundColor: backgroundColor != null ? backgroundColor : Colors.blue,
       radius: avatarRadius != null ? avatarRadius : 30,
       child: Text(
         _getInitials(),
         style: TextStyle(
-            color: textColor != null ? textColor : Colors.white,
-            fontSize: textSize,
-            fontWeight: FontWeight.bold),
+          color: textColor != null ? textColor : Colors.white,
+          fontSize: textSize,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

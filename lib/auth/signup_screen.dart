@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
@@ -428,6 +429,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget welcomePage(BuildContext context) {
+    final themeColor =
+        QuickHelp.isDarkMode(context) ? Colors.white : kPrimaryColor;
     final brightness = Theme.of(context).brightness;
     final imageAsset = brightness == Brightness.dark
         ? "assets/images/starly_welcome_dark.png"
@@ -492,6 +495,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               TextFormField(
                                 autofocus: false,
                                 controller: firstName,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.deny(
+                                      RegExp(r"\s|\b"))
+                                ],
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Please enter a username";
@@ -503,7 +510,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     color: inputFieldLabelColor),
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.person_2_outlined,
-                                      color: Color(0xFFDDB300)),
+                                      color: themeColor),
                                   border: InputBorder.none,
                                   alignLabelWithHint: true,
                                   floatingLabelBehavior:
@@ -548,7 +555,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     color: inputFieldLabelColor),
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.email_outlined,
-                                      color: Color(0xFFDDB300)),
+                                      color: themeColor),
                                   border: InputBorder.none,
                                   alignLabelWithHint: true,
                                   floatingLabelBehavior:
@@ -594,7 +601,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 decoration: InputDecoration(
                                   label: Text('Password'),
                                   prefixIcon: Icon(Icons.lock_outline,
-                                      color: Color(0xFFDDB300)),
+                                      color: themeColor),
                                   border: InputBorder.none,
                                   alignLabelWithHint: true,
                                   floatingLabelBehavior:
@@ -610,7 +617,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         _passwordVisible == true
                                             ? Icons.visibility
                                             : Icons.visibility_off,
-                                        color: Color(0xFFDDB300)),
+                                        color: themeColor),
                                     onTap: () {
                                       setState(() {
                                         _passwordVisible = !_passwordVisible;
@@ -654,8 +661,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontSize: 16,
                         imageName: "",
                         imageColor: kContentColorLightTheme,
-                        color: Color(0xFFDDB300),
-                        textColor: Colors.black,
+                        color: themeColor,
+                        textColor: QuickHelp.isDarkMode(context)
+                            ? kPrimaryColor
+                            : Colors.white,
                         text: "Sign Up",
                         fontWeight: FontWeight.bold,
                         //matchParent: true,
@@ -675,12 +684,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           CircularProgressIndicator(
-                                            color: Color(0xFFDDB300),
+                                            color: QuickHelp.isDarkMode(context)
+                                                ? kContentColorDarkTheme
+                                                : kPrimaryColor,
                                           ),
                                           const SizedBox(
                                             height: 15,
                                           ),
-                                          const Text('Loading...')
+                                          Text(
+                                            'Loading...',
+                                            style: TextStyle(
+                                                color: QuickHelp.isDarkMode(
+                                                        context)
+                                                    ? kContentColorDarkTheme
+                                                    : kPrimaryColor),
+                                          )
                                         ],
                                       ),
                                     ),

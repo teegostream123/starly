@@ -678,18 +678,18 @@ class _LiveScreenState extends State<LiveScreen> with TickerProviderStateMixin {
                                             marginRight: 15,
                                             marginLeft: 5,
                                           ),
-                                          QuickActions.showSVGAsset(
-                                            "assets/svg/ic_diamond.svg",
-                                            height: 24,
-                                          ),
-                                          TextWithTap(
-                                            liveStreaming
-                                                .getAuthor!.getDiamondsTotal!
-                                                .toString(),
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            marginLeft: 3,
-                                          ),
+                                          // QuickActions.showSVGAsset(
+                                          //   "assets/svg/ic_diamond.svg",
+                                          //   height: 24,
+                                          // ),
+                                          // TextWithTap(
+                                          //   liveStreaming
+                                          //       .getAuthor!.getDiamondsTotal!
+                                          //       .toString(),
+                                          //   color: Colors.white,
+                                          //   fontSize: 14,
+                                          //   marginLeft: 3,
+                                          // ),
                                         ],
                                       ),
                                     ],

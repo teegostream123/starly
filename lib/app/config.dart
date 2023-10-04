@@ -4,7 +4,7 @@ class Config {
   static const String packageNameAndroid = "com.tiganlab.teego1";
   static const String packageNameiOS = "com.tiganlab.teego";
   static const String iosAppStoreId = "1631705048";
-  static final String appName = "starlee";
+  static final String appName = "starly";
   static final String appVersion = "1.0.0";
   static final String companyName = "Tigan, Lab";
   static final String appOrCompanyUrl = "https://tiganlab.com";

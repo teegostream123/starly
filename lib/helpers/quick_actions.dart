@@ -110,7 +110,7 @@ class QuickActions {
     return AvatarInitials(
       name: '${currentUser.getUsername}',
       textSize: 18,
-      avatarRadius: 10,
+      avatarRadius: 25,
       backgroundColor:
           QuickHelp.isDarkModeNoContext() ? Colors.white : kPrimaryColor,
       textColor: QuickHelp.isDarkModeNoContext()
@@ -198,7 +198,7 @@ class QuickActions {
         placeholder: (context, url) =>
             _loadingWidget(width: width, height: height, radius: borderRadius),
         errorWidget: (context, url, error) =>
-            QuickActions.showSVGAsset("assets/svg/ic_avatar.svg"),
+            QuickActions.showSVGAsset("assets/svg/ic_cover_imaage.svg"),
       ),
     );
   }
@@ -231,33 +231,33 @@ class QuickActions {
     );
   }
 
-  static Widget gifWidget(String imageUrl,
-      {double? borderRadius = 8, BoxFit? fit = BoxFit.cover}) {
-    return CachedNetworkImage(
-      imageUrl: imageUrl,
-      imageBuilder: (context, imageProvider) => Container(
-        decoration: BoxDecoration(
-          //shape: BoxShape.circle,
-          borderRadius: BorderRadius.circular(borderRadius!),
-          image: DecorationImage(image: imageProvider, fit: fit),
-        ),
-      ),
-      placeholder: (context, url) => FadeShimmer(
-        height: 80,
-        width: 80,
-        fadeTheme:
-            QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
-        millisecondsDelay: 0,
-      ),
-      errorWidget: (context, url, error) => FadeShimmer(
-        height: 80,
-        width: 80,
-        fadeTheme:
-            QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
-        millisecondsDelay: 0,
-      ),
-    );
-  }
+  // static Widget gifWidget(String imageUrl,
+  //     {double? borderRadius = 8, BoxFit? fit = BoxFit.cover}) {
+  //   return CachedNetworkImage(
+  //     imageUrl: imageUrl,
+  //     imageBuilder: (context, imageProvider) => Container(
+  //       decoration: BoxDecoration(
+  //         //shape: BoxShape.circle,
+  //         borderRadius: BorderRadius.circular(borderRadius!),
+  //         image: DecorationImage(image: imageProvider, fit: fit),
+  //       ),
+  //     ),
+  //     placeholder: (context, url) => FadeShimmer(
+  //       height: 80,
+  //       width: 80,
+  //       fadeTheme:
+  //           QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
+  //       millisecondsDelay: 0,
+  //     ),
+  //     errorWidget: (context, url, error) => FadeShimmer(
+  //       height: 80,
+  //       width: 80,
+  //       fadeTheme:
+  //           QuickHelp.isDarkMode(context) ? FadeTheme.dark : FadeTheme.light,
+  //       millisecondsDelay: 0,
+  //     ),
+  //   );
+  // }
 
   static Widget _loadingWidget(
       {double? width, double? height, double? radius}) {
@@ -309,9 +309,9 @@ class QuickActions {
         TextWithTap(
           title,
           marginBottom: 0,
-          fontSize: 18,
+          fontSize: 15,
           fontWeight: FontWeight.w600,
-          color: Colors.red,
+          color: Colors.redAccent,
         ),
         TextWithTap(
           explain,
@@ -319,7 +319,7 @@ class QuickActions {
           marginRight: 10,
           marginBottom: 17,
           marginTop: 5,
-          fontSize: 18,
+          fontSize: 15,
           textAlign: TextAlign.center,
           fontWeight: FontWeight.w600,
           color: kGreyColor1,

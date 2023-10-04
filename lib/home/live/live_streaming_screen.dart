@@ -798,10 +798,10 @@ class _LiveStreamingScreenState extends State<LiveStreamingScreen>
                           "assets/svg/ic_small_viewers.svg",
                           height: 16,
                         ),
-                        QuickActions.showSVGAsset(
-                          "assets/svg/ic_diamond.svg",
-                          height: 25,
-                        ),
+                        // QuickActions.showSVGAsset(
+                        //   "assets/svg/ic_diamond.svg",
+                        //   height: 25,
+                        // ),
                       ],
                     ),
                     Column(

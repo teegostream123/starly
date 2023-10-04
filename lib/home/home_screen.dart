@@ -18,7 +18,7 @@ import 'package:teego/home/message/message_list_screen.dart';
 import 'package:teego/home/profile/profile_edit.dart';
 import 'package:teego/home/profile/profile_menu_screen.dart';
 import 'package:teego/home/reels/reels_home_screen.dart';
-import 'package:teego/home/search/search_creen.dart';
+import 'package:teego/home/search/search_screen.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/ui/app_bar_left_widget.dart';
@@ -370,15 +370,15 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     QuickHelp.saveCurrentRoute(route: HomeScreen.route);
-    initSharedPref();
-    checkUser();
+    // initSharedPref();
+    // checkUser();
 
-    Future.delayed(Duration(seconds: 2), () {
-      if (QuickHelp.isIOSPlatform()) {
-        if (!mounted) return; // Try
-        showAppTrackingPermission(context);
-      }
-    });
+    // Future.delayed(Duration(seconds: 2), () {
+    //   if (QuickHelp.isIOSPlatform()) {
+    //     if (!mounted) return; // Try
+    //     showAppTrackingPermission(context);
+    //   }
+    // });
 
     // AppOpenAdManager appOpenAdManager = AppOpenAdManager()..loadAd();
     // _appLifecycleReactor =
@@ -437,28 +437,30 @@ class _HomeScreenState extends State<HomeScreen> {
           //Container(height: 50, color: Colors.purpleAccent,)
         ],
       ), //_widgetOptions().elementAt(_selectedIndex),
-      leftWidget: QuickActions.avatarWidget(
-        widget.currentUser!,
-        width: 45,
-        height: 45,
-        margin: EdgeInsets.only(bottom: 0, top: 0, left: 10, right: 5),
+      leftWidget: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: QuickActions.avatarWidget(
+          widget.currentUser!,
+          width: 45,
+          height: 45,
+        ),
       ),
       actionsIcons: [
         "assets/svg/ic_tab_feed_default.svg",
         "assets/svg/ic_top_menu_search.svg",
         //Icon(Icons.search),
-        hasNotification
-            ? Icon(
-                Icons.notifications_rounded,
-                size: 26,
-              )
-            : Image.asset(
-                "assets/images/ic_home_notification_bell.png",
-                width: 22,
-                height: 22,
-                // color: Colors.red,
-                color: textColor,
-              )
+        // hasNotification
+        //     ? Icon(
+        //         Icons.notifications_rounded,
+        //         size: 26,
+        //       )
+        //     : Image.asset(
+        //         "assets/images/ic_home_notification_bell.png",
+        //         width: 22,
+        //         height: 22,
+        //         // color: Colors.red,
+        //         color: textColor,
+        //       )
       ],
       onTapActions: [
         () => QuickHelp.goToNavigatorScreen(
@@ -483,29 +485,32 @@ class _HomeScreenState extends State<HomeScreen> {
         //   return streamingsss.objectId;
         // }
 
-        () => QuickHelp.goToNavigatorScreen(
-              context,
-              NotificationsScreen(
-                currentUser: widget.currentUser,
-                preferences: widget.preferences,
-              ),
-            ),
+        // Notification Screen
+
+        // () => QuickHelp.goToNavigatorScreen(
+        //       context,
+        //       NotificationsScreen(
+        //         currentUser: widget.currentUser,
+        //         preferences: widget.preferences,
+        //       ),
+        //     ),
       ],
       actionsIconsSize: 30,
-      coinIconSize: 20,
-      actionsColor: textColor,
-      coinsIcon: "assets/svg/ic_coin_with_star.svg",
-      coins: GestureDetector(
-        onTap: () => QuickHelp.goToNavigatorScreen(
-            context, RefillCoinsScreen(currentUser: widget.currentUser)),
-        child: getCoinsWidget(
-          coinIconSize: 20,
-          coinsColor: QuickHelp.isDarkMode(context)
-              ? kContentColorDarkTheme
-              : kContentColorLightTheme,
-          coinsIcon: "assets/svg/ic_coin_with_star.svg",
-        ),
-      ),
+      // coinIconSize: 20,
+      // actionsColor: textColor,
+      // coinsIcon: "assets/svg/ic_coin_with_star.svg",
+      // coins: GestureDetector(
+      //   onTap: () => QuickHelp.goToNavigatorScreen(
+      //       context, RefillCoinsScreen(currentUser: widget.currentUser)),
+      //   // child: getCoinsWidget(
+      //   //   coinIconSize: 20,
+      //   //   coinsColor: QuickHelp.isDarkMode(context)
+      //   //       ? kContentColorDarkTheme
+      //   //       : kContentColorLightTheme,
+      //   //   coinsIcon: "assets/svg/ic_coin_with_star.svg",
+      //   // ),
+      // ),
+
       avatarTap: () => QuickHelp.goToNavigatorScreen(
           context,
           ProfileMenuScreen(
@@ -518,239 +523,240 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget getCoinsWidget(
-      {double? coinIconSize, Color? coinsColor, String? coinsIcon}) {
-    QueryBuilder<UserModel> queryBuilder =
-        QueryBuilder<UserModel>(UserModel.forQuery());
-    queryBuilder.whereEqualTo(keyVarObjectId, 'GHYauGQysT');
+//   Widget getCoinsWidget(
+//       {double? coinIconSize, Color? coinsColor, String? coinsIcon}) {
+//     QueryBuilder<UserModel> queryBuilder =
+//         QueryBuilder<UserModel>(UserModel.forQuery());
+//     queryBuilder.whereEqualTo(keyVarObjectId, 'GHYauGQysT');
 
-    return ParseLiveListWidget<UserModel>(
-      query: queryBuilder,
-      reverse: false,
-      lazyLoading: false,
-      shrinkWrap: true,
-      duration: Duration(seconds: 0),
-      childBuilder: (BuildContext context,
-          ParseLiveListElementSnapshot<ParseObject> snapshot) {
-        if (snapshot.hasData) {
-          UserModel updatedUser = snapshot.loadedData! as UserModel;
-          widget.currentUser = updatedUser;
+//   //   return ParseLiveListWidget<UserModel>(
+//   //     query: queryBuilder,
+//   //     reverse: false,
+//   //     lazyLoading: false,
+//   //     shrinkWrap: true,
+//   //     duration: Duration(seconds: 0),
+//   //     childBuilder: (BuildContext context,
+//   //         ParseLiveListElementSnapshot<ParseObject> snapshot) {
+//   //       if (snapshot.hasData) {
+//   //         UserModel updatedUser = snapshot.loadedData! as UserModel;
+//   //         widget.currentUser = updatedUser;
 
-          if (QuickHelp.isAccountDisabled(updatedUser)) {
-            print("User updated accountDisabled true");
+//   //         if (QuickHelp.isAccountDisabled(updatedUser)) {
+//   //           print("User updated accountDisabled true");
 
-            widget.currentUser!.logout(deleteLocalUserData: true).then((value) {
-              QuickHelp.goToPageWithClear(
-                context,
-                WelcomeScreen(),
-              );
-            }).onError(
-              (error, stackTrace) {},
-            );
-          } else {
-            print("User updated accountDisabled false");
-          }
+//   //           widget.currentUser!.logout(deleteLocalUserData: true).then((value) {
+//   //             QuickHelp.goToPageWithClear(
+//   //               context,
+//   //               WelcomeScreen(),
+//   //             );
+//   //           }).onError(
+//   //             (error, stackTrace) {},
+//   //           );
+//   //         } else {
+//   //           print("User updated accountDisabled false");
+//   //         }
 
-          //print("User updated, old value: ${widget.currentUser!.getCredits.toString()}");
-          //print("User updated, new value: ${updatedUser.getCredits.toString()}");
+//   //         //print("User updated, old value: ${widget.currentUser!.getCredits.toString()}");
+//   //         //print("User updated, new value: ${updatedUser.getCredits.toString()}");
 
-          return coinsWidget(
-            coinIconSize: coinIconSize,
-            coinsColor: coinsColor,
-            coinsIcon: coinsIcon,
-            coins: updatedUser.getCredits.toString(),
-          );
-        } else {
-          return coinsWidget(
-            coinIconSize: coinIconSize,
-            coinsColor: coinsColor,
-            coinsIcon: coinsIcon,
-            coins: "...",
-          );
-        }
-      },
-      queryEmptyElement: coinsWidget(
-        coinIconSize: coinIconSize,
-        coinsColor: coinsColor,
-        coinsIcon: coinsIcon,
-        coins: "",
-      ),
-      listLoadingElement: coinsWidget(
-        coinIconSize: coinIconSize,
-        coinsColor: coinsColor,
-        coinsIcon: coinsIcon,
-        coins: "...",
-      ),
-    );
-  }
+//   //         // return coinsWidget(
+//   //         //   // coinIconSize: coinIconSize,
+//   //         //   // coinsColor: coinsColor,
+//   //         //   // coinsIcon: coinsIcon,
+//   //         //   // coins: updatedUser.getCredits.toString(),
+//   //         // );
+//   //       } else {
+//   //         // return coinsWidget(
+//   //         //   // coinIconSize: coinIconSize,
+//   //         //   // coinsColor: coinsColor,
+//   //         //   // coinsIcon: coinsIcon,
+//   //         //   // coins: "...",
+//   //         // );
+//   //       }
+//   //     },
+//   //     // queryEmptyElement: coinsWidget(
+//   //     //   coinIconSize: coinIconSize,
+//   //     //   coinsColor: coinsColor,
+//   //     //   coinsIcon: coinsIcon,
+//   //     //   coins: "",
+//   //     // ),
+//   //     // listLoadingElement: coinsWidget(
+//   //     //   coinIconSize: coinIconSize,
+//   //     //   coinsColor: coinsColor,
+//   //     //   coinsIcon: coinsIcon,
+//   //     //   coins: "...",
+//   //     // ),
+//   //   );
+//   // }
 
-  Widget coinsWidget(
-      {double? coinIconSize,
-      Color? coinsColor,
-      String? coinsIcon,
-      String? coins}) {
-    return Row(
-      children: [
-        QuickActions.showSVGAsset(coinsIcon!,
-            width: coinIconSize, height: coinIconSize),
-        TextWithTap(
-          coins!,
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-          marginLeft: 6,
-          color: coinsColor,
-        ),
-      ],
-    );
-  }
+//   // Widget coinsWidget(
+//   //     {double? coinIconSize,
+//   //     Color? coinsColor,
+//   //     String? coinsIcon,
+//   //     String? coins}) {
+//   //   return Row(
+//   //     children: [
+//   //       QuickActions.showSVGAsset(coinsIcon!,
+//   //           width: coinIconSize, height: coinIconSize),
+//   //       TextWithTap(
+//   //         coins!,
+//   //         fontWeight: FontWeight.bold,
+//   //         fontSize: 14,
+//   //         marginLeft: 6,
+//   //         color: coinsColor,
+//   //       ),
+//   //     ],
+//   //   );
+//   // }
 
-  void showNameModal() {
-    showModalBottomSheet(
-        context: (context),
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        enableDrag: false,
-        isDismissible: false,
-        builder: (context) {
-          return _showBottomSheetUpdateName();
-        });
-  }
+//   void showNameModal() {
+//     showModalBottomSheet(
+//         context: (context),
+//         isScrollControlled: true,
+//         backgroundColor: Colors.transparent,
+//         enableDrag: false,
+//         isDismissible: false,
+//         builder: (context) {
+//           return _showBottomSheetUpdateName();
+//         });
+//   }
 
-  Widget _showBottomSheetUpdateName() {
-    return Container(
-      color: Color.fromRGBO(0, 0, 0, 0.001),
-      child: GestureDetector(
-        onTap: () {},
-        child: DraggableScrollableSheet(
-          initialChildSize: 0.3,
-          minChildSize: 0.1,
-          maxChildSize: 1.0,
-          builder: (_, controller) {
-            return StatefulBuilder(
-              builder: (context, setState) {
-                return Container(
-                  decoration: BoxDecoration(
-                    //color: Colors.black.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(25.0),
-                      topRight: const Radius.circular(25.0),
-                    ),
-                  ),
-                  child: ContainerCorner(
-                    radiusTopRight: 25.0,
-                    radiusTopLeft: 25.0,
-                    color: QuickHelp.isDarkMode(context)
-                        ? kContentColorLightTheme
-                        : Colors.white,
-                    child: SafeArea(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                TextWithTap(
-                                  "profile_screen.change_name_title".tr(),
-                                  marginTop: 10,
-                                  marginBottom: 20,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                TextWithTap(
-                                  "profile_screen.change_name_explain".tr(),
-                                  fontSize: 16,
-                                  textAlign: TextAlign.center,
-                                  marginLeft: 20,
-                                  marginRight: 20,
-                                ),
-                              ],
-                            ),
-                            ButtonWidget(
-                              width: 100,
-                              height: 30,
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              marginBottom: 20,
-                              borderRadiusAll: 30,
-                              color: kPrimaryColor,
-                              child: TextWithTap(
-                                "profile_screen.change_btn".tr(),
-                                color: Colors.white,
-                              ),
-                              onTap: () async {
-                                QuickHelp.hideLoadingDialog(context);
+//   Widget _showBottomSheetUpdateName() {
+//     return Container(
+//       color: Color.fromRGBO(0, 0, 0, 0.001),
+//       child: GestureDetector(
+//         onTap: () {},
+//         child: DraggableScrollableSheet(
+//           initialChildSize: 0.3,
+//           minChildSize: 0.1,
+//           maxChildSize: 1.0,
+//           builder: (_, controller) {
+//             return StatefulBuilder(
+//               builder: (context, setState) {
+//                 return Container(
+//                   decoration: BoxDecoration(
+//                     //color: Colors.black.withOpacity(0.5),
+//                     borderRadius: BorderRadius.only(
+//                       topLeft: const Radius.circular(25.0),
+//                       topRight: const Radius.circular(25.0),
+//                     ),
+//                   ),
+//                   child: ContainerCorner(
+//                     radiusTopRight: 25.0,
+//                     radiusTopLeft: 25.0,
+//                     color: QuickHelp.isDarkMode(context)
+//                         ? kContentColorLightTheme
+//                         : Colors.white,
+//                     child: SafeArea(
+//                       child: Center(
+//                         child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: [
+//                             Column(
+//                               children: [
+//                                 TextWithTap(
+//                                   "profile_screen.change_name_title".tr(),
+//                                   marginTop: 10,
+//                                   marginBottom: 20,
+//                                   fontSize: 20,
+//                                   fontWeight: FontWeight.bold,
+//                                 ),
+//                                 TextWithTap(
+//                                   "profile_screen.change_name_explain".tr(),
+//                                   fontSize: 16,
+//                                   textAlign: TextAlign.center,
+//                                   marginLeft: 20,
+//                                   marginRight: 20,
+//                                 ),
+//                               ],
+//                             ),
+//                             ButtonWidget(
+//                               width: 100,
+//                               height: 30,
+//                               padding: EdgeInsets.only(left: 10, right: 10),
+//                               marginBottom: 20,
+//                               borderRadiusAll: 30,
+//                               color: kPrimaryColor,
+//                               child: TextWithTap(
+//                                 "profile_screen.change_btn".tr(),
+//                                 color: Colors.white,
+//                               ),
+//                               onTap: () async {
+//                                 QuickHelp.hideLoadingDialog(context);
 
-                                UserModel? user = await QuickHelp
-                                    .goToNavigatorScreenForResult(
-                                        context,
-                                        ProfileEdit(
-                                          currentUser: widget.currentUser,
-                                        ));
+//                                 UserModel? user = await QuickHelp
+//                                     .goToNavigatorScreenForResult(
+//                                         context,
+//                                         ProfileEdit(
+//                                           currentUser: widget.currentUser,
+//                                         ));
 
-                                if (user != null) {
-                                  widget.currentUser = user;
-                                }
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
-      ),
-    );
-  }
+//                                 if (user != null) {
+//                                   widget.currentUser = user;
+//                                 }
+//                               },
+//                             )
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 );
+//               },
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
 
-  showAppTrackingPermission(BuildContext context) async {
-    // Show tracking authorization dialog and ask for permission
-    try {
-      // If the system can show an authorization request dialog
-      TrackingStatus status =
-          await AppTrackingTransparency.trackingAuthorizationStatus;
+//   showAppTrackingPermission(BuildContext context) async {
+//     // Show tracking authorization dialog and ask for permission
+//     try {
+//       // If the system can show an authorization request dialog
+//       TrackingStatus status =
+//           await AppTrackingTransparency.trackingAuthorizationStatus;
 
-      if (status == TrackingStatus.notSupported) {
-        print("TrackingPermission notSupported");
-      } else if (status == TrackingStatus.notDetermined) {
-        // Show a custom explainer dialog before the system dialog
+//       if (status == TrackingStatus.notSupported) {
+//         print("TrackingPermission notSupported");
+//       } else if (status == TrackingStatus.notDetermined) {
+//         // Show a custom explainer dialog before the system dialog
 
-        if (!appTrackingDialogShowing) {
-          appTrackingDialogShowing = true;
+//         if (!appTrackingDialogShowing) {
+//           appTrackingDialogShowing = true;
 
-          QuickHelp.showDialogPermission(
-              context: context,
-              dismissible: false,
-              confirmButtonText:
-                  "permissions.allow_tracking".tr().toUpperCase(),
-              title: "permissions.allow_app_tracking".tr(),
-              message: "permissions.app_tracking_explain".tr(),
-              onPressed: () async {
-                QuickHelp.goBackToPreviousPage(context);
-                appTrackingDialogShowing = false;
-                await AppTrackingTransparency.requestTrackingAuthorization()
-                    .then((value) async {
-                  if (status == TrackingStatus.authorized) {
-                    await FacebookAuth.i.autoLogAppEventsEnabled(true);
-                  }
-                });
-              });
-        }
-      }
-    } on PlatformException {
-      // Unexpected exception was thrown
-    }
-  }
+//           QuickHelp.showDialogPermission(
+//               context: context,
+//               dismissible: false,
+//               confirmButtonText:
+//                   "permissions.allow_tracking".tr().toUpperCase(),
+//               title: "permissions.allow_app_tracking".tr(),
+//               message: "permissions.app_tracking_explain".tr(),
+//               onPressed: () async {
+//                 QuickHelp.goBackToPreviousPage(context);
+//                 appTrackingDialogShowing = false;
+//                 await AppTrackingTransparency.requestTrackingAuthorization()
+//                     .then((value) async {
+//                   if (status == TrackingStatus.authorized) {
+//                     await FacebookAuth.i.autoLogAppEventsEnabled(true);
+//                   }
+//                 });
+//               });
+//         }
+//       }
+//     } on PlatformException {
+//       // Unexpected exception was thrown
+//     }
+//   }
 
-  showError(int code) {
-    QuickHelp.hideLoadingDialog(context);
-    QuickHelp.showErrorResult(context, code);
-  }
+//   showError(int code) {
+//     QuickHelp.hideLoadingDialog(context);
+//     QuickHelp.showErrorResult(context, code);
+//   }
 
-  initSharedPref() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    Constants.queryParseConfig(preferences);
-  }
+//   initSharedPref() async {
+//     SharedPreferences preferences = await SharedPreferences.getInstance();
+//     Constants.queryParseConfig(preferences);
+//   }
+// }
 }

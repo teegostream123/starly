@@ -22,7 +22,6 @@ class BlockedUsersScreen extends StatefulWidget {
 }
 
 class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -43,17 +42,15 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
         ));
   }
 
-  Widget blockedUsers(){
-
+  Widget blockedUsers() {
     return FutureBuilder(
         future: _loadBlockedUsers(),
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-
-          if(snapshot.connectionState == ConnectionState.waiting ){
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return ListView.builder(
               itemCount: 20,
               shrinkWrap: true,
-              itemBuilder: (context, index){
+              itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.all(8.0),
                   child: FadeShimmer(
@@ -72,118 +69,146 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
             return ListView.builder(
               itemCount: results.length,
               shrinkWrap: true,
-              itemBuilder: (context, index){
-                  return Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              child: QuickActions.avatarWidget(results[index]),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 60,
+                            width: 60,
+                            child: QuickActions.avatarWidget(results[index]),
+                          ),
+                          Expanded(
+                              child: TextWithTap(
+                            results[index].getFullName!,
+                            fontSize: 16,
+                            marginLeft: 10,
+                          )),
+                          ContainerCorner(
+                            height: 40,
+                            width: 40,
+                            borderRadius: 50,
+                            color: kGreenColor,
+                            child: Icon(
+                              Icons.vpn_key,
+                              color: Colors.white,
                             ),
-                            Expanded(child: TextWithTap(results[index].getFullName!, fontSize: 16, marginLeft: 10,)),
-                            ContainerCorner(
-                              height: 40,
-                              width: 40,
-                              borderRadius: 50,
-                              color: kGreenColor,
-                              child: Icon(Icons.vpn_key, color: Colors.white,),
-                              onTap: (){
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 15.0),
-                                              child: QuickActions.avatarWidget(results[index],
-                                                  width: 130, height: 130),
-                                            ),
-                                            TextWithTap(
-                                              results[index].getFullName!,
-                                              textAlign: TextAlign.center,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            TextWithTap(
-                                              "feed.unlock_user_confirm".tr(),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            SizedBox(
-                                              height: 35,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                ContainerCorner(
-                                                  child: TextButton(
-                                                    child: TextWithTap("cancel".tr().toUpperCase(),
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 14,
-                                                    ),
-                                                    onPressed: (){
-                                                      Navigator.of(context).pop();
-                                                    },
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 15.0),
+                                            child: QuickActions.avatarWidget(
+                                                results[index],
+                                                width: 130,
+                                                height: 130),
+                                          ),
+                                          TextWithTap(
+                                            results[index].getFullName!,
+                                            textAlign: TextAlign.center,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          TextWithTap(
+                                            "feed.unlock_user_confirm".tr(),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(
+                                            height: 35,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              ContainerCorner(
+                                                child: TextButton(
+                                                  child: TextWithTap(
+                                                    "cancel".tr().toUpperCase(),
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
                                                   ),
-                                                  color: kRedColor1,
-                                                  borderRadius: 10,
-                                                  marginLeft: 5,
-                                                  width: 125,
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
                                                 ),
-                                                ContainerCorner(
-                                                  child: TextButton(
-                                                    child: TextWithTap("confirm_".tr().toUpperCase(),
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 14,
-                                                    ),
-                                                    onPressed: ()=> _unlockUser(results[index]),
+                                                color: kRedColor1,
+                                                borderRadius: 10,
+                                                marginLeft: 5,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .3,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              ContainerCorner(
+                                                child: TextButton(
+                                                  child: TextWithTap(
+                                                    "confirm_"
+                                                        .tr()
+                                                        .toUpperCase(),
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
                                                   ),
-                                                  color: kGreenColor,
-                                                  borderRadius: 10,
-                                                  marginRight: 5,
-                                                  width: 125,
+                                                  onPressed: () => _unlockUser(
+                                                      results[index]),
                                                 ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20),
-                                          ],
-                                        ),
-                                      );
-                                    });
-                              },
-                            ),
-                          ],
-                        ),
-                        Divider()
-                      ],
-                    ),
-                  );
+                                                color: kGreenColor,
+                                                borderRadius: 10,
+                                                marginRight: 5,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .3,
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 20),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            },
+                          ),
+                        ],
+                      ),
+                      Divider()
+                    ],
+                  ),
+                );
               },
             );
           } else {
-            return Center(child: QuickActions.noContentFound("menu_settings.blocked_users_title".tr(), "menu_settings.blocked_users_explain".tr(), "assets/svg/ic_blocked_menu.svg"),);
+            return Center(
+              child: QuickActions.noContentFound(
+                  "menu_settings.blocked_users_title".tr(),
+                  "menu_settings.blocked_users_explain".tr(),
+                  "assets/svg/ic_blocked_menu.svg"),
+            );
           }
         });
-
   }
 
   Future<List<dynamic>?> _loadBlockedUsers() async {
-
     List<String> usersIds = [];
 
-    for(UserModel userModel in widget.currentUser!.getBlockedUsers!){
+    for (UserModel userModel in widget.currentUser!.getBlockedUsers!) {
       usersIds.add(userModel.objectId!);
     }
 
-    QueryBuilder<UserModel> queryBuilder = QueryBuilder<UserModel>(UserModel.forQuery());
+    QueryBuilder<UserModel> queryBuilder =
+        QueryBuilder<UserModel>(UserModel.forQuery());
     queryBuilder.whereContainedIn(UserModel.keyId, usersIds);
-
 
     ParseResponse apiResponse = await queryBuilder.query();
 
@@ -197,21 +222,19 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
     } else {
       return apiResponse.error as dynamic;
     }
-
   }
 
-  _unlockUser(UserModel author) async{
+  _unlockUser(UserModel author) async {
     QuickHelp.showLoadingDialog(context);
 
     widget.currentUser!.removeBlockedUser = author;
     widget.currentUser!.removeBlockedUserIds = author.objectId!;
 
     ParseResponse response = await widget.currentUser!.save();
-    if(response.success){
+    if (response.success) {
       Navigator.of(context).pop();
       QuickHelp.hideLoadingDialog(context);
       setState(() {});
     }
   }
-
 }

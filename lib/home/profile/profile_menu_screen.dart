@@ -63,12 +63,15 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                     Expanded(
                       child: Row(
                         children: [
-                          QuickActions.avatarWidget(
-                            widget.userModel!,
-                            width: 45,
-                            height: 45,
-                            margin: EdgeInsets.only(
-                                bottom: 0, top: 0, left: 15, right: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: QuickActions.avatarWidget(
+                              widget.userModel!,
+                              width: 45,
+                              height: 45,
+                              margin:
+                                  EdgeInsets.only(bottom: 0, top: 0, right: 5),
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -306,7 +309,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
       marginRight: 10,
       borderWidth: 1,
       marginBottom: 5,
-      marginTop: 10,
+      // marginTop: 10,
       borderRadiusAll: 10,
       color: QuickHelp.isDarkMode(context)
           ? kContentColorLightTheme
@@ -364,13 +367,14 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
           )
         ],
       ),
-      onTap: () => route == RefillCoinsScreen.route
-          ? QuickHelp.goToNavigatorScreen(
-              context,
-              RefillCoinsScreen(
-                currentUser: widget.userModel,
-              ))
-          : QuickHelp.goToNavigator(context, route!),
+      //   onTap: () => route == RefillCoinsScreen.route
+      //       ? QuickHelp.goToNavigatorScreen(
+      //           context,
+      //           RefillCoinsScreen(
+      //             currentUser: widget.userModel,
+      //           ))
+      //       : QuickHelp.goToNavigator(context, route!),
+      //
     );
   }
 
@@ -450,34 +454,34 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                 ],
               ),
             ),
-            ContainerCorner(
-              color: kTransparentColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/svg/ic_diamond.svg",
-                        height: 30,
-                        width: 30,
-                      ),
-                      TextWithTap(
-                        widget.userModel!.getDiamonds.toString(),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        marginRight: 20,
-                        marginLeft: 5,
-                        color: QuickHelp.isDarkMode(context)
-                            ? kContentColorDarkTheme
-                            : kGreyColor2,
-                        //color: Colors.black,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
+            // ContainerCorner(
+            //   color: kTransparentColor,
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.end,
+            //     children: [
+            //       Row(
+            //         children: [
+            //           SvgPicture.asset(
+            //             "assets/svg/ic_diamond.svg",
+            //             height: 30,
+            //             width: 30,
+            //           ),
+            //           TextWithTap(
+            //             widget.userModel!.getDiamonds.toString(),
+            //             fontWeight: FontWeight.bold,
+            //             fontSize: 17,
+            //             marginRight: 20,
+            //             marginLeft: 5,
+            //             color: QuickHelp.isDarkMode(context)
+            //                 ? kContentColorDarkTheme
+            //                 : kGreyColor2,
+            //             //color: Colors.black,
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // )
           ],
         ),
         onTap: () async {

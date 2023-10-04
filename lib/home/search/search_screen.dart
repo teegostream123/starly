@@ -158,15 +158,15 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               length: numberOfColumns,
               child: Column(
                 children: [
-                  ContainerCorner(
-                    child: TabBar(
-                      indicatorColor: kPrimaryColor,
-                      controller: _tabController,
-                      indicatorPadding: EdgeInsets.only(top: 0),
-                      automaticIndicatorColorAdjustment: false,
-                      tabs: tabs,
-                    ),
-                  ),
+                  // ContainerCorner(
+                  //   child: TabBar(
+                  //     indicatorColor: kPrimaryColor,
+                  //     controller: _tabController,
+                  //     indicatorPadding: EdgeInsets.only(top: 0),
+                  //     automaticIndicatorColorAdjustment: false,
+                  //     tabs: tabs,
+                  //   ),
+                  // ),
                   Expanded(
                     child: Container(
                       height: MediaQuery.of(context).size.height,
@@ -199,72 +199,74 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ContainerCorner(
-                    marginTop: 10,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextWithTap(
-                          "search_screen.broad_casting".tr(),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          marginLeft: 5,
-                        ),
-                        TextWithTap(
-                          "search_screen.view_all".tr(),
-                          color: kRedColor1,
-                          decoration: TextDecoration.underline,
-                          marginRight: 5,
-                          onTap: () {
-                            _tabController.animateTo((1));
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  FutureBuilder(
-                    future: loadHashTagsByGivenText(searchTextController.text),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        tags = snapshot.data as List<dynamic>;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(tags.length, (index) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                searchLives(
-                                    liveFilter: tags[index]["objectId"]),
-                              ],
-                            );
-                          }),
-                        );
-                      } else {
-                        return ContainerCorner(
-                          child: Center(
-                            child: TextWithTap("nothing found"),
-                          ),
-                        );
-                      }
-                    },
-                  ),
+                  // ContainerCorner(
+                  //   marginTop: 10,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       TextWithTap(
+                  //         "search_screen.broad_casting".tr(),
+                  //         fontWeight: FontWeight.bold,
+                  //         fontSize: 16,
+                  //         marginLeft: 5,
+                  //       ),
+                  //       TextWithTap(
+                  //         "search_screen.view_all".tr(),
+                  //         color: kRedColor1,
+                  //         decoration: TextDecoration.underline,
+                  //         marginRight: 5,
+                  //         onTap: () {
+                  //           _tabController.animateTo((1));
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
+                  // FutureBuilder(
+                  //   future: loadHashTagsByGivenText(searchTextController.text),
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.hasData) {
+                  //       tags = snapshot.data as List<dynamic>;
+                  //       return Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: List.generate(tags.length, (index) {
+                  //           return Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               searchLives(
+                  //                   liveFilter: tags[index]["objectId"]),
+                  //             ],
+                  //           );
+                  //         }),
+                  //       );
+                  //     } else {
+                  //       return ContainerCorner(
+                  //         child: Center(
+                  //           child: TextWithTap("nothing found"),
+                  //         ),
+                  //       );
+                  //     }
+                  //   },
+                  // ),
                 ],
               ),
             ),
           ),
-          ContainerCorner(
-            height: 60,
-            width: MediaQuery.of(context).size.width,
-            color: kGreyColor1.withOpacity(0.2),
-            marginTop: 10,
-            child: TextWithTap(
-              "search_screen.search_suggestion".tr(),
-              marginTop: 18,
-              marginLeft: 10,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          // ContainerCorner(
+          //   height: 60,
+          //   width: MediaQuery.of(context).size.width,
+          //   color: kGreyColor1.withOpacity(0.2),
+          //   marginTop: 10,
+          //   child: TextWithTap(
+          //     "search_screen.search_suggestion".tr(),
+          //     marginTop: 18,
+          //     marginLeft: 10,
+          //     fontSize: 16,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+
           ContainerCorner(
             color: QuickHelp.isDarkMode(context)
                 ? kContentColorLightTheme
@@ -728,16 +730,16 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                             marginRight: 15,
                             marginLeft: 5,
                           ),
-                          QuickActions.showSVGAsset(
-                            "assets/svg/ic_diamond.svg",
-                            height: 15,
-                          ),
-                          TextWithTap(
-                            liveStreaming.getDiamonds.toString(),
-                            color: Colors.white,
-                            fontSize: 14,
-                            marginLeft: 3,
-                          ),
+                          // QuickActions.showSVGAsset(
+                          //   "assets/svg/ic_diamond.svg",
+                          //   height: 15,
+                          // ),
+                          // TextWithTap(
+                          //   liveStreaming.getDiamonds.toString(),
+                          //   color: Colors.white,
+                          //   fontSize: 14,
+                          //   marginLeft: 3,
+                          // ),
                         ],
                       ),
                     ),
@@ -1027,16 +1029,16 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                   marginRight: 15,
                                   marginLeft: 5,
                                 ),
-                                QuickActions.showSVGAsset(
-                                  "assets/svg/ic_diamond.svg",
-                                  height: 15,
-                                ),
-                                TextWithTap(
-                                  results[index].getDiamonds.toString(),
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  marginLeft: 3,
-                                ),
+                                // QuickActions.showSVGAsset(
+                                //   "assets/svg/ic_diamond.svg",
+                                //   height: 15,
+                                // ),
+                                // TextWithTap(
+                                //   results[index].getDiamonds.toString(),
+                                //   color: Colors.white,
+                                //   fontSize: 14,
+                                //   marginLeft: 3,
+                                // ),
                               ],
                             ),
                           ),
@@ -1150,16 +1152,16 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                 marginRight: 15,
                                 marginLeft: 5,
                               ),
-                              QuickActions.showSVGAsset(
-                                "assets/svg/ic_diamond.svg",
-                                height: 15,
-                              ),
-                              TextWithTap(
-                                results[index].getDiamonds.toString(),
-                                color: Colors.white,
-                                fontSize: 14,
-                                marginLeft: 3,
-                              ),
+                              // QuickActions.showSVGAsset(
+                              //   "assets/svg/ic_diamond.svg",
+                              //   height: 15,
+                              // ),
+                              // TextWithTap(
+                              //   results[index].getDiamonds.toString(),
+                              //   color: Colors.white,
+                              //   fontSize: 14,
+                              //   marginLeft: 3,
+                              // ),
                             ],
                           ),
                         ),
@@ -1305,25 +1307,26 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            ContainerCorner(
-                                              marginRight: 10,
-                                              child: Row(
-                                                children: [
-                                                  QuickActions.showSVGAsset(
-                                                    "assets/svg/ic_diamond.svg",
-                                                    height: 24,
-                                                  ),
-                                                  TextWithTap(
-                                                    snapshot
-                                                        .data[index].getDiamonds
-                                                        .toString(),
-                                                    fontSize: 14,
-                                                    marginLeft: 3,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                            // ContainerCorner(
+                                            //   marginRight: 10,
+                                            //   child: Row(
+                                            //     children: [
+                                            //       QuickActions.showSVGAsset(
+                                            //         "assets/svg/ic_diamond.svg",
+                                            //         height: 24,
+                                            //       ),
+                                            //       TextWithTap(
+                                            //         snapshot
+                                            //             .data[index].getDiamonds
+                                            //             .toString(),
+                                            //         fontSize: 14,
+                                            //         marginLeft: 3,
+                                            //         fontWeight: FontWeight.bold,
+                                            //       ),
+                                            //     ],
+                                            //   ),
+                                            // ),
+
                                             ContainerCorner(
                                               marginLeft: 10,
                                               child: Row(
@@ -1354,25 +1357,26 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                          Visibility(
-                            visible: showFollowBtn,
-                            child: ContainerCorner(
-                              height: 40,
-                              width: 40,
-                              color: kRedColor1,
-                              borderRadius: 50,
-                              child: Padding(
-                                padding: EdgeInsets.all(5),
-                                child: QuickActions.showSVGAsset(
-                                  "assets/svg/ic_tab_following_default.svg",
-                                  color: Colors.white,
-                                  width: 15,
-                                  height: 15,
-                                ),
-                              ),
-                              onTap: () => follow(results[index]),
-                            ),
-                          ),
+                          // Visibility(
+                          //   visible: showFollowBtn,
+                          //   child: ContainerCorner(
+                          //     height: 40,
+                          //     width: 40,
+                          //     color: kRedColor1,
+                          //     borderRadius: 50,
+                          //     child: Padding(
+                          //       padding: EdgeInsets.all(5),
+                          //       child: QuickActions.showSVGAsset(
+                          //         "assets/svg/ic_tab_following_default.svg",
+                          //         color: Colors.white,
+                          //         width: 15,
+                          //         height: 15,
+                          //       ),
+                          //     ),
+                          //     onTap: () => follow(results[index]),
+                          //   ),
+                          // ),
+
                           Visibility(
                             visible: showChatBtn,
                             child: ContainerCorner(

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -451,6 +450,8 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   Widget builderTextField(StateSetter setState) {
+    final selectedColor =
+        QuickHelp.isDarkMode(context) ? Colors.pinkAccent : kPrimaryColor;
     String? _validateFullName(String value) {
       int firstSpace = value.indexOf(" ");
 
@@ -552,7 +553,7 @@ class _ProfileEditState extends State<ProfileEdit> {
             textInputType: TextInputType.datetime,
             isNodeNext: false,
             textInputAction: TextInputAction.done,
-            hintText: "profile_screen.birthday_hint".tr(),
+            hintText: 'dd/mm/yy',
             //icon: Icons.calendar_today,
             //hintText: QuickHelp.toOriginalFormatString(new DateTime.now()),
             onChanged: (value) {
@@ -575,14 +576,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                 //width: 250,
                 height: 46,
                 fontSize: 17,
-                borderWidth: 1,
+                borderWidth: 4,
                 marginRight: 10,
                 marginLeft: 10,
                 borderColor: mySelectedGender == UserModel.keyGenderFemale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 textColor: mySelectedGender == UserModel.keyGenderFemale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 onTap: () {
                   setState(() {
@@ -603,10 +604,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                 marginLeft: 10,
                 //marginTop: 15,
                 borderColor: mySelectedGender == UserModel.keyGenderMale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 textColor: mySelectedGender == UserModel.keyGenderMale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 onTap: () {
                   setState(() {

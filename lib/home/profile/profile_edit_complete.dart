@@ -492,6 +492,8 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
   }
 
   Widget builderTextField(StateSetter setState) {
+    final selectedColor =
+        QuickHelp.isDarkMode(context) ? Colors.pinkAccent : kPrimaryColor;
     String? _validateFullName(String value) {
       int firstSpace = value.indexOf(" ");
 
@@ -606,7 +608,7 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
             textInputType: TextInputType.datetime,
             isNodeNext: false,
             textInputAction: TextInputAction.done,
-            hintText: "profile_screen.birthday_hint".tr(),
+            hintText: "dd/mm/yy".tr(),
             //icon: Icons.calendar_today,
             //hintText: QuickHelp.toOriginalFormatString(new DateTime.now()),
             onChanged: (value) {
@@ -633,10 +635,10 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
                 marginRight: 10,
                 marginLeft: 10,
                 borderColor: mySelectedGender == UserModel.keyGenderFemale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 textColor: mySelectedGender == UserModel.keyGenderFemale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 onTap: () {
                   setState(() {
@@ -657,10 +659,10 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
                 marginLeft: 10,
                 //marginTop: 15,
                 borderColor: mySelectedGender == UserModel.keyGenderMale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 textColor: mySelectedGender == UserModel.keyGenderMale
-                    ? kPrimaryColor
+                    ? selectedColor
                     : kPrimacyGrayColor,
                 onTap: () {
                   setState(() {
@@ -723,15 +725,17 @@ class _ProfileCompleteEditState extends State<ProfileCompleteEdit> {
 
       _getUser();
     } else if (userResult.error!.code == 100) {
+      print(['errrrrrrrrrr: ', userResult.error]);
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.showAppNotificationAdvanced(
           context: context, title: "error".tr(), message: "not_connected".tr());
     } else {
+      print(['er is: ', userResult.error?.message]);
       QuickHelp.hideLoadingDialog(context);
       QuickHelp.showAppNotificationAdvanced(
           context: context,
           title: "error".tr(),
-          message: "try_again_later".tr());
+          message: userResult.error?.message ?? "try_again_later".tr());
     }
   }
 

@@ -141,24 +141,24 @@ class _InvitedUsersState extends State<InvitedUsers> {
                             ],
                           ),
                         ),
-                        ContainerCorner(
-                          marginRight: 10,
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/svg/ic_diamond.svg",
-                                height: 24,
-                              ),
-                              TextWithTap(
-                                invitedUsersModel.getDiamonds.toString(),
-                                fontSize: 14,
-                                marginLeft: 3,
-                                fontWeight: FontWeight.bold,
-                                color: kGrayColor,
-                              ),
-                            ],
-                          ),
-                        ),
+                        // ContainerCorner(
+                        //   marginRight: 10,
+                        //   child: Row(
+                        //     children: [
+                        //       SvgPicture.asset(
+                        //         "assets/svg/ic_diamond.svg",
+                        //         height: 24,
+                        //       ),
+                        //       TextWithTap(
+                        //         invitedUsersModel.getDiamonds.toString(),
+                        //         fontSize: 14,
+                        //         marginLeft: 3,
+                        //         fontWeight: FontWeight.bold,
+                        //         color: kGrayColor,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     )
                   ],
@@ -273,32 +273,32 @@ class _InvitedUsersState extends State<InvitedUsers> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          ContainerCorner(
-                            color: kGrayColor,
-                            height: 3,
-                            width: 30,
-                            borderRadius: 50,
-                            marginTop: 10,
-                          ),
-                          TextWithTap(
-                            "invite_friends.need_help".tr(),
-                            marginTop: 20,
-                            marginBottom: 20,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          TextWithTap(
-                            "invite_friends.contact_us_via_whatsapp"
-                                .tr(namedArgs: {"app_name": Setup.appName}),
-                            fontSize: 16,
-                            textAlign: TextAlign.center,
-                            marginLeft: 20,
-                            marginRight: 20,
-                          ),
-                        ],
-                      ),
+                      // Column(
+                      //   children: [
+                      //     ContainerCorner(
+                      //       color: kGrayColor,
+                      //       height: 3,
+                      //       width: 30,
+                      //       borderRadius: 50,
+                      //       marginTop: 10,
+                      //     ),
+                      //     TextWithTap(
+                      //       "invite_friends.need_help".tr(),
+                      //       marginTop: 20,
+                      //       marginBottom: 20,
+                      //       fontSize: 20,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //     TextWithTap(
+                      //       "invite_friends.contact_us_via_whatsapp"
+                      //           .tr(namedArgs: {"app_name": Setup.appName}),
+                      //       fontSize: 16,
+                      //       textAlign: TextAlign.center,
+                      //       marginLeft: 20,
+                      //       marginRight: 20,
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 );

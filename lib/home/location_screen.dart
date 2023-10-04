@@ -251,7 +251,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 borderRadiusBottomLeft: 15,
                 marginTop: 50,
                 fontSize: 17,
-                colors: [kPrimaryColor, kSecondaryColor],
+                colors: [kPrimaryColor, kPrimaryColor],
                 textColor: Colors.white,
                 text: "permissions.allow_location".tr().toUpperCase(),
                 fontWeight: FontWeight.normal,
