@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:helpers/helpers.dart' show OpacityTransition, SwipeTransition;
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/reels/video_crop_screen.dart';
+import 'package:teego/models/others/video_editor_model.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:video_editor/video_editor.dart';
 
-import '../../models/others/video_editor_model.dart';
 import '../../ui/app_bar.dart';
 import '../../ui/text_with_tap.dart';
 
@@ -83,48 +83,26 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
               CropScreen(controller: _controller)));
 
   Future _exportVideo() async {
-    try {
-      print('export video ta[p]');
+    print('export video ta[p]');
+    _exportingProgress.value = 0;
+    _isExporting.value = true;
+
+    final config = VideoFFmpegVideoEditorConfig(_controller);
+
+    final FFmpegVideoEditorExecute execute = await config.getExecuteConfig();
+
+    setState(() {
       _exportingProgress.value = 1;
-      _isExporting.value = true;
+      _exported = true;
+    });
 
-      setState(() {
-        _exported = true;
-      });
-    } catch (e, t) {
-      print('Error in reels: $e');
-      print('Stack trace: $t');
-    }
+    final path = execute.outputPath;
 
-    // NOTE: To use `-crf 1` and [VideoExportPreset] you need `ffmpeg_kit_flutter_min_gpl` package (with `ffmpeg_kit` only it won't work)
-    // TODO: Export video;
-    // await _controller.(
-    //   // preset: VideoExportPreset.medium,
-    //   customInstruction: "-crf 17",
-    //   onProgress: (stats, value) => _exportingProgress.value = value,
-    //   onError: (e, s) => _exportText = "Error on export video :(",
-    //   onCompleted: (file) async {
-    //     _isExporting.value = false;
-    //     await _controller.extractCover(
-    //       onError: (e, s) => _exportText = "Error on cover exportation :(",
-    //       onCompleted: (cover) {
-    //         if (!mounted) return;
-    //         _exportText = "Cover exported! ${cover.path}";
-    //         print("Exported cover ${cover.path}");
-    //         print("Exported Video ${file.path}");
-    //         VideoEditorModel videoEditorModel = VideoEditorModel();
-    //         videoEditorModel.setCoverPath(cover.path);
-    //         videoEditorModel.setVideoFile(file);
-    //         QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
-    //       },
-    //     );
-    //     _exportText = "Video success export!";
-    //     setState(() => _exported = true);
-    //   },
+    final VideoEditorModel videoEditorModel = VideoEditorModel(
+      videoFile: File(path),
+    );
 
-    // QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
-
-    print('printing the reels video');
+    QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
   }
 
   @override
@@ -339,12 +317,13 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
 
   Widget _coverSelection() {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: height / 4),
-        child: CoverSelection(
-          controller: _controller,
-          //height: height,
-          quantity: 8,
-        ));
+      margin: EdgeInsets.symmetric(horizontal: height / 4),
+      child: CoverSelection(
+        controller: _controller,
+        //height: height,
+        quantity: 8,
+      ),
+    );
   }
 
   Widget _customSnackBar() {
