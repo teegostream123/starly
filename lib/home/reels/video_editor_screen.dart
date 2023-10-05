@@ -98,35 +98,32 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
 
     // NOTE: To use `-crf 1` and [VideoExportPreset] you need `ffmpeg_kit_flutter_min_gpl` package (with `ffmpeg_kit` only it won't work)
     // TODO: Export video;
-    await _controller.(
-      // preset: VideoExportPreset.medium,
-      customInstruction: "-crf 17",
-      onProgress: (stats, value) => _exportingProgress.value = value,
-      onError: (e, s) => _exportText = "Error on export video :(",
-      onCompleted: (file) async {
-        _isExporting.value = false;
-        await _controller.extractCover(
-          onError: (e, s) => _exportText = "Error on cover exportation :(",
-          onCompleted: (cover) {
-            if (!mounted) return;
-            _exportText = "Cover exported! ${cover.path}";
-            print("Exported cover ${cover.path}");
-            print("Exported Video ${file.path}");
-            VideoEditorModel videoEditorModel = VideoEditorModel();
-            videoEditorModel.setCoverPath(cover.path);
-            videoEditorModel.setVideoFile(file);
-            QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
-          },
-        );
-        _exportText = "Video success export!";
-        setState(() => _exported = true);
-      },
-    );
+    // await _controller.(
+    //   // preset: VideoExportPreset.medium,
+    //   customInstruction: "-crf 17",
+    //   onProgress: (stats, value) => _exportingProgress.value = value,
+    //   onError: (e, s) => _exportText = "Error on export video :(",
+    //   onCompleted: (file) async {
+    //     _isExporting.value = false;
+    //     await _controller.extractCover(
+    //       onError: (e, s) => _exportText = "Error on cover exportation :(",
+    //       onCompleted: (cover) {
+    //         if (!mounted) return;
+    //         _exportText = "Cover exported! ${cover.path}";
+    //         print("Exported cover ${cover.path}");
+    //         print("Exported Video ${file.path}");
+    //         VideoEditorModel videoEditorModel = VideoEditorModel();
+    //         videoEditorModel.setCoverPath(cover.path);
+    //         videoEditorModel.setVideoFile(file);
+    //         QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
+    //       },
+    //     );
+    //     _exportText = "Video success export!";
+    //     setState(() => _exported = true);
+    //   },
 
+    // QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
 
-           
-      QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
-    
     print('printing the reels video');
   }
 

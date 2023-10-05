@@ -24,7 +24,7 @@ class _PaywallWidgetState extends State<PaywallWidget> {
   @override
   Widget build(BuildContext context) {
     final textColor =
-        QuickHelp.isDarkMode(context) ? Colors.white : kPrimaryColor;
+        QuickHelp.isDarkMode(context) ? Colors.white : Colors.grey;
     return Container(
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.75,
@@ -70,10 +70,13 @@ class _PaywallWidgetState extends State<PaywallWidget> {
       });
   Widget buildPackage(BuildContext context, Package package) {
     final product = package.storeProduct;
-    final textColor =
-        QuickHelp.isDarkMode(context) ? kPrimaryColor : Colors.white;
+    final textColor = QuickHelp.isDarkMode(context)
+        ? kPrimaryColor
+        : Colors.white.withOpacity(.8);
     return Card(
-      color: QuickHelp.isDarkMode(context) ? Colors.white : kPrimaryColor,
+      color: QuickHelp.isDarkMode(context)
+          ? Colors.white
+          : kPrimaryColor.withOpacity(.8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Theme(
           data: ThemeData.light(),
