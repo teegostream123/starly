@@ -18,6 +18,7 @@ import 'package:teego/ui/app_bar.dart';
 import 'package:teego/ui/button_with_svg.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/utils/colors.dart';
+import 'package:teego/widgets/dospace/dospace.dart' as dospace;
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../app/setup.dart';
@@ -30,10 +31,8 @@ import '../../ui/button_with_gradient.dart';
 import '../../ui/button_with_icon.dart';
 import '../../ui/text_with_tap.dart';
 import '../../utils/shared_manager.dart';
-import 'video_editor_screen.dart';
 import '../message/message_screen.dart';
-
-import 'package:teego/widgets/dospace/dospace.dart' as dospace;
+import 'video_editor_screen.dart';
 
 // ignore: must_be_immutable
 class ReelsVideosScreen extends StatefulWidget {
@@ -206,6 +205,11 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
                                     fontWeight: FontWeight.bold,
                                     textColor: Colors.white,
                                     onTap: () {
+                                      print('isVideo $isVideo');
+
+                                      print(
+                                          'Is self hosted => ${Constants.isSelfHosted}');
+
                                       if (isVideo!) {
                                         if (Constants.isSelfHosted) {
                                           initDoSpaces(
@@ -337,15 +341,19 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
   }
 
   initFileUpload(File? videoFile, {String? text}) async {
-    QuickHelp.showLoadingDialog(context);
+    try {
+      QuickHelp.showLoadingDialog(context);
 
-    parseFile = ParseFile(
-      videoFile,
-      url: videoFile!.absolute.path,
-      name: "video.mp4",
-    );
+      parseFile = ParseFile(
+        videoFile,
+        url: videoFile!.absolute.path,
+        name: "video.mp4",
+      );
 
-    savePost(text: text);
+      savePost(text: text);
+    } catch (e, t) {
+      print(['init file upload error', e, t]);
+    }
   }
 
   savePost({String? text}) async {

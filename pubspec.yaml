@@ -102,9 +102,12 @@ dependencies:
   google_sign_in: ^6.0.2
   sign_in_with_apple: ^5.0.0
   flutter_facebook_auth: ^5.0.8
+  video_thumbnail: ^0.5.3
 
   #payments:
   purchases_flutter: ^5.6.0
+  image: ^4.0.15
+  ffmpeg_kit_flutter: ^6.0.3
 
   # fake name
   faker: ^2.1.0

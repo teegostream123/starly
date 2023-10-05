@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:flutter/material.dart';
 import 'package:helpers/helpers.dart' show OpacityTransition, SwipeTransition;
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 import 'package:teego/helpers/quick_help.dart';
 import 'package:teego/home/reels/video_crop_screen.dart';
 import 'package:teego/models/others/video_editor_model.dart';
@@ -82,6 +86,38 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
           builder: (BuildContext context) =>
               CropScreen(controller: _controller)));
 
+  Future<String?> generateThumbnail(String videoPath,
+      {int positionInSeconds = 5}) async {
+    try {
+      // Generate a unique name for the thumbnail to prevent overwriting existing files
+      final String thumbnailName =
+          path.basenameWithoutExtension(videoPath) + '_thumbnail.jpg';
+
+      // Define a path to save the thumbnail
+      final Directory appDocDir = await getApplicationDocumentsDirectory();
+      final String thumbnailPath = path.join(appDocDir.path, thumbnailName);
+
+      // Create FFmpeg command
+      final String command =
+          "-i $videoPath -ss 00:00:$positionInSeconds -vframes 1 $thumbnailPath";
+
+      // Execute FFmpeg command
+      await FFmpegKit.executeAsync(command, (session) async {
+        final returnCode = await session.getReturnCode();
+
+        if (returnCode == null || !ReturnCode.isSuccess(returnCode)) {
+          print("Error generating thumbnail: ${session.getFailStackTrace()}");
+          throw Exception("Failed to generate thumbnail.");
+        }
+      });
+
+      return thumbnailPath;
+    } catch (e) {
+      print("Exception during thumbnail generation: $e");
+      return null;
+    }
+  }
+
   Future _exportVideo() async {
     print('export video ta[p]');
     _exportingProgress.value = 0;
@@ -98,8 +134,19 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
 
     final path = execute.outputPath;
 
+    final thumbnail = await generateThumbnail(path);
+
+    if (thumbnail == null) {
+      QuickHelp.showAppNotification(
+        context: context,
+        title: 'Error while building thumbnail',
+      );
+      return;
+    }
+
     final VideoEditorModel videoEditorModel = VideoEditorModel(
       videoFile: File(path),
+      coverPath: thumbnail,
     );
 
     QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
@@ -304,13 +351,15 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(vertical: height / 4),
         child: TrimSlider(
+          controller: _controller,
+          height: height,
+          horizontalMargin: height / 4,
+          child: TrimTimeline(
+            textStyle: TextStyle(color: null),
             controller: _controller,
-            height: height,
-            horizontalMargin: height / 4,
-            child: TrimTimeline(
-                textStyle: TextStyle(color: null),
-                controller: _controller,
-                padding: const EdgeInsets.only(top: 10, bottom: 10))),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+          ),
+        ),
       )
     ];
   }
