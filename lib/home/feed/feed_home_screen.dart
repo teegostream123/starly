@@ -75,9 +75,14 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
     if (text != null) postsModel.setText = text;
 
     if (isVideo!) {
+      _future = _loadFeeds(isExclusive: false);
       postsModel.setVideoThumbnail = parseFileThumbnail!;
       postsModel.setVideo = parseFile!;
       postsModel.setImage = parseFileThumbnail!;
+
+      setState(() {
+        _future = _loadFeeds(isExclusive: false);
+      });
     } else {
       postsModel.setImage = parseFile!;
     }
@@ -91,6 +96,8 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
     if (response.success) {
       QuickHelp.hideLoadingDialog(context);
 
+      _future = _loadFeeds(isExclusive: false);
+
       parseFile = null;
       parseFileThumbnail = null;
       uploadPhoto = "";
@@ -102,6 +109,9 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
         message: "feed.post_posted".tr(),
         isError: false,
       );
+      setState(() {
+        _future = _loadFeeds(isExclusive: false);
+      });
     } else {
       QuickHelp.hideLoadingDialog(context);
 
@@ -442,7 +452,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          /// aa wa
                           Row(
                             children: [
                               Expanded(
@@ -737,90 +746,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
         });
   }
 
-  // Widget getAdsFuture() {
-  //   return FutureBuilder(
-  //       // future: QuickHelp.isIOSPlatform(), ? loadAds() : loadNativeAds(),
-  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //         if (snapshot.connectionState == ConnectionState.waiting) {
-  //           return Center(
-  //             child: QuickHelp.showLoadingAnimation(),
-  //           );
-  //         } else if (snapshot.hasData) {
-  //           // AdWithView ad = snapshot.data as AdWithView;
-  //
-  //           return Container(
-  //             width: MediaQuery.of(context).size.width,
-  //             height: MediaQuery.of(context).size.width,
-  //             alignment: Alignment.center,
-  //             color: QuickHelp.isDarkMode(context)
-  //                 ? kContentColorLightTheme
-  //                 : Colors.white,
-  //             margin: EdgeInsets.only(top: 7),
-  //             child: AdWidget(
-  //               ad: ad,
-  //               key: Key(
-  //                 ad.hashCode.toString(),
-  //               ),
-  //             ),
-  //           );
-  //         } else {
-  //           return Container();
-  //         }
-  //       });
-  // }
-
-  // Future<dynamic> loadNativeAds() async {
-  //   NativeAd _listAd = NativeAd(
-  //     adUnitId: Constants.getAdmobFeedNativeUnit(),
-  //     factoryId: "listTile",
-  //     request: const AdRequest(),
-  //     listener: NativeAdListener(onAdLoaded: (ad) {
-  //       if (kDebugMode) {
-  //         print("Ad Got onAdLoaded");
-  //       }
-  //     }, onAdFailedToLoad: (ad, error) {
-  //       debugPrint("Ad Got onAdFailedToLoad ${error.message}");
-  //       ad.dispose();
-  //     }, onAdClosed: (ad) {
-  //       debugPrint("Ad Got onAdClosed");
-  //       ad.dispose();
-  //     }, onAdWillDismissScreen: (ad) {
-  //       debugPrint("Ad Got onAdWillDismissScreen");
-  //       ad.dispose();
-  //     }),
-  //   );
-  //   return _listAd..load();
-  // }
-
-  // Future<dynamic> loadAds() async {
-  //   BannerAdListener bannerAdListener = BannerAdListener(
-  //     onAdWillDismissScreen: (ad) {
-  //       debugPrint("Ad Got onAdWillDismissScreen");
-  //       ad.dispose();
-  //     },
-  //     onAdClosed: (ad) {
-  //       debugPrint("Ad Got Closed");
-  //       ad.dispose();
-  //     },
-  //     onAdFailedToLoad: (ad, error) {
-  //       debugPrint("Ad Got onAdFailedToLoad");
-  //       ad.dispose();
-  //     },
-  //     onAdLoaded: (ad) {
-  //       debugPrint("Ad Got onAdLoaded");
-  //     },
-  //   );
-  //
-  //   BannerAd bannerAd = BannerAd(
-  //     size: AdSize.banner,
-  //     adUnitId: Constants.getAdmobFeedNativeUnit(),
-  //     listener: bannerAdListener,
-  //     request: const AdRequest(),
-  //   );
-  //
-  //   return bannerAd..load();
-  // }
-
   void openVideo(PostsModel post) async {
     showModalBottomSheet(
         context: (context),
@@ -1050,74 +975,74 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Switch.adaptive(
-                                        activeColor: kPrimaryColor,
-                                        value: isSwitchedForPremium,
-                                        onChanged: (bool value) {
-                                          setState(() {
-                                            isSwitchedForPremium = value;
-                                          });
-                                        }),
-                                    Visibility(
-                                      visible: false,
-                                      child: TextWithTap(
-                                        "feed.for_".tr(),
-                                        marginRight: 10,
-                                        color: isSwitchedForPremium
-                                            ? kPrimaryColor
-                                            : QuickHelp.isDarkModeNoContext()
-                                                ? Colors.white
-                                                : Colors.black,
-                                      ),
-                                    ),
-                                    TextWithTap(
-                                      "feed.for_subscriber_only".tr(namedArgs: {
-                                        "coins": Setup
-                                            .coinsNeededToForExclusivePost
-                                            .toString()
-                                      }),
-                                      marginLeft: 10,
-                                      color: isSwitchedForPremium
-                                          ? kPrimaryColor
-                                          : QuickHelp.isDarkModeNoContext()
-                                              ? Colors.white
-                                              : Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15,
-                                    ),
-                                    QuickActions.showSVGAsset(
-                                      "assets/svg/ic_coin_active.svg",
-                                      width: 30,
-                                      height: 30,
-                                      //color: kPrimaryColor,
-                                    ),
+                                    // Switch.adaptive(
+                                    //     activeColor: kPrimaryColor,
+                                    //     value: isSwitchedForPremium,
+                                    //     onChanged: (bool value) {
+                                    //       setState(() {
+                                    //         isSwitchedForPremium = value;
+                                    //       });
+                                    //     }),
+                                    // Visibility(
+                                    //   visible: false,
+                                    //   child: TextWithTap(
+                                    //     "feed.for_".tr(),
+                                    //     marginRight: 10,
+                                    //     color: isSwitchedForPremium
+                                    //         ? kPrimaryColor
+                                    //         : QuickHelp.isDarkModeNoContext()
+                                    //             ? Colors.white
+                                    //             : Colors.black,
+                                    //   ),
+                                    // ),
+                                    // TextWithTap(
+                                    //   "feed.for_subscriber_only".tr(namedArgs: {
+                                    //     "coins": Setup
+                                    //         .coinsNeededToForExclusivePost
+                                    //         .toString()
+                                    //   }),
+                                    //   marginLeft: 10,
+                                    //   color: isSwitchedForPremium
+                                    //       ? kPrimaryColor
+                                    //       : QuickHelp.isDarkModeNoContext()
+                                    //           ? Colors.white
+                                    //           : Colors.black,
+                                    //   fontWeight: FontWeight.w500,
+                                    //   fontSize: 15,
+                                    // ),
+                                    // QuickActions.showSVGAsset(
+                                    //   "assets/svg/ic_coin_active.svg",
+                                    //   width: 30,
+                                    //   height: 30,
+                                    //   //color: kPrimaryColor,
+                                    // ),
                                   ],
                                 ),
-                                Visibility(
-                                  visible: true,
-                                  child: TextWithTap(
-                                    isSwitchedForPremium
-                                        ? "feed.for_subscriber_only_explain_exc"
-                                            .tr(namedArgs: {
-                                            "coins": Setup
-                                                .coinsNeededToForExclusivePost
-                                                .toString()
-                                          })
-                                        : "feed.for_subscriber_only_explain".tr(
-                                            namedArgs: {
-                                                "coins": Setup
-                                                    .coinsNeededToForExclusivePost
-                                                    .toString()
-                                              }),
-                                    marginLeft: 10,
-                                    color: isSwitchedForPremium
-                                        ? kPrimaryColor
-                                        : kPrimacyGrayColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
+                                // Visibility(
+                                //   visible: true,
+                                //   child: TextWithTap(
+                                //     isSwitchedForPremium
+                                //         ? "feed.for_subscriber_only_explain_exc"
+                                //             .tr(namedArgs: {
+                                //             "coins": Setup
+                                //                 .coinsNeededToForExclusivePost
+                                //                 .toString()
+                                //           })
+                                //         : "feed.for_subscriber_only_explain".tr(
+                                //             namedArgs: {
+                                //                 "coins": Setup
+                                //                     .coinsNeededToForExclusivePost
+                                //                     .toString()
+                                //               }),
+                                //     marginLeft: 10,
+                                //     color: isSwitchedForPremium
+                                //         ? kPrimaryColor
+                                //         : kPrimacyGrayColor,
+                                //     fontWeight: FontWeight.w500,
+                                //     fontSize: 13,
+                                //     textAlign: TextAlign.center,
+                                //   ),
+                                // ),
                                 ContainerCorner(
                                   height: 50,
                                   color: kTransparentColor,
@@ -1727,6 +1652,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
     ParseResponse parseResponse = await postsModel.delete();
     if (parseResponse.success) {
       QuickHelp.goBackToPreviousPage(context);
+      _future = _loadFeeds(isExclusive: false);
 
       QuickHelp.showAppNotificationAdvanced(
         context: context,
@@ -1735,6 +1661,9 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
         user: postsModel.getAuthor,
         isError: null,
       );
+      setState(() {
+        _future = _loadFeeds(isExclusive: false);
+      });
     } else {
       QuickHelp.goBackToPreviousPage(context);
 

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ import 'package:teego/utils/colors.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-
 import '../../app/constants.dart';
 import '../../app/setup.dart';
 import 'constant.dart';
@@ -49,9 +47,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
 
   List<dynamic> list = [], selected = [];
   List<HashTagModel> selectedHashTags = [];
-
-  //List<dynamic> hashTagsListFromServer = <dynamic>[];
-  //List<HashTagModel> hashTagsListPointer = <HashTagModel>[];
 
   TextEditingController hashTagsEditTextController = TextEditingController();
 
@@ -316,32 +311,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  /*ContainerCorner(
-                    height: 40,
-                    borderRadius: 50,
-                    marginTop: 10,
-                    marginRight: 10,
-                    onTap: () {
-                      selectButton(LiveStreamingModel.liveTypeParty);
-                    },
-                    colors: [
-                      partyBtnSelected ? kWarninngColor : kTransparentColor,
-                      partyBtnSelected ? kPrimaryColor : kTransparentColor,
-                    ],
-                    child: TextButton(
-                      onPressed: (){
-                        selectButton(LiveStreamingModel.liveTypeParty);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if(partyBtnSelected)
-                          Icon(Icons.camera_alt_outlined, color: Colors.white,size: 18,),
-                          TextWithTap("live_streaming.btn_party".tr().toUpperCase(),color: Colors.white, marginLeft: 10,)
-                        ],
-                      ),
-                    ),
-                  ),*/
                   ButtonWithGradient(
                     height: 50,
                     width: size.width / 2,
@@ -350,18 +319,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                     borderRadius: 50,
                     svgURL: "assets/svg/ic_tab_live_selected.svg",
                     onTap: () async {
-                      // if (parseFileUrl != null) {
-                      //   createLive();
-                      // } else {
-                      //   QuickHelp.showAppNotificationAdvanced(
-                      //       context: context,
-                      //       title: "live_streaming.live_set_cover_photo".tr(),
-                      //       message:
-                      //           "live_streaming.live_set_cover_photo_add".tr(),
-                      //       isError: true);
-                      // }
-                      // selectButton(LiveStreamingModel.liveTypeGoLive);
-
                       UserModel? user = await ParseUser.currentUser();
 
                       Navigator.of(context).push(MaterialPageRoute(
@@ -399,52 +356,7 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                         goLiveBtnSelected ? kPrimaryColor : kTransparentColor,
                     endColor:
                         goLiveBtnSelected ? kPrimaryColor : kTransparentColor,
-                    /*colors: [
-                      goLiveBtnSelected ? kWarninngColor : kTransparentColor,
-                      goLiveBtnSelected ? kPrimaryColor : kTransparentColor,
-                    ],*/
-                    /*child: TextButton(
-                      onPressed: (){
-                        selectButton(LiveStreamingModel.liveTypeGoLive);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if(goLiveBtnSelected)
-                          //Icon(Icons.camera_alt_outlined, color: Colors.white,size: 18,),
-                            SvgPicture.asset("assets/svg/ic_tab_live_selected.svg", color: Colors.white,),
-                          TextWithTap("live_streaming.btn_go_live".tr().toUpperCase(),color: Colors.white, marginLeft: 10, marginRight: 10,)
-                        ],
-                      ),
-                    ),*/
                   ),
-                  /*ContainerCorner(
-                    height: 40,
-                    borderRadius: 50,
-                    marginTop: 10,
-                    marginRight: 10,
-                    onTap: (){
-                      selectButton(LiveStreamingModel.liveTypeBattle);
-                    },
-                    colors: [
-                      battleBtnSelected ? kWarninngColor : kTransparentColor,
-                      battleBtnSelected ? kPrimaryColor : kTransparentColor,
-                    ],
-                    child: TextButton(
-                      onPressed: (){
-                        selectButton(LiveStreamingModel.liveTypeBattle);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if(battleBtnSelected)
-                          //Icon(Icons.camera_alt_outlined, color: Colors.white,size: 18,),
-                            SvgPicture.asset("assets/svg/ic_tab_live_selected.svg", color: Colors.white,),
-                          TextWithTap("live_streaming.btn_battle".tr().toUpperCase(),color: Colors.white, marginLeft: 10,)
-                        ],
-                      ),
-                    ),
-                  ),*/
                 ],
               )
             ],
@@ -787,8 +699,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
   void isFirstLive() async {
     QueryBuilder<LiveStreamingModel> queryBuilder =
         QueryBuilder(LiveStreamingModel());
-    // queryBuilder.whereEqualTo(
-    //     LiveStreamingModel.keyAuthorId, widget.currentUser!.objectId);
 
     ParseResponse parseResponse = await queryBuilder.count();
 
@@ -803,11 +713,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
 
   Future createLive() async {
     try {
-      // get what is required from a stream
-      // title (logged in user name) + uploaded image url
-      // save this data in parserDB
-      // navigate the user to live screen;
-
       QuickHelp.showLoadingDialog(context, isDismissible: false);
 
       QueryBuilder<LiveStreamingModel> queryBuilder =
@@ -1037,10 +942,6 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
               .tr(namedArgs: {"app_name": Setup.appName}),
           onPressed: () async {
             QuickHelp.hideLoadingDialog(context);
-
-            //if (await Permission.camera.request().isGranted) {
-            // Either the permission was already granted before or the user just granted it.
-            //}
 
             // You can request multiple permissions at once.
             Map<Permission, PermissionStatus> statuses = await [
@@ -1310,51 +1211,6 @@ Widget hostAudioVideoViewForegroundBuilder(
           height: 30,
           width: 30,
         )
-        // ValueListenableBuilder<bool>(
-        //   valueListenable: ZegoUIKit().getCameraStateNotifier(user.id),
-        //   builder: (context, isCameraEnabled, _) {
-        //     return GestureDetector(
-        //       onTap: () {
-        //         ZegoUIKit().turnCameraOn(!isCameraEnabled, userID: user.id);
-        //       },
-        //       child: SizedBox(
-        //         width: size.width * 0.4,
-        //         height: size.width * 0.4,
-        //         child: prebuiltImage(
-        //           isCameraEnabled ? toolbarCameraNormal : toolbarCameraOff,
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
-        // SizedBox(width: size.width * 0.3),
-        // ValueListenableBuilder<bool>(
-        //   valueListenable: ZegoUIKit().getMicrophoneStateNotifier(user.id),
-        //   builder: (context, isMicrophoneEnabled, _) {
-        //     return GestureDetector(
-        //       onTap: () {
-        //         ZegoUIKit().turnMicrophoneOn(
-        //           !isMicrophoneEnabled,
-        //           userID: user.id,
-        //
-        //           ///  if you don't want to stop co-hosting automatically when both camera and microphone are off,
-        //           ///  set the [muteMode] parameter to true.
-        //           ///
-        //           ///  However, in this case, your [ZegoUIKitPrebuiltLiveStreamingConfig.stopCoHostingWhenMicCameraOff]
-        //           ///  should also be set to false.
-        //           muteMode: true,
-        //         );
-        //       },
-        //       child: SizedBox(
-        //         width: size.width * 0.4,
-        //         height: size.width * 0.4,
-        //         child: prebuiltImage(
-        //           isMicrophoneEnabled ? toolbarMicNormal : toolbarMicOff,
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // )
       ],
     ),
   );

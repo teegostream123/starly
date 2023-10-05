@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:teego/home/live/zego_live_stream.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/providers/revenuecat.dart';
@@ -13,11 +12,10 @@ import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import '../../helpers/quick_actions.dart';
 import '../../helpers/quick_help.dart';
 import '../../utils/colors.dart';
-import '../search/search_screen.dart';
-import 'artist_screen.dart';
 import 'constant.dart';
 
 class LivePartyScreen extends StatefulWidget {
+  // final String userName;
   const LivePartyScreen({super.key});
 
   @override
@@ -33,86 +31,9 @@ class _LivePartyScreenState extends State<LivePartyScreen> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  // Future<dynamic> _loadLive(int? category) async {
-  //   try {
-  //     print('loading available stream');
-  //     // QueryBuilder<UserModel> queryUsers = QueryBuilder(UserModel.forQuery());
-  //     // queryUsers.whereValueExists(UserModel.keyUserStatus, true);
-  //     // queryUsers.whereEqualTo(UserModel.keyUserStatus, true);
-
-  //     queryBuilder = QueryBuilder<LiveStreamingModel>(LiveStreamingModel());
-
-  //     print('query builder init');
-
-  //     // queryBuilder.whereEqualTo(LiveStreamingModel.keyStreaming, true);
-  //     // queryBuilder.whereNotEqualTo(
-  //     //     LiveStreamingModel.keyAuthorUid, widget.currentUser!.getUid);
-  //     // queryBuilder.whereNotContainedIn(
-  //     //     LiveStreamingModel.keyAuthor, widget.currentUser!.getBlockedUsers!);
-  //     // queryBuilder.whereValueExists(LiveStreamingModel.keyAuthor, true);
-  //     // queryBuilder.whereDoesNotMatchQuery(
-  //     //     LiveStreamingModel.keyAuthor, queryUsers);
-
-  //     // if (category == tabTypeForYou) {
-  //     //queryBuilder.orderByDescending(keyVarCreatedAt);
-  //     // queryBuilder.orderByDescending(LiveStreamingModel.keyAuthorTotalDiamonds);
-  //     // } else if (category == tabTypeNearby) {
-  //     // Nearby
-  //     // if (widget.currentUser!.getGeoPoint != null) {
-  //     //   queryBuilder.whereWithinKilometers(LiveStreamingModel.keyLiveGeoPoint,
-  //     //       widget.currentUser!.getGeoPoint!, Setup.maxDistanceToNearBy);
-  //     //   queryBuilder.orderByDescending(LiveStreamingModel.keyLiveGeoPoint);
-  //     // }
-  //     // } else if (category == tabTypeNew) {
-  //     // New
-  //     // queryBuilder.whereEqualTo(LiveStreamingModel.keyFirstLive, true);
-  //     // queryBuilder.orderByDescending(LiveStreamingModel.keyCreatedAt);
-  //     // } else if (category == tabTypePopular) {
-  //     // Popular
-  //     // queryBuilder.whereGreaterThanOrEqualsTo(
-  //     //     LiveStreamingModel.keyStreamingDiamonds,
-  //     //     Setup.minimumDiamondsToPopular);
-  //     // queryBuilder.orderByDescending(LiveStreamingModel.keyAuthorTotalDiamonds);
-  //     // }
-
-  //     // queryBuilder.setLimit(25);
-  //     // queryBuilder.includeObject([
-  //     //   LiveStreamingModel.keyAuthor,
-  //     //   LiveStreamingModel.keyAuthorInvited,
-  //     //   LiveStreamingModel.keyPrivateLiveGift
-  //     // ]);
-
-  //     ParseResponse apiResponse = await queryBuilder.query();
-
-  //     print(['api res is ', apiResponse.result]);
-  //     if (apiResponse.success) {
-  //       if (apiResponse.results != null) {
-  //         //setupLiveQuery();
-
-  //         setState(() {
-  //           liveResults.clear();
-  //         });
-
-  //         return apiResponse.results;
-  //       } else {
-  //         return [];
-  //       }
-  //     } else {
-  //       return null;
-  //     }
-  //   } catch (e, t) {
-  //     print(e);
-  //     print(t);
-  //     rethrow;
-  //   }
-  // }
-
   Future<void> _loadLiveUpdate() async {
     return null;
   }
-  // function to load all the streams from parser db
-  // then show the list in the live party tab
-  // on tap of the ite
 
   @override
   Widget build(BuildContext context) {
@@ -181,61 +102,10 @@ class _LivePartyScreenState extends State<LivePartyScreen> {
 
                         print(['Live stream is => ', liveStreaming]);
 
-                        final author = liveStreaming['Author'] as UserModel;
+                        final userName = liveStreaming['userName'] as String?;
 
                         print(['item config', liveStreaming]);
-
                         return GestureDetector(
-                          // onLongPress: () {
-                          //   // if (liveStreaming.getAuthorId !=
-                          //   //     widget.currentUser!.objectId) {
-                          //   //   openSheet(
-                          //   //       liveStreaming.getAuthor!, liveStreaming);
-                          //   // }
-
-                          //   // showDialog(
-                          //   //   context: context,
-                          //   //   builder: (BuildContext context) {
-                          //   //     return AlertDialog(
-                          //   //       title: Text('Live Streaming'),
-                          //   //       content: Text(
-                          //   //           'This is the content for Live Streaming.'),
-                          //   //       actions: <Widget>[
-                          //   //         TextButton(
-                          //   //           child: Text('Close'),
-                          //   //           onPressed: () {
-                          //   //             // Close the dialog when the button is tapped
-                          //   //             Navigator.of(context).pop();
-                          //   //           },
-                          //   //         ),
-                          //   //         TextButton(
-                          //   //             onPressed: () async {
-                          //   //               UserModel? user =
-                          //   //                   await ParseUser.currentUser();
-                          //   //               Navigator.of(context).push(
-                          //   //                   MaterialPageRoute(
-                          //   //                       builder: ((context) =>
-                          //   //                           MyWidget(
-                          //   //                             userID:
-                          //   //                                 (user?.getUid ?? '')
-                          //   //                                     .toString(),
-                          //   //                             userName:
-                          //   //                                 user?.username ??
-                          //   //                                     'no user',
-                          //   //                             liveID: liveStreaming[
-                          //   //                                 'liveID'],
-                          //   //                             config:
-                          //   //                                 ZegoUIKitPrebuiltLiveStreamingConfig
-                          //   //                                     .host(),
-                          //   //                             // isHost: host,
-                          //   //                           ))));
-                          //   //             },
-                          //   //             child: Text('Create'))
-                          //   //       ],
-                          //   //     );
-                          //   //   },
-                          //   // );
-                          // },
                           onTap: () async {
                             UserModel? user = await ParseUser.currentUser();
                             Navigator.of(context).push(MaterialPageRoute(
@@ -246,10 +116,6 @@ class _LivePartyScreenState extends State<LivePartyScreen> {
                                       config: audienceConfig,
                                       // isHost: host,
                                     ))));
-
-                            // checkPermission(false,
-                            //     channel: liveStreaming.getStreamingChannel,
-                            //     liveStreamingModel: liveStreaming);
                           },
                           child: Stack(children: [
                             ContainerCorner(
@@ -258,58 +124,6 @@ class _LivePartyScreenState extends State<LivePartyScreen> {
                                   liveStreaming['imageUrl'],
                                   borderRadius: 5),
                             ),
-                            // Positioned(
-                            //   top: 0,
-                            //   child: ContainerCorner(
-                            //     radiusTopLeft: 5,
-                            //     radiusTopRight: 5,
-                            //     height: 40,
-                            //     width: MediaQuery.of(context).size.width / 2.01,
-                            //     alignment: Alignment.center,
-                            //     colors: [
-                            //       Colors.black,
-                            //       Colors.black.withOpacity(0.05)
-                            //     ],
-                            //     begin: Alignment.topCenter,
-                            //     end: Alignment.bottomCenter,
-                            //     child: ContainerCorner(
-                            //       color: kTransparentColor,
-                            //       marginLeft: 10,
-                            //       child: Row(
-                            //         mainAxisAlignment:
-                            //             MainAxisAlignment.spaceBetween,
-                            //         children: [
-                            //           // Row(
-                            //           //   children: [
-                            //           //     QuickActions.showSVGAsset(
-                            //           //       "assets/svg/ic_small_viewers.svg",
-                            //           //       height: 18,
-                            //           //     ),
-                            //           //     TextWithTap(
-                            //           //       '0',
-                            //           //       color: Colors.white,
-                            //           //       fontSize: 14,
-                            //           //       marginRight: 15,
-                            //           //       marginLeft: 5,
-                            //           //     ),
-                            //           //     // QuickActions.showSVGAsset(
-                            //           //     //   "assets/svg/ic_diamond.svg",
-                            //           //     //   height: 24,
-                            //           //     // ),
-                            //           //     // TextWithTap(
-                            //           //     //   '0',
-                            //           //     //   color: Colors.white,
-                            //           //     //   fontSize: 14,
-                            //           //     //   marginLeft: 3,
-                            //           //     // ),
-                            //           //   ],
-                            //           // ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-
                             Visibility(
                               visible: false,
                               child: Center(
@@ -346,8 +160,8 @@ class _LivePartyScreenState extends State<LivePartyScreen> {
                                           MainAxisAlignment.center,
                                       children: [
                                         TextWithTap(
-                                          author.getFullName ?? 'no name',
-                                          color: Colors.pink,
+                                          userName ?? 'no name',
+                                          color: Colors.white,
                                           overflow: TextOverflow.ellipsis,
                                           marginLeft: 10,
                                         ),
