@@ -344,8 +344,9 @@ class QuickActions {
           color: kTransparentColor,
           child: Icon(
             Icons.refresh_rounded,
-            size: 90,
-            color: Colors.white,
+            size: 80,
+            color: Colors.grey,
+            // color: color,
           ),
         ),
         TextWithTap(
@@ -353,7 +354,8 @@ class QuickActions {
           marginBottom: 0,
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: Colors.red,
+          // color: color,
         ),
         TextWithTap(
           explain,
@@ -363,7 +365,8 @@ class QuickActions {
           marginTop: 5,
           fontSize: 14,
           textAlign: TextAlign.center,
-          color: Colors.white,
+          color: Colors.grey,
+          // color: color,
         )
       ],
     );

@@ -124,6 +124,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       child: ToolBar(
         title: "page_title.edit_profile_title".tr(),
         leftButtonIcon: Icons.arrow_back,
+        iconColor: QuickHelp.isDarkMode(context) ? Colors.white : kPrimaryColor,
         onLeftButtonTap: () =>
             QuickHelp.goBackToPreviousPage(context, result: widget.currentUser),
         child: ContainerCorner(
@@ -576,7 +577,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 //width: 250,
                 height: 46,
                 fontSize: 17,
-                borderWidth: 4,
+                borderWidth: 2,
                 marginRight: 10,
                 marginLeft: 10,
                 borderColor: mySelectedGender == UserModel.keyGenderFemale
@@ -599,7 +600,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 //MediaQuery.of(context).size.width * 0.4,
                 height: 46,
                 fontSize: 17,
-                borderWidth: 1,
+                borderWidth: 2,
                 marginRight: 10,
                 marginLeft: 10,
                 //marginTop: 15,

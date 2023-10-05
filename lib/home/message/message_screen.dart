@@ -536,6 +536,7 @@ class _MessageScreenState extends State<MessageScreen> {
     if (apiResponse.success) {
       print("Messages count: ${apiResponse.results!.length}");
       if (apiResponse.results != null) {
+        setState(() {});
         return apiResponse.results;
       } else {
         return AsyncSnapshot.nothing() as dynamic;
@@ -1140,6 +1141,7 @@ class _MessageScreenState extends State<MessageScreen> {
             width: 45,
             onTap: () {
               if (messageController.text.isNotEmpty) {
+                setState(() {});
                 _saveMessage(
                   messageController.text,
                   messageType: MessageModel.messageTypeText,

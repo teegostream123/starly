@@ -73,6 +73,9 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final textColor = QuickHelp.isDarkMode(context)
+        ? kPrimaryColor
+        : Colors.white.withOpacity(.8);
     return ToolBarReels(
       extendBodyBehindAppBar: true,
       showAppBar: true,
@@ -94,7 +97,9 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
       ),
       rightWidget: userRole == "artist"
           ? ContainerCorner(
-              color: Colors.white.withOpacity(0.7),
+              color: QuickHelp.isDarkMode(context)
+                  ? Colors.white.withOpacity(0.7)
+                  : kPrimaryColor,
               borderRadius: 20,
               marginRight: 10,
               child: Row(
@@ -103,12 +108,12 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
                   Icon(
                     Icons.video_library_outlined,
                     size: 20,
-                    color: Colors.black,
+                    color: textColor,
                   ),
                   TextWithTap(
                     "feed.reels_new_video".tr(),
                     marginLeft: 5,
-                    color: Colors.black,
+                    color: textColor,
                     textAlign: TextAlign.center,
                     alignment: Alignment.center,
                   ),
@@ -169,12 +174,17 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
 
   Widget reelsVideoWidget({bool? exclusive}) {
     return Container(
-      color: kContentColorLightTheme,
+      color: QuickHelp.isDarkMode(context)
+          ? kContentColorDarkTheme
+          : kContentColorLightTheme,
       child: VideoNewFeedScreen<VideoInfo>(
         api: this,
         keepPage: true,
         screenConfig: ScreenConfig(
-            backgroundColor: kContentColorLightTheme,
+
+            ///////////////////////////chnage this theme
+            backgroundColor:
+                QuickHelp.isDarkMode(context) ? Colors.black : Colors.white,
             loadingWidget: CircularProgressIndicator.adaptive(),
             emptyWidget: Center(
               child: GestureDetector(

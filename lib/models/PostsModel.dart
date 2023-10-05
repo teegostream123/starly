@@ -1,8 +1,6 @@
 import 'package:teego/models/UserModel.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
-///ay page dobara open kari   kehra
-///oh yar oh hi jeda pehla kitta c jithey comit page
 import '../app/setup.dart';
 
 class PostsModel extends ParseObject implements ParseCloneable {

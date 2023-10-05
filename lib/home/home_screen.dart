@@ -1,38 +1,23 @@
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:teego/app/constants.dart';
 import 'package:teego/helpers/quick_actions.dart';
 import 'package:teego/helpers/quick_help.dart';
-import 'package:teego/home/coins/coins_rc_screen.dart';
 import 'package:teego/home/feed/feed_home_screen.dart';
 import 'package:teego/home/following/following_screen.dart';
 import 'package:teego/home/message/message_list_screen.dart';
-import 'package:teego/home/profile/profile_edit.dart';
 import 'package:teego/home/profile/profile_menu_screen.dart';
 import 'package:teego/home/reels/reels_home_screen.dart';
 import 'package:teego/home/search/search_screen.dart';
 import 'package:teego/models/UserModel.dart';
 import 'package:teego/providers/calls_providers.dart';
 import 'package:teego/ui/app_bar_left_widget.dart';
-import 'package:teego/ui/button_widget.dart';
-import 'package:teego/ui/container_with_corner.dart';
-import 'package:teego/ui/text_with_tap.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:teego/utils/shared_manager.dart';
 import 'package:teego/widgets/component.dart';
-import '../auth/welcome_screen.dart';
-import 'admob/AppLifecycleReactor.dart';
-import 'admob/AppOpenAdManager.dart';
 import 'coins/coins_screen.dart';
-import 'coins/refill_coins_screen.dart';
 import 'live/live_screen.dart';
 import 'notifications/notifications_screen.dart';
 
@@ -305,8 +290,11 @@ class _HomeScreenState extends State<HomeScreen> {
       type: BottomNavigationBarType.fixed,
       elevation: _getElevation(),
       currentIndex: _selectedIndex,
-      selectedItemColor:
-          QuickHelp.isDarkMode(context) ? Colors.yellow[800] : kPrimaryColor,
+      selectedItemColor: _selectedIndex == 4
+          ? kContentColorLightTheme
+          : QuickHelp.isDarkMode(context)
+              ? Colors.yellow[800]
+              : kPrimaryColor,
       backgroundColor: _selectedIndex == 4 ? kContentColorLightTheme : bgColor,
       unselectedItemColor: _selectedIndex == 4
           ? Colors.white
@@ -314,17 +302,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ? Colors.white
               : Colors.black,
       selectedLabelStyle: TextStyle(
-          color: QuickHelp.isDarkMode(context) ? Colors.white : Colors.black,
-          fontSize: 12,
-          fontWeight: FontWeight.bold),
+        color: _selectedIndex == 4
+            ? kContentColorLightTheme
+            : QuickHelp.isDarkMode(context)
+                ? Colors.white
+                : Colors.black,
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
       unselectedLabelStyle: TextStyle(
-          color: _selectedIndex == 4
-              ? Colors.white
-              : QuickHelp.isDarkMode(context)
-                  ? Colors.white
-                  : Colors.black,
-          fontSize: 12,
-          fontWeight: FontWeight.bold),
+        color: _selectedIndex == 4
+            ? Colors.white
+            : QuickHelp.isDarkMode(context)
+                ? Colors.white
+                : Colors.black,
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
       onTap: (index) => onItemTapped(index),
     );
   }

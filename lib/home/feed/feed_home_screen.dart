@@ -665,11 +665,11 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                         ? null
                                         : "assets/svg/ic_post_like.svg",
                                     urlIconColor: liked
-                                        ? kTabIconSelectedColor
+                                        ? Colors.red
                                         : kTabIconDefaultColor,
                                     icon: liked ? Icons.favorite : null,
                                     iconColor: liked
-                                        ? kTabIconSelectedColor
+                                        ? Colors.redAccent
                                         : kTabIconDefaultColor,
                                     backgroundColor:
                                         QuickHelp.isDarkMode(context)
@@ -680,7 +680,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                         post.removeLike =
                                             widget.currentUser!.objectId!;
                                         //post.unset(PostsModel.keyLastLikeAuthor);
-
+                                        setState(() {});
                                         _deleteLike(post);
                                         post.save();
                                       } else {
@@ -688,7 +688,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                             widget.currentUser!.objectId!;
                                         post.setLastLikeAuthor =
                                             widget.currentUser!;
-
+                                        setState(() {});
                                         post.save();
                                         _likePost(post);
                                       }
