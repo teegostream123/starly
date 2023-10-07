@@ -457,11 +457,13 @@ class _MessageScreenState extends State<MessageScreen> {
     messageListModel.setIsRead = true;
     messageListModel.setCounter = 0;
     await messageListModel.save();
+    setState(() {});
   }
 
   _updateMessageStatus(MessageModel messageModel) async {
     messageModel.setIsRead = true;
     await messageModel.save();
+    setState(() {});
   }
 
   Future<void> _objectUpdated(MessageModel object) async {

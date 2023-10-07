@@ -52,9 +52,6 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
 
   var _future;
 
-  // Ads
-  static final _kAdIndex = 2;
-
   late QueryBuilder<PostsModel> queryBuilder;
   final LiveQuery liveQuery = LiveQuery();
   Subscription? subscription;

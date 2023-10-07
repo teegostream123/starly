@@ -322,13 +322,14 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                       UserModel? user = await ParseUser.currentUser();
 
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: ((context) => MyWidget(
-                                userID: (user?.getUid ?? '').toString(),
-                                userName: user?.username ?? 'no user',
-                                liveID: (user?.getUid ?? '').toString(),
-                                config: hostConfig,
-                                // isHost: host,
-                              ))));
+                        builder: ((context) => MyWidget(
+                              userID: (user?.getUid ?? '').toString(),
+                              userName: user?.username ?? 'no user',
+                              liveID: (user?.getUid ?? '').toString(),
+                              config: hostConfig,
+                              // isHost: host,
+                            )),
+                      ));
 
                       try {
                         final streaming = ParseObject('Streamings')
@@ -345,11 +346,18 @@ class _LivePreviewScreenState extends State<LivePreviewScreen>
                         print('create live stream response: ${res.count}');
                         print('create live stream response: ${res.results}');
                         print('create live stream response: ${res.toString()}');
+
+                        // Stream completed logic
+                        // Assuming you have a way to determine when the stream is over
+                        // if (streamCompleted)
+                        //   streaming.set('isLive', false);
+                        //   await streaming.save();
+                        //   print('Stream marked as not live');
+                        // }
                       } catch (e, t) {
                         print(['Error for streaming', e]);
                         print(t);
                       }
-                      // Navigator.push(context, MaterialPageRoute(builder: (_) => SelectScreen()));
                     },
                     text: "live_streaming.btn_go_live".tr().toUpperCase(),
                     beginColor:
