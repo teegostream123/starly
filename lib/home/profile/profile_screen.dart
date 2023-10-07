@@ -640,6 +640,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget initQuery(bool isExclusive) {
+    bool _isLoading = false;
     return FutureBuilder(
         future: _loadFeeds(isExclusive),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -828,22 +829,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 iconURL: liked
                                     ? null
                                     : "assets/svg/ic_post_like.svg",
-                                urlIconColor: liked
-                                    ? kTabIconSelectedColor
-                                    : kTabIconDefaultColor,
+                                urlIconColor:
+                                    liked ? Colors.red : kTabIconDefaultColor,
                                 icon: liked ? Icons.favorite : null,
                                 iconColor: liked
-                                    ? kTabIconSelectedColor
+                                    ? Colors.redAccent
                                     : kTabIconDefaultColor,
                                 backgroundColor: QuickHelp.isDarkMode(context)
                                     ? kContentColorLightTheme
                                     : Colors.white,
-                                onTap: () {
+                                onTap: () async {
                                   if (liked) {
                                     post.removeLike =
                                         widget.currentUser!.objectId!;
-                                    //post.unset(PostsModel.keyLastLikeAuthor);
-
+                                    setState(() {});
                                     _deleteLike(post);
                                     post.save();
                                   } else {
@@ -851,10 +850,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         widget.currentUser!.objectId!;
                                     post.setLastLikeAuthor =
                                         widget.currentUser!;
-
+                                    setState(() {});
                                     post.save();
-                                    _likePost(post);
+                                    await _likePost(post);
                                   }
+                                  setState(
+                                      () {}); // Update the state to trigger a rebuild
                                 },
                               ),
                               ButtonWithIcon(

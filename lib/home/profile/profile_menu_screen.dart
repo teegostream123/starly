@@ -104,18 +104,18 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                                     //   marginRight: 20,
                                     //   color: kGrayColor,
                                     // ),
-                                    SvgPicture.asset(
-                                      "assets/svg/ic_menu_followers.svg",
-                                      width: 20,
-                                    ),
-                                    TextWithTap(
-                                      widget.userModel!.getFollowers!.length
-                                          .toString(),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17,
-                                      marginLeft: 5,
-                                      color: kGrayColor,
-                                    ),
+                                    // SvgPicture.asset(
+                                    //   "assets/svg/ic_menu_followers.svg",
+                                    //   width: 20,
+                                    // ),
+                                    // TextWithTap(
+                                    //   widget.userModel!.getFollowers!.length
+                                    //       .toString(),
+                                    //   fontWeight: FontWeight.bold,
+                                    //   fontSize: 17,
+                                    //   marginLeft: 5,
+                                    //   color: kGrayColor,
+                                    // ),
                                   ],
                                 ),
                               )
@@ -187,11 +187,13 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                   currentUser: widget.userModel,
                 ),
               ),
-              coinBalanceOption(
-                "profile_screen.op_refill_coin_balance".tr(),
-                "assets/svg/ic_refill_menu.svg",
-                route: CoinsScreen.route,
-              ),
+              profilOptions(
+                  "profile_screen.op_refill_coin_balance".tr(),
+                  "assets/svg/ic_refill_menu.svg",
+                  CoinsScreen(
+                    currentUser: widget.userModel,
+                    preferences: widget.preferences,
+                  )),
               // getMoneyOption(
               //   "profile_screen.op_get_money".tr(),
               //   "assets/svg/ic_redeem_menu.svg",

@@ -342,6 +342,11 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
 
   initFileUpload(File? videoFile, {String? text}) async {
     try {
+      print('uploading file $text');
+      if (videoFile == null) {
+        print('there is no video file');
+        return;
+      }
       QuickHelp.showLoadingDialog(context);
 
       parseFile = ParseFile(
@@ -363,9 +368,11 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
     if (text != null) postsModel.setText = text;
 
     if (isVideo!) {
-      postsModel.setVideoThumbnail = parseFileThumbnail!;
+      // TODO" set thumbnail;;;;
+      // postsModel.setVideoThumbnail = parseFileThumbnail!;
       postsModel.setVideo = parseFile!;
-      postsModel.setImage = parseFileThumbnail!;
+      // TODO" set thumbnail;;;;
+      // postsModel.setImage = parseFileThumbnail!;
     } else {
       postsModel.setImage = parseFile!;
     }

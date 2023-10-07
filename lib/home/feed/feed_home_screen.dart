@@ -506,6 +506,7 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                     }),
                               ),
                               ButtonWithIcon(
+                                marginRight: 5,
                                 text: "",
                                 iconURL: "assets/svg/ic_post_config.svg",
                                 iconColor: kGrayColor,
@@ -1189,8 +1190,8 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
               //     },
               //   ),
               // ),
-              Visibility(
-                  visible: widget.currentUser!.isAdmin!, child: Divider()),
+              // Visibility(
+              //     visible: widget.currentUser!.isAdmin!, child: Divider()),
               Visibility(
                 visible: widget.currentUser!.objectId == post.getAuthorId ||
                     widget.currentUser!.isAdmin!,

@@ -296,12 +296,11 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                                 iconURL: liked
                                     ? null
                                     : "assets/svg/ic_post_like.svg",
-                                urlIconColor: liked
-                                    ? kTabIconSelectedColor
-                                    : kTabIconDefaultColor,
+                                urlIconColor:
+                                    liked ? Colors.red : kTabIconDefaultColor,
                                 icon: liked ? Icons.favorite : null,
                                 iconColor: liked
-                                    ? kTabIconSelectedColor
+                                    ? Colors.redAccent
                                     : kTabIconDefaultColor,
                                 backgroundColor: QuickHelp.isDarkMode(context)
                                     ? kContentColorLightTheme
@@ -310,13 +309,13 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                                   if (liked) {
                                     post!.removeLike = currentUser!.objectId!;
                                     //post.unset(PostsModel.keyLastLikeAuthor);
-
+                                    setState(() {});
                                     _deleteLike(post!);
                                     post!.save();
                                   } else {
                                     post!.setLikes = currentUser!.objectId!;
                                     post!.setLastLikeAuthor = currentUser!;
-
+                                    setState(() {});
                                     post!.save();
                                     _likePost(post!);
                                   }
