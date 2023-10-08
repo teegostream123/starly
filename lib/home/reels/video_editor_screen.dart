@@ -13,6 +13,7 @@ import 'package:teego/models/others/video_editor_model.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:video_editor/video_editor.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../ui/app_bar.dart';
 import '../../ui/text_with_tap.dart';
@@ -86,38 +87,6 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
           builder: (BuildContext context) =>
               CropScreen(controller: _controller)));
 
-  Future<String?> generateThumbnail(String videoPath,
-      {int positionInSeconds = 5}) async {
-    try {
-      // Generate a unique name for the thumbnail to prevent overwriting existing files
-      final String thumbnailName =
-          path.basenameWithoutExtension(videoPath) + '_thumbnail.jpg';
-
-      // Define a path to save the thumbnail
-      final Directory appDocDir = await getApplicationDocumentsDirectory();
-      final String thumbnailPath = path.join(appDocDir.path, thumbnailName);
-
-      // Create FFmpeg command
-      final String command =
-          "-i $videoPath -ss 00:00:$positionInSeconds -vframes 1 $thumbnailPath";
-
-      // Execute FFmpeg command
-      await FFmpegKit.executeAsync(command, (session) async {
-        final returnCode = await session.getReturnCode();
-
-        if (returnCode == null || !ReturnCode.isSuccess(returnCode)) {
-          print("Error generating thumbnail: ${session.getFailStackTrace()}");
-          throw Exception("Failed to generate thumbnail.");
-        }
-      });
-
-      return thumbnailPath;
-    } catch (e) {
-      print("Exception during thumbnail generation: $e");
-      return null;
-    }
-  }
-
   Future _exportVideo() async {
     print('export video ta[p]');
     _exportingProgress.value = 0;
@@ -150,6 +119,23 @@ class _VideoEditorScreenState extends State<VideoEditorScreen> {
     );
 
     QuickHelp.goBackToPreviousPage(context, result: videoEditorModel);
+  }
+
+  Future<String> generateThumbnail(String path) async {
+    final fileName = await VideoThumbnail.thumbnailFile(
+      video: path,
+      thumbnailPath: (await getTemporaryDirectory()).path,
+      imageFormat: ImageFormat.WEBP,
+      maxHeight:
+          64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      quality: 75,
+    );
+
+    if (fileName == null) {
+      throw Exception('Could not generate thumbnail');
+    }
+
+    return fileName;
   }
 
   @override

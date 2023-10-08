@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mime/mime.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teego/app/constants.dart';
@@ -19,6 +20,7 @@ import 'package:teego/ui/button_with_svg.dart';
 import 'package:teego/ui/container_with_corner.dart';
 import 'package:teego/utils/colors.dart';
 import 'package:teego/widgets/dospace/dospace.dart' as dospace;
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../app/setup.dart';
@@ -293,7 +295,7 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
       print("Exported cover received ${videoEditorModel.coverPath}");
       print("Exported Video received ${videoEditorModel.getVideoFile()!.path}");
 
-      //uploadVideo(videoFile.getVideoFile()!.path, videoFile.getCoverPath()!, setState);
+      // uploadVideo(videoFile.getVideoFile()!.path, videoFile.getCoverPath()!, setState);
       //initDoSpaces(videoFile.getVideoFile(), videoFile.getCoverPath()!, setState);
       videoFile = videoEditorModel.getVideoFile();
 
@@ -1077,4 +1079,6 @@ class _ReelsVideosScreenState extends State<ReelsVideosScreen>
     print('Permission $status');
     print('Permission $status2');
   }
+
+  Future<void> uploadVideo(path, param1, StateSetter setState) async {}
 }
