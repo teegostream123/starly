@@ -57,11 +57,16 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null // original code
-            storeFile file("key.jks") ? file("key.jks") : null //new solution for some customers
-            storePassword keystoreProperties['storePassword']
+
+            
+
+     keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+      
+
+            
         }
     }
     buildTypes {
