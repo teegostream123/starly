@@ -147,7 +147,6 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
     return StreamBuilder<List<VideoInfo>>(
         stream: _listVideoStream.stream,
         builder: (context, snapshot) {
-
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.waiting:
@@ -157,9 +156,7 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
               );
             default:
               if (snapshot.hasData) {
-
-                if(snapshot.data!.isEmpty){
-
+                if (snapshot.data!.isEmpty) {
                   return Center(
                     child: widget.screenConfig.emptyWidget ??
                         Column(
@@ -170,9 +167,7 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
                           ],
                         ),
                   );
-
                 } else {
-
                   return PreloadPageView.builder(
                     scrollDirection: Axis.vertical,
                     controller: _pageController,
@@ -184,7 +179,8 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
                       PostsModel? post = snapshot.data![page].postModel;
 
                       if (widget.pageChanged != null && user != null) {
-                        widget.pageChanged!(page, user, post!) as void Function()?;
+                        widget.pageChanged!(page, user, post!) as void
+                            Function()?;
                       }
                     },
                     itemBuilder: (context, index) {
@@ -195,16 +191,16 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
                         isPaused: _isOnPageTurning,
                         config: widget.config,
                         videoEnded: widget.videoEnded,
-                        customVideoInfoWidget: widget.customVideoInfoWidget != null
-                            ? widget.customVideoInfoWidget!(context, temps[index])
-                            : null,
+                        customVideoInfoWidget:
+                            widget.customVideoInfoWidget != null
+                                ? widget.customVideoInfoWidget!(
+                                    context, temps[index])
+                                : null,
                       );
                     },
                   );
                 }
-
               } else {
-
                 return Center(
                   child: widget.screenConfig.emptyWidget ??
                       Column(

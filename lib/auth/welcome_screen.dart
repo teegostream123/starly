@@ -511,12 +511,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 return Column(
                                   children: [
                                     TextFormField(
+                                      cursorColor: QuickHelp.isDarkMode(context)
+                                          ? Colors.white
+                                          : kPrimaryColor,
                                       autofocus: false,
                                       controller: userName,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.deny(
-                                            RegExp(r"\s|\b"))
-                                      ],
+                                      // inputFormatters: [
+                                      //   FilteringTextInputFormatter.deny(
+                                      //       RegExp(r"\s|\b"))
+                                      // ],
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return "Please enter a username";
@@ -573,6 +576,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     ),
                                     SizedBox(height: 20),
                                     TextFormField(
+                                      cursorColor: QuickHelp.isDarkMode(context)
+                                          ? Colors.white
+                                          : kPrimaryColor,
                                       obscureText: passwordVisible,
                                       autofocus: false,
                                       controller: password,
@@ -747,15 +753,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                         const SizedBox(
                                           height: 15,
                                         ),
-                                        const Text('Loading...')
+                                        const Text(
+                                          'Loading...',
+                                          style:
+                                              TextStyle(color: kPrimaryColor),
+                                        )
                                       ],
                                     ),
                                   ),
                                 );
                               });
 
-                          final user = ParseUser(
-                              userName.text.tr(), password.text.tr(), null);
+                          final user = ParseUser(userName.text.tr().trim(),
+                              password.text.tr().trim(), null);
 
                           var response = await user.login();
 

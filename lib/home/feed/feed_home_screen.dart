@@ -459,16 +459,18 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                         : Colors.white,
                                     child: Row(
                                       children: [
-                                        QuickActions.avatarWidget(
-                                            post.getAuthor!,
-                                            width: 50,
-                                            height: 50),
+                                        //TODO" fix
+                                        // QuickActions.avatarWidget(
+                                        //     post.getAuthor!,
+                                        //     width: 50,
+                                        //     height: 50),
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             TextWithTap(
-                                              post.getAuthor!.getFullName!,
+                                              post.getAuthor?.getFullName ??
+                                                  'Unknown',
                                               marginLeft: 10,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -566,22 +568,22 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              QuickActions.showSVGAsset(
-                                                "assets/svg/ic_coin_with_star.svg",
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                              TextWithTap(
-                                                "feed.post_cost_exclusive"
-                                                    .tr(namedArgs: {
-                                                  "coins": post.getPaidAmount!
-                                                      .toString()
-                                                }),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                                marginLeft: 6,
-                                                color: Colors.white,
-                                              ),
+                                              // QuickActions.showSVGAsset(
+                                              //   "assets/svg/ic_coin_with_star.svg",
+                                              //   width: 24,
+                                              //   height: 24,
+                                              // ),
+                                              // TextWithTap(
+                                              //   "feed.post_cost_exclusive"
+                                              //       .tr(namedArgs: {
+                                              //     "coins": post.getPaidAmount!
+                                              //         .toString()
+                                              //   }),
+                                              //   fontWeight: FontWeight.bold,
+                                              //   fontSize: 14,
+                                              //   marginLeft: 6,
+                                              //   color: Colors.white,
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -870,6 +872,8 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
   }
 
   void _showCreatePostBottomSheet(BuildContext context) {
+    Color themeColor =
+        QuickHelp.isDarkMode(context) ? Colors.grey.shade700 : Colors.white;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -913,19 +917,24 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                               color: Colors.grey[600],
                             ),
                             ContainerCorner(
-                              color: kGreyColor0,
+                              color: themeColor,
                               borderRadius: 10,
                               height: 80,
                               marginTop: 20,
                               marginBottom: 10,
                               child: TextFormField(
+                                cursorColor: QuickHelp.isDarkMode(context)
+                                    ? Colors.white
+                                    : kPrimaryColor,
                                 minLines: 1,
                                 maxLines: 100,
                                 controller: postContent,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 style: TextStyle(
-                                  color: kGreyColor2,
+                                  color: QuickHelp.isDarkMode(context)
+                                      ? Colors.white
+                                      : kPrimaryColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -944,7 +953,9 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                                   //errorText: "edit_profile.hint_about_you".tr(),
                                   contentPadding: EdgeInsets.only(left: 10),
                                   hintStyle: TextStyle(
-                                    color: kGreyColor2,
+                                    color: QuickHelp.isDarkMode(context)
+                                        ? Colors.grey
+                                        : kPrimaryColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -953,15 +964,17 @@ class _FeedHomeScreenState extends State<FeedHomeScreen>
                             ),
                             Expanded(
                               child: ContainerCorner(
-                                color: kGreyColor0,
+                                color: themeColor,
                                 width: 400,
                                 height: 400,
                                 borderRadius: 10,
                                 child: uploadPhoto.isNotEmpty
                                     ? Image.file(File(uploadPhoto))
                                     : Icon(
-                                        Icons.image_outlined,
-                                        color: kPrimaryColor,
+                                        Icons.add_photo_alternate,
+                                        color: QuickHelp.isDarkMode(context)
+                                            ? Colors.grey
+                                            : kPrimaryColor,
                                         size: 80,
                                       ),
                                 onTap: () => _pickFile(setState),

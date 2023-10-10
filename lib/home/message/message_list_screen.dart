@@ -258,12 +258,12 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                 itemBuilder: (context, index) {
                   MessageListModel chatMessage = messagesResults[index];
 
-                  UserModel chatUser =
+                  UserModel? chatUser =
                       chatMessage.getAuthorId! == widget.currentUser!.objectId!
                           ? chatMessage.getReceiver!
-                          : chatMessage.getAuthor!;
+                          : chatMessage.getAuthor;
                   bool isMe =
-                      chatMessage.getAuthorId! == widget.currentUser!.objectId!
+                      chatMessage.getAuthorId == widget.currentUser?.objectId
                           ? true
                           : false;
 
@@ -280,11 +280,12 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          QuickActions.avatarWidget(
-                            chatUser,
-                            width: 50,
-                            height: 50,
-                          ),
+                          if (chatUser != null)
+                            QuickActions.avatarWidget(
+                              chatUser,
+                              width: 50,
+                              height: 50,
+                            ),
                           Expanded(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,7 +296,7 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextWithTap(
-                                      chatUser.getFullName!,
+                                      chatUser?.getFullName ?? 'Unknown',
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       marginLeft: 10,

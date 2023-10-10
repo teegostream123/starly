@@ -643,6 +643,7 @@ class _MessageScreenState extends State<MessageScreen> {
                               chatList.objectId ==
                                   chatMessage.getMessageListId) {
                             _updateMessageList(chatMessage.getMessageList!);
+                            setState(() {});
                           }
                         }
 
@@ -1143,12 +1144,11 @@ class _MessageScreenState extends State<MessageScreen> {
             width: 45,
             onTap: () {
               if (messageController.text.isNotEmpty) {
-                setState(() {});
-                _saveMessage(
-                  messageController.text,
-                  messageType: MessageModel.messageTypeText,
-                );
                 setState(() {
+                  _saveMessage(
+                    messageController.text,
+                    messageType: MessageModel.messageTypeText,
+                  );
                   messageController.text = "";
                   changeButtonIcon("");
                 });
@@ -1228,6 +1228,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
       await message.save();
       _saveList(message);
+      setState(() {});
 
       SendNotifications.sendPush(
         currentUser!,
@@ -1298,6 +1299,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
         messageListModel.incrementCounter = 1;
         await messageListModel.save();
+        setState(() {});
 
         messageModel.setMessageList = messageListModel;
         messageModel.setMessageListId = messageListModel.objectId!;
@@ -1326,12 +1328,11 @@ class _MessageScreenState extends State<MessageScreen> {
 
         messageListModel.incrementCounter = 1;
         await messageListModel.save();
+        setState(() {});
 
         messageModel.setMessageList = messageListModel;
         messageModel.setMessageListId = messageListModel.objectId!;
         await messageModel.save();
-
-        setState(() {});
       }
     }
   }
@@ -1373,7 +1374,7 @@ class _MessageScreenState extends State<MessageScreen> {
                             ContainerCorner(
                               color: kGreyColor0,
                               width: 400,
-                              height: 400,
+                              height: 320,
                               borderRadius: 10,
                               child: uploadPhoto == null
                                   ? Icon(
@@ -1389,7 +1390,7 @@ class _MessageScreenState extends State<MessageScreen> {
                             Column(
                               children: [
                                 ButtonWithGradient(
-                                  marginTop: 10,
+                                  // marginTop: 10,
                                   height: 50,
                                   borderRadius: 20,
                                   text: "message_screen.send_".tr() +
@@ -1412,7 +1413,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       Navigator.of(context).pop();
                                     }
                                   },
-                                  beginColor: kWarninngColor,
+                                  beginColor: kPrimaryColor,
                                   endColor: kPrimaryColor,
                                 ),
                                 ContainerCorner(
