@@ -254,12 +254,13 @@ class _MessageScreenState extends State<MessageScreen> {
           },
           child: Row(
             children: [
-              QuickActions.avatarWidget(mUser!, width: 40, height: 40),
+              if (mUser != null)
+                QuickActions.avatarWidget(mUser!, width: 40, height: 40),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextWithTap(
-                    mUser!.getFirstName!,
+                    mUser?.getFirstName ?? '',
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: QuickHelp.isDarkMode(context)
@@ -268,51 +269,54 @@ class _MessageScreenState extends State<MessageScreen> {
                     marginLeft: 10,
                     marginRight: 10,
                   ),
-                  TextWithTap(
-                    QuickHelp.isUserOnlineChat(mUser!),
-                    color: QuickHelp.isUserOnline(mUser!)
-                        ? Colors.green
-                        : kGrayColor,
-                    marginLeft: 10,
-                    fontSize: 12,
-                  )
+                  if (mUser != null)
+                    TextWithTap(
+                      QuickHelp.isUserOnlineChat(mUser!),
+                      color: QuickHelp.isUserOnline(mUser!)
+                          ? Colors.green
+                          : kGrayColor,
+                      marginLeft: 10,
+                      fontSize: 12,
+                    )
                 ],
               ),
             ],
           ),
         ),
-        rightButtonWidget: Visibility(
-          visible: !mUser!.isAdmin!,
-          child: Row(
-            children: [
-              ContainerCorner(
-                color: kTransparentColor,
-                child: Icon(
-                  Icons.add_call,
-                  color: textColor,
+        rightButtonWidget: mUser != null
+            ? Visibility(
+                visible: !mUser!.isAdmin!,
+                child: Row(
+                  children: [
+                    ContainerCorner(
+                      color: kTransparentColor,
+                      child: Icon(
+                        Icons.add_call,
+                        color: textColor,
+                      ),
+                      marginRight: 20,
+                      onTap: () {
+                        checkPermission(false);
+                      },
+                    ),
+                    ContainerCorner(
+                      color: kTransparentColor,
+                      child: Icon(
+                        Icons.videocam,
+                        color: textColor,
+                        size: 35,
+                      ),
+                      width: 35,
+                      height: 35,
+                      marginRight: 10,
+                      onTap: () {
+                        checkPermission(true);
+                      },
+                    )
+                  ],
                 ),
-                marginRight: 20,
-                onTap: () {
-                  checkPermission(false);
-                },
-              ),
-              ContainerCorner(
-                color: kTransparentColor,
-                child: Icon(
-                  Icons.videocam,
-                  color: textColor,
-                  size: 35,
-                ),
-                width: 35,
-                height: 35,
-                marginRight: 10,
-                onTap: () {
-                  checkPermission(true);
-                },
               )
-            ],
-          ),
-        ),
+            : const SizedBox(),
         child: _messageSpace(context),
       ),
     );
@@ -453,11 +457,10 @@ class _MessageScreenState extends State<MessageScreen> {
     }
   }
 
-  _updateMessageList(MessageListModel messageListModel) async {
+  Future _updateMessageList(MessageListModel messageListModel) async {
     messageListModel.setIsRead = true;
     messageListModel.setCounter = 0;
     await messageListModel.save();
-    setState(() {});
   }
 
   _updateMessageStatus(MessageModel messageModel) async {
@@ -642,8 +645,10 @@ class _MessageScreenState extends State<MessageScreen> {
                           if (!chatList.isRead! &&
                               chatList.objectId ==
                                   chatMessage.getMessageListId) {
-                            _updateMessageList(chatMessage.getMessageList!);
-                            setState(() {});
+                            _updateMessageList(chatMessage.getMessageList!)
+                                .then((value) {
+                              setState(() {});
+                            });
                           }
                         }
 
